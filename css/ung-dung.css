@@ -36,3 +36,16 @@ body.ud .site-header { background: rgba(6, 7, 11, 0.72); backdrop-filter: blur(1
 .ud-btn:hover, .ud-btn:focus-visible { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
 .ud-btn[aria-pressed="true"] { background: var(--cyan); color: var(--ink); }
 .han { font-family: var(--han); }
+
+/* Màu nền nền tảng theo từng ứng dụng (lớp chuyển động vẽ đè lên bằng js/nen-ung-dung.js) */
+body.ud[data-nen="sao"]   { background: radial-gradient(120% 90% at 75% 10%, #0d1f2c 0%, #070b14 55%, #05060a 100%) fixed; }
+body.ud[data-nen="trang"] { background: radial-gradient(110% 90% at 85% 15%, #1c1a2e 0%, #0a0b16 55%, #05060a 100%) fixed; }
+body.ud[data-nen="muc"]   { background: radial-gradient(120% 100% at 20% 0%, #1d1710 0%, #0c0a08 55%, #070605 100%) fixed; }
+body.ud[data-nen="hao"]   { background: linear-gradient(160deg, #18140c 0%, #0a0907 60%, #060505 100%) fixed; }
+body.ud[data-nen="so"]    { background: radial-gradient(120% 100% at 50% 100%, #0b2226 0%, #071012 55%, #050708 100%) fixed; }
+body.ud[data-nen="pho"]   { background: linear-gradient(180deg, #120a24 0%, #08071a 50%, #05050c 100%) fixed; }
+body.ud[data-nen="song"]  { background: radial-gradient(100% 80% at 15% 50%, #062a2c 0%, #061316 55%, #04080a 100%) fixed; }
+body.ud[data-nen="hat"]   { background: radial-gradient(120% 90% at 50% 30%, #0c2420 0%, #07100f 55%, #050707 100%) fixed; }
+body.ud[data-nen="luoi"]  { background: linear-gradient(180deg, #0a1714 0%, #070b0a 100%) fixed; }
+body.ud[data-nen="gio"]   { background: linear-gradient(180deg, #0b1b2a 0%, #0a1420 45%, #120d12 100%) fixed; }
+body.ud[data-nen="luong"] { background: radial-gradient(110% 90% at 50% 50%, #1a0d10 0%, #0a0708 60%, #050505 100%) fixed; }

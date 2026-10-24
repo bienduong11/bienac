@@ -39,7 +39,7 @@
     @media (max-width: 560px) { .uh-qr { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
   </style>
 </head>
-<body class="ud">
+<body class="ud" data-nen="sao">
   <header class="site-header scrolled">
     <a class="brand" href="/">
       <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
@@ -126,5 +126,6 @@
     try { if (navigator.share) await navigator.share({ title: 'Bienac', url: link }); else { await navigator.clipboard.writeText(link); e.target.textContent = 'Đã chép ✓'; } } catch {}
   };
 </script>
+<script src="/js/nen-ung-dung.js"></script>
 </body>
 </html>
