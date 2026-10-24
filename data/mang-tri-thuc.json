@@ -1,0 +1,215 @@
+{
+  "_huong_dan": "Mỗi video gắn với vài khái niệm (khóa ở mục khai_niem). Video có chung khái niệm sẽ được nối với nhau trên Mạng tri thức. Video mới chưa gắn sẽ hiện ở rìa mạng, chờ bạn gắn.",
+  "khai_niem": {
+    "luong-tu": {
+      "ten": "Lượng tử",
+      "han": "量"
+    },
+    "hat-co-ban": {
+      "ten": "Hạt cơ bản",
+      "han": "粒"
+    },
+    "luc": {
+      "ten": "Lực cơ bản",
+      "han": "力"
+    },
+    "y-thuc": {
+      "ten": "Ý thức",
+      "han": "識"
+    },
+    "anh-sang": {
+      "ten": "Ánh sáng & màu",
+      "han": "光"
+    },
+    "nguyen-to": {
+      "ten": "Nguyên tố",
+      "han": "素",
+      "link": "/elements.html"
+    },
+    "hat-nhan": {
+      "ten": "Hạt nhân",
+      "han": "核"
+    },
+    "kiem": {
+      "ten": "Kiềm & xà phòng",
+      "han": "鹼"
+    },
+    "han-the": {
+      "ten": "Hàn the",
+      "han": "硼"
+    },
+    "thuc-pham": {
+      "ten": "An toàn thực phẩm",
+      "han": "食"
+    },
+    "hoa-hoc-doi-song": {
+      "ten": "Hóa học đời sống",
+      "han": "化"
+    },
+    "hon-loan": {
+      "ten": "Hỗn loạn",
+      "han": "沌"
+    },
+    "vu-tru": {
+      "ten": "Vũ trụ",
+      "han": "宙",
+      "link": "/thang-vu-tru/"
+    },
+    "phat-minh": {
+      "ten": "Phát minh",
+      "han": "明"
+    },
+    "chien-tranh": {
+      "ten": "Chiến tranh",
+      "han": "戰",
+      "link": "/dong-thoi-gian/"
+    },
+    "trung-dong": {
+      "ten": "Trung Đông",
+      "han": "東"
+    },
+    "dong-a": {
+      "ten": "Văn hóa Đông Á",
+      "han": "華"
+    },
+    "than-thoai": {
+      "ten": "Thần thoại & thiên văn cổ",
+      "han": "龍"
+    },
+    "viet-nam": {
+      "ten": "Việt Nam",
+      "han": "越"
+    },
+    "nghe-thuat": {
+      "ten": "Nghệ thuật",
+      "han": "藝"
+    },
+    "lich-su-khoa-hoc": {
+      "ten": "Lịch sử khoa học",
+      "han": "史"
+    },
+    "cong-nghe": {
+      "ten": "Công nghệ & AI",
+      "han": "機"
+    }
+  },
+  "video": {
+    "BaGhStLH8vM": [
+      "luong-tu",
+      "y-thuc"
+    ],
+    "wxWKco46QlY": [
+      "luc",
+      "hat-co-ban",
+      "luong-tu"
+    ],
+    "nOVl0rxpK8s": [
+      "hat-co-ban",
+      "luong-tu"
+    ],
+    "QNKt1YczyoY": [
+      "kiem",
+      "hoa-hoc-doi-song"
+    ],
+    "N4QKHuKzwSc": [
+      "kiem",
+      "chien-tranh"
+    ],
+    "0uzHwiQWavE": [
+      "han-the",
+      "thuc-pham"
+    ],
+    "pMWjwZhdMvY": [
+      "han-the",
+      "nguyen-to",
+      "anh-sang"
+    ],
+    "Mio70FQUPYE": [
+      "han-the",
+      "thuc-pham",
+      "hoa-hoc-doi-song"
+    ],
+    "xXixaqB1754": [
+      "kiem",
+      "hoa-hoc-doi-song"
+    ],
+    "b647OJtakDw": [
+      "kiem",
+      "nguyen-to"
+    ],
+    "3znEaW-Ul64": [
+      "vu-tru"
+    ],
+    "Fhxhm_9PqbU": [
+      "lich-su-khoa-hoc",
+      "hoa-hoc-doi-song"
+    ],
+    "Aqp8Pq_qX5A": [
+      "hon-loan"
+    ],
+    "RMQJVMw91ms": [
+      "nguyen-to"
+    ],
+    "2S3AvoXkIB0": [
+      "nguyen-to"
+    ],
+    "gKp5FWfeyw8": [
+      "lich-su-khoa-hoc",
+      "nguyen-to",
+      "phat-minh"
+    ],
+    "YhP85uD5aYk": [
+      "anh-sang",
+      "y-thuc"
+    ],
+    "sqM2vRDQw7k": [
+      "anh-sang",
+      "phat-minh",
+      "cong-nghe"
+    ],
+    "eN2e8kl9Cw0": [
+      "hat-nhan",
+      "chien-tranh",
+      "lich-su-khoa-hoc"
+    ],
+    "wR72fqNAZJQ": [
+      "phat-minh",
+      "hoa-hoc-doi-song",
+      "lich-su-khoa-hoc"
+    ],
+    "zUxxbQVj0Ho": [
+      "viet-nam"
+    ],
+    "ovOyJ0IrcyM": [
+      "cong-nghe"
+    ],
+    "E0220RjoBiQ": [
+      "than-thoai",
+      "dong-a"
+    ],
+    "9aAxbOnMcnE": [
+      "chien-tranh"
+    ],
+    "5yw_LSlvx54": [
+      "dong-a",
+      "chien-tranh"
+    ],
+    "aEy00VW4oVs": [
+      "chien-tranh",
+      "trung-dong"
+    ],
+    "RpkyoOwwoJs": [
+      "trung-dong",
+      "chien-tranh"
+    ],
+    "Qz0iBaP-W3c": [
+      "nghe-thuat",
+      "anh-sang"
+    ],
+    "VaE0eFtV7oc": [],
+    "x3KlSY2hrcc": [
+      "vu-tru",
+      "chien-tranh"
+    ]
+  }
+}

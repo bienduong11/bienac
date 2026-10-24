@@ -23,6 +23,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CONFIG_PATH = path.join(ROOT, 'data', 'config.json');
 const OUT_PATH = path.join(ROOT, 'data', 'videos.json');
+const ALL_PATH = path.join(ROOT, 'data', 'tat-ca-video.json');
 
 // Dùng UA trình duyệt thật để YouTube trả về trang có ytInitialData đầy đủ.
 const UA =
@@ -113,11 +114,16 @@ async function main() {
   const html = await fetchText(videosUrl);
 
   const max = Number(config.maxVideos) > 0 ? Number(config.maxVideos) : 6;
-  const videos = parseVideosTab(html).slice(0, max);
+  const all = parseVideosTab(html);
+  const videos = all.slice(0, max);
   if (!videos.length) throw new Error('Không lấy được video thường nào từ tab /videos.');
 
   await writeFile(OUT_PATH, JSON.stringify(videos, null, 2) + '\n', 'utf8');
   console.log(`Đã ghi ${videos.length} video vào data/videos.json`);
+
+  // Toàn bộ video thấy được ở tab /videos (dùng cho Mạng tri thức)
+  await writeFile(ALL_PATH, JSON.stringify(all, null, 2) + '\n', 'utf8');
+  console.log(`Đã ghi ${all.length} video vào data/tat-ca-video.json`);
 }
 
 main().catch((err) => {
