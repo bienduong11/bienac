@@ -109,6 +109,10 @@
       <div class="request-card">
         <div class="giscus"></div>
       </div>
+      <div class="old-comments" id="old-comments" hidden>
+        <p class="old-k">Bình luận từ trang cũ</p>
+        <div id="old-list"></div>
+      </div>
       <script src="https://giscus.app/client.js"
               data-repo="bienduong11/bienac"
               data-repo-id="R_kgDOVVi1CQ"
@@ -171,6 +175,16 @@
   <script src="js/bubble.js"></script>
   <script src="js/nen-logo.js"></script>
   <script src="js/tim-kiem.js"></script>
+  <script>
+    fetch('/data/binh-luan-cu.json').then(function (r) { return r.json(); }).then(function (d) {
+      var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+      var day = function (x) { var p = x.split('-'); return +p[2] + '/' + +p[1] + '/' + p[0]; };
+      var one = function (c) { return '<div class="oc"><img src="' + esc(c.anh) + '&s=64" alt="" loading="lazy" width="32" height="32"><div><p class="oc-h"><b>' + esc(c.ten) + '</b> · ' + day(c.ngay) + '</p><p>' + esc(c.noiDung) + '</p>' + (c.traLoi || []).map(one).join('') + '</div></div>'; };
+      if (!d.binhLuan || !d.binhLuan.length) return;
+      document.getElementById('old-list').innerHTML = d.binhLuan.map(one).join('');
+      document.getElementById('old-comments').hidden = false;
+    }).catch(function () {});
+  </script>
   <script>
     (function () {
       var bar = document.getElementById('app-filter'); if (!bar) return;

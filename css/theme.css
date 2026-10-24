@@ -605,3 +605,12 @@ body.home .app-desc { color: rgba(236,230,214,.62); }
 body.home .hero > .hero-bar { z-index: 5; }
 @media (max-width: 720px) { .hero-bar .hero-cta span { display: inline; } .hero-bar .hero-cta { font-size: .72rem; padding: 10px 12px; } .hero-bar .search input::placeholder { font-size: .85rem; } }
 body.home .app-filter button[aria-pressed="true"] { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
+.old-comments { margin: 18px auto 0; max-width: 820px; padding: 18px 20px; border-radius: 18px; background: rgba(10,14,18,.7); border: 1px solid rgba(255,255,255,.1); text-align: left; }
+.old-k { font: 600 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); margin-bottom: 10px; }
+.oc { display: grid; grid-template-columns: 32px 1fr; gap: 10px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); }
+.oc:first-child { border-top: 0; }
+.oc img { width: 32px; height: 32px; border-radius: 50%; }
+.oc p { font-size: .92rem; line-height: 1.55; color: var(--text); }
+.oc .oc-h { font-size: .78rem; color: var(--text-dim); }
+.oc .oc-h b { color: var(--cyan); font-weight: 600; }
+.oc .oc { margin-top: 8px; padding-left: 4px; }
