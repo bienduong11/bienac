@@ -36,6 +36,25 @@
     .ct-cand:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
 
     .ct-view { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; }
+    .ct-left { display: grid; gap: 20px; align-content: start; min-width: 0; }
+    .ct-h3-top { margin-top: 0 !important; margin-bottom: 8px; }
+    .ct-vi { margin-top: 10px; font: 600 1.15rem/1.45 'Be Vietnam Pro', sans-serif; color: var(--text); }
+    .ct-en { margin-top: 6px; font-size: .85rem; color: var(--text-dim); line-height: 1.5; }
+    .ct-en small { opacity: .7; }
+    .ct-ea { margin-top: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+    .ct-ea div { padding: 8px 10px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+    .ct-ea span { display: block; font: 500 .62rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); }
+    .ct-ea b { font: 600 .98rem 'Be Vietnam Pro', sans-serif; color: var(--text); }
+    .ct-link { padding: 0 6px; border-radius: 8px; border: 1px solid rgba(55,240,207,.35); background: rgba(55,240,207,.08); color: var(--text); font: 600 1.1rem var(--han); cursor: pointer; }
+    .ct-link:hover { border-color: var(--cyan); }
+    .ct-more { padding: 20px 20px 22px; }
+    .ct-stroke { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; }
+    .ct-hw { width: 220px; height: 220px; border-radius: 16px; background:
+      linear-gradient(rgba(201,166,80,.18), rgba(201,166,80,.18)) center / 1px 100% no-repeat,
+      linear-gradient(rgba(201,166,80,.18), rgba(201,166,80,.18)) center / 100% 1px no-repeat, rgba(255,255,255,.03);
+      border: 1px solid rgba(201,166,80,.3); margin-bottom: 10px; }
+    .ct-stroke-note p { line-height: 1.6; font-size: .92rem; }
+    @media (max-width: 560px) { .ct-stroke { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
     .ct-tree-wrap { padding: 24px 18px 28px; overflow-x: auto; position: relative; }
     .ct-tree-wrap::before { content: ''; position: absolute; inset: 10px; pointer-events: none; background:
       linear-gradient(var(--brass), var(--brass)) left top / 14px 1px no-repeat, linear-gradient(var(--brass), var(--brass)) left top / 1px 14px no-repeat,
@@ -81,6 +100,8 @@
     .ct-empty { margin-top: 18px; color: var(--text-dim); }
 
     @media (max-width: 860px) {
+      .ct-left { display: contents; }
+      .ct-tree-wrap { order: 1; } .ct-info { order: 2; } .ct-more { order: 3; }
       .t-kids > .t-node::before { left: -5px; right: -5px; }
       .t-kids > .t-node:first-child::before { left: 50%; }
       .t-kids > .t-node:last-child::before { right: 50%; }
@@ -105,7 +126,7 @@
   </header>
 
   <main class="ct-main">
-    <p class="ud-kicker">06 // Chiết tự</p>
+    <p class="ud-kicker">Chiết tự</p>
     <h1 class="ud-title">Mỗi chữ Hán là <span class="accent">một bản lắp ráp</span></h1>
     <form class="ct-search" id="form" autocomplete="off">
       <input id="q" type="search" placeholder="Dán một chữ Hán, hoặc gõ âm Hán Việt: minh, quốc, ái…" aria-label="Chữ Hán hoặc âm Hán Việt" />
@@ -116,14 +137,19 @@
     <p class="ct-empty" id="msg" hidden></p>
 
     <section class="ct-view" id="view" hidden>
-      <div class="ct-tree-wrap ud-panel"><div id="tree"></div></div>
+      <div class="ct-left">
+        <div class="ct-tree-wrap ud-panel"><p class="ct-h3 ct-h3-top">Cấu tạo</p><div id="tree"></div></div>
+        <div class="ct-more ud-panel" id="more"></div>
+      </div>
       <aside class="ct-info ud-panel" id="info"></aside>
     </section>
 
     <p class="ct-src">
       Nguồn dữ liệu: âm Hán Việt và từ ghép từ <a href="https://en.wiktionary.org/" rel="noopener">Wiktionary</a> (CC BY-SA 4.0, qua kaikki.org);
       âm đọc dự phòng, pinyin, số nét và nghĩa tiếng Anh từ <a href="https://www.unicode.org/charts/unihan.html" rel="noopener">Unicode Unihan</a>;
-      cấu tạo chữ từ <a href="https://github.com/cjkvi/cjkvi-ids" rel="noopener">CJKVI IDS</a> (dựa trên CHISE, GPL v2).
+      cấu tạo chữ từ <a href="https://github.com/cjkvi/cjkvi-ids" rel="noopener">CJKVI IDS</a> (dựa trên CHISE, GPL v2);
+      thứ tự nét từ <a href="https://hanziwriter.org/" rel="noopener">Hanzi Writer</a> và dữ liệu Make Me a Hanzi (giấy phép Arphic).
+      Nghĩa tiếng Việt do Bienac biên soạn dựa trên nghĩa Unihan, có thể còn thiếu sót.
       Chữ chưa có âm Hán Việt trên Wiktionary sẽ hiện âm đọc của Unihan, vốn có thể là âm Nôm.
     </p>
   </main>
@@ -144,6 +170,12 @@
   const IDC = { '⿰': 'trái – phải', '⿱': 'trên – dưới', '⿲': 'trái – giữa – phải', '⿳': 'trên – giữa – dưới', '⿴': 'bao quanh', '⿵': 'bao từ trên', '⿶': 'bao từ dưới', '⿷': 'bao từ trái', '⿸': 'bao trên-trái', '⿹': 'bao trên-phải', '⿺': 'bao dưới-trái', '⿻': 'chồng lên nhau', '⿼': 'bao từ phải', '⿽': 'bao dưới-phải', '⿾': 'lật ngang', '⿿': 'xoay', '㇯': 'bớt đi' };
   const ARITY = (c) => (c === '⿲' || c === '⿳' ? 3 : c === '⿾' || c === '⿿' ? 1 : 2);
   const reading = (c) => { const r = D[c]; return r ? (r[0] || r[1]).split(' ')[0] : ''; };
+  const viOf = (c) => { const r = D[c]; if (!r) return ''; return r[15] || [...(r[12] + r[13])].map((v) => D[v] && D[v][15]).find(Boolean) || ''; };
+  const radChar = (n) => String.fromCodePoint(0x2f00 + n - 1).normalize('NFKC');
+  const cap = (x) => x ? x[0].toUpperCase() + x.slice(1) : x;
+  // chỉ mục: bộ thủ → các chữ
+  const byRad = {};
+  for (const [c, r] of Object.entries(D)) { const n = parseInt(r[11], 10); if (n) (byRad[n] = byRad[n] || []).push(c); }
 
   // Chỉ mục ngược: bộ phận → các chữ trực tiếp chứa nó; âm → chữ
   const usedIn = {}, byHv = {};
@@ -206,19 +238,62 @@
 
     const words = r[6] ? r[6].split(',').map((w) => w.split('|')) : [];
     const used = (usedIn[ch] || []).filter((c) => c.codePointAt(0) <= 0xffff).sort((a, b) => (D[b][0] ? 1 : 0) - (D[a][0] ? 1 : 0) || D[a][3] - D[b][3]).slice(0, 48);
+    const radN = parseInt(r[11], 10), radExtra = r[11] ? r[11].split('.')[1] : '';
+    const rc = radN ? radChar(radN) : '';
+    const sameRad = radN ? (byRad[radN] || []).filter((c) => c !== ch && c.codePointAt(0) <= 0xffff && D[c][0]).sort((a, b) => D[a][3] - D[b][3]).slice(0, 36) : [];
+    const link = (cs) => [...cs].map((c) => `<button class="ct-link" data-c="${c}">${c}</button>`).join(' ');
     $('info').innerHTML = `
       <p class="ct-hv-k">${r[0] ? 'Âm Hán Việt' : r[1] ? 'Âm đọc (Unihan)' : 'Âm đọc'}</p>
       <p class="ct-hv">${esc((r[0] || r[1] || '—').split(' ').join(' · '))}</p>
+      ${viOf(ch) ? `<p class="ct-vi">${esc(viOf(ch))}</p>` : ''}
+      ${r[4] ? `<p class="ct-en">${esc(r[4])} <small>· nghĩa tiếng Anh, Unihan</small></p>` : ''}
       <dl class="ct-rows">
         ${r[0] && r[1] && r[1] !== r[0] ? `<dt>Âm khác</dt><dd>${esc(r[1].split(' ').join(', '))}</dd>` : ''}
-        ${r[2] ? `<dt>Pinyin</dt><dd>${esc(r[2])}</dd>` : ''}
+        ${r[14] ? `<dt>Âm Nôm</dt><dd>${esc(r[14].split(' ').join(', '))}</dd>` : ''}
+        ${radN ? `<dt>Bộ thủ</dt><dd><button class="ct-link" data-c="${rc}">${rc}</button> bộ ${esc(cap(reading(rc)) || '')} <span class="ud-dim">(bộ số ${radN})</span>${radExtra && radExtra !== '0' ? ` + ${radExtra} nét` : ''}</dd>` : ''}
         ${r[3] ? `<dt>Số nét</dt><dd>${r[3]}</dd>` : ''}
-        ${r[4] ? `<dt>Nghĩa</dt><dd class="en">${esc(r[4])} <small>(tiếng Anh, Unihan)</small></dd>` : ''}
+        ${r[12] ? `<dt>Phồn thể</dt><dd>${link(r[12])}</dd>` : ''}
+        ${r[13] ? `<dt>Giản thể</dt><dd>${link(r[13])}</dd>` : ''}
         <dt>Mã</dt><dd><code>U+${ch.codePointAt(0).toString(16).toUpperCase()}</code></dd>
       </dl>
-      ${words.length ? `<p class="ct-h3">Từ ghép</p><div class="ct-words">${words.map(([h, v]) => `<span class="ct-word"><b>${esc(h)}</b>${esc(v)}</span>`).join('')}</div>` : ''}
-      ${used.length ? `<p class="ct-h3">Có mặt trong ${usedIn[ch].length} chữ khác</p><div class="ct-used">${used.map((c) => `<button data-c="${c}" title="${c} ${esc(reading(c))}"><b>${c}</b><span>${esc(reading(c))}</span></button>`).join('')}</div>` : ''}`;
+      <p class="ct-h3">Đọc ở các nước Đông Á</p>
+      <div class="ct-ea">
+        <div><span>Việt Nam</span><b>${esc((r[0] || r[1] || '—').split(' ')[0])}</b></div>
+        <div><span>Quan thoại</span><b>${esc(r[2] || '—')}</b></div>
+        <div><span>Quảng Đông</span><b>${esc(r[7] || '—')}</b></div>
+        <div><span>Nhật · âm On</span><b>${esc(r[8] || '—')}</b></div>
+        <div><span>Nhật · âm Kun</span><b>${esc(r[9] || '—')}</b></div>
+        <div><span>Hàn Quốc</span><b>${esc(r[10] || '—')}</b></div>
+      </div>
+      ${words.length ? `<p class="ct-h3">Từ ghép</p><div class="ct-words">${words.map(([h, v]) => `<span class="ct-word"><b>${esc(h)}</b>${esc(v)}</span>`).join('')}</div>` : ''}`;
+    $('more').innerHTML = `
+      <div class="ct-stroke"><div><p class="ct-h3 ct-h3-top">Thứ tự nét</p><div id="hw" class="ct-hw"></div><button class="ud-btn" id="hw-play" type="button">Viết lại</button></div>
+      <div class="ct-stroke-note"><p class="ud-dim" id="hw-msg">Đang tải nét chữ…</p></div></div>
+      ${used.length ? `<p class="ct-h3">Có mặt trong ${usedIn[ch].length} chữ khác</p><div class="ct-used">${used.map((c) => `<button data-c="${c}" title="${c} ${esc(reading(c))}"><b>${c}</b><span>${esc(reading(c))}</span></button>`).join('')}</div>` : ''}
+      ${sameRad.length ? `<p class="ct-h3">Cùng bộ ${esc(cap(reading(rc)))} ${rc}</p><div class="ct-used">${sameRad.map((c) => `<button data-c="${c}" title="${c} ${esc(reading(c))}"><b>${c}</b><span>${esc(reading(c))}</span></button>`).join('')}</div>` : ''}`;
+    strokes(ch);
     document.title = `${ch} ${reading(ch)} · Chiết tự · Bienac`;
+  }
+
+  // Thứ tự nét bằng Hanzi Writer (nạp thư viện khi cần)
+  let HW = null, writer = null;
+  function loadHW() {
+    if (HW) return HW;
+    HW = new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.2/dist/hanzi-writer.min.js'; sc.onload = () => ok(window.HanziWriter); sc.onerror = no; document.head.appendChild(sc); });
+    return HW;
+  }
+  async function strokes(ch) {
+    const box = $('hw'), msg = $('hw-msg');
+    try {
+      const H = await loadHW();
+      box.innerHTML = '';
+      const size = Math.min(220, box.clientWidth || 220);
+      writer = H.create(box, ch, { width: size, height: size, padding: 8, strokeColor: '#37f0cf', radicalColor: '#c9a650', outlineColor: 'rgba(236,230,214,.14)', strokeAnimationSpeed: 1.2, delayBetweenStrokes: 180, showCharacter: false,
+        onLoadCharDataSuccess: (d) => { msg.innerHTML = `Chữ này có <b>${d.strokes.length}</b> nét. Nét màu đồng thuộc bộ thủ. Bấm “Viết lại” để xem từng nét theo đúng thứ tự.`; },
+        onLoadCharDataError: () => { box.innerHTML = ''; msg.textContent = 'Chưa có dữ liệu thứ tự nét cho chữ này.'; $('hw-play').hidden = true; } });
+      writer.animateCharacter();
+      $('hw-play').onclick = () => writer.animateCharacter();
+    } catch { msg.textContent = 'Không tải được phần thứ tự nét.'; }
   }
 
   function go(q, push = true) {

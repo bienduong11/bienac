@@ -25,8 +25,8 @@ const SRC = process.argv[2];
 if (!SRC) { console.error('Cần đường dẫn thư mục chứa ids.txt và Unihan_*.txt'); process.exit(1); }
 
 const uni = {};   // ký tự → { kVietnamese, kMandarin, kTotalStrokes, kDefinition }
-const WANT = new Set(['kVietnamese', 'kMandarin', 'kTotalStrokes', 'kDefinition']);
-for (const f of ['Unihan_Readings.txt', 'Unihan_IRGSources.txt', 'Unihan_DictionaryLikeData.txt']) {
+const WANT = new Set(['kVietnamese', 'kMandarin', 'kTotalStrokes', 'kDefinition', 'kCantonese', 'kJapaneseOn', 'kJapaneseKun', 'kHangul', 'kRSUnicode', 'kTraditionalVariant', 'kSimplifiedVariant']);
+for (const f of ['Unihan_Readings.txt', 'Unihan_IRGSources.txt', 'Unihan_DictionaryLikeData.txt', 'Unihan_Variants.txt', 'Unihan_RadicalStrokeCounts.txt']) {
   let txt;
   try { txt = await readFile(path.join(SRC, f), 'utf8'); } catch { continue; }
   for (const line of txt.split('\n')) {
@@ -54,6 +54,7 @@ function walk(o, acc) {
   if (Array.isArray(o)) o.forEach((v) => walk(v, acc));
   else if (o && typeof o === 'object') {
     if (o.word && (o.tags || []).includes('han-viet-reading')) acc.push(o.word.toLowerCase());
+    if (o.word && (o.tags || []).includes('nom-reading')) (acc.nom = acc.nom || []).push(o.word.toLowerCase());
     Object.values(o).forEach((v) => walk(v, acc));
   }
 }
@@ -71,8 +72,9 @@ for await (const line of rl) {
     for (const r of s.derived || []) if (r.word && r.roman && [...r.word].length <= 4) words.push([r.word, r.roman]);
   }
   for (const r of d.derived || []) if (r.word && r.roman && [...r.word].length <= 4) words.push([r.word, r.roman]);
-  if (!hv.length && !words.length) continue;
-  const e = (wk[d.word] = wk[d.word] || { hv: [], w: [] });
+  if (!hv.length && !words.length && !hv.nom) continue;
+  const e = (wk[d.word] = wk[d.word] || { hv: [], w: [], nom: [] });
+  for (const n of hv.nom || []) if (!e.nom.includes(n)) e.nom.push(n);
   for (const h of hv) if (!e.hv.includes(h)) e.hv.push(h);
   for (const w of words) if (!e.w.some((x) => x[0] === w[0])) e.w.push(w);
 }
@@ -82,18 +84,31 @@ const parts = (seq) => [...seq].filter((c) => !IDC.test(c) && !/[①-⑳]/.test(
 
 // Tập ký tự: mọi chữ có âm Hán Việt, cộng đệ quy các bộ phận cấu thành
 const keep = new Set([...Object.keys(uni).filter((c) => uni[c].kVietnamese), ...Object.keys(wk).filter((c) => wk[c].hv.length)]);
+// thêm 214 bộ thủ Khang Hy để luôn tra được tên bộ
+for (let i = 0; i < 214; i++) keep.add(String.fromCodePoint(0x2f00 + i).normalize('NFKC'));
 const stack = [...keep];
 while (stack.length) {
   const c = stack.pop();
   for (const p of parts(ids[c] || '')) if (!keep.has(p)) { keep.add(p); stack.push(p); }
 }
 
+// Nghĩa tiếng Việt (biên soạn từ nghĩa Unihan, lưu ở scripts/nghia-viet.tsv)
+const vi = {};
+try {
+  for (const line of (await readFile(path.join(ROOT, 'scripts', 'nghia-viet.tsv'), 'utf8')).split('\n')) {
+    const [c, m] = line.split('\t');
+    if (c && m) vi[c] = m.trim();
+  }
+} catch {}
+const cps = (v) => (v || '').split(/\s+/).map((x) => x.split('<')[0]).filter((x) => x.startsWith('U+')).map((x) => String.fromCodePoint(parseInt(x.slice(2), 16))).join('');
+
 const out = {};
 for (const c of keep) {
   const u = uni[c] || {};
   const def = (u.kDefinition || '').split(/;\s*/).slice(0, 3).join('; ');
   const w = wk[c];
-  // [âm Hán Việt (Wiktionary), âm đọc Unihan, pinyin, số nét, nghĩa tiếng Anh, cấu tạo, từ ghép]
+  // [0 âm Hán Việt (Wiktionary), 1 âm đọc Unihan, 2 pinyin, 3 số nét, 4 nghĩa tiếng Anh, 5 cấu tạo, 6 từ ghép,
+  //  7 Quảng Đông, 8 Nhật âm On, 9 Nhật âm Kun, 10 Hàn, 11 bộ thủ.nét thêm, 12 phồn thể, 13 giản thể, 14 âm Nôm, 15 nghĩa tiếng Việt]
   out[c] = [
     w && w.hv.length ? w.hv.join(' ') : '',
     (u.kVietnamese || '').replace(/\s+/g, ' ').trim(),
@@ -102,6 +117,15 @@ for (const c of keep) {
     def.length > 90 ? def.slice(0, 88) + '…' : def,
     ids[c] || '',
     w ? w.w.slice(0, 8).map(([h, r]) => h + '|' + r).join(',') : '',
+    (u.kCantonese || '').split(' ').slice(0, 2).join(' '),
+    (u.kJapaneseOn || '').toLowerCase().split(' ').slice(0, 3).join(' '),
+    (u.kJapaneseKun || '').toLowerCase().split(' ').slice(0, 3).join(' '),
+    (u.kHangul || '').split(' ').map((x) => x.split(':')[0]).slice(0, 2).join(' '),
+    (u.kRSUnicode || '').split(' ')[0],
+    cps(u.kTraditionalVariant).replace(c, ''),
+    cps(u.kSimplifiedVariant).replace(c, ''),
+    w ? w.nom.filter((n) => !w.hv.includes(n)).slice(0, 8).join(' ') : '',
+    vi[c] || '',
   ];
 }
 
