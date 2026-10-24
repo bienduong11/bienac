@@ -1,0 +1,10 @@
+# Cloudflare Pages: thời gian lưu đệm. CSS/JS đã có dấu ?v= theo từng lần dựng,
+# nên chỉ cần lưu ngắn để các file nạp gián tiếp cũng sớm được làm mới.
+/css/*
+  Cache-Control: public, max-age=300
+/js/*
+  Cache-Control: public, max-age=300
+/data/*
+  Cache-Control: public, max-age=300
+/*/du-lieu.json
+  Cache-Control: public, max-age=3600
