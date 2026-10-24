@@ -624,3 +624,10 @@ body.home .app-filter button[aria-pressed="true"] { color: var(--ink); backgroun
 .home-brand .brand-logo img { width: 34px; height: 34px; }
 @media (max-width: 560px) { .home-brand { top: 12px; } .home-brand .brand-logo img { width: 28px; height: 28px; } }
 @media (max-width: 760px) { body.home .hero-head { margin-top: 44px; } }
+
+/* Màu ngọc #00ffff: dòng Đạo khả đạo, mã QR, ba liên kết chân trang */
+body.home .hero-sub { color: #00ffff; }
+.about-logo .about-qr { background: rgba(4,8,10,.85) !important; padding: 16px !important; box-shadow: inset 0 0 0 1px rgba(0,255,255,.25), 0 0 28px rgba(0,255,255,.12); }
+body.home .site-footer a { color: #00ffff; }
+.about-logo > a { display: block; width: clamp(180px, 22vw, 240px); }
+.about-logo .about-qr { width: 100% !important; height: auto !important; box-sizing: border-box; }
