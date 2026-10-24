@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thí nghiệm hai khe · Bienac</title>
+  <meta name="description" content="Tự tay làm thí nghiệm hai khe: sóng giao thoa, bắn từng hạt một, rồi đặt máy dò để xem vân giao thoa biến mất." />
+  <meta property="og:title" content="Thí nghiệm hai khe · Bienac" />
+  <meta property="og:description" content="Bắn từng hạt một qua hai khe, rồi đặt máy dò để xem điều gì xảy ra." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .hk { max-width: 1040px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .hk-lede { margin-top: 10px; max-width: 660px; line-height: 1.65; color: var(--text-dim); }
+    .hk-stage { margin-top: 22px; padding: 14px; border-radius: 18px; }
+    #tank { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; background: #04060a; touch-action: none; }
+    .hk-bar { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .hk-seg { display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .hk-seg button { border: 0; background: none; color: var(--text-dim); font: 600 .72rem var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+    .hk-seg button[aria-pressed="true"] { background: var(--cyan); color: var(--ink); }
+    .hk-det[aria-pressed="true"] { background: var(--cinnabar) !important; color: #fff !important; box-shadow: none !important; }
+    .hk-count { margin-left: auto; font: 500 .75rem var(--mono); color: var(--text-dim); }
+    .hk-sl { margin-top: 12px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; }
+    .hk-sl label { display: grid; gap: 4px; font: 500 .7rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--brass); }
+    .hk-sl input { width: 100%; accent-color: var(--cyan); }
+    .hk-cards { margin-top: 26px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .hk-card { padding: 18px; border-radius: 16px; }
+    .hk-card h3 { font: 700 1.05rem var(--display); margin-bottom: 6px; }
+    .hk-card p { font-size: .9rem; line-height: 1.6; color: var(--text-dim); }
+    .hk-video { margin-top: 18px; padding: 16px 18px; border-radius: 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+    .hk-video p { color: var(--text-dim); font-size: .92rem; line-height: 1.55; flex: 1 1 320px; }
+    .hk-video a.btn { padding: 11px 20px; }
+    @media (max-width: 720px) {
+      .hk { padding-top: 88px; }
+      #tank { aspect-ratio: 4 / 3; }
+      .hk-sl, .hk-cards { grid-template-columns: 1fr; }
+      .hk-count { margin-left: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Hai khe</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="hk">
+    <p class="ud-kicker">Thí nghiệm hai khe</p>
+    <h1 class="ud-title">Một hạt, <span class="accent">hai con đường</span></h1>
+    <p class="hk-lede">Sóng đi qua hai khe hẹp sẽ chồng lên nhau, chỗ thì tăng, chỗ thì triệt tiêu, vẽ ra những vạch sáng tối trên màn. Điều lạ là bắn từng hạt một, mỗi lần một hạt, các vạch ấy vẫn hiện ra. Hãy tự thử.</p>
+
+    <section class="hk-stage ud-panel">
+      <canvas id="tank" aria-label="Mô phỏng sóng đi qua hai khe và màn hứng"></canvas>
+      <div class="hk-bar">
+        <div class="hk-seg" role="group" aria-label="Chế độ">
+          <button data-mode="wave" aria-pressed="true">Sóng</button>
+          <button data-mode="dot" aria-pressed="false">Bắn từng hạt</button>
+        </div>
+        <div class="hk-seg" role="group" aria-label="Số khe">
+          <button data-slits="1" aria-pressed="false">Một khe</button>
+          <button data-slits="2" aria-pressed="true">Hai khe</button>
+        </div>
+        <div class="hk-seg"><button class="hk-det" id="det" aria-pressed="false">Đặt máy dò</button></div>
+        <div class="hk-seg"><button id="clear">Xóa màn</button></div>
+        <span class="hk-count" id="count"></span>
+      </div>
+      <div class="hk-sl">
+        <label>Khoảng cách hai khe <input id="sd" type="range" min="14" max="70" step="1" value="34" /></label>
+        <label>Bước sóng <input id="sl" type="range" min="7" max="26" step="0.5" value="12" /></label>
+      </div>
+    </section>
+
+    <div class="hk-cards">
+      <article class="hk-card ud-panel"><h3>Sóng</h3><p>Hai khe trở thành hai nguồn sóng mới. Ở chỗ đỉnh gặp đỉnh, sóng mạnh lên; chỗ đỉnh gặp đáy, chúng triệt tiêu. Trên màn hiện ra các vân sáng tối xen kẽ, gọi là vân giao thoa.</p></article>
+      <article class="hk-card ud-panel"><h3>Từng hạt một</h3><p>Mỗi hạt (phô-tôn, ê-lếch-trôn) chỉ để lại một chấm ở một chỗ ngẫu nhiên. Nhưng tích lũy đủ nhiều chấm, vân giao thoa vẫn hiện ra, như thể mỗi hạt "biết" cả hai khe. Xác suất hạt rơi vào đâu tỉ lệ với cường độ sóng ở đó.</p></article>
+      <article class="hk-card ud-panel"><h3>Đặt máy dò</h3><p>Nếu có cách ghi lại hạt đi qua khe nào, vân giao thoa biến mất, màn chỉ còn tổng của hai khe riêng rẽ. Không cần ai nhìn: bất kỳ tương tác nào để lại dấu vết về đường đi, như một máy dò tự động hay một phân tử khí va vào, cũng đủ làm việc đó.</p></article>
+    </div>
+
+    <div class="hk-video ud-panel">
+      <p>Thí nghiệm này là điểm khởi đầu cho câu hỏi về vai trò của người quan sát trong video <b>Bản chất Thực tại và Ý thức</b>.</p>
+      <a class="btn btn-primary" href="/v/thuc-tai">Xem video và nguồn</a>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  $('y').textContent = new Date().getFullYear();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Lưới mô phỏng: GW × GH ô. Tường chắn ở cột BX, màn hứng ở mép phải. */
+  const GW = 260, GH = 160, BX = 52, SCREEN_W = 40;
+  const SUB = 4, SLIT_W = 5;          // mỗi khe gồm vài nguồn điểm trải đều trên bề rộng khe
+  let lam = 12, d = 34, slits = 2, mode = 'wave', detector = false;
+  let amp, pha, scr = new Float32Array(GH), scrMax = 1;
+  let ampA, phaA, ampB, phaB;          // trường riêng của từng khe (cho chế độ máy dò)
+  const dots = []; let total = 0;
+
+  const cv = $('tank'), g = cv.getContext('2d');
+  const off = document.createElement('canvas'); off.width = GW; off.height = GH;
+  const og = off.getContext('2d'), img = og.createImageData(GW, GH);
+
+  function slitCenters() { return slits === 2 ? [GH / 2 - d / 2, GH / 2 + d / 2] : [GH / 2]; }
+
+  // Tính biên độ, pha tại mỗi ô phía sau tường cho một tập khe
+  function field(centers) {
+    const A = new Float32Array(GW * GH), P = new Float32Array(GW * GH);
+    const k = (2 * Math.PI) / lam;
+    for (let y = 0; y < GH; y++) {
+      for (let x = BX + 1; x < GW; x++) {
+        let re = 0, im = 0;
+        for (const c of centers) for (let s = 0; s < SUB; s++) {
+          const sy = c - SLIT_W / 2 + (SLIT_W * (s + 0.5)) / SUB;
+          const r = Math.hypot(x - BX, y - sy);
+          const a = 1 / Math.sqrt(r + 1);
+          re += a * Math.cos(k * r); im += a * Math.sin(k * r);
+        }
+        const i = y * GW + x;
+        A[i] = Math.hypot(re, im) / (SUB * centers.length) * 6; P[i] = Math.atan2(im, re);
+      }
+    }
+    return [A, P];
+  }
+
+  // Cường độ trên màn (cột cuối) và chuẩn hóa
+  function computeScreen() {
+    const x = GW - 1;
+    scrMax = 0;
+    for (let y = 0; y < GH; y++) {
+      let v;
+      if (detector && slits === 2) v = ampA[y * GW + x] ** 2 + ampB[y * GW + x] ** 2;
+      else v = amp[y * GW + x] ** 2;
+      scr[y] = v; if (v > scrMax) scrMax = v;
+    }
+  }
+
+  function recompute() {
+    [amp, pha] = field(slitCenters());
+    if (slits === 2) { const c = slitCenters(); [ampA, phaA] = field([c[0]]); [ampB, phaB] = field([c[1]]); }
+    computeScreen();
+  }
+
+  function sampleY() {
+    for (let t = 0; t < 400; t++) {
+      const y = Math.random() * GH;
+      if (Math.random() * scrMax < scr[Math.floor(y)]) return y;
+    }
+    return GH / 2;
+  }
+
+  let W, H, DPR;
+  function resize() { DPR = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * DPR; cv.height = H * DPR; }
+  resize(); addEventListener('resize', resize);
+
+  let t = 0, which = 0, lastSwitch = 0, lastDot = 0;
+  function frame(now) {
+    t += reduce ? 0 : 0.09;
+    const k = (2 * Math.PI) / lam;
+    // chế độ máy dò: mỗi lúc chỉ một khe "có hạt đi qua"
+    if (detector && slits === 2 && now - lastSwitch > 1100) { which = Math.random() < 0.5 ? 0 : 1; lastSwitch = now; }
+    const useA = detector && slits === 2 ? (which ? ampB : ampA) : amp;
+    const useP = detector && slits === 2 ? (which ? phaB : phaA) : pha;
+    const dim = mode === 'dot' ? 0.45 : 1;
+    const data = img.data;
+    const centers = slitCenters();
+    for (let y = 0; y < GH; y++) {
+      for (let x = 0; x < GW; x++) {
+        const i = y * GW + x, j = i * 4;
+        let v;
+        if (x < BX) v = Math.cos(k * x - t) * 0.8;
+        else if (x === BX || x === BX + 1) {
+          const open = centers.some((c) => Math.abs(y - c) <= SLIT_W / 2);
+          if (!open) { data[j] = 150; data[j + 1] = 124; data[j + 2] = 60; data[j + 3] = 255; continue; }
+          v = Math.cos(-t);
+        } else v = useA[i] * Math.cos(useP[i] - t);
+        const b = Math.max(-1, Math.min(1, v)) * dim;
+        const p = b > 0 ? b : 0, n = b < 0 ? -b : 0;
+        data[j] = 4 + p * 60; data[j + 1] = 8 + p * 230 + n * 10; data[j + 2] = 14 + p * 200 + n * 30; data[j + 3] = 255;
+      }
+    }
+    og.putImageData(img, 0, 0);
+
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    g.imageSmoothingEnabled = true;
+    const fw = W - (W < 500 ? 46 : SCREEN_W + 24);   // chừa chỗ cho màn hứng
+    g.fillStyle = '#04060a'; g.fillRect(0, 0, W, H);
+    g.drawImage(off, 0, 0, fw, H);
+
+    // màn hứng
+    const sx = fw + 4, sw = W - sx;
+    g.fillStyle = '#0b0f14'; g.fillRect(sx, 0, sw, H);
+    if (mode === 'wave') {
+      for (let y = 0; y < GH; y++) {
+        const v = scr[y] / scrMax;
+        g.fillStyle = `rgba(55,240,207,${(0.08 + v * 0.92).toFixed(3)})`;
+        g.fillRect(sx, (y / GH) * H, sw * 0.55, H / GH + 1);
+      }
+      // đường cường độ
+      g.strokeStyle = 'rgba(201,166,80,.9)'; g.lineWidth = 1.5; g.beginPath();
+      for (let y = 0; y < GH; y++) { const xx = sx + sw * 0.55 + (scr[y] / scrMax) * sw * 0.42; const yy = (y / GH) * H; y ? g.lineTo(xx, yy) : g.moveTo(xx, yy); }
+      g.stroke();
+    } else {
+      if (!reduce && now - lastDot > 25) {
+        lastDot = now;
+        for (let n = 0; n < 3; n++) { dots.push([Math.random(), sampleY() / GH]); total++; }
+        if (dots.length > 6000) dots.splice(0, dots.length - 6000);
+        $('count').textContent = `${total.toLocaleString('vi-VN')} hạt đã bắn`;
+      }
+      g.fillStyle = 'rgba(179,255,236,.85)';
+      for (const [a, b] of dots) g.fillRect(sx + 2 + a * (sw - 4), b * H, 1.6, 1.6);
+    }
+    // máy dò: vòng đỏ ở khe đang ghi nhận
+    if (detector && slits === 2) {
+      const c = slitCenters()[which];
+      const px = (BX / GW) * fw, py = (c / GH) * H;
+      g.strokeStyle = '#e8452e'; g.lineWidth = 2;
+      g.beginPath(); g.arc(px + 4, py, 10, 0, Math.PI * 2); g.stroke();
+      g.fillStyle = '#e8452e'; g.font = '600 11px "JetBrains Mono", monospace';
+      g.fillText('máy dò', px + 18, py + 4);
+    }
+    g.fillStyle = 'rgba(201,166,80,.85)'; g.font = '500 11px "JetBrains Mono", monospace';
+    g.fillText('MÀN', sx + 4, 14);
+    requestAnimationFrame(frame);
+  }
+
+  function clearScreen() { dots.length = 0; total = 0; $('count').textContent = mode === 'dot' ? '0 hạt đã bắn' : ''; }
+  function setPressed(sel, attr, val) { document.querySelectorAll(sel).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset[attr] === String(val)))); }
+
+  document.querySelectorAll('[data-mode]').forEach((b) => (b.onclick = () => { mode = b.dataset.mode; setPressed('[data-mode]', 'mode', mode); clearScreen(); }));
+  document.querySelectorAll('[data-slits]').forEach((b) => (b.onclick = () => {
+    slits = +b.dataset.slits; setPressed('[data-slits]', 'slits', slits);
+    $('det').disabled = slits === 1; if (slits === 1) { detector = false; $('det').setAttribute('aria-pressed', 'false'); }
+    recompute(); clearScreen();
+  }));
+  $('det').onclick = () => { detector = !detector; $('det').setAttribute('aria-pressed', String(detector)); computeScreen(); clearScreen(); };
+  $('clear').onclick = clearScreen;
+  let rt;
+  const onSlide = () => { d = +$('sd').value; lam = +$('sl').value; clearTimeout(rt); rt = setTimeout(() => { recompute(); clearScreen(); }, 60); };
+  $('sd').oninput = onSlide; $('sl').oninput = onSlide;
+
+  recompute();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

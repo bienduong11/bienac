@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ Mặt Trời thu nhỏ · Bienac</title>
+  <meta name="description" content="Thu nhỏ Hệ Mặt Trời theo đúng tỉ lệ: nếu Mặt Trời to bằng quả bóng đá thì Trái Đất to cỡ nào, cách bao xa? Và một dải cuộn nơi Mặt Trăng chỉ rộng 1 điểm ảnh." />
+  <meta property="og:title" content="Hệ Mặt Trời thu nhỏ · Bienac" />
+  <meta property="og:description" content="Nếu Mặt Trời to bằng quả bóng đá, Trái Đất chỉ cỡ hạt tiêu và cách xa 24 mét." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .hm { max-width: 1080px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .hm-lede { margin-top: 10px; max-width: 680px; color: var(--text-dim); line-height: 1.7; }
+    .hm-panel { border-radius: 18px; padding: 18px; margin-top: 22px; }
+    .hm-h { font: 600 .7rem var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brass); margin-bottom: 12px; }
+    .hm-pick { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .hm-pick button { border-radius: 999px !important; }
+    .hm-pick label { display: flex; align-items: center; gap: 8px; font-size: .9rem; color: var(--text-dim); }
+    .hm-pick input { width: 110px; padding: 9px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: var(--text); font: 500 .95rem 'Be Vietnam Pro', sans-serif; outline: none; }
+    .hm-pick input:focus { border-color: var(--cyan); }
+    .hm-sum { margin-top: 14px; font-size: 1.02rem; line-height: 1.6; }
+    .hm-sum b { color: var(--cyan); font-weight: 600; }
+
+    .hm-list { margin-top: 14px; display: grid; gap: 8px; }
+    .hm-row { display: grid; grid-template-columns: 54px 1.1fr 1.4fr 1.6fr; gap: 12px; align-items: center; padding: 10px 14px; border-radius: 14px; background: rgba(255,255,255,.03); }
+    .hm-dot { width: 46px; height: 46px; display: grid; place-items: center; }
+    .hm-dot i { display: block; border-radius: 50%; }
+    .hm-row b { font: 700 1rem var(--display); }
+    .hm-row small { display: block; font: 500 .7rem var(--mono); color: var(--text-dim); margin-top: 2px; }
+    .hm-row .v { font: 600 .92rem var(--mono); color: var(--cyan); }
+    .hm-row .c { font-size: .85rem; color: var(--text-dim); }
+    .hm-row.head { background: none; padding-top: 0; padding-bottom: 0; font: 600 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brass); }
+
+    .hm-strip-wrap { position: relative; margin-top: 4px; }
+    #strip { display: block; width: 100%; height: 260px; border-radius: 14px; background: #040507; cursor: grab; touch-action: pan-y; }
+    #strip.drag { cursor: grabbing; }
+    .hm-hud { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; margin-top: 10px; font: 500 .82rem var(--mono); color: var(--text-dim); }
+    .hm-hud b { color: var(--cyan); font-weight: 600; }
+    .hm-ctrl { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .hm-ctrl button { border-radius: 999px !important; }
+    .hm-jump { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .hm-jump button { padding: 6px 12px; border-radius: 999px; border: 0; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); color: var(--text); font: 600 .74rem var(--display); cursor: pointer; }
+    .hm-jump button:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    .hm-note { margin-top: 10px; font-size: .8rem; color: var(--text-dim); line-height: 1.6; }
+
+    @media (max-width: 720px) {
+      .hm-row { grid-template-columns: 40px 1fr 1fr; gap: 4px 10px; }
+      .hm-row .c { grid-column: 2 / -1; }
+      .hm-row.head span:last-child { display: none; }
+      .hm-dot { width: 36px; height: 36px; }
+      #strip { height: 220px; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Hệ Mặt Trời</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="hm">
+    <p class="ud-kicker">Hệ Mặt Trời thu nhỏ</p>
+    <h1 class="ud-title">Vũ trụ <span class="accent">trống rỗng</span> đến mức nào?</h1>
+    <p class="hm-lede">Sách giáo khoa hay vẽ các hành tinh xếp sát nhau, to gần bằng nhau. Thật ra, nếu thu nhỏ đúng tỉ lệ cả kích thước lẫn khoảng cách, Hệ Mặt Trời gần như chỉ toàn khoảng trống.</p>
+
+    <section class="ud-panel hm-panel">
+      <p class="hm-h">Nếu Mặt Trời to bằng…</p>
+      <div class="hm-pick" id="pick">
+        <button class="ud-btn" data-cm="7" type="button">Quả cam</button>
+        <button class="ud-btn" data-cm="22" type="button" aria-pressed="true">Quả bóng đá</button>
+        <button class="ud-btn" data-cm="24" type="button">Quả bóng rổ</button>
+        <button class="ud-btn" data-cm="100" type="button">Quả bóng 1 mét</button>
+        <label>hoặc tự nhập <input id="cm" type="number" min="0.1" step="any" value="22" inputmode="decimal" aria-label="Đường kính Mặt Trời (cm)" /> cm</label>
+      </div>
+      <p class="hm-sum" id="sum"></p>
+      <div class="hm-list" id="list"></div>
+      <p class="hm-note">Khoảng cách là khoảng cách trung bình tới Mặt Trời. Trong thực tế các hành tinh không bao giờ xếp thẳng một hàng như thế này.</p>
+    </section>
+
+    <section class="ud-panel hm-panel">
+      <p class="hm-h">Nếu Mặt Trăng chỉ rộng 1 điểm ảnh</p>
+      <p class="hm-lede" style="margin-top:0">Ở dải dưới đây, mỗi điểm ảnh trên màn hình ứng với 3.474 km, đúng bằng đường kính Mặt Trăng. Kéo sang phải để đi từ Mặt Trời ra rìa Hệ Mặt Trời, hoặc bấm chạy để đi cùng tốc độ ánh sáng.</p>
+      <div class="hm-strip-wrap"><canvas id="strip" aria-label="Dải Hệ Mặt Trời theo đúng tỉ lệ, kéo để di chuyển"></canvas></div>
+      <div class="hm-hud"><span>Cách Mặt Trời <b id="km">0 km</b></span><span>Ánh sáng đi mất <b id="lt">0 giây</b></span><span id="near"></span></div>
+      <div class="hm-ctrl">
+        <button class="ud-btn" id="run" type="button" aria-pressed="false">▶ Chạy như ánh sáng</button>
+        <button class="ud-btn" data-x="1" type="button" aria-pressed="true">×1</button>
+        <button class="ud-btn" data-x="10" type="button">×10</button>
+        <button class="ud-btn" data-x="100" type="button">×100</button>
+        <button class="ud-btn" data-x="1000" type="button">×1000</button>
+      </div>
+      <div class="hm-jump" id="jump"></div>
+      <p class="hm-note">Ở tốc độ thật (×1), ánh sáng cần khoảng 8 phút 20 giây để tới Trái Đất và hơn 4 giờ để tới Sao Hải Vương. Ý tưởng “Mặt Trăng chỉ một điểm ảnh” lấy cảm hứng từ trang web của Josh Worth.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (x, d = 3) => x.toLocaleString('vi-VN', { maximumSignificantDigits: d });
+  // [tên, đường kính km, khoảng cách trung bình tới Mặt Trời km, màu]
+  const SUN_D = 1392700;
+  const B = [
+    ['Mặt Trời', SUN_D, 0, '#ffcf6b'],
+    ['Sao Thủy', 4879, 57.9e6, '#b8b2a7'],
+    ['Sao Kim', 12104, 108.2e6, '#e8cf9a'],
+    ['Trái Đất', 12742, 149.6e6, '#5aa9ff'],
+    ['Mặt Trăng', 3474, 149.6e6 + 384400, '#cfcfcf'],
+    ['Sao Hỏa', 6779, 227.9e6, '#e07a4f'],
+    ['Sao Mộc', 139820, 778.5e6, '#d9b38c'],
+    ['Sao Thổ', 116460, 1432e6, '#e9d29b'],
+    ['Sao Thiên Vương', 50724, 2867e6, '#9fe3e8'],
+    ['Sao Hải Vương', 49244, 4515e6, '#5b7cff'],
+    ['Sao Diêm Vương', 2377, 5906e6, '#c9a98a'],
+  ];
+  const PROXIMA_KM = 4.014e13;   // 4,24 năm ánh sáng
+  const C = 299792.458;          // km/s
+
+  // vật quen thuộc theo đường kính (mm)
+  const THINGS = [[0.07, 'sợi tóc'], [0.5, 'hạt cát'], [1, 'hạt muối'], [2.5, 'hạt vừng'], [4.5, 'hạt tiêu'], [9, 'hạt ngô'], [16, 'viên bi'], [25, 'đồng xu lớn'], [40, 'quả bóng bàn'], [67, 'quả bóng tennis'], [75, 'quả cam'], [220, 'quả bóng đá'], [500, 'quả bóng tập gym'], [1000, 'cái bàn tròn'], [3000, 'chiếc ô tô'], [10000, 'ngôi nhà']];
+  function thing(mm) {
+    if (mm < 0.03) return 'nhỏ hơn cả sợi tóc';
+    let best = THINGS[0], bd = 1e9;
+    for (const t of THINGS) { const d = Math.abs(Math.log(mm / t[0])); if (d < bd) { bd = d; best = t; } }
+    return `cỡ ${best[1]}`;
+  }
+  const len = (mm) => mm < 1 ? `${fmt(mm, 2)} mm` : mm < 10 ? `${fmt(mm, 2)} mm` : mm < 1000 ? `${fmt(mm / 10, 3)} cm` : `${fmt(mm / 1000, 3)} m`;
+  function dist(m) {
+    if (m < 1000) return [`${fmt(m, 3)} m`, m < 105 * 1.5 ? `khoảng ${Math.max(1, Math.round(m / 0.75))} bước chân` : `dài cỡ ${fmt(m / 105, 2)} sân bóng đá`];
+    const km = m / 1000, walk = km / 5 * 60;
+    return [`${fmt(km, 3)} km`, walk < 120 ? `đi bộ chừng ${Math.round(walk)} phút` : walk < 60 * 48 ? `đi bộ chừng ${fmt(walk / 60, 2)} giờ` : `đi bộ không nghỉ ${fmt(walk / 60 / 24, 2)} ngày`];
+  }
+
+  function model(cm) {
+    const k = (cm * 10) / SUN_D;   // mm trên mỗi km
+    const e = B[3], earthMm = e[1] * k, earthM = e[2] * k / 1000;
+    $('sum').innerHTML = `Khi đó Trái Đất chỉ <b>${len(earthMm)}</b> (${thing(earthMm)}), nằm cách Mặt Trời <b>${dist(earthM)[0]}</b>. Còn ngôi sao gần nhất, Cận Tinh, sẽ ở xa tận <b>${fmt(PROXIMA_KM * k / 1e6, 3)} km</b>.`;
+    const maxD = Math.log(SUN_D);
+    $('list').innerHTML = `<div class="hm-row head"><span></span><span>Thiên thể</span><span>Kích thước</span><span>Cách Mặt Trời</span></div>` + B.map(([n, d, r, col]) => {
+      const mm = d * k, px = Math.max(3, 46 * Math.log(d) / maxD * (d === SUN_D ? 1 : 0.8));
+      const [dv, dc] = r ? dist(r * k / 1000) : ['', 'ở chính giữa'];
+      return `<div class="hm-row"><span class="hm-dot"><i style="width:${px}px;height:${px}px;background:${col}"></i></span>
+        <span><b>${n}</b><small>${d.toLocaleString('vi-VN')} km</small></span>
+        <span><span class="v">${len(mm)}</span><span class="c" style="display:block">${thing(mm)}</span></span>
+        <span><span class="v">${dv || '—'}</span><span class="c" style="display:block">${dc}</span></span></div>`;
+    }).join('');
+  }
+  $('pick').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-cm]'); if (!b) return;
+    $('pick').querySelectorAll('[data-cm]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    $('cm').value = b.dataset.cm; model(+b.dataset.cm);
+  });
+  $('cm').addEventListener('input', () => { const v = parseFloat($('cm').value); if (v > 0) { $('pick').querySelectorAll('[data-cm]').forEach((x) => x.setAttribute('aria-pressed', 'false')); model(v); } });
+  model(22);
+
+  /* ------------------------- dải 1 điểm ảnh = 3.474 km ------------------------- */
+  const KPX = 3474;
+  const cv = $('strip'), g = cv.getContext('2d');
+  let W = 0, H = 0, DPR = 1;
+  const START = -230 * KPX, END = B[B.length - 1][2] + 400 * KPX;
+  let x0 = START;                  // km ở mép trái màn hình (thấy trọn Mặt Trời)
+  function size() { DPR = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * DPR; cv.height = H * DPR; }
+  const ltText = (s) => s < 60 ? `${fmt(s, 3)} giây` : s < 3600 ? `${Math.floor(s / 60)} phút ${Math.round(s % 60)} giây` : `${Math.floor(s / 3600)} giờ ${Math.round((s % 3600) / 60)} phút`;
+  function draw() {
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    g.fillStyle = '#040507'; g.fillRect(0, 0, W, H);
+    const cy = H / 2;
+    // thước: mỗi 10 triệu km một vạch
+    g.strokeStyle = 'rgba(201,166,80,.25)'; g.fillStyle = 'rgba(201,166,80,.6)'; g.font = '500 10px "JetBrains Mono", monospace'; g.textAlign = 'center';
+    const step = 1e7;
+    for (let k = Math.ceil(x0 / step) * step; k < x0 + W * KPX; k += step) {
+      if (k < 0) continue;
+      const x = (k - x0) / KPX;
+      g.beginPath(); g.moveTo(x, H - 26); g.lineTo(x, H - 18); g.stroke();
+      if (k % 5e7 === 0) g.fillText(`${fmt(k / 1e6, 4)} triệu km`, x, H - 6);
+    }
+    for (const [n, d, r, col] of B) {
+      const px = d / KPX, x = (r - x0) / KPX;
+      if (x + px < -40 || x - px > W + 200) continue;
+      g.fillStyle = col;
+      if (n === 'Mặt Trời') { g.beginPath(); g.arc(x, cy, px / 2, 0, Math.PI * 2); g.fill(); continue; }
+      g.beginPath(); g.arc(x, cy, Math.max(0.5, px / 2), 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#ece6d6'; g.font = '600 12px "Chakra Petch", sans-serif'; g.textAlign = 'left';
+      const lab = n === 'Mặt Trăng' ? cy + 30 : cy - Math.max(14, px / 2 + 10);
+      g.fillText(`${n} · ${fmt(px, 2)} px`, x + 6, lab);
+      g.textAlign = 'center'; g.font = '500 10px "JetBrains Mono", monospace';
+    }
+    const here = Math.max(0, x0 + (W / 2) * KPX);
+    g.strokeStyle = 'rgba(55,240,207,.5)'; g.setLineDash([3, 5]); g.beginPath(); g.moveTo(W / 2, 14); g.lineTo(W / 2, H - 30); g.stroke(); g.setLineDash([]);
+    $('km').textContent = `${Math.round(here).toLocaleString('vi-VN')} km`;
+    $('lt').textContent = ltText(here / C);
+    let next = B.slice(1).find((b) => b[2] > here + 1);
+    $('near').innerHTML = next ? `Tiếp theo: <b>${next[0]}</b>, còn ${fmt((next[2] - here) / 1e6, 3)} triệu km` : 'Đã qua Sao Diêm Vương';
+  }
+  const clampX = (v) => Math.max(START, Math.min(END - W * KPX / 2, v));
+
+  let drag = null;
+  cv.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, x0 }; cv.classList.add('drag'); cv.setPointerCapture(e.pointerId); stop(); });
+  cv.addEventListener('pointermove', (e) => { if (!drag) return; x0 = clampX(drag.x0 - (e.clientX - drag.x) * KPX * 6); draw(); });
+  cv.addEventListener('pointerup', () => { drag = null; cv.classList.remove('drag'); });
+  // cuộn ngang (hoặc giữ Shift + cuộn) để đi dọc dải; cuộn dọc thường vẫn cuộn trang
+  cv.addEventListener('wheel', (e) => {
+    const horiz = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+    if (!horiz && !e.shiftKey) return;
+    e.preventDefault(); stop();
+    x0 = clampX(x0 + (horiz ? e.deltaX : e.deltaY) * KPX * 8); draw();
+  }, { passive: false });
+
+  let running = false, mult = 1, last = 0;
+  function stop() { running = false; $('run').setAttribute('aria-pressed', 'false'); $('run').textContent = '▶ Chạy như ánh sáng'; }
+  function loop(t) {
+    if (!running) return;
+    const dt = Math.min(0.1, (t - last) / 1000); last = t;
+    x0 = clampX(x0 + C * mult * dt);
+    if (x0 >= END - W * KPX / 2) stop();
+    draw(); requestAnimationFrame(loop);
+  }
+  $('run').onclick = () => {
+    if (running) return stop();
+    running = true; $('run').setAttribute('aria-pressed', 'true'); $('run').textContent = '❚❚ Dừng';
+    last = performance.now(); requestAnimationFrame(loop);
+  };
+  document.querySelectorAll('[data-x]').forEach((b) => (b.onclick = () => { mult = +b.dataset.x; document.querySelectorAll('[data-x]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); }));
+  $('jump').innerHTML = B.filter((b) => b[0] !== 'Mặt Trăng').map((b, i) => `<button data-j="${b[2]}" type="button">${b[0]}</button>`).join('');
+  $('jump').onclick = (e) => { const b = e.target.closest('[data-j]'); if (!b) return; stop(); x0 = clampX(+b.dataset.j - (W / 2) * KPX); draw(); };
+
+  addEventListener('resize', () => { size(); draw(); });
+  size(); draw();
+  document.fonts && document.fonts.ready.then(draw);
+  $('y').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

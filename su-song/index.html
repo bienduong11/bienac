@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Trò chơi sự sống · Bienac</title>
+  <meta name="description" content="Trò chơi sự sống của John Conway: hai luật đơn giản sinh ra tàu lượn, súng bắn tàu lượn và những hình mẫu như có sự sống." />
+  <meta property="og:title" content="Trò chơi sự sống · Bienac" />
+  <meta property="og:description" content="Trò chơi sự sống của John Conway: hai luật đơn giản sinh ra tàu lượn, súng bắn tàu lượn và những hình mẫu như có sự sống." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .sim { max-width: 1180px; margin: 0 auto; padding: 100px clamp(16px, 4vw, 32px) 56px; }
+    .sim-lede { margin-top: 10px; max-width: 680px; font-size: .98rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; margin-top: 22px; align-items: start; }
+    .sim-stage { position: relative; border-radius: 18px; overflow: hidden; background: #05070a; box-shadow: inset 0 0 0 1px var(--glass-border); aspect-ratio: 4 / 3; touch-action: none; }
+    .sim-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .sim-side { display: flex; flex-direction: column; gap: 14px; }
+    .sim-box { padding: 16px 18px; border-radius: 18px; }
+    .sim-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sim-row .ud-btn { padding: 9px 14px; }
+    .sim-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .sim-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .sim-stat b { display: block; font: 600 1.15rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
+    .sim-stat span { font: 500 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .sim-range { display: grid; gap: 6px; margin-top: 10px; }
+    .sim-range label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text); }
+    .sim-range label output { font: 600 .8rem var(--mono); color: var(--brass); }
+    .sim-range input { width: 100%; accent-color: #37f0cf; }
+    .sim-text h2 { font: 700 1.05rem var(--display); margin-bottom: 6px; }
+    .sim-text p { font-size: .9rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-text p + p { margin-top: 8px; }
+    .sim-text b { color: var(--text); font-weight: 600; }
+    .sim-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sim-chip { padding: 6px 12px; border-radius: 999px; border: 0; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 .78rem 'Be Vietnam Pro', sans-serif; cursor: pointer; }
+    .sim-chip:hover, .sim-chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
+    .sim-hint { position: absolute; left: 12px; bottom: 10px; font: 500 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
+    .sim-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: var(--text); }
+    .sim-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
+    .sim-video small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .sim-video b { font: 600 .95rem var(--display); }
+    .sim-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    @media (max-width: 900px) {
+      .sim { padding-top: 84px; }
+      .sim-grid { grid-template-columns: 1fr; }
+      .sim-stage { aspect-ratio: 1 / 1; }
+    }
+
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Trò chơi sự sống</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Trò chơi sự sống</p>
+    <h1 class="ud-title">Luật đơn giản, <span class="accent">sự sống phức tạp</span></h1>
+    <p class="sim-lede">Mỗi ô chỉ nhìn tám ô hàng xóm và tuân theo hai luật. Vậy mà từ đó mọc ra những thứ biết di chuyển, biết sinh sản, thậm chí biết “bắn” ra thứ khác. Chạm vào bảng để vẽ, rồi bấm Chạy.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Bảng ô của Trò chơi sự sống, chạm để vẽ"></canvas><span class="sim-hint">Chạm hoặc kéo để vẽ</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row">
+            <button class="ud-btn" id="play" aria-pressed="false">▶ Chạy</button>
+            <button class="ud-btn" id="step">Bước</button>
+            <button class="ud-btn" id="rand">Ngẫu nhiên</button>
+            <button class="ud-btn" id="clear">Xóa</button>
+          </div>
+          <div class="sim-range">
+            <label for="speed">Tốc độ <output id="speedOut">12 thế hệ/giây</output></label>
+            <input type="range" id="speed" min="1" max="60" value="12" />
+          </div>
+          <div class="sim-stats" style="margin-top:12px">
+            <div class="sim-stat"><b id="gen">0</b><span>Thế hệ</span></div>
+            <div class="sim-stat"><b id="pop">0</b><span>Ô đang sống</span></div>
+          </div>
+        </section>
+        <section class="ud-panel sim-box">
+          <p class="ud-kicker" style="margin-bottom:10px">Mẫu có sẵn</p>
+          <div class="sim-chips" id="patterns"></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Hai luật duy nhất</h2>
+          <p><b>Sinh:</b> ô trống có đúng 3 hàng xóm sống thì sống dậy. <b>Còn sống:</b> ô sống có 2 hoặc 3 hàng xóm thì sống tiếp, ít hơn thì chết vì cô đơn, nhiều hơn thì chết vì chật chội.</p>
+          <p>Nhà toán học John Conway nghĩ ra trò này năm 1970. Không ô nào biết “tàu lượn” là gì, nhưng cả nhóm ô vẫn trượt đi như một sinh vật. Đó là <b>tính trồi</b>: cái toàn thể có những khả năng mà từng phần không hề có, giống một đàn kiến hoạt động như một siêu sinh vật.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+<script>
+
+(() => {
+  const PATTERNS = {
+    'Tàu lượn': 'bo$2bo$3o!',
+    'Súng Gosper': '24bo$22bobo$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2o8bo5bo3b2o$2o8bo3bob2o4bobo$10bo5bo7bo$11bo3bo$12b2o!',
+    'Xung Pulsar': '2b3o3b3o2b2$o4bobo4bo$o4bobo4bo$o4bobo4bo$2b3o3b3o2b2$2b3o3b3o2b$o4bobo4bo$o4bobo4bo$o4bobo4bo2$2b3o3b3o!',
+    'Tàu vũ trụ': 'bo2bo$o4b$o3bo$4o!',
+    'R-pentomino': 'b2o$2o$bo!',
+    'Hạt sồi': 'bo5b$3bo3b$2o2b3o!',
+    'Sắp chết': '6bob$2o6b$bo3b3o!',
+  };
+  function rle(s) {
+    const cells = []; let x = 0, y = 0, n = '';
+    for (const ch of s) {
+      if (/\d/.test(ch)) { n += ch; continue; }
+      const k = n ? +n : 1; n = '';
+      if (ch === 'b') x += k;
+      else if (ch === 'o') { for (let i = 0; i < k; i++) cells.push([x + i, y]); x += k; }
+      else if (ch === '$') { y += k; x = 0; }
+      else if (ch === '!') break;
+    }
+    return cells;
+  }
+
+  const cv = document.getElementById('cv'), g = cv.getContext('2d'), stage = document.getElementById('stage');
+  let W, H, DPR, CELL, cols, rows, grid, next, age;
+  let gen = 0, running = false, last = 0;
+
+  function resize() {
+    const r = stage.getBoundingClientRect();
+    DPR = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+    cv.width = W * DPR; cv.height = H * DPR; g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    CELL = W < 500 ? 8 : 10;
+    const nc = Math.floor(W / CELL), nr = Math.floor(H / CELL);
+    const old = grid, oc = cols, or = rows;
+    cols = nc; rows = nr;
+    grid = new Uint8Array(cols * rows); next = new Uint8Array(cols * rows); age = new Uint16Array(cols * rows);
+    if (old) for (let y = 0; y < Math.min(or, rows); y++) for (let x = 0; x < Math.min(oc, cols); x++) grid[y * cols + x] = old[y * oc + x];
+    draw();
+  }
+
+  function stepOnce() {
+    for (let y = 0; y < rows; y++) {
+      const ym = ((y - 1 + rows) % rows) * cols, y0 = y * cols, yp = ((y + 1) % rows) * cols;
+      for (let x = 0; x < cols; x++) {
+        const xm = (x - 1 + cols) % cols, xp = (x + 1) % cols;
+        const n = grid[ym + xm] + grid[ym + x] + grid[ym + xp] + grid[y0 + xm] + grid[y0 + xp] + grid[yp + xm] + grid[yp + x] + grid[yp + xp];
+        const i = y0 + x, alive = grid[i];
+        const v = alive ? (n === 2 || n === 3 ? 1 : 0) : (n === 3 ? 1 : 0);
+        next[i] = v;
+        age[i] = v ? (alive ? Math.min(age[i] + 1, 60) : 0) : (alive ? 1000 : (age[i] >= 1000 && age[i] < 1012 ? age[i] + 1 : 0));
+      }
+    }
+    [grid, next] = [next, grid];
+    gen++;
+  }
+
+  function draw() {
+    g.fillStyle = '#05070a'; g.fillRect(0, 0, W, H);
+    // lưới mờ
+    if (CELL >= 8) {
+      g.strokeStyle = 'rgba(201,166,80,.06)'; g.lineWidth = 1; g.beginPath();
+      for (let x = 0; x <= cols; x++) { g.moveTo(x * CELL + .5, 0); g.lineTo(x * CELL + .5, rows * CELL); }
+      for (let y = 0; y <= rows; y++) { g.moveTo(0, y * CELL + .5); g.lineTo(cols * CELL, y * CELL + .5); }
+      g.stroke();
+    }
+    let pop = 0;
+    for (let i = 0; i < grid.length; i++) {
+      const x = (i % cols) * CELL, y = ((i / cols) | 0) * CELL;
+      if (grid[i]) {
+        pop++;
+        const a = age[i];
+        g.fillStyle = a < 2 ? '#b3ffec' : a < 12 ? '#37f0cf' : '#2bb59d';
+        g.beginPath(); g.roundRect(x + 1, y + 1, CELL - 2, CELL - 2, 2); g.fill();
+      } else if (age[i] >= 1000 && age[i] < 1012) {
+        g.fillStyle = `rgba(232,69,46,${(0.32 * (1 - (age[i] - 1000) / 12)).toFixed(3)})`;
+        g.fillRect(x + 2, y + 2, CELL - 4, CELL - 4);
+      }
+    }
+    document.getElementById('gen').textContent = gen.toLocaleString('vi-VN');
+    document.getElementById('pop').textContent = pop.toLocaleString('vi-VN');
+  }
+
+  function loop(t) {
+    if (running) {
+      const every = 1000 / +document.getElementById('speed').value;
+      if (t - last >= every) { last = t; stepOnce(); draw(); }
+      requestAnimationFrame(loop);
+    }
+  }
+  const playBtn = document.getElementById('play');
+  function setRun(on) {
+    running = on; playBtn.setAttribute('aria-pressed', String(on)); playBtn.textContent = on ? '❚❚ Dừng' : '▶ Chạy';
+    if (on) requestAnimationFrame(loop);
+  }
+  playBtn.onclick = () => setRun(!running);
+  document.getElementById('step').onclick = () => { setRun(false); stepOnce(); draw(); };
+  document.getElementById('clear').onclick = () => { grid.fill(0); age.fill(0); gen = 0; draw(); };
+  document.getElementById('rand').onclick = () => { for (let i = 0; i < grid.length; i++) { grid[i] = Math.random() < 0.22 ? 1 : 0; age[i] = 0; } gen = 0; draw(); };
+  const speed = document.getElementById('speed');
+  speed.oninput = () => (document.getElementById('speedOut').textContent = speed.value + ' thế hệ/giây');
+
+  function place(name) {
+    const cells = rle(PATTERNS[name]);
+    const w = Math.max(...cells.map((c) => c[0])) + 1, h = Math.max(...cells.map((c) => c[1])) + 1;
+    grid.fill(0); age.fill(0); gen = 0;
+    let ox = Math.floor((cols - w) / 2), oy = Math.floor((rows - h) / 2);
+    if (name === 'Súng Gosper') { ox = Math.max(1, Math.floor(cols * 0.1)); oy = Math.max(1, Math.floor(rows * 0.15)); }
+    if (name === 'Tàu lượn') { ox = 4; oy = 4; }
+    if (name === 'Tàu vũ trụ') { ox = 2; }
+    for (const [x, y] of cells) { const xx = (ox + x + cols) % cols, yy = (oy + y + rows) % rows; grid[yy * cols + xx] = 1; }
+    draw();
+  }
+  const pbox = document.getElementById('patterns');
+  for (const name of Object.keys(PATTERNS)) {
+    const b = document.createElement('button'); b.className = 'sim-chip'; b.textContent = name;
+    b.onclick = () => { place(name); if (!reduce) setRun(true); };
+    pbox.appendChild(b);
+  }
+
+  // vẽ bằng chuột / ngón tay
+  let paint = null;
+  const cellAt = (e) => { const r = cv.getBoundingClientRect(); const x = Math.floor((e.clientX - r.left) / CELL), y = Math.floor((e.clientY - r.top) / CELL); return x >= 0 && y >= 0 && x < cols && y < rows ? y * cols + x : -1; };
+  cv.addEventListener('pointerdown', (e) => { cv.setPointerCapture(e.pointerId); const i = cellAt(e); if (i < 0) return; paint = grid[i] ? 0 : 1; grid[i] = paint; age[i] = 0; draw(); });
+  cv.addEventListener('pointermove', (e) => { if (paint === null) return; const i = cellAt(e); if (i >= 0 && grid[i] !== paint) { grid[i] = paint; age[i] = 0; draw(); } });
+  const end = () => (paint = null);
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  addEventListener('keydown', (e) => { if (e.target.tagName === 'INPUT') return; if (e.code === 'Space') { e.preventDefault(); setRun(!running); } });
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(resize, 80); }).observe(stage);
+  resize();
+  place('Súng Gosper');
+  if (!reduce) setRun(true);
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Đàn chim · Bienac</title>
+  <meta name="description" content="Mô phỏng đàn chim theo ba luật của Craig Reynolds: không có con đầu đàn, cả đàn vẫn uốn lượn như một khối." />
+  <meta property="og:title" content="Đàn chim · Bienac" />
+  <meta property="og:description" content="Mô phỏng đàn chim theo ba luật của Craig Reynolds: không có con đầu đàn, cả đàn vẫn uốn lượn như một khối." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .sim { max-width: 1180px; margin: 0 auto; padding: 100px clamp(16px, 4vw, 32px) 56px; }
+    .sim-lede { margin-top: 10px; max-width: 680px; font-size: .98rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; margin-top: 22px; align-items: start; }
+    .sim-stage { position: relative; border-radius: 18px; overflow: hidden; background: #05070a; box-shadow: inset 0 0 0 1px var(--glass-border); aspect-ratio: 4 / 3; touch-action: none; }
+    .sim-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .sim-side { display: flex; flex-direction: column; gap: 14px; }
+    .sim-box { padding: 16px 18px; border-radius: 18px; }
+    .sim-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sim-row .ud-btn { padding: 9px 14px; }
+    .sim-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .sim-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .sim-stat b { display: block; font: 600 1.15rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
+    .sim-stat span { font: 500 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .sim-range { display: grid; gap: 6px; margin-top: 10px; }
+    .sim-range label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text); }
+    .sim-range label output { font: 600 .8rem var(--mono); color: var(--brass); }
+    .sim-range input { width: 100%; accent-color: #37f0cf; }
+    .sim-text h2 { font: 700 1.05rem var(--display); margin-bottom: 6px; }
+    .sim-text p { font-size: .9rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-text p + p { margin-top: 8px; }
+    .sim-text b { color: var(--text); font-weight: 600; }
+    .sim-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sim-chip { padding: 6px 12px; border-radius: 999px; border: 0; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 .78rem 'Be Vietnam Pro', sans-serif; cursor: pointer; }
+    .sim-chip:hover, .sim-chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
+    .sim-hint { position: absolute; left: 12px; bottom: 10px; font: 500 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
+    .sim-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: var(--text); }
+    .sim-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
+    .sim-video small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .sim-video b { font: 600 .95rem var(--display); }
+    .sim-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    @media (max-width: 900px) {
+      .sim { padding-top: 84px; }
+      .sim-grid { grid-template-columns: 1fr; }
+      .sim-stage { aspect-ratio: 1 / 1; }
+    }
+
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Đàn chim</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Đàn chim</p>
+    <h1 class="ud-title">Không con nào chỉ huy, <span class="accent">cả đàn vẫn bay</span></h1>
+    <p class="sim-lede">Mỗi con chim ở đây chỉ để ý vài con gần nó và làm đúng ba việc. Không có con đầu đàn, không có kế hoạch chung, vậy mà cả đàn uốn lượn như một khối. Rê chuột hoặc chạm vào khung để làm chim ưng.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Mô phỏng đàn chim, rê chuột để làm chim ưng"></canvas><span class="sim-hint">Rê chuột hoặc chạm để làm chim ưng</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row">
+            <button class="ud-btn" id="play" aria-pressed="true">❚❚ Dừng</button>
+            <button class="ud-btn" id="scatter">Tung đàn</button>
+          </div>
+          <div class="sim-range"><label for="sep">Giữ khoảng cách <output id="sepO"></output></label><input type="range" id="sep" min="0" max="3" step="0.05" value="1.5" /></div>
+          <div class="sim-range"><label for="ali">Bay cùng hướng <output id="aliO"></output></label><input type="range" id="ali" min="0" max="3" step="0.05" value="1" /></div>
+          <div class="sim-range"><label for="coh">Bám vào đàn <output id="cohO"></output></label><input type="range" id="coh" min="0" max="3" step="0.05" value="1" /></div>
+          <div class="sim-range"><label for="num">Số chim <output id="numO"></output></label><input type="range" id="num" min="20" max="600" step="10" value="300" /></div>
+          <div class="sim-chips" style="margin-top:12px">
+            <button class="sim-chip" data-p="1.5,1,1">Đàn sáo</button>
+            <button class="sim-chip" data-p="0.6,2.6,0.4">Đàn cá</button>
+            <button class="sim-chip" data-p="3,0,0">Tản ra</button>
+            <button class="sim-chip" data-p="0.4,0.2,3">Vón cục</button>
+          </div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Ba việc của mỗi con chim</h2>
+          <p><b>Giữ khoảng cách:</b> đừng va vào con bên cạnh. <b>Bay cùng hướng:</b> nghiêng theo hướng bay trung bình của hàng xóm. <b>Bám vào đàn:</b> lái về phía giữa nhóm hàng xóm.</p>
+          <p>Năm 1986, nhà đồ họa máy tính Craig Reynolds đặt tên cho những con chim ảo này là “boids” và công bố cách làm vào năm sau. Từ đó, đàn dơi, đàn chim, đàn cá trong phim và trò chơi điện tử phần lớn đều chạy bằng ba luật này. Thử kéo một thanh về 0 để xem đàn tan rã ra sao.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+<script>
+
+(() => {
+  const cv = document.getElementById('cv'), g = cv.getContext('2d'), stage = document.getElementById('stage');
+  let W = 0, H = 0, DPR = 1, boids = [], running = true;
+  const P = { sep: 1.5, ali: 1, coh: 1 };
+  const R = 46, RSEP = 18, MAXV = 3.1, MAXF = 0.06;
+  const hawk = { x: -999, y: -999, on: false };
+
+  function mk() { const a = Math.random() * Math.PI * 2; return { x: Math.random() * W, y: Math.random() * H, vx: Math.cos(a) * 2, vy: Math.sin(a) * 2 }; }
+  function setCount(n) { while (boids.length < n) boids.push(mk()); boids.length = n; }
+  function resize() {
+    const r = stage.getBoundingClientRect(); DPR = Math.min(2, devicePixelRatio || 1);
+    const first = !W; W = r.width; H = r.height; cv.width = W * DPR; cv.height = H * DPR; g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    g.fillStyle = '#05070a'; g.fillRect(0, 0, W, H);
+    if (first) setCount(+document.getElementById('num').value);
+  }
+
+  // lưới không gian để tìm hàng xóm nhanh
+  const buckets = new Map();
+  function rebuild() {
+    buckets.clear();
+    for (const b of boids) { const k = ((b.x / R) | 0) + ',' + ((b.y / R) | 0); let a = buckets.get(k); if (!a) buckets.set(k, (a = [])); a.push(b); }
+  }
+  function step() {
+    rebuild();
+    for (const b of boids) {
+      let sx = 0, sy = 0, ax = 0, ay = 0, cx = 0, cy = 0, n = 0;
+      const gx = (b.x / R) | 0, gy = (b.y / R) | 0;
+      for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) {
+        const arr = buckets.get((gx + i) + ',' + (gy + j)); if (!arr) continue;
+        for (const o of arr) {
+          if (o === b) continue;
+          const dx = o.x - b.x, dy = o.y - b.y, d2 = dx * dx + dy * dy;
+          if (d2 > R * R) continue;
+          n++; ax += o.vx; ay += o.vy; cx += o.x; cy += o.y;
+          if (d2 < RSEP * RSEP) { const d = Math.sqrt(d2) || 1; sx -= dx / d / d; sy -= dy / d / d; }
+        }
+      }
+      let fx = 0, fy = 0;
+      if (n) {
+        ax /= n; ay /= n; fx += (ax - b.vx) * 0.05 * P.ali; fy += (ay - b.vy) * 0.05 * P.ali;
+        cx = cx / n - b.x; cy = cy / n - b.y; fx += cx * 0.0012 * P.coh; fy += cy * 0.0012 * P.coh;
+        fx += sx * 1.6 * P.sep; fy += sy * 1.6 * P.sep;
+      }
+      if (hawk.on) {
+        const dx = b.x - hawk.x, dy = b.y - hawk.y, d2 = dx * dx + dy * dy;
+        if (d2 < 120 * 120) { const d = Math.sqrt(d2) || 1; fx += dx / d * 0.5; fy += dy / d * 0.5; }
+      }
+      const fm = Math.hypot(fx, fy), lim = hawk.on ? MAXF * 6 : MAXF * 3;
+      if (fm > lim) { fx = fx / fm * lim; fy = fy / fm * lim; }
+      b.vx += fx; b.vy += fy;
+      const v = Math.hypot(b.vx, b.vy);
+      if (v > MAXV) { b.vx = b.vx / v * MAXV; b.vy = b.vy / v * MAXV; }
+      if (v < 1.2) { b.vx = b.vx / (v || 1) * 1.2; b.vy = b.vy / (v || 1) * 1.2; }
+    }
+    for (const b of boids) {
+      b.x += b.vx; b.y += b.vy;
+      if (b.x < 0) b.x += W; if (b.x >= W) b.x -= W; if (b.y < 0) b.y += H; if (b.y >= H) b.y -= H;
+    }
+  }
+  function draw() {
+    g.fillStyle = 'rgba(5,7,10,.32)'; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#37f0cf';
+    g.beginPath();
+    for (const b of boids) {
+      const a = Math.atan2(b.vy, b.vx), c = Math.cos(a), s = Math.sin(a);
+      g.moveTo(b.x + c * 6, b.y + s * 6);
+      g.lineTo(b.x - c * 4 - s * 3, b.y - s * 4 + c * 3);
+      g.lineTo(b.x - c * 2, b.y - s * 2);
+      g.lineTo(b.x - c * 4 + s * 3, b.y - s * 4 - c * 3);
+      g.closePath();
+    }
+    g.fill();
+    if (hawk.on) {
+      g.strokeStyle = 'rgba(232,69,46,.55)'; g.lineWidth = 1; g.beginPath(); g.arc(hawk.x, hawk.y, 120, 0, Math.PI * 2); g.stroke();
+      g.fillStyle = '#e8452e'; g.beginPath(); g.arc(hawk.x, hawk.y, 5, 0, Math.PI * 2); g.fill();
+    }
+  }
+  function loop() { if (!running) return; step(); draw(); requestAnimationFrame(loop); }
+
+  const pos = (e) => { const r = cv.getBoundingClientRect(); hawk.x = e.clientX - r.left; hawk.y = e.clientY - r.top; hawk.on = true; };
+  cv.addEventListener('pointermove', pos); cv.addEventListener('pointerdown', (e) => { cv.setPointerCapture(e.pointerId); pos(e); });
+  cv.addEventListener('pointerleave', () => (hawk.on = false));
+  cv.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') hawk.on = false; });
+
+  const play = document.getElementById('play');
+  function setRun(on) { running = on; play.setAttribute('aria-pressed', String(on)); play.textContent = on ? '❚❚ Dừng' : '▶ Chạy'; if (on) requestAnimationFrame(loop); }
+  play.onclick = () => setRun(!running);
+  document.getElementById('scatter').onclick = () => { for (const b of boids) Object.assign(b, mk()); };
+  const bind = (id, fmt) => { const el = document.getElementById(id), out = document.getElementById(id + 'O'); const f = () => { out.textContent = fmt(+el.value); if (id in P) P[id] = +el.value; if (id === 'num') setCount(+el.value); }; el.oninput = f; f(); return el; };
+  const pct = (v) => Math.round(v / 3 * 100) + '%';
+  bind('sep', pct); bind('ali', pct); bind('coh', pct); bind('num', (v) => v + ' con');
+  document.querySelectorAll('[data-p]').forEach((b) => (b.onclick = () => {
+    const [s, a, c] = b.dataset.p.split(',').map(Number);
+    for (const [id, v] of [['sep', s], ['ali', a], ['coh', c]]) { const el = document.getElementById(id); el.value = v; el.oninput(); }
+  }));
+
+  new ResizeObserver(resize).observe(stage);
+  resize();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { for (let i = 0; i < 60; i++) step(); draw(); setRun(false); }
+  else setRun(true);
+})();
+
+</script>
+</body>
+</html>

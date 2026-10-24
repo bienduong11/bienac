@@ -15,6 +15,7 @@
     ['Bầu trời Đông Tây', '/bau-troi/', 'bau troi sao chom sao nhi thap bat tu'],
     ['Thang vũ trụ', '/thang-vu-tru/', 'thang vu tru kich thuoc quark'],
     ['Dòng thời gian Đông Tây', '/dong-thoi-gian/', 'dong thoi gian lich su'],
+    ['Mỗi giây trên Trái Đất', '/moi-giay/', 'moi giay set sinh van toc'],
     ['Ủng hộ Bienac', '/ung-ho/', 'ung ho donate'],
   ];
   const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase();

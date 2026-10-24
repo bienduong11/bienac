@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lịch vũ trụ · Bienac</title>
+  <meta name="description" content="Nén 13,8 tỉ năm lịch sử vũ trụ vào một năm: Vụ Nổ Lớn lúc 0 giờ ngày 1/1, loài người xuất hiện vài phút trước giao thừa." />
+  <meta property="og:title" content="Lịch vũ trụ · Bienac" />
+  <meta property="og:description" content="13,8 tỉ năm vũ trụ gói trong một năm lịch." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .lv { max-width: 1080px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .lv-lede { margin-top: 10px; max-width: 680px; color: var(--text-dim); line-height: 1.7; }
+    .lv-scale { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .lv-scale span { padding: 7px 14px; border-radius: 999px; background: rgba(55,240,207,.08); box-shadow: inset 0 0 0 1px rgba(55,240,207,.25); font: 500 .8rem var(--mono); color: var(--mint); }
+    .lv-panel { border-radius: 18px; padding: 18px; margin-top: 22px; }
+    .lv-h { font: 600 .7rem var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brass); margin-bottom: 12px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .lv-h b { color: var(--text-dim); font-weight: 500; letter-spacing: .06em; text-transform: none; }
+
+    /* lưới năm */
+    .lv-year { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .lv-m { padding: 10px; border-radius: 14px; background: rgba(255,255,255,.03); }
+    .lv-m p { font: 600 .74rem var(--display); color: var(--text-dim); margin-bottom: 6px; }
+    .lv-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .lv-d { aspect-ratio: 1; border-radius: 4px; background: rgba(255,255,255,.05); border: 0; padding: 0; cursor: default; position: relative; }
+    .lv-d.ev { background: var(--brass); cursor: pointer; box-shadow: 0 0 8px rgba(201,166,80,.6); }
+    .lv-d.ev.big { background: var(--cyan); box-shadow: 0 0 10px rgba(55,240,207,.7); }
+    .lv-d.on { outline: 2px solid #fff; outline-offset: 1px; }
+    .lv-d.you { background: var(--cinnabar); box-shadow: 0 0 10px rgba(232,69,46,.8); }
+
+    .lv-card { margin-top: 14px; padding: 14px 16px; border-radius: 14px; background: rgba(55,240,207,.07); box-shadow: inset 0 0 0 1px rgba(55,240,207,.25); min-height: 74px; }
+    .lv-card .when { font: 600 .78rem var(--mono); color: var(--cyan); }
+    .lv-card h3 { font: 700 1.1rem var(--display); margin: 4px 0; }
+    .lv-card p { font-size: .9rem; color: var(--text-dim); line-height: 1.55; }
+
+    /* ngày cuối năm */
+    .lv-track { position: relative; height: 128px; margin: 8px 34px 0; }
+    .lv-track::before { content: ''; position: absolute; left: 0; right: 0; top: 64px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(201,166,80,.3), var(--cyan)); }
+    .lv-tick { position: absolute; top: 70px; transform: translateX(-50%); font: 500 .62rem var(--mono); color: var(--text-dim); white-space: nowrap; }
+    .lv-pin { position: absolute; top: 57px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--brass); border: 2px solid var(--ink); cursor: pointer; padding: 0; }
+    .lv-pin.big { background: var(--cyan); }
+    .lv-pin.you { background: var(--cinnabar); }
+    .lv-pin.on { box-shadow: 0 0 0 3px #fff; }
+    .lv-pin span { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); font: 500 .68rem 'Be Vietnam Pro', sans-serif; color: var(--text); white-space: nowrap; pointer-events: none; }
+    .lv-pin.lo span { bottom: auto; top: 22px; }
+    .lv-scroll { overflow-x: auto; scrollbar-width: thin; }
+    .lv-scroll .lv-track { min-width: 600px; }
+
+    .lv-conv { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+    .lv-conv .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .lv-conv input, .lv-conv select { padding: 11px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: var(--text); font: 500 .95rem 'Be Vietnam Pro', sans-serif; outline: none; }
+    .lv-conv input { width: 160px; }
+    .lv-conv input:focus, .lv-conv select:focus { border-color: var(--cyan); }
+    .lv-conv select option { background: #10141a; }
+    .lv-out { margin-top: 12px; font-size: 1.05rem; line-height: 1.6; }
+    .lv-out b { color: var(--cyan); font-weight: 600; }
+    .lv-src { margin-top: 28px; font-size: .78rem; color: var(--text-dim); line-height: 1.6; }
+
+    @media (max-width: 860px) { .lv-year { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) {
+      .lv-year { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .lv-conv { grid-template-columns: 1fr; }
+      .lv-conv input { width: 120px; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Lịch vũ trụ</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="lv">
+    <p class="ud-kicker">Lịch vũ trụ</p>
+    <h1 class="ud-title">Cả vũ trụ gói trong <span class="accent">một năm</span></h1>
+    <p class="lv-lede">Nhà thiên văn Carl Sagan từng nghĩ ra cách này: ép toàn bộ 13,8 tỉ năm lịch sử vũ trụ vào một năm lịch. Vụ Nổ Lớn là 0 giờ sáng ngày 1 tháng 1, còn hiện tại là đúng nửa đêm giao thừa. Theo tỉ lệ đó:</p>
+    <div class="lv-scale" id="scale"></div>
+
+    <section class="ud-panel lv-panel">
+      <p class="lv-h">Cả năm <b>Chấm sáng là sự kiện, bấm vào để xem</b></p>
+      <div class="lv-year" id="year"></div>
+      <div class="lv-card" id="card"></div>
+    </section>
+
+    <section class="ud-panel lv-panel">
+      <p class="lv-h">Ngày 31 tháng 12 <b>24 giờ cuối cùng</b></p>
+      <div class="lv-scroll"><div class="lv-track" id="day"></div></div>
+    </section>
+
+    <section class="ud-panel lv-panel">
+      <p class="lv-h">Phút cuối cùng <b>Thang chia co giãn: càng gần giao thừa càng phóng to</b></p>
+      <div class="lv-scroll"><div class="lv-track" id="min"></div></div>
+    </section>
+
+    <section class="ud-panel lv-panel">
+      <p class="lv-h">Tự đặt một mốc</p>
+      <div class="lv-conv">
+        <div class="row">
+          <input id="cv-n" type="number" inputmode="decimal" value="938" aria-label="Con số" />
+          <select id="cv-u" aria-label="Đơn vị">
+            <option value="ce">năm Công nguyên (số âm là trước CN)</option>
+            <option value="y">năm trước</option>
+            <option value="m">triệu năm trước</option>
+            <option value="b">tỉ năm trước</option>
+          </select>
+        </div>
+        <button class="ud-btn" id="cv-go" type="button">Đặt lên lịch</button>
+      </div>
+      <p class="lv-out" id="cv-out"></p>
+    </section>
+
+    <p class="lv-src">Mốc thời gian theo ước tính khoa học hiện nay: tuổi vũ trụ 13,8 tỉ năm (Planck 2018), Mặt Trời 4,6 tỉ năm, Trái Đất 4,54 tỉ năm, dấu vết sự sống sớm nhất khoảng 3,7 tỉ năm, Sự kiện Ôxy hóa lớn khoảng 2,4 tỉ năm, bùng nổ kỷ Cambri 538,8 triệu năm, khủng long tuyệt chủng 66 triệu năm. Các mốc cổ đại đều là con số làm tròn.</p>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const AGE = 13.8e9;                     // tuổi vũ trụ (năm)
+  const NOW = new Date().getFullYear();
+  const YEAR_S = 365 * 86400;             // một năm lịch không nhuận, tính bằng giây
+  const PER_S = AGE / YEAR_S;             // số năm thật ứng với một giây lịch
+  const $ = (id) => document.getElementById(id);
+  const fmt = (x, d = 3) => x.toLocaleString('vi-VN', { maximumSignificantDigits: d });
+  const MONTHS = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+  const MDAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  // [cách nay bao nhiêu năm, tên, ghi chú, quan trọng?]
+  const EV = [
+    [13.8e9, 'Vụ Nổ Lớn', 'Không gian, thời gian và mọi vật chất bắt đầu từ một trạng thái cực nóng, cực đặc.', 1],
+    [13.8e9 - 380000, 'Vũ trụ trở nên trong suốt', 'Electron gắn vào hạt nhân thành nguyên tử, ánh sáng bắt đầu bay tự do. Đó là bức xạ nền vũ trụ ta còn đo được ngày nay.', 0],
+    [13.6e9, 'Những ngôi sao đầu tiên', 'Khoảng 200 triệu năm sau Vụ Nổ Lớn, khí hydro và heli co lại thành những ngôi sao đầu tiên.', 0],
+    [13.4e9, 'Những thiên hà sớm nhất', 'Kính James Webb đã chụp được thiên hà tồn tại chỉ khoảng 300 triệu năm sau Vụ Nổ Lớn.', 0],
+    [4.6e9, 'Mặt Trời ra đời', 'Một đám mây khí bụi trong Ngân Hà co lại. Đến đây đã là cuối tháng 8 của lịch vũ trụ.', 1],
+    [4.54e9, 'Trái Đất hình thành', 'Bụi và đá quanh Mặt Trời non kết lại thành Trái Đất.', 1],
+    [4.51e9, 'Mặt Trăng ra đời', 'Theo giả thuyết được chấp nhận rộng rãi nhất, một thiên thể cỡ Sao Hỏa đâm vào Trái Đất, mảnh vỡ tụ lại thành Mặt Trăng.', 0],
+    [3.7e9, 'Dấu vết sự sống sớm nhất', 'Những dấu vết sự sống cổ nhất được nhiều nhà khoa học công nhận có tuổi khoảng 3,7 tỉ năm.', 1],
+    [2.4e9, 'Sự kiện Ôxy hóa lớn', 'Vi khuẩn lam quang hợp làm khí ôxy tích tụ trong khí quyển lần đầu tiên.', 0],
+    [2.0e9, 'Tế bào nhân thực', 'Tế bào có nhân, tổ tiên của mọi loài động vật, thực vật và nấm, xuất hiện vào khoảng thời gian này.', 0],
+    [538.8e6, 'Bùng nổ kỷ Cambri', 'Trong vài chục triệu năm, hầu hết các ngành động vật lớn ngày nay đều đã xuất hiện.', 1],
+    [470e6, 'Thực vật lên cạn', 'Những cây rêu đầu tiên phủ xanh đất liền.', 0],
+    [375e6, 'Cá bò lên bờ', 'Tổ tiên của các loài có bốn chân bắt đầu sống trên cạn.', 0],
+    [252e6, 'Đại tuyệt chủng kỷ Permi', 'Khoảng 90% loài sinh vật biển biến mất, sự kiện tuyệt chủng lớn nhất từng biết.', 0],
+    [233e6, 'Khủng long xuất hiện', 'Những con khủng long đầu tiên còn nhỏ, chạy bằng hai chân.', 1],
+    [66e6, 'Khủng long tuyệt chủng', 'Tiểu hành tinh rộng khoảng 10 km rơi xuống bán đảo Yucatán. Thời đại của thú có vú bắt đầu.', 1],
+    [7e6, 'Tổ tiên loài người tách khỏi tinh tinh', 'Dòng họ người và dòng tinh tinh bắt đầu đi hai con đường riêng.', 0],
+    [300000, 'Người tinh khôn xuất hiện', 'Hóa thạch Homo sapiens cổ nhất tìm thấy ở Maroc, khoảng 300.000 năm tuổi.', 1],
+    [12000, 'Nông nghiệp', 'Con người bắt đầu trồng trọt và định cư.', 0],
+    [NOW + 3200, 'Chữ viết ra đời', 'Người Sumer viết chữ hình nêm, khoảng năm 3200 trước Công nguyên.', 1],
+    [NOW + 1000, 'Văn hóa Đông Sơn', 'Thời kỳ trống đồng Đông Sơn trên đất Việt, nở rộ từ khoảng thế kỷ 10 trước Công nguyên.', 0],
+    [NOW - 938, 'Trận Bạch Đằng của Ngô Quyền', 'Năm 938, khép lại hơn một nghìn năm Bắc thuộc.', 0],
+    [NOW - 1492, 'Columbus tới châu Mỹ', 'Năm 1492.', 0],
+    [NOW - 1760, 'Cách mạng công nghiệp', 'Khoảng năm 1760, máy hơi nước thay đổi cách loài người làm việc.', 0],
+    [NOW - 1945, 'Việt Nam tuyên bố độc lập', 'Ngày 2 tháng 9 năm 1945.', 0],
+    [NOW - 1969, 'Con người lên Mặt Trăng', 'Apollo 11, năm 1969.', 0],
+  ];
+
+  // cách nay T năm → giây tính từ 0 giờ ngày 1/1 (tổng YEAR_S)
+  const secOf = (ago) => YEAR_S * (1 - ago / AGE);
+  function dateOf(ago) {
+    const s = secOf(ago);
+    let day = Math.floor(s / 86400), m = 0;
+    while (m < 11 && day >= MDAYS[m]) { day -= MDAYS[m]; m++; }
+    const rem = s % 86400, h = Math.floor(rem / 3600), mi = Math.floor((rem % 3600) / 60), se = rem % 60;
+    return { d: day + 1, m: m + 1, h, mi, se, s };
+  }
+  const pad = (n) => String(n).padStart(2, '0');
+  function whenText(ago) {
+    const t = dateOf(ago);
+    const left = YEAR_S - t.s;
+    let tail;
+    if (left < 1) tail = `chưa tới 1 giây trước giao thừa (${fmt(left, 2)} giây)`;
+    else if (left < 60) tail = `${fmt(left, 2)} giây trước giao thừa`;
+    else if (left < 3600) tail = `${Math.floor(left / 60)} phút ${Math.round(left % 60)} giây trước giao thừa`;
+    else tail = `${pad(t.h)}:${pad(t.mi)}`;
+    return left < 3600 ? `31/12 · ${tail}` : `${t.d}/${t.m} · ${tail}`;
+  }
+  const agoText = (ago) => ago >= 1e9 ? `${fmt(ago / 1e9)} tỉ năm trước` : ago >= 1e6 ? `${fmt(ago / 1e6)} triệu năm trước` : `${Math.round(ago).toLocaleString('vi-VN')} năm trước`;
+
+  // tỉ lệ
+  $('scale').innerHTML = [
+    `1 ngày ≈ ${fmt(AGE / 365 / 1e6)} triệu năm`,
+    `1 giờ ≈ ${fmt(AGE / 365 / 24 / 1e6)} triệu năm`,
+    `1 phút ≈ ${Math.round(PER_S * 60).toLocaleString('vi-VN')} năm`,
+    `1 giây ≈ ${Math.round(PER_S)} năm`,
+  ].map((t) => `<span>${t}</span>`).join('');
+
+  // lưới năm
+  const byDay = {};
+  EV.forEach((e, i) => { const t = dateOf(e[0]); const k = `${t.m}-${t.d}`; (byDay[k] = byDay[k] || []).push(i); });
+  function drawYear() {
+    $('year').innerHTML = MONTHS.map((name, mi) => {
+      let cells = '';
+      for (let d = 1; d <= MDAYS[mi]; d++) {
+        const list = byDay[`${mi + 1}-${d}`];
+        const big = list && list.some((i) => EV[i][3]);
+        cells += list ? `<button class="lv-d ev${big ? ' big' : ''}" data-day="${mi + 1}-${d}" title="${d}/${mi + 1}: ${list.map((i) => EV[i][1]).join(', ')}"></button>` : `<span class="lv-d"></span>`;
+      }
+      return `<div class="lv-m"><p>${name}</p><div class="lv-days">${cells}</div></div>`;
+    }).join('');
+  }
+  function show(list) {
+    $('card').innerHTML = list.map((i) => { const e = EV[i]; return `<p class="when">${whenText(e[0])} · ${agoText(e[0])}</p><h3>${e[1]}</h3><p>${e[2]}</p>`; }).join('<hr style="border:0;border-top:1px solid rgba(255,255,255,.08);margin:10px 0">');
+    document.querySelectorAll('.on').forEach((x) => x.classList.remove('on'));
+  }
+  $('year').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-day]'); if (!b) return;
+    show(byDay[b.dataset.day]); b.classList.add('on');
+  });
+
+  // dải thời gian: [from, to] giây tính tới giao thừa
+  // pos: số giây còn lại tới giao thừa → vị trí 0..100%
+  function track(el, span, ticks, fmtTick, pos = (t) => 100 - (t / span) * 100, minLeft = 0) {
+    const items = EV.map((e, i) => [YEAR_S - secOf(e[0]), i]).filter(([left]) => left <= span && left >= minLeft);
+    el.innerHTML = ticks.map((t) => `<span class="lv-tick" style="left:${pos(t)}%">${fmtTick(t)}</span>`).join('') +
+      items.map(([left, i], k) => `<button class="lv-pin${EV[i][3] ? ' big' : ''}${k % 2 ? ' lo' : ''}" style="left:${Math.max(0, pos(left))}%" data-i="${i}" title="${EV[i][1]}"><span>${EV[i][1]}</span></button>`).join('');
+    el.onclick = (e) => { const b = e.target.closest('[data-i]'); if (!b) return; show([+b.dataset.i]); b.classList.add('on'); };
+  }
+  // các mốc trong phút cuối nằm ở dải bên dưới, ở đây chỉ hiện những gì trước đó
+  track($('day'), 86400, [86400, 64800, 43200, 21600, 0], (t) => (t === 0 ? 'Giao thừa' : `${pad(24 - t / 3600)}:00`), undefined, 60);
+  // phút cuối dùng thang log để các mốc gần đây không dồn cục
+  const logPos = (t) => 100 * (1 - Math.log10(t * 20 + 1) / Math.log10(60 * 20 + 1));
+  track($('min'), 60, [60, 10, 1, 0.1, 0], (t) => (t === 0 ? 'Giao thừa' : `${String(t).replace('.', ',')} giây`), logPos);
+
+  // tự đặt mốc
+  function convert() {
+    const n = parseFloat($('cv-n').value), u = $('cv-u').value;
+    if (isNaN(n)) return;
+    let ago = u === 'ce' ? NOW - n : u === 'y' ? n : u === 'm' ? n * 1e6 : n * 1e9;
+    if (u === 'ce' && n < 0) ago = NOW - n - 1;   // không có năm 0
+    if (ago < 0 || ago > AGE) { $('cv-out').textContent = 'Mốc này nằm ngoài lịch: chưa xảy ra hoặc trước cả Vụ Nổ Lớn.'; return; }
+    const label = u === 'ce' ? (n < 0 ? `Năm ${-n} trước Công nguyên` : `Năm ${n}`) : agoText(ago).replace(/^./, (c) => c.toUpperCase());
+    $('cv-out').innerHTML = `${label} rơi vào <b>${whenText(ago)}</b> trên lịch vũ trụ.`;
+  }
+  $('cv-go').onclick = convert;
+  $('cv-n').addEventListener('keydown', (e) => { if (e.key === 'Enter') convert(); });
+
+  // trên màn hẹp, cuộn sẵn dải 24 giờ về phía giao thừa
+  document.querySelectorAll('.lv-scroll').forEach((el, i) => { if (i === 0) el.scrollLeft = el.scrollWidth; });
+  drawYear();
+  show([0]);
+  convert();
+  $('y').textContent = NOW;
+})();
+</script>
+</body>
+</html>

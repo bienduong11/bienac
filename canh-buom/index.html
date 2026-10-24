@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Hiệu ứng cánh bướm · Bienac</title>
+  <meta name="description" content="Ba quỹ đạo Lorenz xuất phát lệch nhau một phần tỷ và tách hẳn nhau: tận mắt thấy hiệu ứng cánh bướm." />
+  <meta property="og:title" content="Hiệu ứng cánh bướm · Bienac" />
+  <meta property="og:description" content="Ba quỹ đạo Lorenz xuất phát lệch nhau một phần tỷ và tách hẳn nhau: tận mắt thấy hiệu ứng cánh bướm." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .sim { max-width: 1180px; margin: 0 auto; padding: 100px clamp(16px, 4vw, 32px) 56px; }
+    .sim-lede { margin-top: 10px; max-width: 680px; font-size: .98rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; margin-top: 22px; align-items: start; }
+    .sim-stage { position: relative; border-radius: 18px; overflow: hidden; background: #05070a; box-shadow: inset 0 0 0 1px var(--glass-border); aspect-ratio: 4 / 3; touch-action: none; }
+    .sim-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .sim-side { display: flex; flex-direction: column; gap: 14px; }
+    .sim-box { padding: 16px 18px; border-radius: 18px; }
+    .sim-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sim-row .ud-btn { padding: 9px 14px; }
+    .sim-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .sim-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .sim-stat b { display: block; font: 600 1.15rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
+    .sim-stat span { font: 500 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .sim-range { display: grid; gap: 6px; margin-top: 10px; }
+    .sim-range label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text); }
+    .sim-range label output { font: 600 .8rem var(--mono); color: var(--brass); }
+    .sim-range input { width: 100%; accent-color: #37f0cf; }
+    .sim-text h2 { font: 700 1.05rem var(--display); margin-bottom: 6px; }
+    .sim-text p { font-size: .9rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-text p + p { margin-top: 8px; }
+    .sim-text b { color: var(--text); font-weight: 600; }
+    .sim-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sim-chip { padding: 6px 12px; border-radius: 999px; border: 0; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 .78rem 'Be Vietnam Pro', sans-serif; cursor: pointer; }
+    .sim-chip:hover, .sim-chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
+    .sim-hint { position: absolute; left: 12px; bottom: 10px; font: 500 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
+    .sim-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: var(--text); }
+    .sim-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
+    .sim-video small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .sim-video b { font: 600 .95rem var(--display); }
+    .sim-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    @media (max-width: 900px) {
+      .sim { padding-top: 84px; }
+      .sim-grid { grid-template-columns: 1fr; }
+      .sim-stage { aspect-ratio: 1 / 1; }
+    }
+
+    .lz-chart { position: relative; height: 150px; border-radius: 14px; overflow: hidden; background: rgba(255,255,255,.03); box-shadow: inset 0 0 0 1px var(--glass-border); margin-top: 10px; }
+    .lz-chart canvas { width: 100%; height: 100%; display: block; }
+    .lz-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; font-size: .8rem; color: var(--text-dim); }
+    .lz-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Cánh bướm</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Hiệu ứng cánh bướm</p>
+    <h1 class="ud-title">Lệch một phần tỷ, <span class="accent">khác cả tương lai</span></h1>
+    <p class="sim-lede">Ba điểm cùng chạy theo đúng một bộ phương trình, xuất phát gần như trùng nhau: chỉ lệch nhau một phần tỷ. Lúc đầu chúng đi sát rạt như một. Đợi vài chục giây rồi xem chuyện gì xảy ra.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Ba quỹ đạo Lorenz chạy song song, kéo để xoay"></canvas><span class="sim-hint">Kéo để xoay</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row">
+            <button class="ud-btn" id="play" aria-pressed="true">❚❚ Dừng</button>
+            <button class="ud-btn" id="reset">Làm lại</button>
+          </div>
+          <div class="sim-range"><label for="eps">Chênh lệch ban đầu <output id="epsO"></output></label><input type="range" id="eps" min="3" max="14" step="1" value="9" /></div>
+          <div class="lz-legend"><span><i style="background:#37f0cf"></i>Điểm A</span><span><i style="background:#e8452e"></i>Điểm B</span><span><i style="background:#c9a650"></i>Điểm C</span></div>
+          <div class="sim-stats" style="margin-top:12px">
+            <div class="sim-stat"><b id="t">0</b><span>Thời gian</span></div>
+            <div class="sim-stat"><b id="d">0</b><span>Khoảng cách A–B</span></div>
+          </div>
+          <div class="lz-chart"><canvas id="chart" aria-label="Biểu đồ khoảng cách giữa A và B theo thời gian, thang logarit"></canvas></div>
+          <p class="ud-dim" style="font-size:.78rem;margin-top:6px">Khoảng cách A–B theo thời gian. Trục dọc chia theo lũy thừa của 10: đường gần như thẳng nghĩa là sai lệch tăng theo cấp số nhân.</p>
+        </section>
+        <a class="ud-panel sim-video" href="https://www.youtube.com/watch?v=Aqp8Pq_qX5A" target="_blank" rel="noopener">
+          <img src="https://i.ytimg.com/vi/Aqp8Pq_qX5A/mqdefault.jpg" alt="" loading="lazy" />
+          <span><small>Video trên kênh</small><b>Hiệu Ứng Cánh Bướm</b></span>
+        </a>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Chuyện của Edward Lorenz</h2>
+          <p>Năm 1961, nhà khí tượng Edward Lorenz chạy lại một mô phỏng thời tiết, nhưng gõ tay con số 0,506 thay cho 0,506127 mà máy in ra. Sai lệch chưa tới một phần nghìn, vậy mà sau một thời gian, dự báo mới khác hẳn dự báo cũ.</p>
+          <p>Năm 1963, ông công bố hệ ba phương trình bạn đang thấy ở đây. Năm 1972, ông đặt tên cho một bài nói: <b>“Predictability: Does the Flap of a Butterfly's Wings in Brazil Set Off a Tornado in Texas?”</b> (Khả năng dự đoán: cái vỗ cánh của một con bướm ở Brazil có gây ra cơn lốc ở Texas không?). Từ đó mới có tên “hiệu ứng cánh bướm”.</p>
+          <p>Hệ này hoàn toàn tất định, không có chút ngẫu nhiên nào. Chỉ là sai số nhỏ đến đâu cũng bị khuếch đại, nên về lâu dài không thể đoán trước.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+<script>
+
+(() => {
+  const S = 10, RHO = 28, B = 8 / 3, DT = 0.005, SUB = 8, TRAIL = 1400;
+  const COLORS = ['#37f0cf', '#e8452e', '#c9a650'];
+  const cv = document.getElementById('cv'), g = cv.getContext('2d'), stage = document.getElementById('stage');
+  const ch = document.getElementById('chart'), gc = ch.getContext('2d');
+  let W, H, DPR, pts, trails, t, hist, running = true, rot = 0.6, tilt = 0.35, dragging = null;
+
+  function f([x, y, z]) { return [S * (y - x), x * (RHO - z) - y, x * y - B * z]; }
+  function rk4(p) {
+    const a = f(p), b = f(p.map((v, i) => v + a[i] * DT / 2)), c = f(p.map((v, i) => v + b[i] * DT / 2)), d = f(p.map((v, i) => v + c[i] * DT));
+    return p.map((v, i) => v + DT / 6 * (a[i] + 2 * b[i] + 2 * c[i] + d[i]));
+  }
+  const epsEl = document.getElementById('eps');
+  const eps = () => Math.pow(10, -+epsEl.value);
+  function fmtEps() {
+    const k = +epsEl.value;
+    const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+    document.getElementById('epsO').textContent = '10' + String(-k).split('').map((c) => SUP[c]).join('') + (k === 9 ? ' (một phần tỷ)' : k === 6 ? ' (một phần triệu)' : k === 3 ? ' (một phần nghìn)' : '');
+  }
+  function reset() {
+    const e = eps();
+    pts = [[1, 1, 20], [1 + e, 1, 20], [1 + 2 * e, 1, 20]];
+    trails = pts.map(() => []); t = 0; hist = [];
+    g.fillStyle = '#05070a'; g.fillRect(0, 0, W, H);
+  }
+  function resize() {
+    const r = stage.getBoundingClientRect(); DPR = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+    cv.width = W * DPR; cv.height = H * DPR; g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const rc = ch.getBoundingClientRect(); ch.width = rc.width * DPR; ch.height = rc.height * DPR; gc.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  function proj([x, y, z]) {
+    const c = Math.cos(rot), s = Math.sin(rot);
+    const X = x * c - y * s, Y = x * s + y * c, Z = z - 25;
+    const ct = Math.cos(tilt), st = Math.sin(tilt);
+    const yy = Z * ct - Y * st;
+    const k = Math.min(W, H) / 62;
+    return [W / 2 + X * k, H / 2 - yy * k];
+  }
+  function advance() {
+    for (let i = 0; i < SUB; i++) { pts = pts.map(rk4); t += DT; }
+    pts.forEach((p, i) => { trails[i].push(p); if (trails[i].length > TRAIL) trails[i].shift(); });
+    const d = Math.hypot(pts[0][0] - pts[1][0], pts[0][1] - pts[1][1], pts[0][2] - pts[1][2]);
+    hist.push([t, d]);
+    if (hist.length > 6000) hist = hist.filter((_, i) => i % 2 === 0);
+  }
+  function draw() {
+    g.fillStyle = '#05070a'; g.fillRect(0, 0, W, H);
+    g.lineWidth = 1.3;
+    for (let i = trails.length - 1; i >= 0; i--) {
+      const tr = trails[i]; if (tr.length < 2) continue;
+      g.strokeStyle = COLORS[i];
+      const seg = 7;
+      for (let s = 0; s < seg; s++) {
+        const a = Math.floor(tr.length * s / seg), b = Math.floor(tr.length * (s + 1) / seg);
+        g.globalAlpha = 0.15 + 0.85 * ((s + 1) / seg);
+        g.beginPath();
+        for (let k = Math.max(0, a - 1); k <= Math.min(b, tr.length - 1); k++) { const [x, y] = proj(tr[k]); k === Math.max(0, a - 1) ? g.moveTo(x, y) : g.lineTo(x, y); }
+        g.stroke();
+      }
+      g.globalAlpha = 1;
+      const [hx, hy] = proj(pts[i]);
+      g.fillStyle = COLORS[i]; g.beginPath(); g.arc(hx, hy, 4, 0, Math.PI * 2); g.fill();
+      g.shadowColor = COLORS[i]; g.shadowBlur = 12; g.fill(); g.shadowBlur = 0;
+    }
+    const d = hist.length ? hist[hist.length - 1][1] : eps();
+    document.getElementById('t').textContent = t.toFixed(1).replace('.', ',');
+    document.getElementById('d').textContent = d < 1e-3 ? d.toExponential(1).replace('.', ',').replace('e', '×10^') : d.toFixed(2).replace('.', ',');
+    drawChart();
+  }
+  function drawChart() {
+    const w = ch.clientWidth, h = ch.clientHeight;
+    gc.clearRect(0, 0, w, h);
+    const lo = -15, hi = 2, tmax = Math.max(40, t);
+    const Y = (v) => h - 14 - ((Math.log10(Math.max(v, 1e-15)) - lo) / (hi - lo)) * (h - 24);
+    const X = (tt) => 30 + (tt / tmax) * (w - 38);
+    gc.font = '500 9px "JetBrains Mono", monospace'; gc.fillStyle = 'rgba(157,151,134,.8)'; gc.textAlign = 'right'; gc.textBaseline = 'middle';
+    for (const e of [-15, -10, -5, 0]) {
+      const y = Y(Math.pow(10, e));
+      gc.strokeStyle = 'rgba(201,166,80,.15)'; gc.beginPath(); gc.moveTo(30, y); gc.lineTo(w - 6, y); gc.stroke();
+      gc.fillText('1e' + e, 27, y);
+    }
+    gc.textAlign = 'left'; gc.fillText('t = ' + Math.round(tmax), w - 50, h - 6);
+    if (hist.length < 2) return;
+    gc.strokeStyle = '#e8452e'; gc.lineWidth = 1.5; gc.beginPath();
+    const stepN = Math.max(1, Math.floor(hist.length / 400));
+    for (let i = 0; i < hist.length; i += stepN) { const [tt, d] = hist[i]; i ? gc.lineTo(X(tt), Y(d)) : gc.moveTo(X(tt), Y(d)); }
+    gc.stroke();
+  }
+  function loop() { if (!running) return; advance(); if (!dragging) rot += 0.0025; draw(); requestAnimationFrame(loop); }
+
+  const play = document.getElementById('play');
+  function setRun(on) { running = on; play.setAttribute('aria-pressed', String(on)); play.textContent = on ? '❚❚ Dừng' : '▶ Chạy'; if (on) requestAnimationFrame(loop); }
+  play.onclick = () => setRun(!running);
+  document.getElementById('reset').onclick = () => { reset(); draw(); };
+  epsEl.oninput = () => { fmtEps(); reset(); draw(); };
+  cv.addEventListener('pointerdown', (e) => { cv.setPointerCapture(e.pointerId); dragging = { x: e.clientX, y: e.clientY, r: rot, t: tilt }; });
+  cv.addEventListener('pointermove', (e) => { if (!dragging) return; rot = dragging.r + (e.clientX - dragging.x) * 0.01; tilt = Math.max(-1.4, Math.min(1.4, dragging.t + (e.clientY - dragging.y) * 0.01)); if (!running) draw(); });
+  const up = () => (dragging = null); cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  new ResizeObserver(() => { resize(); draw(); }).observe(stage);
+  resize(); fmtEps(); reset();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { for (let i = 0; i < 600; i++) advance(); draw(); setRun(false); }
+  else setRun(true);
+})();
+
+</script>
+</body>
+</html>

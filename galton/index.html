@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bàn Galton · Bienac</title>
+  <meta name="description" content="Thả hàng nghìn hạt qua các hàng chốt và xem chúng tự xếp thành hình quả chuông: định lý giới hạn trung tâm bằng mắt thường." />
+  <meta property="og:title" content="Bàn Galton · Bienac" />
+  <meta property="og:description" content="Thả hàng nghìn hạt qua các hàng chốt và xem chúng tự xếp thành hình quả chuông: định lý giới hạn trung tâm bằng mắt thường." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .sim { max-width: 1180px; margin: 0 auto; padding: 100px clamp(16px, 4vw, 32px) 56px; }
+    .sim-lede { margin-top: 10px; max-width: 680px; font-size: .98rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; margin-top: 22px; align-items: start; }
+    .sim-stage { position: relative; border-radius: 18px; overflow: hidden; background: #05070a; box-shadow: inset 0 0 0 1px var(--glass-border); aspect-ratio: 4 / 3; touch-action: none; }
+    .sim-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .sim-side { display: flex; flex-direction: column; gap: 14px; }
+    .sim-box { padding: 16px 18px; border-radius: 18px; }
+    .sim-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sim-row .ud-btn { padding: 9px 14px; }
+    .sim-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .sim-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .sim-stat b { display: block; font: 600 1.15rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
+    .sim-stat span { font: 500 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .sim-range { display: grid; gap: 6px; margin-top: 10px; }
+    .sim-range label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text); }
+    .sim-range label output { font: 600 .8rem var(--mono); color: var(--brass); }
+    .sim-range input { width: 100%; accent-color: #37f0cf; }
+    .sim-text h2 { font: 700 1.05rem var(--display); margin-bottom: 6px; }
+    .sim-text p { font-size: .9rem; line-height: 1.65; color: var(--text-dim); }
+    .sim-text p + p { margin-top: 8px; }
+    .sim-text b { color: var(--text); font-weight: 600; }
+    .sim-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sim-chip { padding: 6px 12px; border-radius: 999px; border: 0; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 .78rem 'Be Vietnam Pro', sans-serif; cursor: pointer; }
+    .sim-chip:hover, .sim-chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
+    .sim-hint { position: absolute; left: 12px; bottom: 10px; font: 500 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
+    .sim-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: var(--text); }
+    .sim-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
+    .sim-video small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .sim-video b { font: 600 .95rem var(--display); }
+    .sim-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    @media (max-width: 900px) {
+      .sim { padding-top: 84px; }
+      .sim-grid { grid-template-columns: 1fr; }
+      .sim-stage { aspect-ratio: 1 / 1; }
+    }
+
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Bàn Galton</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Bàn Galton</p>
+    <h1 class="ud-title">Ngẫu nhiên từng hạt, <span class="accent">trật tự cả đống</span></h1>
+    <p class="sim-lede">Mỗi hạt rơi xuống, gặp chốt nào cũng nảy sang trái hoặc phải như tung đồng xu. Không đoán được một hạt sẽ rơi vào ngăn nào. Nhưng thả đủ nhiều, chúng luôn xếp thành cùng một hình quả chuông.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Bàn Galton: hạt rơi qua các hàng chốt vào các ngăn"></canvas></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row">
+            <button class="ud-btn" id="auto" aria-pressed="true">❚❚ Dừng thả</button>
+            <button class="ud-btn" id="one">Thả 1 hạt</button>
+            <button class="ud-btn" id="burst">Thả 200</button>
+            <button class="ud-btn" id="clear">Xóa</button>
+          </div>
+          <div class="sim-range"><label for="rows">Số hàng chốt <output id="rowsO"></output></label><input type="range" id="rows" min="4" max="16" step="1" value="12" /></div>
+          <div class="sim-range"><label for="p">Khả năng nảy sang phải <output id="pO"></output></label><input type="range" id="p" min="0.1" max="0.9" step="0.05" value="0.5" /></div>
+          <label class="ud-dim" style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:.85rem"><input type="checkbox" id="curve" checked style="accent-color:#e8452e" /> Hiện đường lý thuyết</label>
+          <div class="sim-stats" style="margin-top:12px">
+            <div class="sim-stat"><b id="n">0</b><span>Hạt đã rơi</span></div>
+            <div class="sim-stat"><b id="mean">–</b><span>Ngăn trung bình</span></div>
+          </div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Vì sao lại là quả chuông?</h2>
+          <p>Muốn rơi vào ngăn ngoài cùng, hạt phải nảy về một phía ở mọi chốt, rất hiếm. Muốn vào ngăn giữa thì có rất nhiều cách trộn trái phải. Số cách ấy chính là các số trong tam giác Pascal.</p>
+          <p>Đây là <b>định lý giới hạn trung tâm</b>: cộng thật nhiều tác động nhỏ, độc lập với nhau, kết quả gần như luôn có dạng hình chuông. Chiều cao người, sai số đo đạc, điểm thi… đều mang dáng dấp này.</p>
+          <p>Nhà khoa học người Anh Francis Galton mô tả dụng cụ này trong cuốn <b>Natural Inheritance</b> năm 1889. Thử kéo thanh “nảy sang phải” lệch khỏi giữa: quả chuông dịch sang bên nhưng vẫn giữ dáng.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+<script>
+
+(() => {
+  const cv = document.getElementById('cv'), g = cv.getContext('2d'), stage = document.getElementById('stage');
+  let W, H, DPR, ROWS = 12, P = 0.5, bins, balls = [], total = 0, autoOn = true, acc = 0, sumK = 0;
+  let geo;
+
+  function layout() {
+    const topY = H * 0.08, pegBottom = H * 0.56;
+    const gapY = (pegBottom - topY) / ROWS;
+    const binW = Math.min(W * 0.9 / (ROWS + 1), gapY * 1.6);
+    geo = { topY, gapY, binW, x0: W / 2, binTop: pegBottom + gapY * 0.6, floor: H - 10, r: Math.max(2.2, Math.min(4.5, binW * 0.14)) };
+  }
+  function resize() {
+    const r = stage.getBoundingClientRect(); DPR = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+    cv.width = W * DPR; cv.height = H * DPR; g.setTransform(DPR, 0, 0, DPR, 0, 0); layout();
+  }
+  function reset() { bins = new Array(ROWS + 1).fill(0); balls = []; total = 0; sumK = 0; }
+  const pegX = (row, i) => geo.x0 + (i - row / 2) * geo.binW;
+
+  function drop() {
+    // định trước lộ trình: mỗi hàng nảy trái (0) hay phải (1)
+    const path = []; let k = 0;
+    for (let i = 0; i < ROWS; i++) { const right = Math.random() < P ? 1 : 0; path.push(right); k += right; }
+    balls.push({ path, k, row: -1, t: 0, x: geo.x0, y: geo.topY - geo.gapY, done: false, hue: Math.random() });
+  }
+  function update(dt) {
+    const speed = 4.2; // hàng mỗi giây ×
+    for (const b of balls) {
+      if (b.done) continue;
+      b.t += dt * speed;
+      while (b.t >= 1 && b.row < ROWS) { b.t -= 1; b.row++; }
+      if (b.row >= ROWS) {
+        // rơi xuống ngăn
+        const bx = pegX(ROWS, b.k) ;
+        const stackH = geo.floor - bins[b.k] * geo.unit;
+        b.x = bx; b.vy = (b.vy || 0) + dt * 900; b.y += b.vy * dt;
+        if (b.y >= stackH - geo.r) { b.done = true; bins[b.k]++; total++; sumK += b.k; }
+        continue;
+      }
+      // nội suy giữa hai vị trí liên tiếp, có nảy nhẹ
+      const pos = (r) => {
+        if (r < 0) return [geo.x0, geo.topY - geo.gapY];
+        if (r >= ROWS) return [pegX(ROWS, b.k), geo.binTop];
+        let idx = 0; for (let q = 0; q < r; q++) idx += b.path[q];
+        return [pegX(r, idx), geo.topY + r * geo.gapY];
+      };
+      const [fx, fy] = pos(b.row), [tx, ty] = pos(b.row + 1), s = b.t;
+      b.x = fx + (tx - fx) * s;
+      b.y = fy + (ty - fy) * s - Math.sin(s * Math.PI) * geo.gapY * 0.35 - geo.r * 1.4;
+      b.vy = 120;
+    }
+    balls = balls.filter((b) => !b.done);
+  }
+  function binom(n, k) { let r = 1; for (let i = 1; i <= k; i++) r = r * (n - k + i) / i; return r; }
+  function draw() {
+    g.fillStyle = '#05070a'; g.fillRect(0, 0, W, H);
+    const maxBin = Math.max(...bins, 1);
+    const expectMax = total > 0 ? Math.max(...bins.map((_, k) => total * binom(ROWS, k) * Math.pow(P, k) * Math.pow(1 - P, ROWS - k))) : 0;
+    const room = geo.floor - geo.binTop - 6;
+    geo.unit = Math.min(geo.r * 2, room / Math.max(maxBin, expectMax, 40));
+    // phễu
+    g.strokeStyle = 'rgba(201,166,80,.5)'; g.lineWidth = 1.5; g.beginPath();
+    g.moveTo(geo.x0 - geo.binW * 1.2, geo.topY - geo.gapY * 1.8); g.lineTo(geo.x0 - geo.binW * 0.35, geo.topY - geo.gapY * 0.6);
+    g.moveTo(geo.x0 + geo.binW * 1.2, geo.topY - geo.gapY * 1.8); g.lineTo(geo.x0 + geo.binW * 0.35, geo.topY - geo.gapY * 0.6); g.stroke();
+    // chốt
+    g.fillStyle = '#c9a650';
+    for (let r = 0; r < ROWS; r++) for (let i = 0; i <= r; i++) { g.beginPath(); g.arc(pegX(r, i), geo.topY + r * geo.gapY, Math.max(1.6, geo.r * 0.55), 0, Math.PI * 2); g.fill(); }
+    // vách ngăn
+    g.strokeStyle = 'rgba(236,230,214,.12)'; g.lineWidth = 1; g.beginPath();
+    for (let k = 0; k <= ROWS + 1; k++) { const x = pegX(ROWS, k) - geo.binW / 2; g.moveTo(x, geo.binTop); g.lineTo(x, geo.floor); }
+    g.moveTo(pegX(ROWS, 0) - geo.binW / 2, geo.floor); g.lineTo(pegX(ROWS, ROWS) + geo.binW / 2, geo.floor); g.stroke();
+    // cột hạt trong ngăn
+    for (let k = 0; k <= ROWS; k++) {
+      const h = bins[k] * geo.unit, x = pegX(ROWS, k);
+      const grd = g.createLinearGradient(0, geo.floor - h, 0, geo.floor);
+      grd.addColorStop(0, '#b3ffec'); grd.addColorStop(1, '#1e9e88');
+      g.fillStyle = grd; g.beginPath(); g.roundRect(x - geo.binW * 0.38, geo.floor - h, geo.binW * 0.76, h, [4, 4, 0, 0]); g.fill();
+      if (bins[k] && geo.binW > 22) { g.fillStyle = 'rgba(236,230,214,.7)'; g.font = '500 9px "JetBrains Mono", monospace'; g.textAlign = 'center'; g.fillText(bins[k], x, geo.floor - h - 5); }
+    }
+    // đường lý thuyết
+    if (document.getElementById('curve').checked && total > 0) {
+      g.strokeStyle = '#e8452e'; g.lineWidth = 2; g.beginPath();
+      const mu = ROWS * P, sd = Math.sqrt(ROWS * P * (1 - P));
+      const x0 = pegX(ROWS, 0), x1 = pegX(ROWS, ROWS);
+      for (let i = 0; i <= 120; i++) {
+        const kk = -0.5 + (ROWS + 1) * i / 120;
+        const dens = Math.exp(-((kk - mu) ** 2) / (2 * sd * sd)) / (sd * Math.sqrt(2 * Math.PI));
+        const x = x0 + (kk) * geo.binW, y = geo.floor - total * dens * geo.unit;
+        i ? g.lineTo(x, y) : g.moveTo(x, y);
+      }
+      g.stroke();
+    }
+    // hạt đang rơi
+    g.fillStyle = '#37f0cf';
+    for (const b of balls) { g.beginPath(); g.arc(b.x, b.y, geo.r, 0, Math.PI * 2); g.fill(); }
+    document.getElementById('n').textContent = total.toLocaleString('vi-VN');
+    document.getElementById('mean').textContent = total ? (sumK / total).toFixed(2).replace('.', ',') : '–';
+  }
+  let last = performance.now(), queue = 0;
+  function loop(t) {
+    const dt = Math.min(0.05, (t - last) / 1000); last = t;
+    if (autoOn) { acc += dt; while (acc > 0.06) { acc -= 0.06; drop(); } }
+    while (queue > 0 && balls.length < 260) { drop(); queue--; if (Math.random() < 0.85) break; }
+    update(dt); draw(); requestAnimationFrame(loop);
+  }
+  const auto = document.getElementById('auto');
+  function setAuto(on) { autoOn = on; auto.setAttribute('aria-pressed', String(on)); auto.textContent = on ? '❚❚ Dừng thả' : '▶ Thả liên tục'; }
+  auto.onclick = () => setAuto(!autoOn);
+  document.getElementById('one').onclick = () => drop();
+  document.getElementById('burst').onclick = () => (queue += 200);
+  document.getElementById('clear').onclick = () => { reset(); queue = 0; };
+  const rowsEl = document.getElementById('rows'), pEl = document.getElementById('p');
+  rowsEl.oninput = () => { ROWS = +rowsEl.value; document.getElementById('rowsO').textContent = ROWS + ' hàng'; layout(); reset(); };
+  pEl.oninput = () => { P = +pEl.value; document.getElementById('pO').textContent = Math.round(P * 100) + '%'; reset(); };
+  rowsEl.oninput(); pEl.oninput();
+  new ResizeObserver(() => { resize(); }).observe(stage);
+  resize(); reset();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) setAuto(false);
+  requestAnimationFrame(loop);
+})();
+
+</script>
+</body>
+</html>

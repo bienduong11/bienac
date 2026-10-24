@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phổ điện từ · Bienac</title>
+  <meta name="description" content="Kéo một thanh trượt từ tia gamma tới sóng vô tuyến: bước sóng, tần số, năng lượng phô-tôn và những thứ quen thuộc ở từng dải." />
+  <meta property="og:title" content="Phổ điện từ · Bienac" />
+  <meta property="og:description" content="Từ tia gamma tới sóng vô tuyến, ánh sáng nhìn thấy chỉ là một khe rất hẹp." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .pa { max-width: 1040px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .pa-lede { margin-top: 10px; max-width: 640px; line-height: 1.65; color: var(--text-dim); }
+    .pa-stage { margin-top: 24px; padding: 18px; border-radius: 18px; }
+    #wave { display: block; width: 100%; height: 190px; border-radius: 14px; background: rgba(0,0,0,.35); }
+    .pa-bar { position: relative; margin-top: 18px; height: 34px; border-radius: 999px; overflow: hidden; background: linear-gradient(90deg, #6f4bd8 0%, #4a6cf0 14%, #4a6cf0 26%, #8b5cf6 34%, #37f0cf 46%, #c9a650 60%, #e8452e 72%, #8a3b2e 100%); }
+    .pa-vis { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, #7a00ff, #0000ff, #00c8ff, #00ff40, #ffff00, #ff8000, #ff0000); }
+    .pa-bar span { position: absolute; top: 50%; transform: translate(-50%, -50%); font: 600 .62rem var(--mono); letter-spacing: .06em; color: rgba(255,255,255,.85); white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,.7); pointer-events: none; }
+    .pa-range { width: 100%; margin-top: 14px; accent-color: var(--cyan); height: 28px; }
+    .pa-ticks { position: relative; height: 14px; margin: 0 10px; font: 500 .62rem var(--mono); color: var(--text-dim); }
+    .pa-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+    .pa-grid { margin-top: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .pa-num { padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .pa-num small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .pa-num b { display: block; margin-top: 4px; font: 600 1.15rem var(--mono); color: var(--text); word-break: break-word; }
+    .pa-band { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+    .pa-band h2 { font: 700 1.4rem var(--display); }
+    .pa-swatch { width: 34px; height: 34px; border-radius: 50%; box-shadow: 0 0 22px var(--sw, transparent), inset 0 0 0 1px rgba(255,255,255,.2); }
+    .pa-band p { flex-basis: 100%; color: var(--text-dim); line-height: 1.6; font-size: .95rem; }
+    .pa-ex { margin-top: 20px; }
+    .pa-ex h3, .pa-near h3 { font: 600 .68rem var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brass); margin-bottom: 8px; }
+    .pa-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+    .pa-list button { text-align: left; padding: 10px 14px; border-radius: 14px; border: 0; cursor: pointer; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 500 .88rem/1.4 'Be Vietnam Pro', sans-serif; }
+    .pa-list button small { display: block; color: var(--text-dim); font: 500 .7rem var(--mono); margin-top: 2px; }
+    .pa-list button:hover, .pa-list button.on { box-shadow: inset 0 0 0 1px var(--cyan); }
+    .pa-list button.on { background: rgba(55,240,207,.08); }
+    .pa-size { margin-top: 10px; font-size: .9rem; color: var(--text-dim); }
+    .pa-size b { color: var(--text); font-weight: 600; }
+    .pa-note { margin-top: 28px; font-size: .82rem; line-height: 1.6; color: var(--text-dim); }
+    @media (max-width: 720px) {
+      .pa { padding-top: 88px; }
+      .pa-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #wave { height: 150px; }
+      .pa-bar span.sm { display: none; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Phổ điện từ</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="pa">
+    <p class="ud-kicker">Phổ điện từ</p>
+    <h1 class="ud-title">Mắt ta chỉ thấy <span class="accent">một khe rất hẹp</span></h1>
+    <p class="pa-lede">Tia gamma, tia X, ánh sáng, sóng Wi-Fi hay sóng radio đều là một thứ: sóng điện từ. Chúng chỉ khác nhau ở bước sóng. Kéo thanh trượt để đi từ sóng ngắn cỡ hạt nhân nguyên tử tới sóng dài hàng chục ki-lô-mét.</p>
+
+    <section class="pa-stage ud-panel">
+      <canvas id="wave" aria-hidden="true"></canvas>
+      <div class="pa-bar" id="bar" aria-hidden="true"></div>
+      <input class="pa-range" id="r" type="range" min="-12" max="4" step="0.001" value="-6.27" aria-label="Bước sóng (thang lô-ga-rít)" />
+      <div class="pa-ticks"><span style="left:0%">1 pm</span><span style="left:18.75%">1 nm</span><span style="left:37.5%">1 µm</span><span style="left:56.25%">1 mm</span><span style="left:75%">1 m</span><span style="left:100%">10 km</span></div>
+
+      <div class="pa-band">
+        <span class="pa-swatch" id="sw"></span>
+        <h2 id="band"></h2>
+        <p id="bandTxt"></p>
+      </div>
+
+      <div class="pa-grid" aria-live="polite">
+        <div class="pa-num"><small>Bước sóng</small><b id="vL"></b></div>
+        <div class="pa-num"><small>Tần số</small><b id="vF"></b></div>
+        <div class="pa-num"><small>Năng lượng phô-tôn</small><b id="vE"></b></div>
+        <div class="pa-num"><small>Một chu kỳ</small><b id="vT"></b></div>
+      </div>
+      <p class="pa-size" id="size"></p>
+    </section>
+
+    <section class="pa-ex">
+      <h3>Những thứ quen thuộc trên phổ</h3>
+      <div class="pa-list" id="ex"></div>
+    </section>
+
+    <p class="pa-note">Ranh giới giữa các dải là quy ước, các tài liệu có thể lệch nhau đôi chút. Màu hiển thị trong vùng nhìn thấy là màu gần đúng mà màn hình tái tạo được, không phải màu thật của ánh sáng đơn sắc. Hằng số dùng để tính: c = 299 792 458 m/s, h = 4,135 667 696 × 10⁻¹⁵ eV·s.</p>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const C = 299792458, H = 4.135667696e-15;
+  const $ = (id) => document.getElementById(id);
+  $('y').textContent = new Date().getFullYear();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Dải phổ (ranh giới theo bước sóng, mét)
+  const BANDS = [
+    { to: 1e-11, n: 'Tia gamma', t: 'Sinh ra trong hạt nhân nguyên tử, vụ nổ sao và va chạm hạt. Năng lượng đủ lớn để phá vỡ phân tử ADN, nên vừa nguy hiểm vừa được dùng để diệt tế bào ung thư và tiệt trùng dụng cụ y tế.' },
+    { to: 1e-8, n: 'Tia X', t: 'Đi xuyên qua mô mềm nhưng bị xương chặn lại, nên vẽ được bóng xương trên phim. Bước sóng cỡ khoảng cách giữa các nguyên tử, vì thế tia X còn dùng để giải mã cấu trúc tinh thể và chuỗi xoắn ADN.' },
+    { to: 3.8e-7, n: 'Tử ngoại', t: 'Phần năng lượng cao trong ánh nắng, gây cháy nắng và giúp da tạo vitamin D. Tầng ô-dôn chặn gần hết tia tử ngoại ngắn nhất trước khi chúng xuống tới mặt đất.' },
+    { to: 7.5e-7, n: 'Ánh sáng nhìn thấy', t: 'Khe hẹp duy nhất mà mắt người cảm nhận được, từ tím (khoảng 380 nm) tới đỏ (khoảng 750 nm). Mặt Trời phát mạnh nhất quanh vùng này, và mắt ta tiến hóa để tận dụng đúng điều đó.' },
+    { to: 1e-3, n: 'Hồng ngoại', t: 'Mọi vật có nhiệt độ đều phát hồng ngoại, kể cả cơ thể bạn. Camera nhiệt, điều khiển ti-vi và cáp quang đều làm việc trong dải này.' },
+    { to: 1, n: 'Vi sóng', t: 'Lò vi sóng, Wi-Fi, Bluetooth, sóng điện thoại và radar. Ánh sáng còn sót lại từ thuở vũ trụ mới hình thành, bức xạ nền vũ trụ, ngày nay cũng nằm ở dải này.' },
+    { to: Infinity, n: 'Sóng vô tuyến', t: 'Sóng dài nhất, đi được rất xa và vòng qua vật cản. Đài FM, AM, liên lạc tàu biển, tàu ngầm và kính thiên văn vô tuyến đều dùng dải này.' },
+  ];
+  const bandOf = (l) => BANDS.find((b) => l < b.to);
+
+  // Ví dụ thực tế: [bước sóng m, tên, ghi chú]
+  const EX = [
+    [1.06e-12, 'Tia gamma của coban-60', '1,17 và 1,33 MeV, dùng trong xạ trị'],
+    [2.43e-12, 'Chụp PET', 'phô-tôn 511 keV từ cặp electron, pô-di-tơ-rôn hủy nhau'],
+    [3e-11, 'Chụp X-quang y tế', 'khoảng 0,01 tới 0,1 nm'],
+    [1.54e-10, 'Tia X dùng soi tinh thể', 'vạch đồng 0,154 nm, cỡ khoảng cách nguyên tử'],
+    [1.216e-7, 'Vạch Lyman-alpha của hiđrô', '121,6 nm, kính thiên văn ngoài khí quyển mới thấy'],
+    [2.54e-7, 'Đèn diệt khuẩn', '254 nm, tử ngoại C'],
+    [3.65e-7, 'Đèn soi tiền giả', '365 nm, tử ngoại A'],
+    [5.89e-7, 'Đèn đường cao áp natri', '589 nm, ánh vàng cam'],
+    [6.328e-7, 'Laser heli-neon', '632,8 nm, đỏ'],
+    [9.4e-7, 'Điều khiển ti-vi', 'khoảng 940 nm, mắt không thấy nhưng camera điện thoại thấy'],
+    [1.55e-6, 'Cáp quang Internet', '1 550 nm, ít suy hao nhất trong sợi thủy tinh'],
+    [9.4e-6, 'Hơi ấm cơ thể người', 'đỉnh bức xạ quanh 9 tới 10 µm'],
+    [1.87e-3, 'Bức xạ nền vũ trụ', 'đỉnh theo tần số ở khoảng 160 GHz'],
+    [0.0545, 'Wi-Fi 5,5 GHz', 'khoảng 5,5 cm'],
+    [0.1224, 'Lò vi sóng, Wi-Fi 2,4 GHz', 'khoảng 12 cm'],
+    [0.2110, 'Vạch 21 cm của hiđrô', '1 420 MHz, dùng để vẽ bản đồ Ngân Hà'],
+    [3.05, 'Đài FM', 'khoảng 98 MHz'],
+    [300, 'Đài AM sóng trung', 'khoảng 1 MHz'],
+    [1.25e4, 'Liên lạc tàu ngầm', 'sóng rất dài 3 tới 30 kHz, xuyên được nước biển'],
+  ];
+  // So sánh kích thước bước sóng
+  const SIZE = [[1e-14, 'một hạt nhân nguyên tử'], [1e-10, 'một nguyên tử'], [1e-7, 'một con virus'], [2e-6, 'một con vi khuẩn'], [7e-5, 'bề ngang sợi tóc'], [4e-3, 'một con kiến'], [0.2, 'một bàn tay'], [1.7, 'một người lớn'], [50, 'một tòa nhà mười tầng'], [1e3, 'một cây số'], [1e5, 'một thành phố']];
+
+  const sup = (n) => String(n).replace(/-/g, '⁻').replace(/\d/g, (d) => '⁰¹²³⁴⁵⁶⁷⁸⁹'[d]);
+  const fmt = (x, d = 3) => x.toLocaleString('vi-VN', { maximumSignificantDigits: d });
+  function unit(v, units) {
+    for (const [f, u] of units) if (v >= f) return `${fmt(v / f)} ${u}`;
+    const e = Math.floor(Math.log10(v));
+    return `${fmt(v / 10 ** e)} × 10${sup(e)} ${units[units.length - 1][1]}`;
+  }
+  const L_UNITS = [[1e3, 'km'], [1, 'm'], [1e-2, 'cm'], [1e-3, 'mm'], [1e-6, 'µm'], [1e-9, 'nm'], [1e-12, 'pm']];
+  const F_UNITS = [[1e18, 'EHz'], [1e15, 'PHz'], [1e12, 'THz'], [1e9, 'GHz'], [1e6, 'MHz'], [1e3, 'kHz'], [1, 'Hz']];
+  const E_UNITS = [[1e6, 'MeV'], [1e3, 'keV'], [1, 'eV'], [1e-3, 'meV'], [1e-6, 'µeV'], [1e-9, 'neV'], [1e-12, 'peV']];
+  const T_UNITS = [[1e-3, 'ms'], [1e-6, 'µs'], [1e-9, 'ns'], [1e-12, 'ps'], [1e-15, 'fs'], [1e-18, 'as'], [1e-21, 'zs']];
+
+  // Bước sóng (nm) → màu RGB gần đúng (thuật toán Dan Bruton)
+  function nmToRGB(nm) {
+    let r = 0, g = 0, b = 0;
+    if (nm >= 380 && nm < 440) { r = -(nm - 440) / 60; b = 1; }
+    else if (nm < 490) { g = (nm - 440) / 50; b = 1; }
+    else if (nm < 510) { g = 1; b = -(nm - 510) / 20; }
+    else if (nm < 580) { r = (nm - 510) / 70; g = 1; }
+    else if (nm < 645) { r = 1; g = -(nm - 645) / 65; }
+    else if (nm <= 750) { r = 1; }
+    let f = 1;
+    if (nm < 420) f = 0.3 + 0.7 * (nm - 380) / 40;
+    else if (nm > 700) f = 0.3 + 0.7 * (750 - nm) / 50;
+    const c = (v) => Math.round(255 * Math.pow(v * f, 0.8));
+    return `rgb(${c(r)},${c(g)},${c(b)})`;
+  }
+  const colorOf = (l) => {
+    const nm = l * 1e9;
+    if (nm >= 380 && nm <= 750) return { c: nmToRGB(nm), vis: true };
+    return { c: l < 3.8e-7 ? '#9a8cff' : '#c9a650', vis: false };
+  };
+
+  // Thanh phổ: nhãn dải + vùng nhìn thấy
+  const pos = (l) => ((Math.log10(l) + 12) / 16) * 100;
+  const bar = $('bar');
+  const vis = document.createElement('div'); vis.className = 'pa-vis';
+  vis.style.left = pos(3.8e-7) + '%'; vis.style.width = (pos(7.5e-7) - pos(3.8e-7)) + '%';
+  bar.appendChild(vis);
+  [[1e-12, 1e-11, 'Gamma', 1], [1e-11, 1e-8, 'Tia X', 1], [1e-8, 3.8e-7, 'Tử ngoại', 1], [7.5e-7, 1e-3, 'Hồng ngoại'], [1e-3, 1, 'Vi sóng', 1], [1, 1e4, 'Vô tuyến']].forEach(([a, z, t, sm]) => {
+    const s = document.createElement('span');
+    s.textContent = t; if (sm) s.className = 'sm';
+    s.style.left = (pos(a) + pos(z)) / 2 + '%';
+    bar.appendChild(s);
+  });
+  bar.addEventListener('click', (e) => { const r = bar.getBoundingClientRect(); set(((e.clientX - r.left) / r.width) * 16 - 12); });
+
+  // Danh sách ví dụ
+  $('ex').innerHTML = EX.map(([l, n, t], i) => `<button data-i="${i}">${n}<small>${t}</small></button>`).join('');
+  $('ex').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; set(Math.log10(EX[+b.dataset.i][0])); scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); };
+
+  let lam = 5.4e-7;
+  function set(lg) {
+    lg = Math.max(-12, Math.min(4, lg));
+    $('r').value = lg;
+    lam = 10 ** lg;
+    const f = C / lam, E = H * f, T = 1 / f;
+    const b = bandOf(lam), col = colorOf(lam);
+    $('vL').textContent = unit(lam, L_UNITS);
+    $('vF').textContent = unit(f, F_UNITS);
+    $('vE').textContent = unit(E, E_UNITS);
+    $('vT').textContent = unit(T, T_UNITS);
+    $('band').textContent = b.n;
+    $('bandTxt').textContent = b.t;
+    const sw = $('sw');
+    sw.style.background = col.vis ? col.c : 'repeating-linear-gradient(45deg, rgba(255,255,255,.12) 0 4px, transparent 4px 8px)';
+    sw.style.setProperty('--sw', col.vis ? col.c : 'transparent');
+    sw.title = col.vis ? 'Màu gần đúng' : 'Mắt người không nhìn thấy';
+    let near = SIZE[0];
+    for (const s of SIZE) if (Math.abs(Math.log10(s[0] / lam)) < Math.abs(Math.log10(near[0] / lam))) near = s;
+    const ratio = lam / near[0];
+    $('size').innerHTML = col.vis ? `Mắt bạn thấy bước sóng này là <b>${b.n === 'Ánh sáng nhìn thấy' ? nameColor(lam * 1e9) : ''}</b>. Một bước sóng cỡ ${ratio > 0.5 && ratio < 2 ? '' : `${fmt(ratio, 2)} lần `}<b>${near[1]}</b>.`
+      : `Một bước sóng ở đây dài cỡ ${ratio > 0.5 && ratio < 2 ? '' : `${fmt(ratio, 2)} lần `}<b>${near[1]}</b>. Mắt người không nhìn thấy dải này.`;
+    document.querySelectorAll('#ex button').forEach((x) => x.classList.toggle('on', Math.abs(Math.log10(EX[+x.dataset.i][0] / lam)) < 0.02));
+    history.replaceState(null, '', '#' + lg.toFixed(2));
+  }
+  function nameColor(nm) {
+    return nm < 425 ? 'màu tím' : nm < 450 ? 'màu chàm' : nm < 495 ? 'màu lam' : nm < 570 ? 'màu lục' : nm < 590 ? 'màu vàng' : nm < 620 ? 'màu cam' : 'màu đỏ';
+  }
+  $('r').addEventListener('input', (e) => set(+e.target.value));
+
+  // Sóng chạy
+  const cv = $('wave'), g = cv.getContext('2d');
+  let W, Hh, DPR;
+  function resize() { DPR = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; Hh = cv.clientHeight; cv.width = W * DPR; cv.height = Hh * DPR; }
+  resize(); addEventListener('resize', resize);
+  let ph = 0;
+  function draw() {
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    g.clearRect(0, 0, W, Hh);
+    // bước sóng trên màn hình: ánh xạ log từ 6 px (gamma) tới gần hết khung (vô tuyến)
+    const k = (Math.log10(lam) + 12) / 16;
+    const px = 6 * Math.pow(W * 0.9 / 6, k);
+    const col = colorOf(lam);
+    g.strokeStyle = 'rgba(255,255,255,.06)'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(0, Hh / 2); g.lineTo(W, Hh / 2); g.stroke();
+    g.lineWidth = 2.2; g.strokeStyle = col.c;
+    g.shadowColor = col.vis ? col.c : 'transparent'; g.shadowBlur = col.vis ? 14 : 0;
+    g.setLineDash(col.vis ? [] : [6, 5]);
+    g.beginPath();
+    const amp = Hh * 0.32;
+    for (let x = 0; x <= W; x += Math.max(1, Math.min(3, px / 12))) {
+      const y = Hh / 2 + amp * Math.sin((x / px) * Math.PI * 2 - ph);
+      x === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+    }
+    g.stroke(); g.setLineDash([]); g.shadowBlur = 0;
+    // thước một bước sóng
+    if (px < W * 0.8) {
+      const x0 = 12, y0 = Hh - 16;
+      g.strokeStyle = 'rgba(201,166,80,.8)'; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(x0, y0 - 5); g.lineTo(x0, y0 + 5); g.moveTo(x0, y0); g.lineTo(x0 + px, y0); g.moveTo(x0 + px, y0 - 5); g.lineTo(x0 + px, y0 + 5); g.stroke();
+      g.fillStyle = 'rgba(201,166,80,.9)'; g.font = '500 11px "JetBrains Mono", monospace';
+      g.fillText('λ', x0 + px + 6, y0 + 4);
+    }
+    if (!reduce) { ph += 0.06; requestAnimationFrame(draw); }
+  }
+  const h = parseFloat(location.hash.slice(1));
+  set(isNaN(h) ? Math.log10(5.4e-7) : h);
+  draw();
+  if (reduce) $('r').addEventListener('input', draw);
+})();
+</script>
+</body>
+</html>

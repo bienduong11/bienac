@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Âm lịch & Can Chi · Bienac</title>
+  <meta name="description" content="Đổi ngày dương sang âm lịch Việt Nam, xem Can Chi của năm, tháng, ngày, giờ, tiết khí và giờ hoàng đạo. Tính theo múi giờ Việt Nam." />
+  <meta property="og:title" content="Âm lịch & Can Chi · Bienac" />
+  <meta property="og:description" content="Đổi ngày âm dương, xem Can Chi, tiết khí và giờ hoàng đạo." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .al { max-width: 1040px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .al-lede { margin-top: 10px; color: var(--text-dim); line-height: 1.65; max-width: 640px; }
+    .al-bar { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .al-bar input[type="date"] { padding: 10px 16px; font: 500 .95rem var(--mono); color: var(--text); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color-scheme: dark; }
+    .al-bar .ud-btn { border-radius: 999px; }
+    .al-main { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 16px; align-items: start; }
+    .al-day { padding: 24px; text-align: center; border-radius: 18px; }
+    .al-sol { font: 500 .8rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brass); }
+    .al-big { margin-top: 10px; font: 700 clamp(4.5rem, 14vw, 7rem)/1 var(--display); color: var(--cyan); text-shadow: 0 0 30px rgba(55,240,207,.25); }
+    .al-mon { margin-top: 6px; font: 600 1.25rem var(--display); }
+    .al-mon .leap { color: var(--cinnabar); font-size: .9rem; margin-left: 6px; }
+    .al-yr { margin-top: 4px; color: var(--text-dim); }
+    .al-rows { margin-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; text-align: left; font-size: .95rem; }
+    .al-rows dt { font: 500 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); padding-top: 3px; }
+    .al-rows dd b { color: var(--text); font-weight: 600; }
+    .al-rows dd small { color: var(--text-dim); }
+    .al-hd { margin-top: 18px; text-align: left; }
+    .al-hd p { font: 500 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .al-hd div { display: flex; flex-wrap: wrap; gap: 6px; }
+    .al-hd span { padding: 5px 10px; border-radius: 999px; font-size: .82rem; background: rgba(201,166,80,.1); box-shadow: inset 0 0 0 1px rgba(201,166,80,.3); }
+    .al-hd span.now { background: rgba(55,240,207,.16); box-shadow: inset 0 0 0 1px var(--cyan); color: var(--mint); }
+
+    .al-cal { padding: 18px; border-radius: 18px; }
+    .al-cal-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+    .al-cal-head h2 { font: 700 1.2rem var(--display); }
+    .al-cal-head span { font-size: .85rem; color: var(--text-dim); }
+    .al-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+    .al-wd { text-align: center; font: 600 .7rem var(--mono); letter-spacing: .08em; color: var(--text-dim); padding: 4px 0; }
+    .al-wd.sun { color: var(--cinnabar); }
+    .al-c { position: relative; aspect-ratio: 1 / .9; border: 0; border-radius: 12px; background: rgba(255,255,255,.03); color: var(--text); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font: inherit; }
+    .al-c:hover { background: rgba(55,240,207,.08); }
+    .al-c b { font: 600 1.05rem var(--display); }
+    .al-c i { font-style: normal; font: 500 .66rem var(--mono); color: var(--text-dim); }
+    .al-c.first i { color: var(--cinnabar); font-weight: 600; }
+    .al-c.full i { color: var(--brass); }
+    .al-c.other { opacity: .32; }
+    .al-c.sun b { color: #ff8a78; }
+    .al-c.today { box-shadow: inset 0 0 0 1px var(--brass); }
+    .al-c.sel { background: rgba(55,240,207,.18); box-shadow: inset 0 0 0 1px var(--cyan); }
+    .al-c .tk { position: absolute; top: 4px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: var(--brass); }
+    .al-legend { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 14px; font-size: .75rem; color: var(--text-dim); }
+    .al-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+    .al-conv { margin-top: 16px; padding: 18px 20px; border-radius: 18px; }
+    .al-conv h2 { font: 700 1.05rem var(--display); margin-bottom: 10px; }
+    .al-conv form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .al-conv input[type="number"] { width: 84px; padding: 9px 12px; font: 500 .95rem var(--mono); color: var(--text); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; }
+    .al-conv label { font-size: .88rem; color: var(--text-dim); display: inline-flex; gap: 6px; align-items: center; }
+    .al-conv output { display: block; margin-top: 10px; font-size: .95rem; }
+    .al-conv output b { color: var(--cyan); }
+    .al-note { margin-top: 28px; font-size: .88rem; line-height: 1.7; color: var(--text-dim); max-width: 760px; }
+    .al-note p + p { margin-top: 10px; }
+    .al-note b { color: var(--text); }
+    @media (max-width: 860px) { .al-main { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) { .al { padding-top: 88px; } .al-cal { padding: 12px; } .al-grid { gap: 3px; } .al-c b { font-size: .95rem; } .al-c i { font-size: .6rem; } }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Âm lịch</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="al">
+    <p class="ud-kicker">Âm lịch & Can Chi</p>
+    <h1 class="ud-title">Lịch của Mặt Trăng, <span class="accent">giờ của Việt Nam</span></h1>
+    <p class="al-lede">Chọn một ngày bất kỳ để xem ngày âm, Can Chi của năm, tháng, ngày, giờ, tiết khí và các giờ hoàng đạo. Mọi phép tính đều theo múi giờ Việt Nam.</p>
+
+    <div class="al-bar">
+      <input type="date" id="pick" aria-label="Chọn ngày dương lịch" />
+      <button class="ud-btn" id="prev" type="button">‹ Tháng trước</button>
+      <button class="ud-btn" id="today" type="button">Hôm nay</button>
+      <button class="ud-btn" id="next" type="button">Tháng sau ›</button>
+    </div>
+
+    <div class="al-main">
+      <section class="ud-panel al-day" aria-live="polite">
+        <p class="al-sol" id="sol"></p>
+        <p class="al-big" id="lday"></p>
+        <p class="al-mon" id="lmon"></p>
+        <p class="al-yr" id="lyr"></p>
+        <dl class="al-rows" id="rows"></dl>
+        <div class="al-hd"><p>Giờ hoàng đạo</p><div id="hd"></div></div>
+      </section>
+
+      <div>
+        <section class="ud-panel al-cal">
+          <div class="al-cal-head"><h2 id="calt"></h2><span id="cals"></span></div>
+          <div class="al-grid" id="grid"></div>
+          <div class="al-legend">
+            <span><i style="background:var(--cinnabar)"></i>Mùng một</span>
+            <span><i style="background:var(--brass)"></i>Rằm, đầu tiết khí</span>
+          </div>
+        </section>
+        <section class="ud-panel al-conv">
+          <h2>Đổi ngày âm sang dương</h2>
+          <form id="conv">
+            <input type="number" id="cd" min="1" max="30" value="1" aria-label="Ngày âm" />
+            <input type="number" id="cm" min="1" max="12" value="1" aria-label="Tháng âm" />
+            <input type="number" id="cy" min="1800" max="2199" aria-label="Năm âm" style="width:100px" />
+            <label><input type="checkbox" id="cl" /> Tháng nhuận</label>
+            <button class="ud-btn" type="submit">Đổi</button>
+          </form>
+          <output id="cout"></output>
+        </section>
+      </div>
+    </div>
+
+    <div class="al-note">
+      <p><b>Vì sao phải nói rõ múi giờ?</b> Tháng âm bắt đầu vào ngày có trăng mới. Nếu trăng mới rơi vào khoảng nửa đêm, Hà Nội (GMT+7) và Bắc Kinh (GMT+8) có thể ghi sang hai ngày khác nhau. Năm 1985, Tết ở Việt Nam là ngày 21/1, còn Tết ở Trung Quốc là ngày 20/2, lệch nhau đúng một tháng.</p>
+      <p><b>Con giáp Việt Nam</b> có Mèo thay cho Thỏ, Trâu thay cho Bò. Năm âm được tính từ Tết, nên người sinh tháng Một dương lịch thường vẫn thuộc con giáp của năm trước.</p>
+      <p>Cách tính dựa trên thuật toán âm lịch Việt Nam của Hồ Ngọc Đức, dùng được cho các năm từ 1800 đến 2199.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script src="/am-lich/lich.js"></script>
+<script>
+(() => {
+  const L = window.AmLich;
+  const $ = (id) => document.getElementById(id);
+  const THANG = ['', 'Giêng', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười', 'Mười một', 'Chạp'];
+  const THU = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+  const GIO = ['23–1', '1–3', '3–5', '5–7', '7–9', '9–11', '11–13', '13–15', '15–17', '17–19', '19–21', '21–23'];
+  $('y').textContent = new Date().getFullYear();
+
+  // Giờ Việt Nam hiện tại
+  const vnNow = () => { const d = new Date(Date.now() + 7 * 3600e3); return { d: d.getUTCDate(), m: d.getUTCMonth() + 1, y: d.getUTCFullYear(), h: d.getUTCHours() }; };
+  const now = vnNow();
+  let sel = { d: now.d, m: now.m, y: now.y };
+  const dow = (jd) => (jd + 1) % 7;   // 0 = Chủ nhật
+  const daysIn = (m, y) => new Date(Date.UTC(y, m, 0)).getUTCDate();
+  const pad = (n) => String(n).padStart(2, '0');
+  const isToday = (d, m, y) => d === now.d && m === now.m && y === now.y;
+
+  function show() {
+    const { d, m, y } = sel;
+    const jd = L.jdFromDate(d, m, y);
+    const [ld, lm, ly, leap] = L.solar2lunar(d, m, y);
+    $('pick').value = `${y}-${pad(m)}-${pad(d)}`;
+    $('sol').textContent = `${THU[dow(jd)]}, ${d}/${m}/${y}`;
+    $('lday').textContent = ld;
+    $('lmon').innerHTML = `tháng ${THANG[lm]}${leap ? '<span class="leap">nhuận</span>' : ''}`;
+    const chiY = (ly + 8) % 12;
+    $('lyr').textContent = `năm ${L.canChiNam(ly)} · con ${L.GIAP[chiY]}`;
+    const tk = L.tietKhi(jd), tkPrev = L.tietKhi(jd - 1);
+    const today = isToday(d, m, y);
+    const hourChi = Math.floor(((now.h + 1) % 24) / 2);
+    let rows = `
+      <dt>Năm</dt><dd><b>${L.canChiNam(ly)}</b></dd>
+      <dt>Tháng</dt><dd><b>${L.canChiThang(lm, ly)}</b>${leap ? ' <small>(tháng nhuận)</small>' : ''}</dd>
+      <dt>Ngày</dt><dd><b>${L.canChiNgay(jd)}</b></dd>`;
+    if (today) rows += `<dt>Giờ này</dt><dd><b>${L.canChiGio(jd, hourChi)}</b> <small>(${GIO[hourChi]} giờ)</small></dd>`;
+    rows += `<dt>Tiết khí</dt><dd><b>${tk}</b>${tk !== tkPrev ? ' <small>· bắt đầu hôm nay</small>' : ''}</dd>`;
+    $('rows').innerHTML = rows;
+    $('hd').innerHTML = L.gioHoangDao(jd).map((c) => { const i = L.CHI.indexOf(c); return `<span${today && i === hourChi ? ' class="now"' : ''}>${c} · ${GIO[i]}h</span>`; }).join('');
+    $('cy').value = $('cy').value || ly;
+    cal();
+  }
+
+  function cal() {
+    const { m, y } = sel;
+    const first = L.jdFromDate(1, m, y);
+    const lead = (dow(first) + 6) % 7;             // tuần bắt đầu từ thứ hai
+    const n = daysIn(m, y);
+    $('calt').textContent = `Tháng ${m}/${y}`;
+    const a = L.solar2lunar(1, m, y), b = L.solar2lunar(n, m, y);
+    $('cals').textContent = a[1] === b[1] ? `tháng ${THANG[a[1]]} âm lịch` : `tháng ${THANG[a[1]]} – ${THANG[b[1]]} âm lịch`;
+    let html = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].map((w, i) => `<div class="al-wd${i === 6 ? ' sun' : ''}">${w}</div>`).join('');
+    const total = Math.ceil((lead + n) / 7) * 7;
+    for (let i = 0; i < total; i++) {
+      const jd = first - lead + i;
+      const [sd, sm, sy] = L.jdToDate(jd);
+      const [ld, lm, , leap] = L.solar2lunar(sd, sm, sy);
+      const cls = ['al-c'];
+      if (sm !== m) cls.push('other');
+      if (ld === 1) cls.push('first'); else if (ld === 15) cls.push('full');
+      if (dow(jd) === 0) cls.push('sun');
+      if (isToday(sd, sm, sy)) cls.push('today');
+      if (sd === sel.d && sm === sel.m && sy === sel.y) cls.push('sel');
+      const tkStart = L.tietKhi(jd) !== L.tietKhi(jd - 1);
+      const lab = ld === 1 ? `${ld}/${lm}${leap ? 'N' : ''}` : ld;
+      html += `<button type="button" class="${cls.join(' ')}" data-d="${sd}" data-m="${sm}" data-y="${sy}" title="${ld}/${lm}${leap ? ' nhuận' : ''} âm lịch${tkStart ? ' · ' + L.tietKhi(jd) : ''}">${tkStart ? '<span class="tk"></span>' : ''}<b>${sd}</b><i>${lab}</i></button>`;
+    }
+    $('grid').innerHTML = html;
+  }
+
+  $('grid').onclick = (e) => { const b = e.target.closest('[data-d]'); if (!b) return; sel = { d: +b.dataset.d, m: +b.dataset.m, y: +b.dataset.y }; show(); };
+  $('pick').onchange = () => { const [y, m, d] = $('pick').value.split('-').map(Number); if (y) { sel = { d, m, y }; show(); } };
+  const shift = (k) => { let m = sel.m + k, y = sel.y; if (m < 1) { m = 12; y--; } if (m > 12) { m = 1; y++; } sel = { d: Math.min(sel.d, daysIn(m, y)), m, y }; show(); };
+  $('prev').onclick = () => shift(-1);
+  $('next').onclick = () => shift(1);
+  $('today').onclick = () => { sel = { d: now.d, m: now.m, y: now.y }; show(); };
+  $('conv').onsubmit = (e) => {
+    e.preventDefault();
+    const d = +$('cd').value, m = +$('cm').value, y = +$('cy').value, leap = $('cl').checked ? 1 : 0;
+    const r = d >= 1 && d <= 30 && m >= 1 && m <= 12 ? L.lunar2solar(d, m, y, leap) : null;
+    if (!r) { $('cout').innerHTML = leap ? `Năm ${y} không có tháng ${m} nhuận.` : 'Ngày không hợp lệ.'; return; }
+    const back = L.solar2lunar(r[0], r[1], r[2]);
+    if (back[0] !== d) { $('cout').textContent = `Tháng ${THANG[m]} năm ${y} không có ngày ${d}.`; return; }
+    const lm = L.leapMonthOf(y);
+    $('cout').innerHTML = `Ngày ${d} tháng ${THANG[m]}${leap ? ' nhuận' : ''} năm ${L.canChiNam(y)} là <b>${THU[dow(L.jdFromDate(...r))]}, ${r[0]}/${r[1]}/${r[2]}</b>.${lm ? ` Năm này có tháng ${THANG[lm]} nhuận.` : ''}`;
+    sel = { d: r[0], m: r[1], y: r[2] }; show();
+  };
+  const h = location.hash.slice(1).split('-').map(Number);
+  if (h.length === 3 && h.every((x) => x > 0)) sel = { y: h[0], m: h[1], d: h[2] };
+  show();
+})();
+</script>
+</body>
+</html>

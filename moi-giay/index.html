@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mỗi giây trên Trái Đất · Bienac</title>
+  <meta name="description" content="Từ lúc bạn mở trang này, Trái Đất đã bay bao xa, bao nhiêu tia sét đã đánh xuống, bao nhiêu em bé chào đời? Những con số chạy theo từng giây." />
+  <meta property="og:title" content="Mỗi giây trên Trái Đất · Bienac" />
+  <meta property="og:description" content="Những con số chạy theo từng giây kể từ lúc bạn mở trang." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .mg { max-width: 1080px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .mg-lede { margin-top: 10px; color: var(--text-dim); line-height: 1.7; max-width: 640px; }
+    .mg-clock { margin-top: 22px; display: inline-flex; align-items: baseline; gap: 10px; padding: 10px 18px; border-radius: 999px; background: rgba(55,240,207,.08); border: 1px solid rgba(55,240,207,.3); }
+    .mg-clock b { font: 600 1.6rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
+    .mg-clock span { color: var(--text-dim); font-size: .9rem; }
+    .mg-grid { margin-top: 26px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+    .mg-card { padding: 18px 20px 20px; border-radius: 18px; }
+    .mg-card .k { font: 600 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .mg-card .n { margin-top: 8px; font: 600 clamp(1.7rem, 3.4vw, 2.2rem)/1.1 var(--mono); color: var(--text); font-variant-numeric: tabular-nums; word-break: break-word; }
+    .mg-card .u { font: 500 .9rem 'Be Vietnam Pro', sans-serif; color: var(--cyan); margin-left: 6px; }
+    .mg-card p { margin-top: 10px; font-size: .88rem; line-height: 1.6; color: var(--text-dim); }
+    .mg-card .r { margin-top: 8px; font: 500 .74rem var(--mono); color: var(--text-dim); opacity: .8; }
+    .mg-note { margin-top: 30px; font-size: .8rem; line-height: 1.6; color: var(--text-dim); }
+    .mg-tabs { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .mg-tabs button { padding: 7px 14px; border-radius: 999px; font: 600 .8rem 'Be Vietnam Pro', sans-serif; color: var(--text-dim); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); cursor: pointer; }
+    .mg-tabs button[aria-pressed="true"] { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Mỗi giây</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="mg">
+    <p class="ud-kicker">Mỗi giây trên Trái Đất</p>
+    <h1 class="ud-title">Trong lúc bạn <span class="accent">đọc dòng này</span></h1>
+    <p class="mg-lede">Bạn đang ngồi yên, nhưng thật ra đang lao đi trong không gian nhanh hơn viên đạn hàng trăm lần. Những con số dưới đây chạy từ lúc bạn mở trang.</p>
+    <p class="mg-clock"><b id="t">0</b><span>giây kể từ khi bạn mở trang</span></p>
+
+    <div class="mg-tabs" role="group" aria-label="Đếm theo">
+      <button data-mode="open" aria-pressed="true">Từ lúc mở trang</button>
+      <button data-mode="day" aria-pressed="false">Từ nửa đêm hôm nay</button>
+      <button data-mode="year" aria-pressed="false">Từ đầu năm</button>
+    </div>
+
+    <div class="mg-grid" id="grid"></div>
+
+    <p class="mg-note">Các con số là ước lượng trung bình, làm tròn từ nguồn khoa học phổ biến: NASA (tần suất sét toàn cầu khoảng 44 tia mỗi giây), Liên Hợp Quốc (khoảng 132 triệu ca sinh và 62 triệu ca tử mỗi năm), các giá trị thiên văn và vật lý chuẩn. Vận tốc tự quay tính ở vĩ độ Hà Nội (21° Bắc).</p>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+<script>
+(() => {
+  document.getElementById('y').textContent = new Date().getFullYear();
+  // [nhóm, tiêu đề, số mỗi giây, đơn vị, giải thích, số chữ số thập phân]
+  const ITEMS = [
+    ['Chuyển động', 'Trái Đất bay quanh Mặt Trời', 29.78, 'km', 'Vận tốc quỹ đạo trung bình của Trái Đất: gần 30 km mỗi giây, khoảng 107.000 km/h.', 0],
+    ['Chuyển động', 'Hệ Mặt Trời quay quanh tâm Ngân Hà', 230, 'km', 'Mất khoảng 230 triệu năm để đi hết một vòng. Lần trước ta ở vị trí này, khủng long còn chưa xuất hiện.', 0],
+    ['Chuyển động', 'Hà Nội quay theo Trái Đất', 0.434, 'km', 'Ở xích đạo mặt đất quay khoảng 465 m/s; ở vĩ độ Hà Nội còn khoảng 434 m/s, vẫn nhanh hơn máy bay chở khách.', 1],
+    ['Ánh sáng', 'Ánh sáng đi được', 299792.458, 'km', 'Tốc độ ánh sáng trong chân không: đúng 299.792.458 m/s, theo định nghĩa của mét.', 0],
+    ['Bầu trời', 'Tia sét đánh xuống', 44, 'tia', 'Theo vệ tinh của NASA, toàn cầu có khoảng 44 tia sét mỗi giây, phần lớn trên đất liền vùng nhiệt đới.', 0],
+    ['Bầu trời', 'Nước mưa rơi xuống', 16000000, 'tấn', 'Mỗi năm Trái Đất nhận khoảng 505.000 km³ mưa và tuyết, tức chừng 16 triệu tấn nước mỗi giây.', 0],
+    ['Con người', 'Em bé chào đời', 4.2, 'em bé', 'Khoảng 132 triệu ca sinh mỗi năm trên toàn thế giới.', 0],
+    ['Con người', 'Người qua đời', 1.96, 'người', 'Khoảng 62 triệu ca tử vong mỗi năm.', 0],
+    ['Cơ thể bạn', 'Hồng cầu mới được tạo ra', 2400000, 'tế bào', 'Tủy xương người trưởng thành tạo ra khoảng 2 đến 3 triệu hồng cầu mỗi giây để thay những hồng cầu già.', 0],
+    ['Cơ thể bạn', 'Nhịp tim', 1.17, 'nhịp', 'Tính với nhịp tim nghỉ khoảng 70 lần mỗi phút.', 0],
+    ['Mặt Trời', 'Khối lượng Mặt Trời biến thành năng lượng', 4260000, 'tấn', 'Theo E = mc², Mặt Trời mất khoảng 4,26 triệu tấn khối lượng mỗi giây để tỏa sáng.', 0],
+    ['Mặt Trời', 'Neutrino xuyên qua 1 cm² da bạn', 6.5e10, 'hạt', 'Neutrino từ lõi Mặt Trời đi xuyên qua người bạn, xuyên cả Trái Đất, gần như không chạm vào thứ gì.', 0],
+  ];
+  const grid = document.getElementById('grid');
+  grid.innerHTML = ITEMS.map((it, i) => `
+    <article class="ud-panel mg-card">
+      <p class="k">${it[0]}</p>
+      <p class="n"><span id="v${i}">0</span><span class="u">${it[3]}</span></p>
+      <p>${it[1]}. ${it[4]}</p>
+      <p class="r">${fmt(it[2], it[2] < 10 ? 2 : 0)} ${it[3]} mỗi giây</p>
+    </article>`).join('');
+  function fmt(x, d) {
+    if (x >= 1e15) return x.toExponential(2).replace('e+', ' × 10^');
+    return x.toLocaleString('vi-VN', { maximumFractionDigits: d, minimumFractionDigits: d });
+  }
+  let mode = 'open';
+  const t0 = performance.now();
+  function since() {
+    const now = new Date();
+    if (mode === 'open') return (performance.now() - t0) / 1000;
+    const vn = new Date(now.getTime() + (now.getTimezoneOffset() + 420) * 60000);   // giờ Việt Nam
+    const start = mode === 'day' ? new Date(vn.getFullYear(), vn.getMonth(), vn.getDate()) : new Date(vn.getFullYear(), 0, 1);
+    return (vn - start) / 1000;
+  }
+  document.querySelectorAll('[data-mode]').forEach((b) => b.onclick = () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll('[data-mode]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  });
+  const els = ITEMS.map((_, i) => document.getElementById('v' + i));
+  const tEl = document.getElementById('t');
+  function tick() {
+    const s = since();
+    tEl.textContent = s.toLocaleString('vi-VN', { maximumFractionDigits: 0 });
+    ITEMS.forEach((it, i) => {
+      const v = it[2] * s;
+      els[i].textContent = fmt(v, it[5]);
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

@@ -558,5 +558,50 @@ body.home .fx-switcher, body.home .phys-bubble, body.home .phys-menu { z-index: 
 .about-bank { font: 600 1rem var(--mono); color: var(--text) !important; }
 .about-pay { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
 .about-pay .btn { padding: 9px 16px; font-size: .8rem; }
-@media (max-width: 720px) { body.home .fx-switcher { bottom: 96px; } }
+@media (max-width: 720px) { body.home .fx-switcher { bottom: 22px; } body.home .fx-options.collapsed { display: none; } }
 .about-pay .btn { margin-top: 0 !important; }
+
+/* Hàng nút lọc ô theo chủ đề + lưới 5 cột khi nhiều ô */
+.app-filter { margin-top: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; position: relative; z-index: 2; }
+.app-filter button { padding: 7px 14px; font: 600 .78rem 'Be Vietnam Pro', sans-serif; color: var(--text-dim); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 999px; cursor: pointer; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.app-filter button:hover { color: var(--text); }
+.app-filter button[aria-pressed="true"] { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
+body.home .apps-stage { width: min(100%, 1120px); margin-top: 16px; }
+body.home .app-grid { grid-template-columns: repeat(5, 1fr); }
+.app[hidden] { display: none !important; }
+@media (max-width: 1100px) { body.home .app-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 860px) { body.home .app-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px) { .app-filter { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; width: 100%; padding-bottom: 4px; scrollbar-width: none; } .app-filter button { flex: none; } }
+
+/* ---- Đầu trang cân đối lại (24/10 17:00) ---- */
+body.home #fx-canvas { opacity: .5; }
+body.home .hero::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 260px; z-index: 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(6,7,11,.92), rgba(6,7,11,.6) 55%, rgba(6,7,11,0)); }
+body.home .hero > * { position: relative; z-index: 1; }
+body.home .hero { position: relative; padding-top: 28px !important; gap: 0; }
+.hero-head { text-align: center; }
+body.home .hero-tagline { font: 600 clamp(1.4rem, 3vw, 2rem)/1.2 var(--display); letter-spacing: .01em; color: var(--text); margin: 0; }
+body.home .hero-sub { margin-top: 8px; font-size: .74rem; letter-spacing: .32em; }
+.hero-bar { margin-top: 22px; width: min(100%, 680px); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px;
+  background: rgba(10, 14, 18, .72); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+.hero-bar .search { flex: 1; margin: 0; width: auto; }
+.hero-bar .search input { background: transparent; border: 0; backdrop-filter: none; -webkit-backdrop-filter: none; padding: 11px 14px 11px 44px; }
+.hero-bar .search input:focus { border: 0; box-shadow: none; }
+.hero-bar:focus-within { border-color: rgba(55,240,207,.6); }
+.hero-bar .hero-cta { margin: 0; flex: none; padding: 11px 20px; font-size: .82rem; gap: 8px; }
+body.home .app-filter { margin-top: 16px; }
+body.home .app-filter button { background: rgba(10,14,18,.66); }
+/* ô kính tối hơn để chữ luôn rõ trên nền sáng */
+body.home .app { background: linear-gradient(160deg, rgba(20, 28, 32, .72), rgba(8, 10, 14, .62)) !important; border-color: rgba(255,255,255,.12); }
+body.home .app:hover, body.home .app:focus-visible { background: linear-gradient(160deg, rgba(55,240,207,.2), rgba(8,10,14,.6)) !important; }
+body.home .app-desc { color: rgba(236,230,214,.62); }
+@media (max-width: 720px) {
+  body.home .hero { padding-top: 20px !important; }
+  .hero-bar { margin-top: 16px; }
+  .hero-bar .hero-cta { padding: 10px 14px; }
+  .hero-bar .hero-cta span { display: none; }
+  .hero-bar .search input { padding-left: 40px; font-size: .9rem; }
+}
+body.home .hero > .hero-bar { z-index: 5; }
+@media (max-width: 720px) { .hero-bar .hero-cta span { display: inline; } .hero-bar .hero-cta { font-size: .72rem; padding: 10px 12px; } .hero-bar .search input::placeholder { font-size: .85rem; } }
+body.home .app-filter button[aria-pressed="true"] { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
