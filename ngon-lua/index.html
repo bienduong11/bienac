@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ngọn lửa màu · Bienac</title>
+  <meta name="description" content="Rắc muối của mỗi kim loại vào lửa, ngọn lửa đổi màu: đỏ của liti, vàng của natri, xanh lục của hàn the. Xem màu lửa và vạch quang phổ của từng nguyên tố." />
+  <meta property="og:title" content="Ngọn lửa màu · Bienac" />
+  <meta property="og:description" content="Mỗi nguyên tố nhuộm ngọn lửa một màu riêng. Xem vì sao." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .nl { max-width: 1080px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .nl-lede { margin-top: 10px; color: var(--text-dim); line-height: 1.7; max-width: 660px; }
+    .nl-pick { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .nl-pick button { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; font: 600 .85rem 'Be Vietnam Pro', sans-serif; color: var(--text); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); cursor: pointer; }
+    .nl-pick button i { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+    .nl-pick button[aria-pressed="true"] { border-color: var(--cyan); background: rgba(55,240,207,.12); }
+    .nl-pick button.b2[aria-pressed="true"] { border-color: var(--brass); background: rgba(201,166,80,.14); }
+    .nl-tools { margin-top: 12px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; color: var(--text-dim); font-size: .88rem; }
+    .nl-tools .ud-btn { border-radius: 999px; clip-path: none; }
+    .nl-stage { margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .nl-stage.two { grid-template-columns: 1fr 1fr; }
+    .nl-card { padding: 16px; border-radius: 20px; }
+    .nl-card h2 { font: 700 1.25rem/1.2 var(--display); display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .nl-card h2 small { font: 500 .78rem var(--mono); color: var(--text-dim); letter-spacing: .06em; }
+    .nl-card .col { margin-top: 4px; font-size: .92rem; color: var(--text-dim); }
+    .nl-flame { margin-top: 12px; width: 100%; height: 340px; display: block; border-radius: 16px; background: radial-gradient(80% 70% at 50% 80%, #120c0a, #050506 70%); }
+    .nl-spec-k { margin-top: 14px; font: 600 .64rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .nl-spec { margin-top: 6px; width: 100%; height: 64px; display: block; border-radius: 12px; }
+    .nl-ax { position: relative; height: 14px; font: 500 .62rem var(--mono); color: var(--text-dim); margin-top: 4px; }
+    .nl-ax span { position: absolute; top: 0; } .nl-ax span:not(:first-child):not(:last-child) { transform: translateX(-50%); }
+    .nl-lines { margin-top: 8px; font: 500 .78rem var(--mono); color: var(--text-dim); line-height: 1.6; }
+    .nl-note { margin-top: 10px; font-size: .9rem; line-height: 1.6; color: var(--text-dim); }
+    .nl-grid { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+    .nl-box { padding: 20px 22px; border-radius: 20px; }
+    .nl-box h3 { font: 700 1.1rem var(--display); margin-bottom: 8px; }
+    .nl-box p { font-size: .93rem; line-height: 1.7; color: var(--text-dim); }
+    .nl-box p + p { margin-top: 8px; }
+    .nl-box b { color: var(--text); }
+    .nl-box a { color: var(--cyan); }
+    .nl-steps { margin-top: 10px; display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .nl-steps div { padding: 10px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); font-size: .82rem; line-height: 1.5; color: var(--text-dim); }
+    .nl-steps b { display: block; font: 600 .7rem var(--mono); letter-spacing: .1em; color: var(--cyan); margin-bottom: 4px; }
+    .nl-vid { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; margin-top: 12px; padding: 10px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); text-decoration: none; }
+    .nl-vid img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; }
+    .nl-vid span { color: var(--text); font-weight: 600; font-size: .92rem; }
+    .nl-vid small { display: block; color: var(--text-dim); font-weight: 400; font-size: .78rem; margin-top: 2px; }
+    @media (max-width: 760px) {
+      .nl-stage.two { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .nl-stage.two .nl-card { padding: 10px; }
+      .nl-stage.two .nl-flame { height: 230px; }
+      .nl-stage.two .nl-lines, .nl-stage.two .nl-note { display: none; }
+      .nl-flame { height: 280px; }
+      .nl-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="ud" data-nen="hat">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Ngọn lửa màu</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="nl">
+    <p class="ud-kicker">Thử lửa</p>
+    <h1 class="ud-title">Mỗi kim loại <span class="accent">một màu lửa</span></h1>
+    <p class="nl-lede">Rắc một chút muối của kim loại vào ngọn lửa, lửa lập tức đổi màu. Màu ấy giống như dấu vân tay: nhìn màu đoán được nguyên tố. Chọn một nguyên tố để đốt thử.</p>
+
+    <div class="nl-pick" id="pick" role="group" aria-label="Chọn nguyên tố"></div>
+    <div class="nl-tools">
+      <button class="ud-btn" id="cmp" type="button" aria-pressed="false">So sánh hai nguyên tố</button>
+      <span id="cmp-hint" hidden>Bấm thêm một nguyên tố để đặt cạnh nhau.</span>
+    </div>
+
+    <section class="nl-stage" id="stage"></section>
+
+    <div class="nl-grid">
+      <article class="ud-panel nl-box">
+        <h3>Vì sao lửa đổi màu?</h3>
+        <p>Nhiệt của ngọn lửa đẩy electron trong nguyên tử kim loại lên một mức năng lượng cao hơn. Chúng không ở đó lâu mà rơi ngay về chỗ cũ, nhả phần năng lượng thừa ra dưới dạng ánh sáng.</p>
+        <div class="nl-steps">
+          <div><b>1 · NHẬN NHIỆT</b>Electron hấp thụ năng lượng từ ngọn lửa.</div>
+          <div><b>2 · NHẢY LÊN</b>Electron lên một mức năng lượng cao hơn.</div>
+          <div><b>3 · RƠI XUỐNG</b>Electron rơi về, phát ra ánh sáng đúng một bước sóng.</div>
+        </div>
+        <p style="margin-top:10px">Khoảng cách giữa các mức năng lượng ở mỗi nguyên tố mỗi khác, nên mỗi nguyên tố phát ra những bước sóng riêng. Mắt ta trộn các vạch sáng ấy lại thành một màu.</p>
+      </article>
+      <article class="ud-panel nl-box">
+        <h3>Pháo hoa, đèn đường và các vì sao</h3>
+        <p><b>Pháo hoa</b> dùng đúng nguyên lý này: muối stronti cho màu đỏ, bari cho màu lục, đồng cho màu lam, natri cho màu vàng.</p>
+        <p><b>Đèn đường hơi natri</b> có ánh vàng cam đặc trưng vì chỉ phát ra hai vạch gần 589 nm.</p>
+        <p>Phân tích vạch quang phổ cũng là cách các nhà thiên văn biết một ngôi sao cách hàng trăm năm ánh sáng được làm từ những gì. Xem thêm từng nguyên tố ở <a href="/elements.html">Bảng tuần hoàn</a>.</p>
+      </article>
+      <article class="ud-panel nl-box">
+        <h3>Ngọn lửa xanh của hàn the</h3>
+        <p>Hàn the (natri tetraborat) chứa bo. Đốt lên, ngọn lửa có viền xanh lục rất rõ. Đó là một cách thử đơn giản để nhận ra hàn the trộn lén trong thực phẩm.</p>
+        <a class="nl-vid" href="https://www.youtube.com/watch?v=pMWjwZhdMvY" target="_blank" rel="noopener">
+          <img src="https://i.ytimg.com/vi/pMWjwZhdMvY/mqdefault.jpg" alt="" loading="lazy" />
+          <span>Ngọn Lửa Của Hàn The<small>Video trên kênh Bienac</small></span>
+        </a>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+<script>
+(() => {
+  document.getElementById('y').textContent = new Date().getFullYear();
+  /* ------------------------------------------------------------ DỮ LIỆU
+   * col: màu ngọn lửa (gần đúng, để vẽ)
+   * lines: vạch phát xạ chính [bước sóng nm, độ mạnh 0–1, 'b' nếu là dải phân tử]
+   * Vạch nguyên tử theo NIST; với Ca, Sr, Ba, Cu, B màu lửa chủ yếu do dải phân tử
+   * (CaOH, SrOH, BaCl/BaOH, CuCl, BO₂) nên vẽ thành dải rộng hơn.
+   */
+  const EL = [
+    { s: 'Li', n: 'Liti', z: 3, name: 'đỏ thẫm', col: [235, 30, 60], lines: [[670.8, 1], [610.4, 0.25], [460.3, 0.08]], note: 'Vạch đỏ 670,8 nm rất mạnh lấn át mọi vạch khác. Liti cũng có trong pin điện thoại của bạn.' },
+    { s: 'Na', n: 'Natri', z: 11, name: 'vàng cam', col: [255, 175, 30], lines: [[589.0, 1], [589.6, 0.9]], note: 'Hai vạch vàng sát nhau 589,0 và 589,6 nm. Chỉ một chút muối ăn dính tay cũng đủ nhuộm vàng ngọn lửa, nên natri hay che mất màu của nguyên tố khác.' },
+    { s: 'K', n: 'Kali', z: 19, name: 'tím hoa cà nhạt', col: [190, 120, 255], lines: [[766.5, 1], [769.9, 0.9], [404.4, 0.35], [404.7, 0.3]], note: 'Hai vạch mạnh nhất 766 và 770 nm nằm sát rìa đỏ, mắt khó thấy; ta chủ yếu thấy vạch tím 404 nm, nên lửa có màu tím nhạt.' },
+    { s: 'Ca', n: 'Canxi', z: 20, name: 'đỏ cam (đỏ gạch)', col: [255, 95, 35], lines: [[622, 1, 'b'], [554, 0.6, 'b'], [422.7, 0.35]], note: 'Màu đỏ gạch chủ yếu đến từ dải sáng của phân tử CaOH quanh 622 nm và dải lục quanh 554 nm, cộng với vạch tím 422,7 nm của nguyên tử canxi.' },
+    { s: 'Sr', n: 'Stronti', z: 38, name: 'đỏ son', col: [255, 20, 40], lines: [[606, 0.8, 'b'], [646, 0.9, 'b'], [662, 1, 'b'], [682, 0.6, 'b'], [460.7, 0.4]], note: 'Màu đỏ rực trong pháo hoa. Phần lớn ánh sáng đến từ dải phân tử SrOH và SrCl ở vùng đỏ 600–690 nm.' },
+    { s: 'Ba', n: 'Bari', z: 56, name: 'lục nhạt', col: [150, 255, 90], lines: [[514, 0.8, 'b'], [524, 0.9, 'b'], [532, 0.8, 'b'], [553.5, 1]], note: 'Pháo hoa xanh lá thường dùng muối bari. Ánh lục đến từ vạch 553,5 nm và các dải phân tử BaCl, BaOH quanh 510–535 nm.' },
+    { s: 'Cu', n: 'Đồng', z: 29, name: 'xanh lam lục', col: [40, 220, 200], lines: [[428, 0.7, 'b'], [435, 0.8, 'b'], [443, 0.8, 'b'], [452, 0.6, 'b'], [510.6, 0.7], [515.3, 0.6], [521.8, 0.8]], note: 'Muối đồng clorua cho ngọn lửa xanh lam nhờ các dải phân tử CuCl ở 420–455 nm; muối đồng khác cho màu lục nhiều hơn với các vạch 510–522 nm.' },
+    { s: 'B', n: 'Bo (hàn the)', z: 5, name: 'xanh lục', col: [80, 255, 120], lines: [[471, 0.5, 'b'], [493, 0.8, 'b'], [518, 1, 'b'], [548, 0.9, 'b'], [580, 0.4, 'b']], note: 'Ngọn lửa xanh lục của bo đến từ các dải sáng của phân tử BO₂ quanh 470–580 nm, mạnh nhất gần 518 và 548 nm. Đây chính là màu lửa khi đốt hàn the.' },
+    { s: 'Cs', n: 'Xesi', z: 55, name: 'xanh tím', col: [120, 140, 255], lines: [[455.5, 1], [459.3, 0.6], [852.1, 1], [894.3, 0.8]], note: 'Hai vạch xanh lam 455,5 và 459,3 nm cho màu lửa. Năm 1860, Bunsen và Kirchhoff tìm ra xesi chính nhờ hai vạch này; tên của nó gốc Latinh nghĩa là xanh da trời.' },
+    { s: 'Rb', n: 'Rubiđi', z: 37, name: 'tím đỏ', col: [220, 60, 160], lines: [[780.0, 1], [794.8, 0.8], [420.2, 0.4], [421.6, 0.3]], note: 'Hai vạch mạnh 780 và 795 nm nằm gần như ngoài vùng nhìn thấy, cùng vạch tím 420 nm cho lửa màu tím đỏ. Tên rubiđi gốc Latinh nghĩa là đỏ thẫm.' },
+  ];
+
+  // bước sóng → màu (gần đúng, theo Dan Bruton)
+  function wl2rgb(w) {
+    let r = 0, g = 0, b = 0;
+    if (w >= 380 && w < 440) { r = -(w - 440) / 60; b = 1; }
+    else if (w < 490) { g = (w - 440) / 50; b = 1; }
+    else if (w < 510) { g = 1; b = -(w - 510) / 20; }
+    else if (w < 580) { r = (w - 510) / 70; g = 1; }
+    else if (w < 645) { r = 1; g = -(w - 645) / 65; }
+    else if (w <= 780) { r = 1; }
+    let f = 1;
+    if (w < 420) f = 0.3 + 0.7 * (w - 380) / 40; else if (w > 700) f = 0.3 + 0.7 * (780 - w) / 80;
+    if (w < 380 || w > 780) f = 0;
+    return [Math.round(255 * Math.pow(r * f, 0.8)), Math.round(255 * Math.pow(g * f, 0.8)), Math.round(255 * Math.pow(b * f, 0.8))];
+  }
+
+  const $ = (id) => document.getElementById(id);
+  let sel = [0], compare = false;
+  const flames = [];
+
+  function renderPick() {
+    $('pick').innerHTML = EL.map((e, i) => {
+      const k = sel.indexOf(i);
+      return `<button data-i="${i}" class="${k === 1 ? 'b2' : ''}" aria-pressed="${k >= 0}"><i style="background:rgb(${e.col});color:rgb(${e.col})"></i>${e.s} · ${e.n}</button>`;
+    }).join('');
+  }
+  $('pick').onclick = (e) => {
+    const b = e.target.closest('[data-i]'); if (!b) return;
+    const i = +b.dataset.i;
+    if (compare) {
+      if (sel.includes(i)) { if (sel.length > 1) sel = sel.filter((x) => x !== i); }
+      else sel = sel.length < 2 ? [...sel, i] : [sel[1], i];
+    } else sel = [i];
+    renderPick(); renderStage();
+  };
+  $('cmp').onclick = () => {
+    compare = !compare;
+    $('cmp').setAttribute('aria-pressed', String(compare));
+    $('cmp-hint').hidden = !compare;
+    if (compare && sel.length < 2) sel = [sel[0], sel[0] === 1 ? 0 : 1];
+    if (!compare) sel = [sel[0]];
+    renderPick(); renderStage();
+  };
+
+  function renderStage() {
+    const st = $('stage');
+    st.className = 'nl-stage' + (sel.length > 1 ? ' two' : '');
+    st.innerHTML = sel.map((i, k) => {
+      const e = EL[i];
+      const lines = e.lines.map(([w, a, t]) => `${String(w).replace('.', ',')} nm${t ? ' (dải)' : ''}${w > 750 ? ' · gần hồng ngoại' : ''}`).join(' · ');
+      return `<article class="ud-panel nl-card">
+        <h2>${e.n}<small>${e.s} · Z = ${e.z}</small></h2>
+        <p class="col">Màu lửa: <b style="color:rgb(${e.col})">${e.name}</b></p>
+        <canvas class="nl-flame" id="f${k}"></canvas>
+        <p class="nl-spec-k">Vạch quang phổ phát xạ</p>
+        <canvas class="nl-spec" id="s${k}"></canvas>
+        <div class="nl-ax"><span style="left:0">380 nm</span><span style="left:30%">500</span><span style="left:55%">600</span><span style="left:80%">700</span><span style="right:0">780</span></div>
+        <p class="nl-lines">${lines}</p>
+        <p class="nl-note">${e.note}</p>
+      </article>`;
+    }).join('');
+    flames.length = 0;
+    sel.forEach((i, k) => { flames.push(makeFlame($('f' + k), EL[i])); drawSpec($('s' + k), EL[i]); });
+  }
+
+  function drawSpec(cv, e) {
+    const D = Math.min(2, devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
+    cv.width = W * D; cv.height = H * D;
+    const g = cv.getContext('2d'); g.scale(D, D);
+    g.fillStyle = '#050506'; g.fillRect(0, 0, W, H);
+    // nền phổ liên tục mờ để định vị màu
+    for (let x = 0; x < W; x++) { const [r, gg, b] = wl2rgb(380 + (x / W) * 400); g.fillStyle = `rgba(${r},${gg},${b},0.12)`; g.fillRect(x, H - 8, 1, 8); }
+    g.globalCompositeOperation = 'lighter';
+    for (const [w, a, t] of e.lines) {
+      if (w < 380 || w > 780) continue;
+      const x = ((w - 380) / 400) * W, [r, gg, b] = wl2rgb(w);
+      const bw = t ? 9 : 2.2;
+      const grd = g.createLinearGradient(x - bw * 2, 0, x + bw * 2, 0);
+      grd.addColorStop(0, `rgba(${r},${gg},${b},0)`); grd.addColorStop(0.5, `rgba(${r},${gg},${b},${a})`); grd.addColorStop(1, `rgba(${r},${gg},${b},0)`);
+      g.fillStyle = grd; g.fillRect(x - bw * 2, 4, bw * 4, H - 14);
+      g.fillStyle = `rgba(255,255,255,${0.5 * a})`; g.fillRect(x - 0.6, 6, 1.2, H - 18);
+    }
+    g.globalCompositeOperation = 'source-over';
+  }
+
+  /* ---------------------------------------------------- NGỌN LỬA */
+  function makeFlame(cv, e) {
+    const D = Math.min(2, devicePixelRatio || 1);
+    const W = cv.clientWidth, H = cv.clientHeight;
+    cv.width = W * D; cv.height = H * D;
+    const g = cv.getContext('2d'); g.scale(D, D);
+    const P = [];
+    const bx = W / 2, by = H - 28;
+    return { g, W, H, e, P, bx, by };
+  }
+  const R = Math.random;
+  function step(f) {
+    const { g, W, H, e, P, bx, by } = f;
+    const spread = Math.min(W * 0.14, 44);
+    const sc = H / 340;
+    for (let k = 0; k < 9; k++) P.push({ x: bx + (R() - 0.5) * spread, y: by - 4, vx: (R() - 0.5) * 0.4, vy: -(2.2 + R() * 2.2) * sc, life: 0, max: 55 + R() * 45, s: (12 + R() * 16) * sc });
+    g.globalCompositeOperation = 'source-over';
+    g.fillStyle = 'rgba(5,5,6,0.35)'; g.fillRect(0, 0, W, H);
+    g.globalCompositeOperation = 'lighter';
+    // lõi xanh của đèn Bunsen
+    const cone = g.createRadialGradient(bx, by - 18, 2, bx, by - 18, 26);
+    cone.addColorStop(0, 'rgba(120,170,255,0.55)'); cone.addColorStop(1, 'rgba(40,80,255,0)');
+    g.fillStyle = cone; g.beginPath(); g.ellipse(bx, by - 16, 12, 26, 0, 0, 6.283); g.fill();
+    const [cr, cg, cb] = e.col;
+    for (let i = P.length - 1; i >= 0; i--) {
+      const p = P[i];
+      p.life++; p.x += p.vx + Math.sin((p.life + p.y) * 0.08) * 0.35; p.y += p.vy; p.vx += (bx - p.x) * 0.0025;
+      const t = p.life / p.max;
+      if (t >= 1) { P.splice(i, 1); continue; }
+      const a = (t < 0.12 ? t / 0.12 : 1 - (t - 0.12) / 0.88) * 0.16;
+      const sz = p.s * (1 - t * 0.6);
+      const hot = Math.max(0, 1 - t * 3);   // gốc lửa sáng trắng hơn
+      const r = cr + (255 - cr) * hot * 0.25, gg = cg + (255 - cg) * hot * 0.25, b = cb + (255 - cb) * hot * 0.25;
+      const grd = g.createRadialGradient(p.x, p.y, 0, p.x, p.y, sz);
+      grd.addColorStop(0, `rgba(${r | 0},${gg | 0},${b | 0},${a})`); grd.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
+      g.fillStyle = grd; g.fillRect(p.x - sz, p.y - sz, sz * 2, sz * 2);
+    }
+    // ống đèn
+    g.globalCompositeOperation = 'source-over';
+    g.fillStyle = '#2a2d33'; g.fillRect(bx - 9, by + 2, 18, H - by);
+    g.fillStyle = '#3b3f47'; g.fillRect(bx - 11, by, 22, 5);
+  }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function loop() { flames.forEach(step); if (!reduce) requestAnimationFrame(loop); }
+
+  renderPick(); renderStage();
+  if (reduce) for (let k = 0; k < 90; k++) flames.forEach(step);
+  loop();
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(renderStage, 150); });
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+</body>
+</html>

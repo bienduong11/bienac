@@ -30,6 +30,9 @@
     ['Âm lịch & Can Chi', '/am-lich/', 'am lich can chi tet tiet khi con giap'],
     ['Kinh Dịch nhị phân', '/kinh-dich/', 'kinh dich que nhi phan leibniz'],
     ['Hệ đếm nhân loại', '/he-dem/', 'he dem nhi phan la ma maya babylon'],
+    ['Ngọn lửa màu', '/ngon-lua/', 'ngon lua mau kim loai pho phat xa han the'],
+    ['Trộn ánh sáng', '/tron-mau/', 'tron mau anh sang rgb te bao non'],
+    ['Con lắc kép', '/con-lac/', 'con lac kep hon loan'],
     ['Ủng hộ Bienac', '/ung-ho/', 'ung ho donate'],
   ];
   const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase();
