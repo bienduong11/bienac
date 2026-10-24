@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Thang vũ trụ · Bienac</title>
+  <meta name="description" content="Kéo một thanh trượt từ độ dài Planck tới rìa vũ trụ quan sát được: 62 bậc lũy thừa của 10, kèm tên gọi cổ phương Đông cho từng bậc." />
+  <meta property="og:title" content="Thang vũ trụ · Bienac" />
+  <meta property="og:description" content="Từ độ dài Planck tới rìa vũ trụ quan sát được, kèm tên gọi cổ phương Đông cho từng bậc." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap&text=分厘毫絲忽微纖沙塵埃渺漠模糊逡巡須臾瞬息彈指剎那六德虛空清淨萬億兆京垓秭宙銀河" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+    #tvt { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: ns-resize; }
+
+    .tvt-read { position: fixed; left: clamp(16px, 4vw, 48px); top: 92px; z-index: 5; max-width: 340px; pointer-events: none; }
+    .tvt-exp { font: 600 clamp(2.4rem, 6vw, 4rem)/1 var(--mono); color: var(--text); letter-spacing: -.02em; margin-top: 10px; }
+    .tvt-exp sup { font-size: .45em; vertical-align: .95em; color: var(--cyan); margin-left: 2px; }
+    .tvt-exp small { font-size: .38em; color: var(--text-dim); margin-left: 8px; letter-spacing: .04em; }
+    .tvt-alt { font: 500 .82rem/1.6 var(--mono); color: var(--text-dim); margin-top: 8px; }
+    .tvt-alt b { color: var(--mint); font-weight: 600; }
+
+    .tvt-east { margin-top: 16px; padding: 12px 14px; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; opacity: 0; transform: translateY(4px); transition: opacity .25s, transform .25s; }
+    .tvt-east.on { opacity: 1; transform: none; }
+    .tvt-east .g { grid-row: span 2; font: 600 2.4rem/1 var(--han); color: var(--cinnabar); }
+    .tvt-east .n { font: 600 .95rem/1.2 var(--display); }
+    .tvt-east .n span { color: var(--brass); font: 500 .72rem var(--mono); letter-spacing: .1em; margin-left: 6px; }
+    .tvt-east p { grid-column: 1 / -1; font-size: .8rem; line-height: 1.5; color: var(--text-dim); margin-top: 4px; }
+
+    .tvt-card { position: fixed; left: clamp(16px, 4vw, 48px); bottom: clamp(16px, 4vh, 40px); z-index: 5; width: min(420px, calc(100vw - 32px - 64px)); padding: 16px 18px 18px; }
+    .tvt-card .k { display: flex; justify-content: space-between; gap: 12px; }
+    .tvt-card h2 { font: 700 1.35rem/1.2 var(--display); margin: 6px 0 4px; }
+    .tvt-card .sz { font: 600 .8rem var(--mono); color: var(--cyan); }
+    .tvt-card p { font-size: .9rem; line-height: 1.6; color: var(--text-dim); margin-top: 8px; }
+
+    .tvt-rail { position: fixed; right: clamp(10px, 2.5vw, 32px); top: 96px; bottom: 96px; width: 44px; z-index: 6; touch-action: none; cursor: pointer; }
+    .tvt-rail::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--hair); }
+    .tvt-rail .t { position: absolute; left: 50%; height: 1px; background: var(--hair); width: 6px; transform: translateX(-50%); }
+    .tvt-rail .t.big { width: 14px; background: var(--brass); }
+    .tvt-rail .l { position: absolute; right: 30px; transform: translateY(-50%); font: 500 .6rem var(--mono); color: var(--text-dim); white-space: nowrap; }
+    .tvt-rail .knob { position: absolute; left: 50%; width: 26px; height: 10px; transform: translate(-50%, -50%); background: var(--cyan); box-shadow: 0 0 14px rgba(55, 240, 207, .7); clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%); }
+
+    .tvt-ctrl { position: fixed; right: clamp(64px, 8vw, 96px); bottom: clamp(16px, 4vh, 40px); z-index: 6; display: flex; gap: 8px; }
+    .tvt-hint { position: fixed; left: 50%; top: 84px; transform: translateX(-50%); z-index: 4; font: 500 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; transition: opacity .6s; white-space: nowrap; }
+
+    @media (max-width: 720px) {
+      .tvt-read { top: 76px; right: 64px; }
+      .tvt-exp { font-size: 2.1rem; }
+      .tvt-east { padding: 8px 10px; margin-top: 10px; }
+      .tvt-east .g { font-size: 1.8rem; }
+      .tvt-east p { display: none; }
+      .tvt-card { width: calc(100vw - 32px); bottom: 70px; padding: 12px 14px 14px; }
+      .tvt-card h2 { font-size: 1.1rem; }
+      .tvt-card p { font-size: .82rem; margin-top: 4px; }
+      .tvt-ctrl { right: auto; left: 16px; bottom: 16px; }
+      .tvt-rail { top: 80px; bottom: 260px; }
+      .tvt-hint { display: none; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Thang vũ trụ</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <canvas id="tvt" aria-label="Các vật thể xếp theo kích thước, thu phóng bằng cuộn chuột hoặc kéo"></canvas>
+
+  <div class="tvt-read" aria-live="polite">
+    <p class="ud-kicker"><span class="han">宙</span> &nbsp;09 // Thang vũ trụ</p>
+    <p class="tvt-exp" id="exp">10<sup>0</sup><small>mét</small></p>
+    <p class="tvt-alt" id="alt"></p>
+    <div class="tvt-east ud-panel" id="east">
+      <span class="g" id="eg"></span>
+      <span class="n" id="en"></span>
+      <p id="ep"></p>
+    </div>
+  </div>
+
+  <p class="tvt-hint" id="hint">Cuộn chuột · kéo lên xuống · phím ↑ ↓</p>
+
+  <article class="tvt-card ud-panel" id="card">
+    <div class="k"><span class="ud-kicker" id="ck"></span><span class="sz" id="cs"></span></div>
+    <h2 id="cn"></h2>
+    <p id="cf"></p>
+  </article>
+
+  <div class="tvt-rail" id="rail" role="slider" tabindex="0" aria-label="Bậc kích thước" aria-valuemin="-35" aria-valuemax="27" aria-valuenow="0"></div>
+
+  <div class="tvt-ctrl">
+    <button class="ud-btn" id="tour" aria-pressed="false">▶ Du hành</button>
+    <button class="ud-btn" id="home" title="Về kích thước con người">Người</button>
+  </div>
+
+<script>
+(() => {
+  /* ------------------------------------------------------------ DỮ LIỆU
+   * s: kích thước đặc trưng (mét): đường kính, chiều dài hoặc khoảng cách
+   * c: nhóm  q = lượng tử, s = sự sống, n = con người & Việt Nam, a = thiên văn
+   */
+  const OBJ = [
+    { n: 'Độ dài Planck', s: 1.616e-35, c: 'q', f: 'Thang đo nhỏ nhất mà vật lý hiện nay còn nói được gì đó. Dưới mức này, chính khái niệm “khoảng cách” có lẽ mất nghĩa.' },
+    { n: 'Quark', s: 1e-18, c: 'q', f: 'Chưa thí nghiệm nào đo được kích thước của quark. Ta chỉ biết nếu có, nó nhỏ hơn khoảng 10⁻¹⁸ m.' },
+    { n: 'Proton', s: 1.68e-15, c: 'q', f: 'Ba quark bị lực mạnh giam lại với nhau. Gần như toàn bộ khối lượng của bạn nằm trong những hạt cỡ này.' },
+    { n: 'Hạt nhân urani', s: 1.5e-14, c: 'q', f: '238 hạt proton và neutron chen nhau trong một vùng nhỏ hơn nguyên tử chứa nó chừng 10.000 lần.' },
+    { n: 'Nguyên tử hiđrô', s: 1.06e-10, c: 'q', f: 'Gần đúng 1 ångström, và cũng gần đúng 1 “ai” 埃 theo bảng đơn vị cổ. Chữ 埃 nay chính là tên tiếng Trung của ångström.' },
+    { n: 'Phân tử nước', s: 2.8e-10, c: 'q', f: 'Một giọt nước nhỏ chứa khoảng 1,7 × 10²¹ phân tử như thế này.' },
+    { n: 'Chuỗi xoắn DNA', s: 2e-9, c: 's', f: 'Rộng chỉ 2 nanômét, nhưng DNA trong một tế bào người kéo thẳng ra dài khoảng 2 mét.' },
+    { n: 'Virus SARS-CoV-2', s: 1e-7, c: 's', f: 'Khoảng 100 nanômét, nhỏ hơn bước sóng ánh sáng nhìn thấy, nên kính hiển vi quang học thông thường không thấy được.' },
+    { n: 'Bước sóng ánh sáng lục', s: 5.3e-7, c: 'q', f: 'Mắt người nhạy nhất với ánh sáng quanh bước sóng này, cũng là vùng Mặt Trời phát mạnh nhất.' },
+    { n: 'Vi khuẩn E. coli', s: 2e-6, c: 's', f: 'Dài khoảng 2 micrômét. Trong ruột mỗi người có hàng tỉ con, phần lớn vô hại.' },
+    { n: 'Hồng cầu', s: 7.5e-6, c: 's', f: 'Cơ thể người có khoảng 25 nghìn tỉ hồng cầu, nhiều hơn mọi loại tế bào khác cộng lại.' },
+    { n: 'Sợi tóc', s: 7e-5, c: 'n', f: 'Đường kính khoảng 70 micrômét, cỡ nhỏ nhất mắt thường còn nhận ra được.' },
+    { n: 'Hạt cát', s: 5e-4, c: 'n', f: 'Theo quy ước địa chất, cát là hạt từ 0,0625 đến 2 milimét. Nhỏ hơn là bùn, lớn hơn là sỏi.' },
+    { n: 'Hạt gạo', s: 6.5e-3, c: 'n', f: 'Gạo tẻ hạt dài cỡ 6 đến 7 milimét. Hạt cơm nuôi phần lớn châu Á bắt đầu từ cây lúa thuần hóa ở lưu vực Trường Giang.' },
+    { n: 'Quả bóng đá', s: 0.22, c: 'n', f: 'Đường kính khoảng 22 xăngtimét theo luật FIFA.' },
+    { n: 'Con người', s: 1.7, c: 'n', f: 'Gần ngay chính giữa thang: lớn hơn độ dài Planck khoảng 10³⁵ lần, nhỏ hơn vũ trụ quan sát được khoảng 10²⁶ lần.' },
+    { n: 'Cá voi xanh', s: 30, c: 's', f: 'Động vật lớn nhất từng sống trên Trái Đất, dài tới khoảng 30 mét, lớn hơn mọi loài khủng long đã biết.' },
+    { n: 'Landmark 81', s: 461, c: 'n', f: 'Tòa nhà cao nhất Việt Nam, khoảng 461 mét, ở Thành phố Hồ Chí Minh.' },
+    { n: 'Đỉnh Fansipan', s: 3143, c: 'n', f: 'Nóc nhà Đông Dương, cao 3.143 mét so với mực nước biển.' },
+    { n: 'Hang Sơn Đoòng', s: 9000, c: 'n', f: 'Hang động tự nhiên lớn nhất thế giới đã biết, ở Quảng Bình. Có đoạn đủ rộng cho cả một khu rừng mọc bên trong.' },
+    { n: 'Việt Nam, Bắc tới Nam', s: 1.65e6, c: 'n', f: 'Từ Lũng Cú tới mũi Cà Mau chừng 1.650 km theo đường chim bay.' },
+    { n: 'Mặt Trăng', s: 3.474e6, c: 'a', f: 'Đường kính 3.474 km, khoảng một phần tư Trái Đất.' },
+    { n: 'Trái Đất', s: 1.2742e7, c: 'a', f: 'Đường kính 12.742 km. Ánh sáng đi vòng quanh xích đạo hơn 7 lần mỗi giây.' },
+    { n: 'Sao Mộc', s: 1.3982e8, c: 'a', f: 'Hành tinh lớn nhất Hệ Mặt Trời, chứa vừa khoảng 1.300 Trái Đất.' },
+    { n: 'Trái Đất tới Mặt Trăng', s: 3.844e8, c: 'a', f: '384.400 km. Ánh sáng đi mất khoảng 1,3 giây.' },
+    { n: 'Mặt Trời', s: 1.3927e9, c: 'a', f: 'Đường kính khoảng 1,39 triệu km, chiếm 99,86% khối lượng cả Hệ Mặt Trời.' },
+    { n: 'Trái Đất tới Mặt Trời', s: 1.496e11, c: 'a', f: 'Một đơn vị thiên văn (AU). Ánh sáng Mặt Trời bạn thấy đã rời đi từ khoảng 8 phút 20 giây trước.' },
+    { n: 'Quỹ đạo Sao Hải Vương', s: 9e12, c: 'a', f: 'Đường kính khoảng 60 AU. Sao Hải Vương mất 165 năm để đi hết một vòng.' },
+    { n: 'Voyager 1', s: 2.5e13, c: 'a', f: 'Vật thể xa nhất do con người tạo ra, hơn 160 AU tính từ Mặt Trời, vẫn đang bay ra xa.' },
+    { n: 'Một năm ánh sáng', s: 9.461e15, c: 'a', f: 'Quãng đường ánh sáng đi trong một năm: khoảng 9.461 tỉ km.' },
+    { n: 'Sao Cận Tinh (Proxima)', s: 4.0e16, c: 'a', f: 'Ngôi sao gần Mặt Trời nhất, cách 4,24 năm ánh sáng.' },
+    { n: 'Tinh vân Lạp Hộ', s: 2.3e17, c: 'a', f: 'Vườn ươm sao rộng khoảng 24 năm ánh sáng, nhìn được bằng mắt thường ở “thanh kiếm” của chòm Lạp Hộ.' },
+    { n: 'Ngân Hà', s: 9.5e20, c: 'a', f: 'Khoảng 100.000 năm ánh sáng. Phương Tây gọi là “dòng sữa”, phương Đông gọi là “sông bạc” 銀河.' },
+    { n: 'Ngân Hà tới Andromeda', s: 2.4e22, c: 'a', f: '2,5 triệu năm ánh sáng. Vật thể xa nhất mà mắt thường nhìn thấy được trong đêm tối.' },
+    { n: 'Nhóm Địa phương', s: 9.5e22, c: 'a', f: 'Cụm hơn 80 thiên hà, Ngân Hà và Andromeda là hai thành viên lớn nhất.' },
+    { n: 'Siêu đám Laniakea', s: 4.9e24, c: 'a', f: 'Khoảng 520 triệu năm ánh sáng. Tên lấy từ tiếng Hawaii, nghĩa là “bầu trời bao la”.' },
+    { n: 'Vũ trụ quan sát được', s: 8.8e26, c: 'a', f: 'Khoảng 93 tỉ năm ánh sáng. Vũ trụ mới 13,8 tỉ năm tuổi nhưng không gian vẫn giãn nở trong lúc ánh sáng trên đường tới ta.' },
+  ];
+  const CAT = { q: ['Lượng tử', '#37f0cf'], s: ['Sự sống', '#7fe8a2'], n: ['Con người', '#c9a650'], a: ['Thiên văn', '#e8452e'] };
+
+  /* Đơn vị cổ: bảng phổ biến theo sách toán thời Minh (mỗi bậc nhỏ đi 10 lần,
+     bậc lớn theo hệ "vạn tiến": mỗi bậc lớn gấp 10.000 lần) */
+  const EAST = {
+    '-1': ['分', 'phân'], '-2': ['厘', 'li'], '-3': ['毫', 'hào'], '-4': ['絲', 'ti'], '-5': ['忽', 'hốt'],
+    '-6': ['微', 'vi'], '-7': ['纖', 'tiêm'], '-8': ['沙', 'sa'], '-9': ['塵', 'trần'], '-10': ['埃', 'ai'],
+    '-11': ['渺', 'miểu'], '-12': ['漠', 'mạc'], '-13': ['模糊', 'mô hồ'], '-14': ['逡巡', 'thuân tuần'], '-15': ['須臾', 'tu du'],
+    '-16': ['瞬息', 'thuấn tức'], '-17': ['彈指', 'đàn chỉ'], '-18': ['剎那', 'sát na'], '-19': ['六德', 'lục đức'], '-20': ['虛空', 'hư không'], '-21': ['清淨', 'thanh tịnh'],
+    '4': ['萬', 'vạn'], '8': ['億', 'ức'], '12': ['兆', 'triệu'], '16': ['京', 'kinh'], '20': ['垓', 'cai'], '24': ['秭', 'tỉ'],
+  };
+  const EAST_NOTE = {
+    '-1': 'Tiếng Trung hiện đại vẫn gọi đềximét là 分米: “phân” cổ khớp đúng với tiền tố deci.',
+    '-2': 'Xăngtimét trong tiếng Trung là 厘米. Chữ “li” vẫn sống trong tiếng Việt: “không sai một li”.',
+    '-3': 'Milimét là 毫米. Tiếng Việt còn “mảy may”, “hào ly”: chữ 毫 vốn là sợi lông tơ.',
+    '-4': '絲 là sợi tơ. Bậc nhỏ đến đây vẫn còn là thứ người xưa cầm được trong tay.',
+    '-6': 'Micrômét là 微米. Từ “vi” trong vi khuẩn, vi mô, vi tế cũng là chữ này.',
+    '-8': 'Từ bậc này trở xuống, tên đơn vị lấy từ bụi, cát: những thứ nhỏ nhất mắt còn thấy.',
+    '-9': '塵 là bụi trần. Nanômét ngày nay lại được gọi bằng chữ khác: 納米.',
+    '-10': 'Trùng hợp thú vị: 埃 nay chính là tên tiếng Trung của ångström, 10⁻¹⁰ m.',
+    '-15': '須臾, 瞬息, 彈指, 剎那: từ đây trở xuống, tên đơn vị mượn từ chỉ khoảnh khắc trong kinh Phật.',
+    '-18': 'Sát na: trong Phật học là khoảnh khắc ngắn nhất của một ý niệm.',
+    '-21': 'Bậc nhỏ nhất trong bảng: “thanh tịnh”. Dưới đó, người xưa không đặt tên nữa.',
+    '4': 'Một vạn mét = 10 km. Hệ đếm cổ đi theo bậc vạn, mỗi bậc lớn gấp 10.000 lần bậc trước.',
+    '8': 'Một ức mét = 100.000 km, khoảng một phần tư quãng đường tới Mặt Trăng.',
+    '12': '兆 trong hệ vạn tiến là 10¹². Tiếng Việt mượn chữ “triệu” nhưng nay dùng cho 10⁶.',
+    '16': 'Một kinh mét ≈ 1 năm ánh sáng. Cũng là chữ “kinh” trong kinh đô: nghĩa gốc là rất lớn.',
+    '24': '秭 đọc là “tỉ”. Tiếng Việt ngày nay cũng mượn chữ này, nhưng “một tỉ” chỉ còn là 10⁹.',
+  };
+
+  const PREF = [[-30,'q'],[-27,'r'],[-24,'y'],[-21,'z'],[-18,'a'],[-15,'f'],[-12,'p'],[-9,'n'],[-6,'µ'],[-3,'m'],[0,''],[3,'k'],[6,'M'],[9,'G'],[12,'T'],[15,'P'],[18,'E'],[21,'Z'],[24,'Y'],[27,'R']];
+  const ZMIN = -35, ZMAX = 27;
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  const sup = (n) => String(n).split('').map((c) => SUP[c]).join('');
+  const fmt = (x, d = 3) => x.toLocaleString('vi-VN', { maximumSignificantDigits: d });
+
+  const cv = document.getElementById('tvt'), g = cv.getContext('2d');
+  let W = 0, H = 0, DPR = 1;
+  let z = Math.log10(1.7), zt = z;          // bậc hiện tại / bậc đích (mượt)
+  let touring = false;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize() {
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * DPR; cv.height = H * DPR;
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    buildRail();
+  }
+
+  // Tâm vòng tròn: lệch phải một chút để chừa chỗ cho bảng chữ
+  const center = () => [W < 720 ? W * 0.5 : W * 0.58, W < 720 ? H * 0.5 : H * 0.54];
+  const base = () => Math.min(W, H) * (W < 720 ? 0.3 : 0.27);   // bán kính của vật "đang xem"
+
+  // Sao nền cố định
+  const STARS = Array.from({ length: 160 }, (_, i) => [Math.random(), Math.random(), Math.random()]);
+
+  function draw() {
+    z += (zt - z) * (reduce ? 1 : 0.12);
+    const [cx, cy] = center(), B = base(), D = Math.hypot(W, H);
+    g.clearRect(0, 0, W, H);
+
+    // Nền: sao mờ dần khi đi vào vi mô
+    const sa = Math.max(0, Math.min(1, (z - 4) / 8)) * 0.8 + 0.12;
+    for (const [x, y, b] of STARS) {
+      g.fillStyle = `rgba(236,230,214,${(sa * b * 0.6).toFixed(3)})`;
+      g.fillRect(x * W, y * H, b > 0.8 ? 1.6 : 1, b > 0.8 ? 1.6 : 1);
+    }
+
+    // Chữ Hán lớn mờ phía sau cho bậc cổ gần nhất
+    const k = Math.round(z), e = EAST[k];
+    if (e) {
+      const a = Math.max(0, 1 - Math.abs(z - k) * 2.2) * 0.07;
+      if (a > 0.002) {
+        g.save(); g.globalAlpha = a; g.fillStyle = '#e8452e';
+        g.font = `600 ${Math.min(W, H) * (e[0].length > 1 ? 0.42 : 0.62)}px "Noto Serif TC", serif`;
+        g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillText(e[0], cx, cy + Math.min(W, H) * 0.02); g.restore();
+      }
+    }
+
+    // Vòng lũy thừa 10
+    g.lineWidth = 1;
+    for (let n = Math.floor(z) - 3; n <= Math.ceil(z) + 4; n++) {
+      if (n < ZMIN || n > ZMAX) continue;
+      const R = B * Math.pow(10, n - z);
+      if (R < 10 || R > D) continue;
+      const a = Math.min(1, (R - 10) / 60) * Math.min(1, (D - R) / (D * 0.4));
+      g.strokeStyle = `rgba(201,166,80,${(0.22 * a).toFixed(3)})`;
+      g.setLineDash(n % 3 === 0 ? [] : [2, 6]);
+      g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.stroke();
+      if (R > 40) {
+        g.fillStyle = `rgba(201,166,80,${(0.6 * a).toFixed(3)})`;
+        g.font = '500 10px "JetBrains Mono", monospace'; g.textAlign = 'left'; g.textBaseline = 'middle';
+        g.fillText(`10${sup(n)} m`, cx + R + 6, cy);
+      }
+    }
+    g.setLineDash([]);
+
+    // Vật thể
+    let near = null, nd = 1e9;
+    OBJ.forEach((o, i) => {
+      const R = B * Math.pow(10, Math.log10(o.s) - z);
+      const d = Math.abs(Math.log10(o.s) - z);
+      if (d < nd) { nd = d; near = o; }
+      if (R < 3 || R > D * 1.2) return;
+      const fadeIn = Math.min(1, (R - 3) / 40), fadeOut = Math.min(1, (D * 1.2 - R) / (D * 0.6));
+      const a = fadeIn * fadeOut;
+      const col = CAT[o.c][1];
+      g.globalAlpha = a;
+      g.strokeStyle = col; g.lineWidth = o === near ? 1.6 : 1;
+      g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.stroke();
+      // nhãn trên vòng, góc so le để không chồng nhau
+      const ang = -Math.PI / 2 - 0.5 - (i % 4) * 0.32;
+      const px = cx + Math.cos(ang) * R, py = cy + Math.sin(ang) * R;
+      if (R > 14 && px > -50 && py > -20 && px < W + 50 && py < H + 20) {
+        const lx = px - 18, ly = py - 14;
+        g.beginPath(); g.moveTo(px, py); g.lineTo(lx, ly); g.lineTo(lx - 10, ly); g.stroke();
+        g.beginPath(); g.arc(px, py, 2.2, 0, Math.PI * 2); g.fillStyle = col; g.fill();
+        g.font = '600 12px "Chakra Petch", sans-serif'; g.textAlign = 'right'; g.textBaseline = 'middle';
+        g.fillStyle = '#ece6d6'; g.fillText(o.n, lx - 14, ly);
+      }
+      g.globalAlpha = 1;
+    });
+
+    // tâm
+    g.fillStyle = '#37f0cf'; g.beginPath(); g.arc(cx, cy, 1.6, 0, Math.PI * 2); g.fill();
+
+    updateHud(near);
+    requestAnimationFrame(draw);
+  }
+
+  /* ------------------------------------------------------------- HUD */
+  const $ = (id) => document.getElementById(id);
+  let lastNear = null, lastK = null, lastZ = null;
+  function sizeText(m) {
+    const ex = Math.floor(Math.log10(m));
+    let p = PREF[0];
+    for (const q of PREF) if (q[0] <= ex) p = q;
+    if (ex >= 15) {
+      const ly = m / 9.461e15;
+      return `${fmt(ly)} năm ánh sáng`;
+    }
+    if (ex >= 3 && ex < 15) {
+      const km = m / 1000;
+      return `${fmt(km)} km`;
+    }
+    return `${fmt(m / Math.pow(10, p[0]))} ${p[1]}m`;
+  }
+  function updateHud(near) {
+    const zr = Math.round(z * 100) / 100;
+    if (zr !== lastZ) {
+      lastZ = zr;
+      const n = Math.floor(z), m = Math.pow(10, z);
+      $('exp').innerHTML = `10<sup>${n}</sup><small>mét</small>`;
+      const lt = m / 2.998e8;
+      let light = '';
+      if (z > 7.5) {
+        light = lt < 60 ? `${fmt(lt, 2)} giây` : lt < 3600 ? `${fmt(lt / 60, 2)} phút` : lt < 86400 * 2 ? `${fmt(lt / 3600, 2)} giờ` : lt < 3.156e7 ? `${fmt(lt / 86400, 2)} ngày` : `${fmt(lt / 3.156e7, 2)} năm`;
+        light = `<br>ánh sáng đi mất <b>${light}</b>`;
+      }
+      $('alt').innerHTML = `≈ <b>${sizeText(m)}</b>${light}`;
+      $('rail').setAttribute('aria-valuenow', zr);
+      $('rail').querySelector('.knob').style.top = `${((ZMAX - z) / (ZMAX - ZMIN)) * 100}%`;
+    }
+    const k = Math.round(z);
+    const e = EAST[k] && Math.abs(z - k) < 0.45 ? k : null;
+    if (e !== lastK) {
+      lastK = e;
+      const box = $('east');
+      if (e === null) box.classList.remove('on');
+      else {
+        const [han, hv] = EAST[e];
+        $('eg').textContent = han;
+        $('en').innerHTML = `1 ${hv} mét <span>10${sup(e)}</span>`;
+        $('ep').textContent = EAST_NOTE[e] || (e < 0 ? `Đơn vị cổ: mỗi bậc nhỏ hơn bậc trước 10 lần.` : `Đơn vị cổ theo hệ vạn tiến.`);
+        box.classList.add('on');
+      }
+    }
+    if (near !== lastNear) {
+      lastNear = near;
+      $('ck').textContent = CAT[near.c][0];
+      $('ck').style.color = CAT[near.c][1];
+      $('cs').textContent = sizeText(near.s);
+      $('cn').textContent = near.n;
+      $('cf').textContent = near.f;
+    }
+  }
+
+  /* ------------------------------------------------------------ RAIL */
+  function buildRail() {
+    const r = $('rail');
+    r.innerHTML = '';
+    for (let n = ZMIN; n <= ZMAX; n++) {
+      const t = document.createElement('span');
+      const top = ((ZMAX - n) / (ZMAX - ZMIN)) * 100;
+      t.className = 't' + (n % 5 === 0 ? ' big' : '');
+      t.style.top = top + '%';
+      r.appendChild(t);
+      if (n % 5 === 0 || n === ZMAX || n === ZMIN) {
+        const l = document.createElement('span');
+        l.className = 'l'; l.style.top = top + '%'; l.textContent = `10${sup(n)}`;
+        r.appendChild(l);
+      }
+    }
+    const k = document.createElement('span'); k.className = 'knob'; r.appendChild(k);
+    lastZ = null;
+  }
+
+  const clamp = (v) => Math.max(ZMIN, Math.min(ZMAX, v));
+  const setZ = (v) => { zt = clamp(v); };
+  const stopTour = () => { touring = false; $('tour').setAttribute('aria-pressed', 'false'); $('tour').textContent = '▶ Du hành'; };
+  const hideHint = () => { $('hint').style.opacity = 0; };
+
+  addEventListener('wheel', (e) => { e.preventDefault(); stopTour(); hideHint(); setZ(zt - e.deltaY * (e.deltaMode ? 0.05 : 0.0022)); }, { passive: false });
+
+  // Kéo trên nền: kéo lên = phóng to (đi ra vũ trụ)
+  let drag = null;
+  cv.addEventListener('pointerdown', (e) => { drag = { y: e.clientY, z: zt }; cv.setPointerCapture(e.pointerId); stopTour(); hideHint(); });
+  cv.addEventListener('pointermove', (e) => { if (drag) setZ(drag.z + (drag.y - e.clientY) / (H / 9)); });
+  cv.addEventListener('pointerup', () => { drag = null; });
+  cv.addEventListener('pointercancel', () => { drag = null; });
+
+  // Kéo trên thanh thước
+  const rail = $('rail');
+  const railZ = (y) => { const r = rail.getBoundingClientRect(); return ZMAX - ((y - r.top) / r.height) * (ZMAX - ZMIN); };
+  rail.addEventListener('pointerdown', (e) => { rail.setPointerCapture(e.pointerId); stopTour(); hideHint(); setZ(railZ(e.clientY)); rail.dragging = true; });
+  rail.addEventListener('pointermove', (e) => { if (rail.dragging) setZ(railZ(e.clientY)); });
+  rail.addEventListener('pointerup', () => { rail.dragging = false; });
+
+  addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 0.1 : 0.5;
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') { setZ(zt + step); stopTour(); e.preventDefault(); }
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') { setZ(zt - step); stopTour(); e.preventDefault(); }
+    if (e.key === 'Home') setZ(ZMIN);
+    if (e.key === 'End') setZ(ZMAX);
+  });
+
+  $('home').onclick = () => { stopTour(); setZ(Math.log10(1.7)); };
+  $('tour').onclick = () => {
+    if (touring) return stopTour();
+    touring = true; $('tour').setAttribute('aria-pressed', 'true'); $('tour').textContent = '❚❚ Dừng';
+    hideHint();
+    if (zt > ZMAX - 0.5) zt = z = ZMIN;
+    let last = performance.now();
+    const step = (t) => {
+      if (!touring) return;
+      const dt = (t - last) / 1000; last = t;
+      zt = clamp(zt + dt * 0.75);           // ~80 giây cho cả hành trình
+      if (zt >= ZMAX) return stopTour();
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  // Mở thẳng một bậc bằng #10^-10 hoặc #-10
+  const h = decodeURIComponent(location.hash.replace('#', '')).replace('10^', '');
+  if (h && !isNaN(+h)) z = zt = clamp(+h);
+
+  addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

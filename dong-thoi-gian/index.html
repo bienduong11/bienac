@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Dòng thời gian Đông Tây · Bienac</title>
+  <meta name="description" content="Hai dòng lịch sử song song: Việt Nam và Trung Hoa ở phương Đông, châu Âu và Cận Đông ở phương Tây. Chạm vào một năm để xem cùng lúc thế giới bên kia đang làm gì." />
+  <meta property="og:title" content="Dòng thời gian Đông Tây · Bienac" />
+  <meta property="og:description" content="Cùng một năm, phương Đông và phương Tây đang làm gì?" />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap&text=時東西越華歐近" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    html, body { height: 100%; overflow: hidden; }
+    body.ud { display: grid; grid-template-rows: auto auto 1fr auto; }
+    .site-header { position: relative; }
+
+    .dt-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 18px clamp(16px, 4vw, 48px) 12px; }
+    .dt-top p.ud-dim { font-size: .9rem; margin-top: 6px; max-width: 560px; line-height: 1.5; }
+    .dt-tools { display: flex; gap: 8px; }
+
+    .dt-wrap { position: relative; overflow-x: auto; overflow-y: hidden; cursor: grab; scrollbar-width: thin; scrollbar-color: var(--brass) transparent; }
+    .dt-wrap.drag { cursor: grabbing; }
+    .dt-stage { position: relative; height: 100%; min-height: 420px; }
+
+    .dt-lane-name { z-index: 4; width: max-content; height: 22px; display: flex; align-items: center; padding: 0 10px; font: 600 .66rem var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brass); background: rgba(6,7,11,.85); }
+    .dt-lane-name .han { color: var(--cinnabar); font-size: .9rem; margin-right: 6px; letter-spacing: 0; }
+
+    .dt-band { position: absolute; height: 22px; display: flex; align-items: center; padding: 0 6px; overflow: hidden; white-space: nowrap; font: 600 .7rem var(--display); letter-spacing: .02em; color: var(--text); box-shadow: inset 0 0 0 1px rgba(201,166,80,.3); background: rgba(201,166,80,.07); }
+    .dt-band.e { box-shadow: inset 0 0 0 1px rgba(55,240,207,.3); background: rgba(55,240,207,.06); }
+    .dt-band.ghost { opacity: .55; font-style: italic; }
+    .dt-band.on { background: rgba(55,240,207,.2); box-shadow: inset 0 0 0 1px var(--cyan); }
+    .dt-band.w.on { background: rgba(201,166,80,.22); box-shadow: inset 0 0 0 1px var(--brass); }
+
+    .dt-axis { position: absolute; left: 0; right: 0; height: 1px; background: var(--hair); }
+    .dt-tick { position: absolute; transform: translateX(-50%); font: 500 .62rem var(--mono); color: var(--text-dim); white-space: nowrap; }
+    .dt-tick::before { content: ''; position: absolute; left: 50%; width: 1px; height: 7px; background: var(--brass); }
+    .dt-tick.up::before { top: 100%; } .dt-tick.dn::before { bottom: 100%; }
+
+    .dt-ev { position: absolute; transform: translateX(-4px); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: none; border: 0; padding: 0; color: var(--text); font: 500 .76rem/1.2 'Be Vietnam Pro', sans-serif; cursor: pointer; }
+    .dt-ev i { flex: none; width: 8px; height: 8px; transform: rotate(45deg); background: var(--cyan); box-shadow: 0 0 8px rgba(55,240,207,.6); }
+    .dt-ev.w i { background: var(--brass); box-shadow: 0 0 8px rgba(201,166,80,.6); }
+    .dt-ev.nolabel span { display: none; }
+    .dt-ev span { padding: 2px 5px; background: rgba(6,7,11,.75); }
+    .dt-ev:hover span, .dt-ev:focus-visible span, .dt-ev.sel span { display: inline; color: var(--mint); box-shadow: inset 0 0 0 1px var(--cyan); }
+    .dt-ev.w:hover span, .dt-ev.w.sel span { color: #f1dca0; box-shadow: inset 0 0 0 1px var(--brass); }
+    .dt-stem { position: absolute; width: 1px; background: rgba(236,230,214,.12); }
+
+    .dt-pairs { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+    .dt-pairs path { fill: none; stroke: var(--cinnabar); stroke-width: 1; stroke-dasharray: 3 4; opacity: .55; }
+
+    .dt-cursor { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--cinnabar); box-shadow: 0 0 10px rgba(232,69,46,.8); pointer-events: none; z-index: 3; }
+    .dt-cursor b { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 3px 7px; font: 600 .7rem var(--mono); color: var(--ink); background: var(--cinnabar); white-space: nowrap; }
+
+    .dt-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border-top: 1px solid var(--hair); }
+    .dt-col { background: rgba(6,7,11,.94); padding: 12px clamp(16px, 3vw, 28px) 14px; min-height: 120px; }
+    .dt-col h3 { font: 600 .66rem var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brass); }
+    .dt-col h3 .han { color: var(--cinnabar); font-size: .95rem; letter-spacing: 0; margin-right: 6px; }
+    .dt-col .now { margin-top: 6px; font: 600 .95rem/1.4 var(--display); }
+    .dt-col .now em { font-style: normal; color: var(--cyan); }
+    .dt-col.w .now em { color: var(--brass); }
+    .dt-col p { margin-top: 6px; font-size: .85rem; line-height: 1.55; color: var(--text-dim); }
+    .dt-col p b { color: var(--text); font-weight: 600; }
+    .dt-col p .pair { color: var(--cinnabar); }
+
+    @media (max-width: 720px) {
+      .dt-top { padding-top: 12px; }
+      .dt-top p.ud-dim { display: none; }
+      .dt-info { grid-template-columns: 1fr; max-height: 38vh; overflow-y: auto; }
+      .dt-col { min-height: 0; padding: 10px 16px; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Dòng thời gian</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <section class="dt-top">
+    <div>
+      <p class="ud-kicker"><span class="han">時</span> &nbsp;10 // Dòng thời gian</p>
+      <h1 class="ud-title">Đông <span class="accent">⇄</span> Tây</h1>
+      <p class="ud-dim">Chạm vào bất kỳ năm nào để xem cùng lúc hai phía thế giới đang ra sao. Đường chấm đỏ nối hai phát minh giống nhau ở hai đầu lục địa.</p>
+    </div>
+    <div class="dt-tools">
+      <button class="ud-btn" id="zout" aria-label="Thu nhỏ">−</button>
+      <button class="ud-btn" id="zin" aria-label="Phóng to">+</button>
+      <button class="ud-btn" id="fit">Toàn cảnh</button>
+    </div>
+  </section>
+
+  <div class="dt-wrap" id="wrap"><div class="dt-stage" id="stage"></div></div>
+
+  <section class="dt-info" aria-live="polite">
+    <div class="dt-col e"><h3><span class="han">東</span>Phương Đông</h3><div class="now" id="ie"></div><p id="pe"></p></div>
+    <div class="dt-col w"><h3><span class="han">西</span>Phương Tây</h3><div class="now" id="iw"></div><p id="pw"></p></div>
+  </section>
+
+<script>
+(() => {
+  /* ------------------------------------------------------------ DỮ LIỆU
+   * Năm âm = trước Công nguyên. Mốc cổ đại là ước lượng theo giới sử học,
+   * mốc truyền thuyết được ghi rõ là truyền thuyết.
+   * Dải (band): [hàng, bắt đầu, kết thúc, tên, mờ = giai đoạn bị đô hộ/chồng lấn]
+   */
+  const ROWS = [
+    { id: 'vn', side: 'e', han: '越', name: 'Việt Nam' },
+    { id: 'cn', side: 'e', han: '華', name: 'Trung Hoa' },
+    { id: 'eu', side: 'w', han: '歐', name: 'Châu Âu & Địa Trung Hải' },
+    { id: 'ne', side: 'w', han: '近', name: 'Cận Đông' },
+  ];
+  const BANDS = [
+    ['vn', -1000, -258, 'Văn Lang · văn hóa Đông Sơn'],
+    ['vn', -257, -179, 'Âu Lạc'],
+    ['vn', -179, 938, 'Bắc thuộc', 1],
+    ['vn', 939, 965, 'Ngô'], ['vn', 968, 980, 'Đinh'], ['vn', 980, 1009, 'Tiền Lê'],
+    ['vn', 1009, 1225, 'Lý'], ['vn', 1225, 1400, 'Trần'], ['vn', 1400, 1407, 'Hồ'],
+    ['vn', 1407, 1427, 'Thuộc Minh', 1], ['vn', 1428, 1527, 'Lê sơ'], ['vn', 1527, 1592, 'Mạc'],
+    ['vn', 1592, 1789, 'Lê trung hưng · Trịnh–Nguyễn'], ['vn', 1778, 1802, 'Tây Sơn', 1],
+    ['vn', 1802, 1945, 'Nguyễn'], ['vn', 1945, 2026, 'Hiện đại'],
+    ['cn', -2070, -1600, 'Hạ (theo sử truyền)', 1], ['cn', -1600, -1046, 'Thương'], ['cn', -1046, -256, 'Chu'],
+    ['cn', -221, -206, 'Tần'], ['cn', -206, 220, 'Hán'], ['cn', 220, 280, 'Tam Quốc'], ['cn', 266, 420, 'Tấn'],
+    ['cn', 420, 589, 'Nam–Bắc triều'], ['cn', 581, 618, 'Tùy'], ['cn', 618, 907, 'Đường'], ['cn', 907, 960, 'Ngũ Đại'],
+    ['cn', 960, 1279, 'Tống'], ['cn', 1271, 1368, 'Nguyên'], ['cn', 1368, 1644, 'Minh'], ['cn', 1644, 1912, 'Thanh'],
+    ['cn', 1912, 1949, 'Dân Quốc'], ['cn', 1949, 2026, 'Hiện đại'],
+    ['eu', -2686, -2181, 'Ai Cập · Cổ vương quốc'], ['eu', -2055, -1650, 'Ai Cập · Trung vương quốc'], ['eu', -1550, -1070, 'Ai Cập · Tân vương quốc'],
+    ['eu', -800, -323, 'Hy Lạp cổ'], ['eu', -323, -31, 'Thời Hy Lạp hóa'], ['eu', -509, -27, 'Cộng hòa La Mã', 1],
+    ['eu', -27, 476, 'Đế quốc La Mã'], ['eu', 476, 1453, 'Trung cổ'], ['eu', 1453, 1789, 'Phục hưng · Cận đại'], ['eu', 1789, 2026, 'Hiện đại'],
+    ['ne', -3500, -2004, 'Sumer'], ['ne', -1894, -1595, 'Babylon cổ'], ['ne', -911, -609, 'Tân Assyria'],
+    ['ne', -550, -330, 'Ba Tư Achaemenes'], ['ne', 224, 651, 'Ba Tư Sasan'], ['ne', 330, 1453, 'Byzantine', 1],
+    ['ne', 632, 1258, 'Các triều Hồi giáo'], ['ne', 1299, 1922, 'Ottoman'], ['ne', 1923, 2026, 'Hiện đại'],
+  ];
+  // [năm, phía, tiêu đề, ghi chú, khóa ghép cặp]
+  const EV = [
+    [-3200, 'w', 'Chữ hình nêm ra đời', 'Người Sumer khắc chữ lên tấm đất sét, một trong những hệ chữ viết sớm nhất loài người.'],
+    [-2560, 'w', 'Kim tự tháp Khufu', 'Công trình cao nhất do con người dựng suốt gần 4.000 năm sau đó.'],
+    [-1754, 'w', 'Bộ luật Hammurabi', 'Một trong những bộ luật thành văn cổ nhất, khắc trên bia đá đen ở Babylon.'],
+    [-1250, 'e', 'Giáp cốt văn', 'Chữ khắc trên mai rùa, xương thú dùng để bói thời Thương, tổ tiên trực tiếp của chữ Hán.'],
+    [-776, 'w', 'Thế vận hội đầu tiên', 'Theo truyền thống Hy Lạp, Olympic cổ đại bắt đầu năm này.'],
+    [-551, 'e', 'Khổng Tử ra đời', 'Học thuyết của ông chi phối nền giáo dục và khoa cử Việt Nam suốt gần một nghìn năm.', 'truc'],
+    [-470, 'w', 'Socrates ra đời', 'Cùng thế kỷ với Khổng Tử, Phật Thích Ca: thời mà sử gia gọi là “thời trục” của tư tưởng loài người.', 'truc'],
+    [-334, 'w', 'Alexander Đại đế đông chinh', 'Trong chưa đầy 11 năm, đế quốc Macedonia vươn tới tận Ấn Độ.'],
+    [-257, 'e', 'An Dương Vương lập Âu Lạc', 'Năm theo sử truyền thống. Thành Cổ Loa có thể là tòa thành lớn nhất Đông Nam Á thời đó.'],
+    [-240, 'w', 'Eratosthenes đo Trái Đất', 'Chỉ bằng bóng nắng ở hai thành phố, ông ước tính chu vi Trái Đất sai lệch chỉ vài phần trăm.'],
+    [-221, 'e', 'Tần thống nhất Trung Hoa', 'Tần Thủy Hoàng thống nhất chữ viết, đo lường, tiền tệ và trục xe.'],
+    [-111, 'e', 'Nhà Hán chiếm Nam Việt', 'Mở đầu giai đoạn Bắc thuộc kéo dài hơn một nghìn năm.'],
+    [-44, 'w', 'Julius Caesar bị ám sát', 'Cộng hòa La Mã sụp đổ, Đế quốc La Mã ra đời ngay sau đó.'],
+    [40, 'e', 'Khởi nghĩa Hai Bà Trưng', 'Hai chị em đánh đuổi thái thú Tô Định, xưng vương ở Mê Linh.'],
+    [79, 'w', 'Núi Vesuvius vùi Pompeii', 'Tro núi lửa giữ nguyên cả một thành phố La Mã cho khảo cổ học ngày nay.'],
+    [105, 'e', 'Thái Luân cải tiến giấy', 'Giấy làm từ vỏ cây, giẻ rách, lưới cũ: rẻ, nhẹ và thay đổi cách loài người lưu giữ chữ.', 'giay'],
+    [248, 'e', 'Khởi nghĩa Bà Triệu', 'Cuộc nổi dậy chống quân Đông Ngô ở vùng Cửu Chân.'],
+    [476, 'w', 'Tây La Mã sụp đổ', 'Mốc quen dùng để đánh dấu hết thời cổ đại, bắt đầu thời Trung cổ ở châu Âu.'],
+    [544, 'e', 'Lý Bí lập nước Vạn Xuân', 'Lần đầu tiên người Việt tự xưng đế, đặt quốc hiệu riêng.'],
+    [537, 'w', 'Hoàn thành Hagia Sophia', 'Mái vòm lớn nhất thế giới suốt gần một nghìn năm.'],
+    [868, 'e', 'Kinh Kim Cương', 'Cuốn sách in có ghi năm cổ nhất còn lại, in bằng bản khắc gỗ.'],
+    [938, 'e', 'Ngô Quyền thắng trận Bạch Đằng', 'Trận cọc gỗ trên sông Bạch Đằng khép lại thời Bắc thuộc.'],
+    [1010, 'e', 'Dời đô ra Thăng Long', 'Lý Thái Tổ ban Chiếu dời đô từ Hoa Lư ra thành Đại La, đổi tên Thăng Long.'],
+    [1044, 'e', 'Công thức thuốc súng được in', 'Sách quân sự Vũ kinh tổng yếu thời Tống in công thức thuốc súng sớm nhất còn biết.', 'sung'],
+    [1045, 'e', 'Tất Thăng làm chữ in rời', 'Chữ rời bằng đất sét nung, theo ghi chép của Thẩm Quát. Sớm hơn Gutenberg khoảng 400 năm.', 'in'],
+    [1070, 'e', 'Lập Văn Miếu', 'Thờ Khổng Tử ở Thăng Long. Sáu năm sau, Quốc Tử Giám ra đời.'],
+    [1077, 'e', 'Trận sông Như Nguyệt', 'Lý Thường Kiệt chặn quân Tống. Gắn với bài thơ “Nam quốc sơn hà”.'],
+    [1088, 'e', 'Thẩm Quát mô tả la bàn', 'Mộng Khê bút đàm ghi lại kim nam châm chỉ hướng và cả độ lệch từ.', 'labàn'],
+    [1088, 'w', 'Đại học Bologna', 'Thường được coi là trường đại học lâu đời nhất châu Âu còn hoạt động.'],
+    [1150, 'w', 'Xưởng giấy ở Xàtiva', 'Một trong những xưởng giấy sớm nhất châu Âu, ở vùng Tây Ban Nha do người Hồi giáo cai trị.', 'giay'],
+    [1190, 'w', 'La bàn trong sách châu Âu', 'Alexander Neckam nhắc tới kim nam châm chỉ hướng cho thủy thủ.', 'labàn'],
+    [1215, 'w', 'Đại hiến chương Magna Carta', 'Vua Anh lần đầu chịu ràng buộc bởi một văn bản pháp lý.'],
+    [1267, 'w', 'Roger Bacon ghi về thuốc súng', 'Một trong những ghi chép sớm nhất về thuốc súng ở châu Âu.', 'sung'],
+    [1288, 'e', 'Trận Bạch Đằng lần ba', 'Trần Hưng Đạo dùng lại kế cọc gỗ, đánh tan thủy quân Nguyên.'],
+    [1347, 'w', 'Cái Chết Đen', 'Dịch hạch giết khoảng một phần ba dân số châu Âu trong vài năm.'],
+    [1405, 'e', 'Trịnh Hòa xuống Tây Dương', 'Bảy chuyến hải trình tới tận Đông Phi, gần một thế kỷ trước Columbus.'],
+    [1428, 'e', 'Bình Ngô đại cáo', 'Lê Lợi thắng quân Minh. Nguyễn Trãi viết áng văn được coi là bản tuyên ngôn độc lập thứ hai.'],
+    [1440, 'w', 'Gutenberg và máy in', 'Chữ rời kim loại cùng máy ép in, khởi đầu làn sóng sách in ở châu Âu.', 'in'],
+    [1453, 'w', 'Constantinople thất thủ', 'Đế quốc Byzantine kết thúc sau hơn một nghìn năm.'],
+    [1492, 'w', 'Columbus tới châu Mỹ', 'Hai nửa thế giới bắt đầu nối với nhau, kéo theo cả dịch bệnh và thực dân.'],
+    [1543, 'w', 'Copernicus: Trái Đất quay quanh Mặt Trời', 'Cuốn sách xuất bản đúng năm ông mất.'],
+    [1651, 'e', 'Từ điển Việt–Bồ–La', 'Alexandre de Rhodes in ở Roma, cột mốc quan trọng của chữ Quốc ngữ.'],
+    [1687, 'w', 'Newton xuất bản Principia', 'Ba định luật chuyển động và định luật vạn vật hấp dẫn.'],
+    [1789, 'w', 'Cách mạng Pháp', 'Cùng năm, ở phương Đông, Quang Trung đại phá quân Thanh.', 'nam1789'],
+    [1789, 'e', 'Quang Trung đại phá quân Thanh', 'Trận Ngọc Hồi – Đống Đa dịp Tết Kỷ Dậu. Cùng năm với Cách mạng Pháp.', 'nam1789'],
+    [1802, 'e', 'Gia Long thống nhất đất nước', 'Nhà Nguyễn, triều đại phong kiến cuối cùng của Việt Nam.'],
+    [1820, 'e', 'Truyện Kiều (khoảng)', 'Nguyễn Du viết bằng chữ Nôm, năm hoàn thành chính xác còn bàn cãi.'],
+    [1859, 'w', 'Darwin: Nguồn gốc các loài', 'Thuyết tiến hóa bằng chọn lọc tự nhiên.'],
+    [1858, 'e', 'Pháp tấn công Đà Nẵng', 'Mở đầu gần một thế kỷ Pháp thuộc.'],
+    [1905, 'w', 'Einstein: năm kỳ diệu', 'Bốn bài báo về quang điện, chuyển động Brown, thuyết tương đối hẹp và E = mc².'],
+    [1911, 'e', 'Cách mạng Tân Hợi', 'Chấm dứt hơn hai nghìn năm chế độ quân chủ ở Trung Hoa.'],
+    [1945, 'e', 'Tuyên ngôn độc lập', 'Ngày 2 tháng 9, Quảng trường Ba Đình.'],
+    [1969, 'w', 'Apollo 11 lên Mặt Trăng', 'Con người lần đầu đặt chân lên một thiên thể khác.'],
+    [1975, 'e', 'Thống nhất đất nước', 'Ngày 30 tháng 4.'],
+    [1986, 'e', 'Đổi Mới', 'Đại hội VI mở đường cho kinh tế thị trường.'],
+    [1989, 'w', 'Bức tường Berlin sụp đổ', 'Chiến tranh Lạnh đi tới hồi kết.'],
+    [1991, 'w', 'World Wide Web', 'Tim Berners-Lee đưa trang web đầu tiên lên mạng tại CERN.'],
+  ];
+
+  const YMIN = -3300, YMAX = 2030;
+  const $ = (id) => document.getElementById(id);
+  const wrap = $('wrap'), stage = $('stage');
+  let ppy = 0.3;                    // điểm ảnh mỗi năm
+  let cursorYear = 1010;
+  const yTxt = (y) => (y < 0 ? `${-y} TCN` : `${y}`);
+  const xOf = (y) => 40 + (y - YMIN) * ppy;
+  const yearAt = (x) => YMIN + (x - 40) / ppy;
+
+  function layout() {
+    const H = wrap.clientHeight, W = xOf(YMAX) + 60;
+    stage.style.width = W + 'px';
+    stage.innerHTML = '';
+    const mid = Math.round(H / 2);
+    const rowY = { vn: mid - 52, cn: mid - 26, eu: mid + 6, ne: mid + 32 };   // dải triều đại sát trục
+    const evTopMax = mid - 64, evBotMin = mid + 66;
+
+    // tên hàng (dính bên trái)
+    const names = document.createElement('div');
+    names.style.cssText = `position:sticky;left:0;top:0;width:0;height:0;z-index:4;`;
+    ROWS.forEach((r) => {
+      const n = document.createElement('div');
+      n.className = 'dt-lane-name'; n.style.cssText = `position:absolute;top:${rowY[r.id] - 1}px;`;
+      n.innerHTML = `<span class="han">${r.han}</span>${r.name}`;
+      names.appendChild(n);
+    });
+
+    // dải triều đại
+    BANDS.forEach((b) => {
+      const [row, a, z, t, ghost] = b;
+      const el = document.createElement('div');
+      const side = ROWS.find((r) => r.id === row).side;
+      el.className = `dt-band ${side}${ghost ? ' ghost' : ''}`;
+      el.style.left = xOf(a) + 'px'; el.style.width = Math.max(2, (z - a) * ppy - 1) + 'px';
+      el.style.top = rowY[row] + 'px';
+      el.textContent = (z - a) * ppy > 28 ? t : '';
+      el.title = `${t}: ${yTxt(a)} – ${yTxt(z)}`;
+      el._b = b;
+      stage.appendChild(el);
+    });
+
+    // trục năm
+    const ax = document.createElement('div'); ax.className = 'dt-axis'; ax.style.top = (mid - 1) + 'px'; stage.appendChild(ax);
+    const step = ppy > 1.5 ? 50 : ppy > 0.6 ? 100 : ppy > 0.25 ? 250 : 500;
+    for (let y = Math.ceil(YMIN / step) * step; y <= YMAX; y += step) {
+      const t = document.createElement('div');
+      t.className = 'dt-tick dn'; t.style.left = xOf(y) + 'px'; t.style.top = (mid + 1) + 'px';
+      t.style.transform = 'translate(-50%, -2px)'; t.style.display = 'none';
+      stage.appendChild(t);
+    }
+    const yLabelRow = mid - 6;
+    for (let y = Math.ceil(YMIN / step) * step; y <= YMAX; y += step) {
+      const t = document.createElement('div');
+      t.className = 'dt-tick'; t.style.left = xOf(y) + 'px'; t.style.top = (yLabelRow - 2) + 'px';
+      t.textContent = y === 0 ? 'CN' : yTxt(y);
+      t.style.cssText += 'background:rgba(6,7,11,.9);padding:0 4px;';
+      stage.appendChild(t);
+    }
+
+    // sự kiện: xếp tầng tham lam để nhãn không chồng nhau
+    const measure = document.createElement('span');
+    measure.style.cssText = 'position:absolute;visibility:hidden;font:500 .76rem "Be Vietnam Pro",sans-serif;white-space:nowrap';
+    document.body.appendChild(measure);
+    const levels = { e: [], w: [] };
+    const gap = 22;
+    const maxLv = { e: Math.max(1, Math.floor((evTopMax - 20) / gap)), w: Math.max(1, Math.floor((H - evBotMin - 14) / gap)) };
+    const pos = new Map();
+    [...EV].sort((a, b) => a[0] - b[0]).forEach((ev) => {
+      const [y, s, title] = ev;
+      measure.textContent = title;
+      const x = xOf(y), w = measure.offsetWidth + 24;
+      const L = levels[s];
+      let lv = L.findIndex((end) => end < x);
+      if (lv === -1 && L.length < maxLv[s]) { lv = L.length; L.push(0); }
+      const el = document.createElement('button');
+      el.className = `dt-ev ${s}`;
+      el.innerHTML = `<i></i><span>${title}</span>`;
+      el.title = `${yTxt(y)} · ${title}`;
+      let top;
+      if (lv === -1) { el.classList.add('nolabel'); lv = 0; top = s === 'e' ? evTopMax : evBotMin; }
+      else { L[lv] = x + w; top = s === 'e' ? evTopMax - lv * gap : evBotMin + lv * gap; }
+      el.style.left = x + 'px'; el.style.top = (top - 8) + 'px';
+      el.onclick = (e) => { e.stopPropagation(); setCursor(y, ev); };
+      // đường dóng xuống trục
+      const st = document.createElement('div'); st.className = 'dt-stem';
+      st.style.left = x + 'px';
+      if (s === 'e') { st.style.top = top + 'px'; st.style.height = (mid - top) + 'px'; }
+      else { st.style.top = mid + 'px'; st.style.height = (top - mid) + 'px'; }
+      stage.appendChild(st); stage.appendChild(el);
+      pos.set(ev, [x, top]);
+      el._ev = ev;
+    });
+    measure.remove();
+
+    // cung nối các cặp phát minh Đông ↔ Tây
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'dt-pairs'); svg.setAttribute('width', W); svg.setAttribute('height', H);
+    const keys = {};
+    EV.forEach((ev) => { if (ev[4]) (keys[ev[4]] = keys[ev[4]] || []).push(ev); });
+    Object.values(keys).forEach((pair) => {
+      if (pair.length !== 2) return;
+      const [a, b] = pair.map((ev) => pos.get(ev));
+      const p = document.createElementNS(svg.namespaceURI, 'path');
+      const cx = (a[0] + b[0]) / 2;
+      p.setAttribute('d', `M${a[0]},${a[1]} C${cx},${a[1]} ${cx},${b[1]} ${b[0]},${b[1]}`);
+      svg.appendChild(p);
+    });
+    stage.appendChild(svg);
+
+    const cur = document.createElement('div'); cur.className = 'dt-cursor'; cur.id = 'cur'; cur.innerHTML = '<b></b>';
+    stage.appendChild(cur);
+    stage.prepend(names);
+    setCursor(cursorYear, null, true);
+  }
+
+  function nearest(side, y) {
+    return EV.filter((e) => e[1] === side).map((e) => [Math.abs(e[0] - y), e]).sort((a, b) => a[0] - b[0])[0][1];
+  }
+  function bandsAt(side, y) {
+    return BANDS.filter((b) => ROWS.find((r) => r.id === b[0]).side === side && b[1] <= y && y < b[2]);
+  }
+  function describe(side, y, picked) {
+    const bs = bandsAt(side, y);
+    const now = bs.length ? bs.map((b) => `<em>${b[3]}</em>`).join(' · ') : '<em>—</em>';
+    const ev = picked && picked[1] === side ? picked : nearest(side, y);
+    const d = ev[0] - y;
+    const when = d === 0 ? 'Năm này' : d > 0 ? `${d} năm sau` : `${-d} năm trước`;
+    let pair = '';
+    if (ev[4]) {
+      const o = EV.find((x) => x[4] === ev[4] && x !== ev);
+      if (o) pair = ` <span class="pair">⇄ phía bên kia: ${o[2]} (${yTxt(o[0])}).</span>`;
+    }
+    return [now, `<b>${when} · ${yTxt(ev[0])}: ${ev[2]}.</b> ${ev[3]}${pair}`];
+  }
+
+  function setCursor(y, picked, quiet) {
+    cursorYear = Math.round(y);
+    const cur = $('cur');
+    if (cur) { cur.style.left = xOf(cursorYear) + 'px'; cur.querySelector('b').textContent = cursorYear === 0 ? 'năm 1' : yTxt(cursorYear); }
+    stage.querySelectorAll('.dt-band').forEach((el) => el.classList.toggle('on', el._b[1] <= cursorYear && cursorYear < el._b[2]));
+    stage.querySelectorAll('.dt-ev').forEach((el) => el.classList.toggle('sel', el._ev === picked));
+    const [ne, pe] = describe('e', cursorYear, picked), [nw, pw] = describe('w', cursorYear, picked);
+    $('ie').innerHTML = ne; $('pe').innerHTML = pe; $('iw').innerHTML = nw; $('pw').innerHTML = pw;
+    if (!quiet) history.replaceState(null, '', '#' + cursorYear);
+  }
+
+  // Kéo để cuộn ngang, chạm để đặt con trỏ năm
+  let down = null;
+  wrap.addEventListener('pointerdown', (e) => { if (e.target.closest('.dt-ev')) return; down = { x: e.clientX, s: wrap.scrollLeft, moved: false }; });
+  wrap.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - down.x;
+    if (Math.abs(dx) > 4) { down.moved = true; wrap.classList.add('drag'); }
+    if (down.moved && e.pointerType === 'mouse') wrap.scrollLeft = down.s - dx;
+  });
+  wrap.addEventListener('pointerup', (e) => {
+    if (down && !down.moved) {
+      const r = stage.getBoundingClientRect();
+      setCursor(Math.max(YMIN, Math.min(2026, yearAt(e.clientX - r.left))));
+    }
+    down = null; wrap.classList.remove('drag');
+  });
+  wrap.addEventListener('wheel', (e) => {
+    if (e.ctrlKey) { e.preventDefault(); zoom(e.deltaY < 0 ? 1.25 : 0.8, e.clientX); return; }
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); wrap.scrollLeft += e.deltaY; }
+  }, { passive: false });
+
+  function zoom(f, clientX) {
+    const r = wrap.getBoundingClientRect();
+    const px = (clientX ?? r.left + r.width / 2) - r.left;
+    const yr = yearAt(wrap.scrollLeft + px);
+    ppy = Math.max(fitPpy(), Math.min(6, ppy * f));
+    layout();
+    wrap.scrollLeft = xOf(yr) - px;
+  }
+  const fitPpy = () => (wrap.clientWidth - 100) / (YMAX - YMIN);
+  $('zin').onclick = () => zoom(1.6);
+  $('zout').onclick = () => zoom(1 / 1.6);
+  $('fit').onclick = () => { ppy = fitPpy(); layout(); wrap.scrollLeft = 0; };
+  addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') setCursor(Math.min(2026, cursorYear + (e.shiftKey ? 100 : 10)));
+    if (e.key === 'ArrowLeft') setCursor(Math.max(YMIN, cursorYear - (e.shiftKey ? 100 : 10)));
+    if (e.key === '+' || e.key === '=') zoom(1.6);
+    if (e.key === '-') zoom(1 / 1.6);
+  });
+
+  const h = parseInt(location.hash.slice(1), 10);
+  if (!isNaN(h)) cursorYear = Math.max(YMIN, Math.min(2026, h));
+  ppy = Math.max(fitPpy(), innerWidth < 720 ? 0.45 : 0.6);
+  layout();
+  wrap.scrollLeft = xOf(cursorYear) - wrap.clientWidth / 2;
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { ppy = Math.max(fitPpy(), ppy); layout(); }, 150); });
+})();
+</script>
+</body>
+</html>

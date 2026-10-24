@@ -209,7 +209,7 @@ async function main() {
   );
 
   // Sitemap
-  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/bai-viet/', ...posts.map((p) => `/bai-viet/${p.slug}/`)];
+  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/bai-viet/', ...posts.map((p) => `/bai-viet/${p.slug}/`)];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
     .map((u) => `  <url><loc>${SITE}${u}</loc></url>`)
     .join('\n')}\n</urlset>\n`;
