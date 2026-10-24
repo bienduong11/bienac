@@ -276,6 +276,7 @@ async function main() {
     path.join(OUT, 'index.html'),
     page({
       title: 'Bài viết · Bienac',
+      image: `${SITE}/assets/og/bai-viet.jpg`,
       description: 'Nội dung các video của Bienac ở dạng đọc, kèm đầy đủ nguồn tham khảo.',
       url: `${SITE}/bai-viet/`,
       body: `
