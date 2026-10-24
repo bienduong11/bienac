@@ -86,7 +86,9 @@ const page = ({ title, description, url, image, body, type = 'website' }) => `<!
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/blog.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
 </head>
 <body class="no-webgl blog">
   <div class="vignette" aria-hidden="true"></div>
