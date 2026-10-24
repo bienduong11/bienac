@@ -1,0 +1,12 @@
+{
+  "name": "bienac",
+  "private": true,
+  "type": "module",
+  "description": "Website bienac.com",
+  "scripts": {
+    "build": "node scripts/fetch-videos.mjs || true; node scripts/build-posts.mjs"
+  },
+  "dependencies": {
+    "marked": "18.0.14"
+  }
+}
