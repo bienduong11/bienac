@@ -1,0 +1,30 @@
+/* Tàng thư số cho trang Quả địa cầu: bảng màu mực, ngọc, đồng, son */
+:root {
+  --bg: #06070b;
+  --panel-bg: rgba(10, 12, 16, 0.66);
+  --panel-border: rgba(201, 166, 80, 0.24);
+  --text: #ece6d6;
+  --text-dim: #9d9786;
+  --accent: #c9a650;
+  --accent-2: #37f0cf;
+}
+html, body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; }
+.panel { border-radius: 2px; }
+#header h1 { font-family: 'Chakra Petch', sans-serif; letter-spacing: .02em; }
+#header .subtitle, #header .hint, #counter, #era-buttons button { font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; }
+#era-buttons button, #country-select, .country-ev, #tooltip, #modal-close { border-radius: 2px; }
+#play-btn:hover { background: rgba(201, 166, 80, 0.18); }
+
+/* Nút ⊞ quay về lưới ô của bienac.com */
+.home-apps {
+  position: fixed; z-index: 50; left: 50%; top: 16px; transform: translateX(-50%);
+  display: inline-grid; place-items: center; width: 40px; height: 40px;
+  font-size: 1.35rem; line-height: 1; text-decoration: none;
+  color: var(--accent-2); background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.home-apps:hover { border-color: var(--accent-2); }
+@media (max-width: 720px) {
+  .home-apps { left: auto; right: 12px; top: 106px; transform: none; width: 36px; height: 36px; }
+}
