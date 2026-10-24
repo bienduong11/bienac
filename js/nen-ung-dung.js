@@ -24,6 +24,8 @@
   document.body.prepend(cv);
   const g = cv.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LITE = (matchMedia('(max-width: 760px)').matches || (navigator.connection && navigator.connection.saveData) || (navigator.hardwareConcurrency || 8) <= 4);
+  let skip = 0;
   let W, H, DPR, t = 0, items = [];
   const R = Math.random;
   const C = { cyan: '55,240,207', brass: '201,166,80', red: '232,69,46', ivory: '236,230,214', blue: '120,150,255' };
@@ -59,7 +61,8 @@
 
   function frame() {
     if (document.hidden) { requestAnimationFrame(frame); return; }
-    t += 1;
+    if (LITE && (skip ^= 1)) { requestAnimationFrame(frame); return; }   // máy yếu: vẽ cách khung
+    t += LITE ? 2 : 1;
     g.clearRect(0, 0, W, H);
     draw[mode] && draw[mode]();
     if (!reduce) requestAnimationFrame(frame);

@@ -364,7 +364,9 @@
       this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // Giới hạn nhịp vẽ — nền động không cần 60fps, đỡ tốn GPU/pin
-      this.frameInterval = 1000 / 40;
+      // Máy yếu / điện thoại: 24 khung hình/giây là đủ cho một lớp nền mờ
+      this.lite = (matchMedia('(max-width: 760px)').matches || (navigator.connection && navigator.connection.saveData) || (navigator.hardwareConcurrency || 8) <= 4);
+      this.frameInterval = 1000 / (this.lite ? 24 : 40);
       this.lastFrame = 0;
       this.rendered = null; // shader đã vẽ gần nhất (cho chế độ giảm chuyển động)
 
@@ -441,7 +443,7 @@
       // Trần số điểm ảnh: shader fbm rất nặng, màn lớn/HiDPI sẽ giật nếu vẽ
       // ở độ phân giải gốc. Canvas được CSS kéo full màn nên hạ nội bộ gần
       // như không thấy khác biệt với một lớp nền mờ chuyển động.
-      const MAX_PIXELS = 1280 * 720;
+      const MAX_PIXELS = this.lite ? 640 * 360 : 1280 * 720;
       const over = (w * h) / MAX_PIXELS;
       if (over > 1) {
         const s = Math.sqrt(over);

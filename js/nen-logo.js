@@ -10,6 +10,7 @@
   if (!cv || !holder) return;
   const g = cv.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LITE = (matchMedia('(max-width: 760px)').matches || (navigator.connection && navigator.connection.saveData) || (navigator.hardwareConcurrency || 8) <= 4);
 
   let W = 0, H = 0, DPR = 1, CELL = 10, cols = 0, rows = 0;
   let digits;                  // ký tự 0/1 của từng ô
@@ -48,7 +49,7 @@
   }
 
   function resize() {
-    DPR = Math.min(2, devicePixelRatio || 1);
+    DPR = Math.min(LITE ? 1.5 : 2, devicePixelRatio || 1);
     W = innerWidth; H = innerHeight;
     CELL = W < 720 ? 9 : 10;
     cv.width = W * DPR; cv.height = H * DPR;
@@ -84,7 +85,8 @@
   let last = 0;
   function frame(t) {
     if (document.hidden) { requestAnimationFrame(frame); return; }
-    if (t - last < 28) { requestAnimationFrame(frame); return; }   // ~35 khung hình/giây
+    if (t - last < (LITE ? 50 : 28)) { requestAnimationFrame(frame); return; }   // ~35 khung hình/giây, máy yếu ~20
+    { const rr = holder.getBoundingClientRect(); if (rr.bottom < -40 || rr.top > innerHeight + 40) { requestAnimationFrame(frame); return; } }   // logo đã cuộn khuất: nghỉ
     last = t;
     g.setTransform(DPR, 0, 0, DPR, 0, 0);
     g.clearRect(0, 0, W, H);
