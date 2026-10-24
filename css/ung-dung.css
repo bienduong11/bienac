@@ -1,0 +1,38 @@
+/* =====================================================================
+ * Khung chung cho các "ứng dụng" của bienac.com (Thang vũ trụ, Chiết tự…)
+ * Dùng sau style.css + theme.css
+ * ===================================================================== */
+body.ud { background: var(--ink); min-height: 100vh; }
+body.ud .site-header { background: rgba(6, 7, 11, 0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--hair); }
+
+.ud-panel {
+  background: var(--glass);
+  box-shadow: inset 0 0 0 1px var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.ud-kicker {
+  font: 500 .68rem/1.4 var(--mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.ud-kicker .han { font-family: var(--han); letter-spacing: .1em; color: var(--cinnabar); }
+.ud-title { font: 700 clamp(1.6rem, 3.2vw, 2.4rem)/1.1 var(--display); letter-spacing: .01em; }
+.ud-title .accent { color: var(--cyan); }
+.ud-dim { color: var(--text-dim); }
+.ud-btn {
+  font: 600 .74rem/1 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: rgba(8, 10, 14, .7);
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--glass-border);
+  padding: 10px 14px;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+.ud-btn:hover, .ud-btn:focus-visible { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
+.ud-btn[aria-pressed="true"] { background: var(--cyan); color: var(--ink); }
+.han { font-family: var(--han); }
