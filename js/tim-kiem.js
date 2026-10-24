@@ -33,6 +33,7 @@
     ['Ngọn lửa màu', '/ngon-lua/', 'ngon lua mau kim loai pho phat xa han the'],
     ['Trộn ánh sáng', '/tron-mau/', 'tron mau anh sang rgb te bao non'],
     ['Con lắc kép', '/con-lac/', 'con lac kep hon loan'],
+    ['Bắt đầu từ đây', '/bat-dau/', 'bat dau moi xem gioi thieu lo trinh nen xem video nao'],
     ['Ủng hộ Bienac', '/ung-ho/', 'ung ho donate'],
   ];
   const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase();
