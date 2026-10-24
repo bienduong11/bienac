@@ -129,7 +129,7 @@
 
 @media (max-width: 640px) {
   .post-item { grid-template-columns: 1fr; }
-  .blog .site-nav a:not(.nav-cta):not(.nav-active) { display: none; }
+  .blog .site-nav a:not(.nav-cta):not(.nav-active):not(.nav-apps) { display: none; }
 }
 
 /* Nền chuyển màu phủ kín cả trang dài */
