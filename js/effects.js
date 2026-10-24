@@ -56,10 +56,10 @@
       p.x += (u_mouse.x - 0.5) * 0.15;
 
       // Bầu trời đêm
-      vec3 col = mix(vec3(0.008, 0.012, 0.035), vec3(0.015, 0.04, 0.10), uv.y);
+      vec3 col = mix(vec3(0.010, 0.011, 0.016), vec3(0.014, 0.030, 0.036), uv.y);
 
       // Sao lấp lánh
-      col += vec3(0.9, 0.95, 1.0) * stars(gl_FragCoord.xy, 0.997, 2.0) * 0.7 * smoothstep(0.15, 0.8, uv.y);
+      col += vec3(1.0, 0.95, 0.84) * stars(gl_FragCoord.xy, 0.997, 2.0) * 0.7 * smoothstep(0.15, 0.8, uv.y);
 
       // Ba dải cực quang
       for (int i = 0; i < 3; i++) {
@@ -69,13 +69,13 @@
         float y   = uv.y - 0.34 - fi * 0.10 - wav * 0.42;
         float band = exp(-abs(y) * (5.2 - wav * 2.5));
         float rays = 0.55 + 0.45 * fbm(vec2(p.x * 7.0 + t * 3.0, uv.y * 2.2 - t));
-        vec3 tint = mix(vec3(0.05, 1.0, 0.55), vec3(0.15, 0.55, 1.0), wav);
-        tint = mix(tint, vec3(0.65, 0.30, 0.95), fi * 0.34);
+        vec3 tint = mix(vec3(0.16, 0.95, 0.66), vec3(0.06, 0.62, 0.58), wav);
+        tint = mix(tint, vec3(0.86, 0.30, 0.20), fi * 0.30);   // dải trên đỏ son (oxy)
         col += tint * band * rays * 0.52;
       }
 
       // Ánh phản chiếu nhẹ phía chân trời
-      col += vec3(0.0, 0.25, 0.22) * exp(-uv.y * 6.0) * 0.35;
+      col += vec3(0.20, 0.16, 0.07) * exp(-uv.y * 6.0) * 0.35;
       gl_FragColor = vec4(col, 1.0);
     }
   `;
@@ -88,12 +88,12 @@
       p.x += (u_mouse.x - 0.5) * 0.2;
 
       // Đại dương về đêm
-      vec3 col = mix(vec3(0.0, 0.015, 0.05), vec3(0.0, 0.05, 0.11), uv.y);
+      vec3 col = mix(vec3(0.006, 0.012, 0.016), vec3(0.012, 0.034, 0.042), uv.y);
       col += vec3(0.9, 0.95, 1.0) * stars(gl_FragCoord.xy, 0.9975, 1.5) * 0.5 * smoothstep(0.5, 0.95, uv.y);
 
       // Vầng trăng mờ
       float moon = length(p - vec2(0.75, 0.55));
-      col += vec3(0.7, 0.9, 1.0) * exp(-moon * 5.5) * 0.25;
+      col += vec3(0.95, 0.82, 0.55) * exp(-moon * 5.5) * 0.25;
 
       // Các lớp sóng phát sáng
       for (int i = 0; i < 7; i++) {
@@ -106,7 +106,7 @@
         float d = abs(p.y - yy - w);
         float glow = 0.014 / (d + 0.014);
         glow *= glow;
-        vec3 wc = mix(vec3(0.10, 0.95, 0.90), vec3(0.15, 0.40, 1.0), fi / 6.0);
+        vec3 wc = mix(vec3(0.20, 0.94, 0.80), vec3(0.62, 0.50, 0.24), fi / 6.0);
         col += wc * glow * (0.35 + 0.18 * sin(fi * 2.0 + u_time * 0.4));
       }
       gl_FragColor = vec4(col, 1.0);
@@ -127,10 +127,10 @@
                     fbm(p * 1.1 + 3.5 * q + vec2(8.3, 2.8) - t * 0.5));
       float f = fbm(p * 1.1 + 3.5 * r);
 
-      vec3 col = mix(vec3(0.015, 0.008, 0.045), vec3(0.10, 0.18, 0.50), clamp(f * f * 1.6, 0.0, 1.0));
-      col = mix(col, vec3(0.0, 0.85, 0.80), clamp(q.y * q.y * 0.85, 0.0, 1.0) * f);
-      col = mix(col, vec3(0.60, 0.20, 0.85), clamp(r.x * 0.7, 0.0, 1.0) * f * 0.8);
-      col += vec3(0.9, 0.7, 1.0) * pow(f, 5.0) * 0.6;
+      vec3 col = mix(vec3(0.010, 0.010, 0.016), vec3(0.04, 0.16, 0.17), clamp(f * f * 1.6, 0.0, 1.0));
+      col = mix(col, vec3(0.16, 0.86, 0.74), clamp(q.y * q.y * 0.85, 0.0, 1.0) * f);
+      col = mix(col, vec3(0.80, 0.26, 0.16), clamp(r.x * 0.7, 0.0, 1.0) * f * 0.55);
+      col += vec3(1.0, 0.86, 0.55) * pow(f, 5.0) * 0.6;
 
       // Trường sao hai lớp
       col += vec3(0.9, 0.95, 1.0) * stars(gl_FragCoord.xy, 0.9965, 1.8) * 0.8;
@@ -148,9 +148,9 @@
       vec2 p = (gl_FragCoord.xy * 2.0 - u_resolution.xy) / u_resolution.y;
 
       // Khu rừng đêm: gradient + sương mù chuyển động
-      vec3 col = mix(vec3(0.004, 0.02, 0.03), vec3(0.01, 0.05, 0.08), uv.y);
+      vec3 col = mix(vec3(0.006, 0.010, 0.012), vec3(0.012, 0.030, 0.034), uv.y);
       float mist = fbm(vec2(p.x * 1.2 + u_time * 0.05, p.y * 1.5 - u_time * 0.02));
-      col += vec3(0.0, 0.10, 0.10) * mist * 0.5;
+      col += vec3(0.04, 0.09, 0.08) * mist * 0.5;
 
       // Đàn đom đóm trôi lơ lửng
       for (int i = 0; i < 48; i++) {
@@ -169,7 +169,7 @@
 
         float d = length(p - pos);
         float blink = 0.45 + 0.55 * pow(0.5 + 0.5 * sin(u_time * (1.0 + h1 * 2.0) + fi * 7.0), 3.0);
-        vec3 fc = mix(vec3(0.15, 1.0, 0.85), vec3(0.55, 0.45, 1.0), h3);
+        vec3 fc = mix(vec3(0.20, 0.96, 0.80), vec3(0.95, 0.74, 0.36), h3);
         col += fc * exp(-d * d * (1400.0 - h2 * 800.0)) * blink;      // lõi sáng
         col += fc * exp(-d * 7.0) * 0.035 * blink;                     // quầng sáng
       }
