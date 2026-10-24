@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trộn ánh sáng · Bienac</title>
+  <meta name="description" content="Kéo ba đèn đỏ, lục, lam chồng lên nhau để thấy màu được tạo ra thế nào, và vì sao màu hồng sen không có trong cầu vồng." />
+  <meta property="og:title" content="Trộn ánh sáng · Bienac" />
+  <meta property="og:description" content="Màu sắc được trộn trong mắt và não như thế nào?" />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .tm { max-width: 1080px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .tm-lede { margin-top: 10px; color: var(--text-dim); line-height: 1.7; max-width: 680px; }
+    .tm-grid { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+    .tm-stage { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 4 / 3; touch-action: none; box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .tm-stage canvas { width: 100%; height: 100%; display: block; cursor: grab; }
+    .tm-stage .hint { position: absolute; left: 12px; bottom: 10px; font: 500 .7rem var(--mono); color: rgba(236,230,214,.6); pointer-events: none; }
+    .tm-stage.sub .hint { color: rgba(30,30,30,.6); }
+    .tm-side { padding: 18px 20px 20px; border-radius: 18px; }
+    .tm-modes { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tm-modes button, .tm-chip { padding: 8px 14px; border-radius: 999px; font: 600 .8rem 'Be Vietnam Pro', sans-serif; color: var(--text-dim); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); cursor: pointer; }
+    .tm-modes button[aria-pressed="true"], .tm-chip[aria-pressed="true"] { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
+    .tm-sl { margin-top: 16px; display: grid; gap: 12px; }
+    .tm-sl label { display: grid; grid-template-columns: 92px 1fr 42px; gap: 10px; align-items: center; font-size: .88rem; }
+    .tm-sl input[type=range] { width: 100%; accent-color: var(--cyan); }
+    .tm-sl output { font: 600 .8rem var(--mono); color: var(--text-dim); text-align: right; }
+    .tm-sl .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    .tm-exp { margin-top: 16px; font-size: .9rem; line-height: 1.65; color: var(--text-dim); }
+    .tm-exp b { color: var(--text); }
+    .tm-sec { margin-top: 40px; }
+    .tm-sec h2 { font: 700 clamp(1.3rem, 3vw, 1.7rem)/1.25 var(--display); }
+    .tm-sec h2 .accent { color: var(--cyan); }
+    .tm-cone { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+    .tm-chart { padding: 14px; border-radius: 18px; }
+    .tm-chart canvas { width: 100%; height: 260px; display: block; }
+    .tm-wl { margin-top: 10px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+    .tm-wl input { width: 100%; accent-color: var(--cyan); }
+    .tm-wl output { font: 600 .9rem var(--mono); }
+    .tm-bars { display: grid; gap: 10px; margin-top: 4px; }
+    .tm-bar { display: grid; grid-template-columns: 76px 1fr 40px; gap: 10px; align-items: center; font-size: .85rem; }
+    .tm-bar .t { height: 12px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
+    .tm-bar .t i { display: block; height: 100%; border-radius: 999px; transition: width .15s; }
+    .tm-bar span:last-child { font: 600 .78rem var(--mono); color: var(--text-dim); text-align: right; }
+    .tm-swatch { margin-top: 16px; display: flex; align-items: center; gap: 14px; }
+    .tm-swatch i { width: 64px; height: 64px; border-radius: 16px; flex: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.15); }
+    .tm-swatch p { font-size: .9rem; line-height: 1.55; color: var(--text-dim); }
+    .tm-swatch b { color: var(--text); }
+    .tm-presets { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tm-videos { margin-top: 34px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .tm-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 16px; text-decoration: none; color: var(--text); }
+    .tm-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; }
+    .tm-video small { display: block; font: 600 .62rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brass); margin-bottom: 4px; }
+    .tm-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    @media (max-width: 860px) { .tm-grid, .tm-cone { grid-template-columns: 1fr; } .tm-chart canvas { height: 220px; } }
+  </style>
+</head>
+<body class="ud" data-nen="pho">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Trộn ánh sáng</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="tm">
+    <p class="ud-kicker">Trộn ánh sáng</p>
+    <h1 class="ud-title">Màu sắc được <span class="accent">pha trong não</span></h1>
+    <p class="tm-lede">Màn hình điện thoại của bạn chỉ có ba loại điểm sáng: đỏ, lục và lam. Mọi màu khác, từ vàng chanh tới da người, đều do mắt và não tự trộn ra. Kéo ba chiếc đèn chồng lên nhau để xem.</p>
+
+    <div class="tm-grid">
+      <div class="tm-stage" id="stage"><canvas id="cv" aria-label="Sân khấu ba đèn màu, kéo để di chuyển"></canvas><span class="hint" id="hint">Kéo các vòng tròn để chồng màu</span></div>
+      <aside class="ud-panel tm-side">
+        <div class="tm-modes" role="group" aria-label="Kiểu trộn">
+          <button data-m="add" aria-pressed="true">Trộn ánh sáng</button>
+          <button data-m="sub" aria-pressed="false">Trộn mực in</button>
+        </div>
+        <div class="tm-sl" id="sliders"></div>
+        <div class="tm-exp" id="exp"></div>
+        <div class="tm-presets">
+          <button class="tm-chip" id="reset" type="button">Xếp lại</button>
+          <button class="tm-chip" id="stack" type="button">Chồng cả ba</button>
+        </div>
+      </aside>
+    </div>
+
+    <section class="tm-sec">
+      <p class="ud-kicker">Màu không có trong cầu vồng</p>
+      <h2>Mắt chỉ có <span class="accent">ba loại cảm biến</span></h2>
+      <p class="tm-lede">Võng mạc người có ba loại tế bào nón, nhạy nhất với ánh sáng bước sóng ngắn (S), trung bình (M) và dài (L). Não không đo bước sóng, nó chỉ so ba tín hiệu ấy với nhau. Chọn một bước sóng để xem mỗi loại nón “kêu” to cỡ nào.</p>
+      <div class="tm-cone">
+        <div class="ud-panel tm-chart">
+          <canvas id="cone" aria-label="Đường độ nhạy của ba loại tế bào nón"></canvas>
+          <div class="tm-wl"><input id="wl" type="range" min="400" max="700" value="580" aria-label="Bước sóng" /><output id="wlo">580 nm</output></div>
+        </div>
+        <div class="ud-panel tm-side">
+          <div class="tm-bars" id="bars"></div>
+          <div class="tm-swatch"><i id="sw"></i><p id="swt"></p></div>
+          <div class="tm-presets">
+            <button class="tm-chip" data-p="single" aria-pressed="true">Một bước sóng</button>
+            <button class="tm-chip" data-p="magenta" aria-pressed="false">Đỏ + lam cùng lúc</button>
+            <button class="tm-chip" data-p="yellow" aria-pressed="false">Đỏ + lục cùng lúc</button>
+          </div>
+        </div>
+      </div>
+      <p class="tm-exp" style="max-width:760px">Đường cong trên là mô hình gần đúng, chỉ để minh họa: độ nhạy thật của các tế bào nón rộng hơn và lệch hơn một chút, đỉnh nằm quanh 420, 534 và 564 nm.</p>
+    </section>
+
+    <div class="tm-videos">
+      <a class="ud-panel tm-video" href="https://www.youtube.com/watch?v=YhP85uD5aYk" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/YhP85uD5aYk/mqdefault.jpg" alt="" loading="lazy" /><span><small>Video trên kênh</small>Vì sao Màu Sắc Không Tồn Tại?</span></a>
+      <a class="ud-panel tm-video" href="https://www.youtube.com/watch?v=sqM2vRDQw7k" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/sqM2vRDQw7k/mqdefault.jpg" alt="" loading="lazy" /><span><small>Video trên kênh</small>Vì sao LED Xanh là Phát Minh Vĩ Đại?</span></a>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+<script>
+(() => {
+  document.getElementById('y').textContent = new Date().getFullYear();
+  const $ = (id) => document.getElementById(id);
+
+  /* ---------------------------------------------------- PHẦN 1: ĐÈN */
+  const SETS = {
+    add: { bg: '#000', op: 'lighter', lights: [['Đỏ', [255, 0, 0]], ['Lục', [0, 255, 0]], ['Lam', [0, 0, 255]]],
+      exp: '<b>Trộn cộng</b>: mỗi đèn thêm ánh sáng vào. Đỏ + lục ra <b>vàng</b>, lục + lam ra <b>lục lam</b>, đỏ + lam ra <b>hồng sen</b>, đủ cả ba ra <b>trắng</b>. Màn hình, máy chiếu và đèn LED đều trộn màu theo cách này. Thiếu đèn LED lam, người ta không làm được màn hình LED hay bóng đèn LED trắng, nên phát minh LED xanh lam được trao giải Nobel năm 2014.' },
+    sub: { bg: '#fff', op: 'multiply', lights: [['Lục lam', [0, 255, 255]], ['Hồng sen', [255, 0, 255]], ['Vàng', [255, 255, 0]]],
+      exp: '<b>Trộn trừ</b>: mỗi lớp mực hút bớt một phần ánh sáng trắng. Mực lục lam hút đỏ, mực hồng sen hút lục, mực vàng hút lam. Chồng cả ba thì gần như hút hết, ra màu tối gần <b>đen</b>. Máy in dùng bốn mực CMYK, thêm mực đen (K) vì ba màu chồng nhau thường chỉ ra nâu sẫm và tốn mực.' },
+  };
+  let mode = 'add';
+  const cv = $('cv'), g = cv.getContext('2d');
+  let W, H, DPR;
+  const L = [{ x: 0.38, y: 0.4, k: 1 }, { x: 0.62, y: 0.4, k: 1 }, { x: 0.5, y: 0.64, k: 1 }];
+  function resize() {
+    DPR = Math.min(2, devicePixelRatio || 1);
+    const r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = W * DPR; cv.height = H * DPR; draw();
+  }
+  function draw() {
+    if (!W) return;
+    const S = SETS[mode];
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    g.globalCompositeOperation = 'source-over';
+    g.fillStyle = S.bg; g.fillRect(0, 0, W, H);
+    g.globalCompositeOperation = S.op;
+    const R = Math.min(W, H) * 0.27;
+    L.forEach((l, i) => {
+      const [r, gg, b] = S.lights[i][1];
+      const k = l.k;
+      const col = mode === 'add' ? [r * k, gg * k, b * k] : [255 - (255 - r) * k, 255 - (255 - gg) * k, 255 - (255 - b) * k];
+      const x = l.x * W, y = l.y * H;
+      const grd = g.createRadialGradient(x, y, R * 0.75, x, y, R);
+      const c = col.map(Math.round).join(',');
+      const edge = mode === 'add' ? '0,0,0' : '255,255,255';
+      grd.addColorStop(0, `rgb(${c})`); grd.addColorStop(1, `rgb(${edge})`);
+      g.fillStyle = grd; g.beginPath(); g.arc(x, y, R, 0, Math.PI * 2); g.fill();
+    });
+    g.globalCompositeOperation = 'source-over';
+  }
+  function ui() {
+    const S = SETS[mode];
+    $('sliders').innerHTML = S.lights.map(([name, c], i) => `<label><span><span class="dot" style="background:rgb(${c})"></span>${name}</span><input type="range" min="0" max="100" value="${Math.round(L[i].k * 100)}" data-i="${i}" aria-label="Độ mạnh ${name}" /><output>${Math.round(L[i].k * 100)}%</output></label>`).join('');
+    $('sliders').querySelectorAll('input').forEach((inp) => inp.oninput = () => { L[inp.dataset.i].k = inp.value / 100; inp.nextElementSibling.textContent = inp.value + '%'; draw(); });
+    $('exp').innerHTML = S.exp;
+    $('stage').classList.toggle('sub', mode === 'sub');
+    document.querySelectorAll('[data-m]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.m === mode)));
+    draw();
+  }
+  document.querySelectorAll('[data-m]').forEach((b) => b.onclick = () => { mode = b.dataset.m; ui(); });
+  $('reset').onclick = () => { Object.assign(L[0], { x: 0.38, y: 0.4 }); Object.assign(L[1], { x: 0.62, y: 0.4 }); Object.assign(L[2], { x: 0.5, y: 0.64 }); draw(); };
+  $('stack').onclick = () => { L.forEach((l) => { l.x = 0.5; l.y = 0.5; }); draw(); };
+
+  let drag = null;
+  const pos = (e) => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
+  cv.addEventListener('pointerdown', (e) => {
+    const [px, py] = pos(e); const R = Math.min(W, H) * 0.27;
+    let best = -1, bd = 1e9;
+    L.forEach((l, i) => { const d = Math.hypot((l.x - px) * W, (l.y - py) * H); if (d < R && d < bd) { bd = d; best = i; } });
+    if (best < 0) return;
+    drag = { i: best, dx: L[best].x - px, dy: L[best].y - py };
+    cv.setPointerCapture(e.pointerId); cv.style.cursor = 'grabbing'; $('hint').style.opacity = 0;
+  });
+  cv.addEventListener('pointermove', (e) => {
+    if (!drag) return; const [px, py] = pos(e);
+    L[drag.i].x = Math.max(0.05, Math.min(0.95, px + drag.dx)); L[drag.i].y = Math.max(0.05, Math.min(0.95, py + drag.dy)); draw();
+  });
+  const end = () => { drag = null; cv.style.cursor = 'grab'; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  addEventListener('resize', resize);
+
+  /* ------------------------------------------ PHẦN 2: TẾ BÀO NÓN */
+  // Mô hình gần đúng: hàm Gauss trên trục bước sóng, đỉnh 420 / 534 / 564 nm
+  const CONES = [['S · ngắn', 420, 32, '#5b7bff'], ['M · trung', 534, 42, '#3fd28b'], ['L · dài', 564, 46, '#ff5a4a']];
+  const resp = (wl, [, p, s]) => Math.exp(-0.5 * ((wl - p) / s) ** 2);
+  function wl2rgb(w) {   // bước sóng → màu gần đúng để hiển thị
+    let r = 0, g2 = 0, b = 0;
+    if (w < 440) { r = -(w - 440) / 60; b = 1; } else if (w < 490) { g2 = (w - 440) / 50; b = 1; } else if (w < 510) { g2 = 1; b = -(w - 510) / 20; }
+    else if (w < 580) { r = (w - 510) / 70; g2 = 1; } else if (w < 645) { r = 1; g2 = -(w - 645) / 65; } else r = 1;
+    const f = w < 420 ? 0.3 + 0.7 * (w - 380) / 40 : w > 650 ? 0.3 + 0.7 * (700 - w) / 50 : 1;
+    return [r, g2, b].map((c) => Math.round(255 * Math.pow(Math.max(0, c) * f, 0.8)));
+  }
+  let preset = 'single';
+  const cc = $('cone'), cg = cc.getContext('2d');
+  function sources() {
+    const w = +$('wl').value;
+    if (preset === 'magenta') return [450, 620];
+    if (preset === 'yellow') return [540, 620];
+    return [w];
+  }
+  function drawCone() {
+    const D = Math.min(2, devicePixelRatio || 1), r = cc.getBoundingClientRect();
+    const w = r.width, h = r.height; cc.width = w * D; cc.height = h * D; cg.setTransform(D, 0, 0, D, 0, 0);
+    cg.clearRect(0, 0, w, h);
+    const X = (nm) => 30 + (nm - 400) / 300 * (w - 40), Y = (v) => h - 26 - v * (h - 46);
+    for (let nm = 400; nm < 700; nm += 2) { const [a, b2, c] = wl2rgb(nm); cg.fillStyle = `rgba(${a},${b2},${c},.55)`; cg.fillRect(X(nm), h - 18, X(nm + 2) - X(nm) + 0.5, 8); }
+    cg.font = '500 10px "JetBrains Mono", monospace'; cg.fillStyle = 'rgba(236,230,214,.55)'; cg.textAlign = 'center';
+    for (const nm of [400, 450, 500, 550, 600, 650, 700]) cg.fillText(nm, X(nm), h - 2);
+    CONES.forEach((c) => {
+      cg.strokeStyle = c[3]; cg.lineWidth = 2; cg.beginPath();
+      for (let nm = 400; nm <= 700; nm += 2) { const y = Y(resp(nm, c)); nm === 400 ? cg.moveTo(X(nm), y) : cg.lineTo(X(nm), y); }
+      cg.stroke();
+      cg.fillStyle = c[3]; cg.textAlign = 'left'; cg.fillText(c[0].split(' ')[0], X(c[1]) - 4, Y(1) - 4);
+    });
+    for (const s of sources()) {
+      cg.strokeStyle = 'rgba(255,255,255,.85)'; cg.setLineDash([4, 4]); cg.beginPath(); cg.moveTo(X(s), 10); cg.lineTo(X(s), h - 20); cg.stroke(); cg.setLineDash([]);
+    }
+    // cột cảm nhận
+    const act = CONES.map((c) => Math.min(1, sources().reduce((a, s) => a + resp(s, c), 0)));
+    $('bars').innerHTML = CONES.map((c, i) => `<div class="tm-bar"><span>${c[0]}</span><span class="t"><i style="width:${(act[i] * 100).toFixed(0)}%;background:${c[3]}"></i></span><span>${(act[i] * 100).toFixed(0)}%</span></div>`).join('');
+    let rgb;
+    if (preset === 'single') rgb = wl2rgb(+$('wl').value);
+    else rgb = sources().map(wl2rgb).reduce((a, c) => a.map((v, k) => Math.min(255, v + c[k])));
+    $('sw').style.background = `rgb(${rgb.join(',')})`;
+    $('swt').innerHTML = preset === 'magenta'
+      ? '<b>Hồng sen.</b> Nón S và L cùng được kích thích, còn M yếu hơn hẳn, kiểu kích thích mà không bước sóng đơn lẻ nào tạo ra được, vì S và L nằm ở hai đầu phổ. Não vẫn đưa ra một màu cho tổ hợp ấy. Hồng sen có thật trong cảm nhận, nhưng không có chỗ trên cầu vồng.'
+      : preset === 'yellow'
+      ? '<b>Vàng giả.</b> Đỏ trộn lục kích thích nón M và L gần giống hệt ánh sáng vàng 580 nm. Não không phân biệt được, đó là lý do màn hình hiện được màu vàng dù không có điểm ảnh vàng nào.'
+      : `<b>${+$('wl').value} nm.</b> Một bước sóng thuần. Kéo thử: vùng 560–590 nm làm cả M lẫn L cùng kêu, não đọc ra màu vàng.`;
+    $('wlo').textContent = preset === 'single' ? $('wl').value + ' nm' : sources().join(' + ') + ' nm';
+  }
+  $('wl').oninput = () => { if (preset !== 'single') setPreset('single'); else drawCone(); };
+  function setPreset(p) { preset = p; document.querySelectorAll('[data-p]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.p === p))); drawCone(); }
+  document.querySelectorAll('[data-p]').forEach((b) => b.onclick = () => setPreset(b.dataset.p));
+  addEventListener('resize', drawCone);
+
+  resize(); ui(); drawCone();
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+</body>
+</html>
