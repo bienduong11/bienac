@@ -52,7 +52,7 @@
   }
 
   /* ------------------------------------------------ Vật lý bay --- */
-  let x = 26, y = window.innerHeight * 0.55;
+  let x = 26, y = window.innerWidth < 720 ? window.innerHeight - SIZE - 24 : window.innerHeight * 0.55;
   let vx = 18, vy = -10;
   let phase = Math.random() * Math.PI * 2;
   let dragging = false, menuOpen = false;

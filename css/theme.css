@@ -485,3 +485,4 @@ body::after {
 .app:hover .app-ico, .app:focus-visible .app-ico { background: rgba(55, 240, 207, .18); }
 .app.soon .app-ico { opacity: .45; }
 @media (max-width: 720px) { .app-ico { width: 34px; height: 34px; } .app-ico svg { width: 20px; height: 20px; } }
+@media (max-width: 720px) { body:not(.ud) .fx-switcher { display: none; } }
