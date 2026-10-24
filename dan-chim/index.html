@@ -116,7 +116,11 @@
     const r = stage.getBoundingClientRect(); DPR = Math.min(2, devicePixelRatio || 1);
     const first = !W; W = r.width; H = r.height; cv.width = W * DPR; cv.height = H * DPR; g.setTransform(DPR, 0, 0, DPR, 0, 0);
     g.fillStyle = '#05070a'; g.fillRect(0, 0, W, H);
-    if (first) setCount(+document.getElementById('num').value);
+    if (first) {
+      const n = Math.max(60, Math.min(300, Math.round(W * H / 1700 / 10) * 10));
+      const el = document.getElementById('num'); el.value = n; document.getElementById('numO').textContent = n + ' con';
+      boids = []; setCount(n);
+    }
   }
 
   // lưới không gian để tìm hàng xóm nhanh

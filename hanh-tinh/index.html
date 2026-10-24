@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bạn trên các hành tinh · Bienac</title>
+  <meta name="description" content="Nhập cân nặng và ngày sinh để biết trên Sao Hỏa bạn nặng bao nhiêu, trên Sao Mộc bạn bao nhiêu tuổi, và khi nào tới sinh nhật tiếp theo ở mỗi hành tinh." />
+  <meta property="og:title" content="Bạn trên các hành tinh · Bienac" />
+  <meta property="og:description" content="Trên Sao Hỏa bạn nặng bao nhiêu? Trên Sao Thủy bạn đã bao nhiêu tuổi?" />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .ht { max-width: 1080px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .ht-lede { margin-top: 10px; max-width: 640px; color: var(--text-dim); line-height: 1.7; }
+    .ht-form { margin-top: 22px; padding: 18px; border-radius: 18px; display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: flex-end; }
+    .ht-form label { display: grid; gap: 6px; font: 600 .68rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brass); }
+    .ht-form input { width: 170px; padding: 11px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: var(--text); font: 500 1rem 'Be Vietnam Pro', sans-serif; outline: none; color-scheme: dark; }
+    .ht-form input:focus { border-color: var(--cyan); }
+    .ht-grid { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+    .ht-card { padding: 16px 16px 14px; border-radius: 18px; }
+    .ht-card.earth { box-shadow: inset 0 0 0 1px rgba(55,240,207,.45); }
+    .ht-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .ht-ball { flex: none; width: 42px; height: 42px; border-radius: 50%; box-shadow: inset -8px -8px 14px rgba(0,0,0,.45), 0 0 18px var(--glow, transparent); }
+    .ht-top h2 { font: 700 1.1rem var(--display); }
+    .ht-top small { display: block; font: 500 .68rem var(--mono); color: var(--text-dim); }
+    .ht-dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: .86rem; }
+    .ht-dl dt { color: var(--text-dim); }
+    .ht-dl dd { text-align: right; font: 600 .86rem var(--mono); color: var(--text); }
+    .ht-dl dd.hi { color: var(--cyan); font-size: 1rem; }
+    .ht-dl dd.no { color: var(--text-dim); font-weight: 500; }
+    .ht-note { margin-top: 24px; font-size: .8rem; line-height: 1.6; color: var(--text-dim); max-width: 760px; }
+    @media (max-width: 560px) { .ht-form input { width: 100%; } .ht-form label { flex: 1 1 140px; } }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Các hành tinh</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="ht">
+    <p class="ud-kicker">Bạn trên các hành tinh</p>
+    <h1 class="ud-title">Trên Sao Hỏa, <span class="accent">bạn là ai?</span></h1>
+    <p class="ht-lede">Khối lượng của bạn ở đâu cũng vậy, nhưng lực hấp dẫn thì mỗi nơi một khác. Năm cũng thế: mỗi hành tinh quay quanh Mặt Trời nhanh chậm khác nhau, nên tuổi của bạn trên đó cũng khác.</p>
+
+    <form class="ht-form ud-panel" id="f" onsubmit="return false">
+      <label>Cân nặng (kg)<input id="kg" type="number" min="1" max="500" step="any" value="60" inputmode="decimal" /></label>
+      <label>Ngày sinh<input id="dob" type="date" value="2000-01-01" /></label>
+      <label>Nhảy cao được (cm)<input id="jump" type="number" min="1" max="300" step="any" value="50" inputmode="decimal" /></label>
+    </form>
+
+    <div class="ht-grid" id="grid"></div>
+
+    <p class="ht-note">Số đo theo bảng dữ liệu hành tinh của NASA (NSSDC); lực hấp dẫn của các hành tinh khí đã tính cả tác dụng của chuyển động tự quay. Sao Mộc, Sao Thổ, Sao Thiên Vương và Sao Hải Vương không có bề mặt rắn: lực hấp dẫn ở đây tính tại độ cao mà áp suất khí quyển bằng áp suất mặt đất trên Trái Đất. “Cân nặng” là con số chiếc cân nhà bạn sẽ hiện nếu mang nó tới đó. Độ cao nhảy chỉ tính theo lực hấp dẫn, chưa kể bộ đồ du hành và không khí. Tuổi tính theo chu kỳ quay quanh Mặt Trời; một “ngày” là khoảng thời gian từ lúc Mặt Trời mọc tới lần mọc tiếp theo.</p>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const G0 = 9.8;
+  // [tên, phụ chú, g (m/s²), chu kỳ quanh Mặt Trời (ngày Trái Đất) hoặc 0, độ dài một ngày (giờ), màu]
+  const P = [
+    ['Mặt Trời', 'ngôi sao', 274, 0, 25.4 * 24, '#ffcf6b'],
+    ['Sao Thủy', 'gần Mặt Trời nhất', 3.70, 87.969, 4222.6, '#b8b2a7'],
+    ['Sao Kim', 'nóng nhất', 8.87, 224.701, 2802.0, '#e8cf9a'],
+    ['Trái Đất', 'nhà của chúng ta', G0, 365.256, 24, '#5aa9ff'],
+    ['Mặt Trăng', 'vệ tinh của Trái Đất', 1.62, 0, 708.7, '#cfcfcf'],
+    ['Sao Hỏa', 'hành tinh đỏ', 3.71, 687.0, 24.66, '#e07a4f'],
+    ['Sao Mộc', 'lớn nhất', 23.1, 4331, 9.9, '#d9b38c'],
+    ['Sao Thổ', 'có vành đẹp nhất', 9.0, 10747, 10.7, '#e9d29b'],
+    ['Sao Thiên Vương', 'nằm nghiêng', 8.7, 30589, 17.2, '#9fe3e8'],
+    ['Sao Hải Vương', 'xa nhất', 11.0, 59800, 16.1, '#5b7cff'],
+    ['Sao Diêm Vương', 'hành tinh lùn', 0.62, 90560, 153.3, '#c9a98a'],
+  ];
+  const fmt = (x, d = 3) => x.toLocaleString('vi-VN', { maximumSignificantDigits: d });
+  const dayLen = (h) => h < 48 ? `${Math.floor(h)} giờ ${Math.round((h % 1) * 60)} phút` : `${fmt(h / 24, 3)} ngày Trái Đất`;
+  const dateVN = (d) => `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+
+  function render() {
+    const kg = parseFloat($('kg').value) || 0;
+    const jump = parseFloat($('jump').value) || 0;
+    const dob = $('dob').value ? new Date($('dob').value + 'T00:00:00') : null;
+    const now = new Date();
+    const lived = dob ? (now - dob) / 86400000 : 0;
+    $('grid').innerHTML = P.map(([n, sub, g, per, day, col]) => {
+      const w = kg * g / G0, h = jump * G0 / g;
+      let age = '', next = '';
+      if (per && dob && lived > 0) {
+        const a = lived / per;
+        let nb = new Date(dob.getTime() + Math.ceil(a) * per * 86400000);
+        if (n === 'Trái Đất') {   // trên Trái Đất dùng sinh nhật theo lịch
+          nb = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+          if (nb <= now) nb.setFullYear(nb.getFullYear() + 1);
+        }
+        const left = Math.ceil((nb - now) / 86400000);
+        age = `<dt>Tuổi</dt><dd class="hi">${fmt(a, a < 1 ? 2 : 3)}</dd>`;
+        next = `<dt>Sinh nhật tới</dt><dd>${nb.getFullYear() > 9999 ? 'rất lâu nữa' : dateVN(nb)}<br><small style="color:var(--text-dim);font-weight:500">còn ${left.toLocaleString('vi-VN')} ngày</small></dd>`;
+      } else if (!per) {
+        age = `<dt>Tuổi</dt><dd class="no">không tính</dd>`;
+      }
+      const jumpTxt = h >= 100 ? `${fmt(h / 100, 3)} m` : `${fmt(h, 2)} cm`;
+      return `<article class="ht-card ud-panel${n === 'Trái Đất' ? ' earth' : ''}">
+        <div class="ht-top"><span class="ht-ball" style="background:radial-gradient(circle at 35% 35%, #fff8, ${col} 45%);--glow:${col}55"></span><span><h2>${n}</h2><small>${sub} · g = ${String(g).replace('.', ',')} m/s²</small></span></div>
+        <dl class="ht-dl">
+          <dt>Cân nặng</dt><dd class="hi">${fmt(w, w < 10 ? 2 : 3)} kg</dd>
+          ${age}${next}
+          <dt>Nhảy cao</dt><dd>${jumpTxt}</dd>
+          <dt>${n === 'Mặt Trời' ? 'Tự quay một vòng' : 'Một ngày dài'}</dt><dd>${dayLen(day)}</dd>
+        </dl></article>`;
+    }).join('');
+  }
+  ['kg', 'dob', 'jump'].forEach((id) => $(id).addEventListener('input', render));
+  try { const s = JSON.parse(localStorage.getItem('bienac-hanh-tinh') || 'null'); if (s) { $('kg').value = s.kg; $('dob').value = s.dob; $('jump').value = s.jump; } } catch {}
+  $('f').addEventListener('input', () => { try { localStorage.setItem('bienac-hanh-tinh', JSON.stringify({ kg: $('kg').value, dob: $('dob').value, jump: $('jump').value })); } catch {} });
+  render();
+  $('y').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

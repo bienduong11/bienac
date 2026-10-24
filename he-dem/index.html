@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ đếm nhân loại · Bienac</title>
+  <meta name="description" content="Gõ một con số, xem nó được viết thế nào bằng nhị phân, thập lục phân, số La Mã, chữ số Hán, số Babylon cơ số 60 và số Maya cơ số 20." />
+  <meta property="og:title" content="Hệ đếm nhân loại · Bienac" />
+  <meta property="og:description" content="Một con số, bảy cách viết của loài người." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&family=Noto+Serif+TC:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .hd { max-width: 1040px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .hd-lede { margin-top: 10px; color: var(--text-dim); line-height: 1.65; max-width: 640px; }
+    .hd-in { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .hd-in input { width: min(100%, 340px); padding: 14px 22px; font: 600 1.6rem var(--mono); color: var(--text); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; outline: none; }
+    .hd-in input:focus { border-color: var(--cyan); }
+    .hd-in .ud-btn { border-radius: 999px; }
+    .hd-read { margin-top: 12px; font-size: 1.02rem; color: var(--text); }
+    .hd-read span { color: var(--text-dim); }
+    .hd-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .hd-card { padding: 20px 22px; border-radius: 18px; min-width: 0; }
+    .hd-card.wide { grid-column: 1 / -1; }
+    .hd-k { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+    .hd-k h2 { font: 700 1.1rem var(--display); }
+    .hd-k span { font: 500 .7rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brass); white-space: nowrap; }
+    .hd-v { margin-top: 12px; font: 600 1.5rem/1.35 var(--mono); color: var(--cyan); word-break: break-all; }
+    .hd-v.han { font: 600 1.9rem/1.4 var(--han); color: var(--text); word-break: normal; overflow-wrap: anywhere; }
+    .hd-v small { display: block; margin-top: 4px; font: 500 .85rem 'Be Vietnam Pro', sans-serif; color: var(--text-dim); word-break: normal; }
+    .hd-v .bits b { color: var(--text-dim); font-weight: 500; }
+    .hd-n { margin-top: 12px; font-size: .88rem; line-height: 1.65; color: var(--text-dim); }
+    .hd-n a { color: var(--cyan); }
+    .hd-pic { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; min-height: 60px; }
+    .hd-pic figure { margin: 0; text-align: center; }
+    .hd-pic figcaption { margin-top: 4px; font: 500 .72rem var(--mono); color: var(--text-dim); }
+    .hd-pic svg { display: block; }
+    .hd-maya { display: flex; flex-direction: column; gap: 10px; align-items: center; padding: 6px 0; }
+    .hd-maya figure { display: flex; align-items: center; gap: 12px; margin: 0; }
+    .hd-maya figcaption { font: 500 .72rem var(--mono); color: var(--text-dim); min-width: 92px; text-align: left; }
+    .hd-two { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start; }
+    @media (max-width: 760px) { .hd-grid { grid-template-columns: 1fr; } .hd-two { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .hd { padding-top: 88px; } .hd-in input { font-size: 1.3rem; } .hd-v { font-size: 1.25rem; } }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Hệ đếm</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="hd">
+    <p class="ud-kicker">Hệ đếm nhân loại</p>
+    <h1 class="ud-title">Một con số, <span class="accent">nhiều cách viết</span></h1>
+    <p class="hd-lede">Gõ một số nguyên dương bất kỳ để xem người Babylon, người Maya, người La Mã, người Trung Hoa và máy tính của bạn viết nó ra sao.</p>
+
+    <div class="hd-in">
+      <input id="n" type="text" inputmode="numeric" value="2026" maxlength="16" aria-label="Số cần đổi" />
+      <button class="ud-btn" type="button" data-v="60">60</button>
+      <button class="ud-btn" type="button" data-v="400">400</button>
+      <button class="ud-btn" type="button" data-v="3999">3999</button>
+      <button class="ud-btn" type="button" data-v="86400">86400</button>
+      <button class="ud-btn" type="button" id="rnd">Ngẫu nhiên</button>
+    </div>
+    <p class="hd-read" id="read"></p>
+
+    <div class="hd-grid">
+      <section class="ud-panel hd-card">
+        <div class="hd-k"><h2>Nhị phân</h2><span>cơ số 2</span></div>
+        <div class="hd-v" id="bin"></div>
+        <p class="hd-n">Chỉ có 0 và 1, đúng với hai trạng thái tắt và bật của mạch điện, nên mọi máy tính đều đếm bằng hệ này. Hơn ba trăm năm trước, Leibniz đã thấy dãy nhị phân trong 64 quẻ <a href="/kinh-dich/">Kinh Dịch</a>.</p>
+      </section>
+
+      <section class="ud-panel hd-card">
+        <div class="hd-k"><h2>Thập lục phân</h2><span>cơ số 16</span></div>
+        <div class="hd-v" id="hex"></div>
+        <p class="hd-n">Dùng thêm A đến F cho các giá trị 10 đến 15. Mỗi chữ số gói gọn đúng bốn bit nhị phân, nên lập trình viên dùng nó để viết mã màu (như #37F0CF), địa chỉ bộ nhớ.</p>
+      </section>
+
+      <section class="ud-panel hd-card">
+        <div class="hd-k"><h2>Số La Mã</h2><span>cộng và trừ</span></div>
+        <div class="hd-v" id="rom"></div>
+        <p class="hd-n">I, V, X, L, C, D, M lần lượt là 1, 5, 10, 50, 100, 500, 1000. Ký hiệu nhỏ đứng trước ký hiệu lớn thì trừ đi (IV = 4). Hệ này không có số 0, và theo cách viết thông thường chỉ viết được đến 3999. Trên mặt đồng hồ, số 4 thường được viết là IIII.</p>
+      </section>
+
+      <section class="ud-panel hd-card">
+        <div class="hd-k"><h2>Chữ số Hán</h2><span>thập phân, nhóm theo vạn</span></div>
+        <div class="hd-v han" id="han"></div>
+        <p class="hd-n">Cũng là hệ thập phân, nhưng đọc theo bậc: 十 thập (10), 百 bách (100), 千 thiên (1000), rồi gom theo vạn: 萬 vạn (10⁴), 億 ức (10⁸), 兆 triệu (10¹²). Dòng thứ hai là chữ số “đại tự” dùng trên giấy tờ tiền bạc, nét phức tạp để khó sửa số.</p>
+      </section>
+
+      <section class="ud-panel hd-card wide">
+        <div class="hd-k"><h2>Số Babylon</h2><span>cơ số 60</span></div>
+        <div class="hd-two">
+          <div>
+            <div class="hd-pic" id="bab"></div>
+            <div class="hd-v" id="babt" style="font-size:1.1rem"></div>
+          </div>
+        </div>
+        <p class="hd-n">Người Lưỡng Hà đếm theo cơ số 60 từ hơn bốn nghìn năm trước, và chỉ cần hai nét khắc trên đất sét: nêm đứng là 1, nêm góc là 10. Lúc đầu họ không có số 0 và không đánh dấu hàng, người đọc phải tự đoán theo ngữ cảnh. Ký hiệu giữ chỗ trống chỉ xuất hiện rất muộn. Di sản của họ vẫn còn trên đồng hồ của bạn: 60 giây, 60 phút, và 360 độ của một vòng tròn.</p>
+      </section>
+
+      <section class="ud-panel hd-card wide">
+        <div class="hd-k"><h2>Số Maya</h2><span>cơ số 20</span></div>
+        <div class="hd-two">
+          <div class="hd-maya" id="maya"></div>
+          <p class="hd-n" style="margin-top:6px;max-width:520px">Chấm là 1, gạch ngang là 5, hình vỏ sò là 0. Các bậc xếp chồng từ dưới lên, bậc dưới cùng là hàng đơn vị, mỗi bậc trên lớn gấp 20 lần. Người Maya là một trong những dân tộc sớm nhất có ký hiệu riêng cho số 0. Riêng trong lịch đếm dài, bậc thứ ba của họ chỉ gấp 18 lần bậc dưới để khớp với năm 360 ngày. Ở đây dùng cơ số 20 thuần túy để đếm.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  $('y').textContent = new Date().getFullYear();
+  const MAX = 9999999999999999n;   // 16 chữ số
+
+  /* ---------------- đọc số tiếng Việt ---------------- */
+  const SO = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
+  function doc3(n, full) {           // n < 1000; full = phải đọc đủ "không trăm"
+    const t = Math.floor(n / 100), c = Math.floor((n % 100) / 10), u = n % 10, out = [];
+    if (t || full) out.push(SO[t] + ' trăm');
+    if (c === 0) { if (u && (t || full)) out.push('linh'); }
+    else if (c === 1) out.push('mười');
+    else out.push(SO[c] + ' mươi');
+    if (u) {
+      if (u === 1 && c > 1) out.push('mốt');
+      else if (u === 5 && c > 0) out.push('lăm');
+      else out.push(SO[u]);
+    }
+    return out.join(' ');
+  }
+  function docSo(big) {
+    if (big === 0n) return 'không';
+    const UNIT = ['', 'nghìn', 'triệu', 'tỷ', 'nghìn tỷ', 'triệu tỷ'];
+    const g = []; let x = big;
+    while (x > 0n) { g.push(Number(x % 1000n)); x /= 1000n; }
+    const out = [];
+    for (let i = g.length - 1; i >= 0; i--) {
+      if (g[i] === 0) continue;
+      out.push(doc3(g[i], i < g.length - 1) + (UNIT[i] ? ' ' + UNIT[i] : ''));
+    }
+    return out.join(' ');
+  }
+
+  /* ---------------- La Mã ---------------- */
+  function roman(n) {
+    if (n < 1 || n > 3999) return null;
+    const T = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
+    let s = '';
+    for (const [v, r] of T) while (n >= v) { s += r; n -= v; }
+    return s;
+  }
+
+  /* ---------------- chữ số Hán ---------------- */
+  const HD = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+  const HF = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
+  const HV = { '零': 'linh', '一': 'nhất', '二': 'nhị', '三': 'tam', '四': 'tứ', '五': 'ngũ', '六': 'lục', '七': 'thất', '八': 'bát', '九': 'cửu', '十': 'thập', '百': 'bách', '千': 'thiên', '萬': 'vạn', '億': 'ức', '兆': 'triệu' };
+  function han(big, fin) {
+    if (big === 0n) return '零';
+    const D = fin ? HF : HD, P = fin ? ['', '拾', '佰', '仟'] : ['', '十', '百', '千'], G = ['', '萬', '億', '兆'];
+    const groups = []; let x = big;
+    while (x > 0n) { groups.push(Number(x % 10000n)); x /= 10000n; }
+    let s = '', needZero = false;
+    for (let gi = groups.length - 1; gi >= 0; gi--) {
+      const g = groups[gi];
+      if (g === 0) { needZero = s !== ''; continue; }
+      if (s && (needZero || g < 1000)) s += '零';
+      needZero = false;
+      let part = '', z = false;
+      for (let p = 3; p >= 0; p--) {
+        const d = Math.floor(g / 10 ** p) % 10;
+        if (d === 0) { z = part !== ''; continue; }
+        if (z) { part += '零'; z = false; }
+        part += D[d] + P[p];
+      }
+      s += part + G[gi];
+    }
+    if (!fin && s.startsWith('一十')) s = s.slice(1);   // 10–19 đọc là 十…
+    return s;
+  }
+  const hanViet = (s) => [...s].map((c) => HV[c] || '').filter(Boolean).join(' ');
+
+  /* ---------------- vẽ Babylon ---------------- */
+  const C = '#c9a650';
+  function wedgeV(x, y) { return `<path d="M${x - 5} ${y} L${x + 5} ${y} L${x} ${y + 9} Z M${x} ${y + 8} L${x} ${y + 28}" fill="${C}" stroke="${C}" stroke-width="2" stroke-linecap="round"/>`; }
+  function wedgeT(x, y) { return `<path d="M${x + 12} ${y} L${x} ${y + 12} L${x + 12} ${y + 24}" fill="none" stroke="${C}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M${x} ${y + 12} l7 -5 v10 z" fill="${C}"/>`; }
+  function babDigit(d) {
+    const tens = Math.floor(d / 10), ones = d % 10;
+    const tw = tens ? 14 + (tens > 3 ? 2 : tens - 1) * 0 : 0;
+    let svg = '', x = 4;
+    // nêm góc xếp thành nhóm tối đa 3 trên một hàng
+    for (let i = 0; i < tens; i++) svg += wedgeT(x + (i % 3) * 13, 4 + Math.floor(i / 3) * 26);
+    if (tens) x += Math.min(tens, 3) * 13 + 12;
+    for (let i = 0; i < ones; i++) svg += wedgeV(x + (i % 3) * 12, 4 + Math.floor(i / 3) * 30);
+    if (ones) x += Math.min(ones, 3) * 12 + 2;
+    const w = Math.max(x + 4, 28), h = 4 + Math.max(tens ? Math.ceil(tens / 3) * 26 : 0, ones ? Math.ceil(ones / 3) * 30 : 0) + 6;
+    if (d === 0) return `<svg width="28" height="40" aria-label="trống"><rect x="4" y="10" width="20" height="20" rx="6" fill="none" stroke="#9d9786" stroke-dasharray="3 3"/></svg>`;
+    return `<svg width="${w}" height="${Math.max(h, 40)}" viewBox="0 0 ${w} ${Math.max(h, 40)}" aria-label="${d}">${svg}</svg>`;
+  }
+
+  /* ---------------- vẽ Maya ---------------- */
+  function mayaDigit(d) {
+    const W = 72;
+    if (d === 0) return `<svg width="${W}" height="30" viewBox="0 0 ${W} 30" aria-label="0"><ellipse cx="36" cy="15" rx="26" ry="11" fill="none" stroke="#37f0cf" stroke-width="2.2"/><path d="M16 15 q10 -7 20 0 q10 7 20 0" fill="none" stroke="#37f0cf" stroke-width="1.6"/><path d="M24 9 v12 M36 6 v18 M48 9 v12" stroke="#37f0cf" stroke-width="1.2" opacity=".7"/></svg>`;
+    const bars = Math.floor(d / 5), dots = d % 5;
+    const h = (dots ? 16 : 0) + bars * 12 + 4;
+    let svg = '', y = 4;
+    if (dots) { const s = (W - (dots - 1) * 14) / 2; for (let i = 0; i < dots; i++) svg += `<circle cx="${s + i * 14}" cy="${y + 5}" r="5" fill="#37f0cf"/>`; y += 16; }
+    for (let i = 0; i < bars; i++) { svg += `<rect x="6" y="${y}" width="${W - 12}" height="8" rx="4" fill="#37f0cf"/>`; y += 12; }
+    return `<svg width="${W}" height="${h}" viewBox="0 0 ${W} ${h}" aria-label="${d}">${svg}</svg>`;
+  }
+
+  function digits(big, base) {
+    const out = []; let x = big; const b = BigInt(base);
+    if (x === 0n) return [0];
+    while (x > 0n) { out.unshift(Number(x % b)); x /= b; }
+    return out;
+  }
+
+  function render() {
+    const raw = $('n').value.replace(/[^\d]/g, '').replace(/^0+(?=\d)/, '');
+    if (!raw) return;
+    let big = BigInt(raw);
+    if (big > MAX) { big = MAX; $('n').value = String(MAX); }
+    const num = Number(big);
+    $('read').innerHTML = `<span>Tiếng Việt đọc là:</span> ${docSo(big)}`;
+
+    const b = big.toString(2);
+    $('bin').innerHTML = `<span class="bits">${b.replace(/(?=(\d{4})+$)/g, ' ').trim()}</span><small>${b.length} chữ số nhị phân</small>`;
+    $('hex').innerHTML = `${big.toString(16).toUpperCase()}<small>${big.toString(16).length} chữ số · bát phân (cơ số 8): ${big.toString(8)}</small>`;
+    const r = roman(num);
+    $('rom').innerHTML = r ? `${r}<small>${r.length} ký hiệu</small>` : `<span style="color:var(--text-dim);font-size:1rem">${big === 0n ? 'Người La Mã không có ký hiệu cho số 0.' : 'Vượt quá 3999, cách viết thông thường không biểu diễn được.'}</span>`;
+    const h = han(big, false);
+    $('han').innerHTML = `${h}<small>${hanViet(h)}</small><small style="font-family:var(--han);font-size:1.15rem;color:var(--text)">${han(big, true)}</small>`;
+
+    const b60 = digits(big, 60);
+    $('bab').innerHTML = b60.map((d, i) => `<figure>${babDigit(d)}<figcaption>${d}</figcaption></figure>`).join('');
+    $('babt').innerHTML = `${b60.join(' ; ')}<small>${b60.map((d, i) => `${d}×60${sup(b60.length - 1 - i)}`).join(' + ')}</small>`;
+
+    const b20 = digits(big, 20);
+    $('maya').innerHTML = b20.map((d, i) => `<figure>${mayaDigit(d)}<figcaption>${d} × 20${sup(b20.length - 1 - i)}</figcaption></figure>`).join('');
+    history.replaceState(null, '', '#' + raw);
+  }
+  const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  const sup = (k) => String(k).split('').map((c) => SUP[c]).join('');
+
+  $('n').addEventListener('input', render);
+  document.querySelectorAll('[data-v]').forEach((b) => (b.onclick = () => { $('n').value = b.dataset.v; render(); }));
+  $('rnd').onclick = () => { $('n').value = String(Math.floor(Math.random() * 100000)); render(); };
+  const h = location.hash.slice(1).replace(/\D/g, '');
+  if (h) $('n').value = h;
+  render();
+})();
+</script>
+</body>
+</html>

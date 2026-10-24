@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đố vui Bienac</title>
+  <meta name="description" content="Mười câu hỏi ngẫu nhiên về khoa học và lịch sử từ các video của Bienac. Bạn được mấy điểm?" />
+  <meta property="og:title" content="Đố vui Bienac" />
+  <meta property="og:description" content="Mười câu hỏi khoa học và lịch sử. Bạn được mấy điểm?" />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .dv { max-width: 720px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .dv-bar { margin-top: 20px; display: flex; align-items: center; gap: 12px; }
+    .dv-track { flex: 1; height: 8px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .dv-track i { display: block; height: 100%; width: 0; background: var(--cyan); border-radius: 999px; transition: width .3s; }
+    .dv-bar b { font: 600 .85rem var(--mono); color: var(--text-dim); }
+    .dv-card { margin-top: 18px; padding: 24px; border-radius: 20px; }
+    .dv-card .cat { font: 600 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .dv-card h2 { margin-top: 8px; font: 700 clamp(1.25rem, 3.4vw, 1.6rem)/1.35 var(--display); }
+    .dv-opts { margin-top: 18px; display: grid; gap: 8px; }
+    .dv-opts button { text-align: left; padding: 14px 16px; border-radius: 14px; font: 500 1rem 'Be Vietnam Pro', sans-serif; color: var(--text); background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); cursor: pointer; transition: border-color .15s, background .15s; }
+    .dv-opts button:hover:not(:disabled) { border-color: var(--cyan); }
+    .dv-opts button.ok { border-color: #3fd28b; background: rgba(63,210,139,.14); }
+    .dv-opts button.no { border-color: var(--cinnabar); background: rgba(232,69,46,.14); }
+    .dv-opts button:disabled { cursor: default; }
+    .dv-exp { margin-top: 16px; padding: 14px 16px; border-radius: 14px; background: rgba(55,240,207,.06); color: var(--text-dim); line-height: 1.6; font-size: .95rem; }
+    .dv-exp a { color: var(--cyan); }
+    .dv-next { margin-top: 16px; display: flex; justify-content: flex-end; }
+    .dv-end { text-align: center; }
+    .dv-end .score { font: 700 clamp(3rem, 12vw, 5rem)/1 var(--mono); color: var(--cyan); margin-top: 10px; }
+    .dv-end p { color: var(--text-dim); margin-top: 10px; line-height: 1.6; }
+    .dv-end .row { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Đố vui</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="dv">
+    <p class="ud-kicker">Đố vui</p>
+    <h1 class="ud-title">Bạn nhớ được <span class="accent">bao nhiêu?</span></h1>
+    <div class="dv-bar"><div class="dv-track"><i id="prog"></i></div><b id="count">1/10</b></div>
+    <section class="ud-panel dv-card" id="card" aria-live="polite"></section>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+<script>
+(() => {
+  document.getElementById('y').textContent = new Date().getFullYear();
+  // [chủ đề, câu hỏi, [đáp án đúng, sai, sai, sai], giải thích, id video liên quan]
+  const BANK = [
+    ['Hóa học', 'Nguyên tố nào phổ biến nhất trong vũ trụ?', ['Hiđrô', 'Heli', 'Ôxi', 'Cacbon'], 'Hiđrô chiếm khoảng ba phần tư khối lượng vật chất thường trong vũ trụ.', '2S3AvoXkIB0'],
+    ['Hóa học', 'Bảng tuần hoàn hiện có bao nhiêu nguyên tố đã được xác nhận?', ['118', '108', '112', '126'], 'Nguyên tố thứ 118 là oganesson, được đặt tên chính thức năm 2016.', '2S3AvoXkIB0'],
+    ['Hóa học', 'Hàn the thực chất là muối của nguyên tố nào?', ['Bo', 'Nhôm', 'Chì', 'Lưu huỳnh'], 'Hàn the (borax) là natri tetraborat, một hợp chất của bo.', 'Mio70FQUPYE'],
+    ['Hóa học', 'Đốt hợp chất của bo, ngọn lửa có màu gì?', ['Xanh lục', 'Đỏ thẫm', 'Vàng cam', 'Tím'], 'Bo cho ngọn lửa xanh lục, đó cũng là cách nhận biết hàn the bằng ngọn lửa.', 'pMWjwZhdMvY'],
+    ['Hóa học', 'Xà phòng được tạo ra khi chất béo phản ứng với…', ['Kiềm', 'Axit', 'Muối ăn', 'Rượu'], 'Phản ứng này gọi là xà phòng hóa: chất béo gặp kiềm như xút (NaOH) tạo ra xà phòng và glixerin.', 'xXixaqB1754'],
+    ['Hóa học', 'Quy trình Haber–Bosch tổng hợp ra chất gì, nền tảng của phân đạm?', ['Amoniac', 'Axit sunfuric', 'Ure', 'Kali clorua'], 'Amoniac được tổng hợp từ nitơ trong không khí và hiđrô, giúp nuôi sống khoảng một nửa nhân loại ngày nay.', 'wR72fqNAZJQ'],
+    ['Vật lý', 'Thứ nào dưới đây KHÔNG phải một trong bốn lực cơ bản?', ['Lực ma sát', 'Lực hấp dẫn', 'Lực điện từ', 'Lực hạt nhân mạnh'], 'Ma sát chỉ là biểu hiện của lực điện từ giữa các nguyên tử ở hai bề mặt.', 'wxWKco46QlY'],
+    ['Vật lý', 'Ánh sáng Mặt Trời đi tới Trái Đất mất khoảng bao lâu?', ['8 phút 20 giây', '8 giây', '1 giờ', '1 ngày'], 'Khoảng cách trung bình 150 triệu km, chia cho tốc độ ánh sáng gần 300.000 km/s.', ''],
+    ['Vật lý', 'Ai làm thí nghiệm hai khe với ánh sáng đầu tiên, khoảng năm 1801?', ['Thomas Young', 'Isaac Newton', 'Albert Einstein', 'Richard Feynman'], 'Vân giao thoa của Young là bằng chứng mạnh cho bản chất sóng của ánh sáng.', 'BaGhStLH8vM'],
+    ['Vật lý', 'Chu kỳ bán rã của cacbon-14 vào khoảng bao nhiêu?', ['5.730 năm', '57 năm', '573 năm', '57.300 năm'], 'Nhờ con số này, các nhà khảo cổ định tuổi được những di vật hữu cơ tới khoảng 50.000 năm.', ''],
+    ['Vật lý', 'Giải Nobel Vật lý năm nào trao cho phát minh đèn LED xanh lam?', ['2014', '1994', '2004', '2021'], 'Ba nhà khoa học Nhật Akasaki, Amano và Nakamura nhận giải năm 2014.', 'sqM2vRDQw7k'],
+    ['Vật lý', 'Mắt người bình thường có mấy loại tế bào nón cảm nhận màu?', ['3', '1', '2', '7'], 'Ba loại nón nhạy với ánh sáng bước sóng ngắn, trung bình và dài. Màu sắc là cách não phối ba tín hiệu ấy.', 'YhP85uD5aYk'],
+    ['Vật lý', 'Hiệu ứng cánh bướm gắn với tên nhà khoa học nào?', ['Edward Lorenz', 'Henri Poincaré', 'Stephen Hawking', 'Carl Sagan'], 'Năm 1963, Lorenz phát hiện mô hình thời tiết của ông cực kỳ nhạy với điều kiện ban đầu.', 'Aqp8Pq_qX5A'],
+    ['Vũ trụ', 'Ngôi sao sáng nhất trên bầu trời đêm là sao nào?', ['Sirius (Thiên Lang)', 'Sao Bắc Cực', 'Vega (Chức Nữ)', 'Betelgeuse'], 'Sirius cách ta khoảng 8,6 năm ánh sáng. Sao Bắc Cực thật ra chỉ sáng hàng thứ 48.', ''],
+    ['Vũ trụ', 'Người Việt gọi cụm sao Thất Nữ (Pleiades) là gì?', ['Sao Rua', 'Sao Hôm', 'Sao Mai', 'Sao Cày'], 'Sao Rua chính là sao Mão trong Nhị thập bát tú.', ''],
+    ['Vũ trụ', 'Chú chó Laika bay vào quỹ đạo năm 1957 trên con tàu nào?', ['Sputnik 2', 'Vostok 1', 'Apollo 11', 'Soyuz 1'], 'Laika là động vật đầu tiên bay vào quỹ đạo Trái Đất, và không có đường trở về.', 'x3KlSY2hrcc'],
+    ['Vũ trụ', 'Bức xạ nền vi sóng vũ trụ có nhiệt độ khoảng bao nhiêu?', ['2,7 K', '27 K', '273 K', '0 K'], 'Khoảng 2,7 độ trên độ không tuyệt đối: ánh sáng già nhất vũ trụ, bị giãn nở kéo dài thành vi sóng.', 'BaGhStLH8vM'],
+    ['Lịch sử', 'Ai chỉ huy trận Bạch Đằng năm 938?', ['Ngô Quyền', 'Trần Hưng Đạo', 'Lý Thường Kiệt', 'Lê Hoàn'], 'Trận cọc gỗ năm 938 khép lại hơn một nghìn năm Bắc thuộc. Năm 1288 Trần Hưng Đạo dùng lại kế ấy.', ''],
+    ['Lịch sử', 'Câu “Tôi tư duy, nên tôi tồn tại” là của ai?', ['René Descartes', 'Plato', 'Immanuel Kant', 'Aristotle'], 'Descartes nghi ngờ mọi thứ, chỉ còn một điều không thể nghi ngờ: chính việc mình đang nghi ngờ.', 'BaGhStLH8vM'],
+    ['Lịch sử', 'Chiến tranh Sáu Ngày giữa Israel và các nước Ả Rập diễn ra năm nào?', ['1967', '1948', '1973', '1956'], 'Từ 5 đến 10 tháng 6 năm 1967.', 'aEy00VW4oVs'],
+    ['Đông Tây', 'Leibniz nhận ra hệ nhị phân của ông trùng khớp với thứ gì của phương Đông?', ['64 quẻ Kinh Dịch', 'Bàn tính', 'Lịch can chi', 'Chữ Nôm'], 'Năm 1703 Leibniz thấy cách xếp 64 quẻ của Thiệu Ung chính là dãy số nhị phân từ 0 đến 63.', ''],
+    ['Đông Tây', 'Chữ Hán 埃 (ai) trong bảng đơn vị cổ ứng với 10⁻¹⁰. Ngày nay chữ ấy là tên tiếng Trung của đơn vị nào?', ['Ångström', 'Nanômét', 'Micrômét', 'Picômét'], 'Một ångström đúng bằng 10⁻¹⁰ mét. Xem thêm ở ứng dụng Thang vũ trụ.', ''],
+  ];
+  const $ = (id) => document.getElementById(id);
+  const card = $('card');
+  let round = [], i = 0, score = 0;
+  const shuffle = (a) => { a = a.slice(); for (let k = a.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [a[k], a[j]] = [a[j], a[k]]; } return a; };
+
+  function start() { round = shuffle(BANK).slice(0, 10); i = 0; score = 0; show(); }
+  function show() {
+    const [cat, q, opts, exp, vid] = round[i];
+    $('prog').style.width = (i / round.length) * 100 + '%';
+    $('count').textContent = `${i + 1}/${round.length}`;
+    const order = shuffle(opts.map((t, k) => [t, k === 0]));
+    card.innerHTML = `<p class="cat">${cat}</p><h2>${q}</h2>
+      <div class="dv-opts">${order.map(([t, ok]) => `<button data-ok="${ok}">${t}</button>`).join('')}</div>
+      <div id="after"></div>`;
+    card.querySelectorAll('.dv-opts button').forEach((b) => b.onclick = () => answer(b, exp, vid));
+  }
+  function answer(b, exp, vid) {
+    const ok = b.dataset.ok === 'true';
+    if (ok) score++;
+    card.querySelectorAll('.dv-opts button').forEach((x) => { x.disabled = true; if (x.dataset.ok === 'true') x.classList.add('ok'); });
+    if (!ok) b.classList.add('no');
+    $('after').innerHTML = `<div class="dv-exp"><b>${ok ? 'Chính xác!' : 'Chưa đúng.'}</b> ${exp}${vid ? ` <a href="https://www.youtube.com/watch?v=${vid}" target="_blank" rel="noopener">Xem video liên quan →</a>` : ''}</div>
+      <div class="dv-next"><button class="ud-btn" id="next">${i + 1 < round.length ? 'Câu tiếp' : 'Xem kết quả'}</button></div>`;
+    $('next').onclick = () => { i++; i < round.length ? show() : end(); };
+    $('next').focus();
+  }
+  function end() {
+    $('prog').style.width = '100%';
+    const msg = score >= 9 ? 'Xuất sắc! Bạn đúng là khán giả ruột của Bienac.' : score >= 7 ? 'Rất tốt! Chỉ thiếu chút nữa là tuyệt đối.' : score >= 4 ? 'Không tệ chút nào. Xem lại vài video là lần sau điểm cao ngay.' : 'Mỗi câu sai là một chuyện mới để khám phá. Thử lại nhé!';
+    card.innerHTML = `<div class="dv-end"><p class="cat">Kết quả</p><p class="score">${score}/10</p><p>${msg}</p>
+      <div class="row"><button class="ud-btn" id="again">Chơi lượt mới</button><button class="ud-btn" id="share">Khoe điểm</button></div></div>`;
+    $('again').onclick = start;
+    $('share').onclick = async (e) => {
+      const text = `Mình được ${score}/10 điểm ở Đố vui Bienac. Bạn thử xem: https://bienac.com/do-vui/`;
+      try { if (navigator.share) await navigator.share({ text }); else { await navigator.clipboard.writeText(text); e.target.textContent = 'Đã chép ✓'; } } catch {}
+    };
+  }
+  start();
+})();
+</script>
+</body>
+</html>

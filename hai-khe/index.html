@@ -82,8 +82,8 @@
         <span class="hk-count" id="count"></span>
       </div>
       <div class="hk-sl">
-        <label>Khoảng cách hai khe <input id="sd" type="range" min="14" max="70" step="1" value="34" /></label>
-        <label>Bước sóng <input id="sl" type="range" min="7" max="26" step="0.5" value="12" /></label>
+        <label>Khoảng cách hai khe <input id="sd" type="range" min="14" max="70" step="1" value="48" /></label>
+        <label>Bước sóng <input id="sl" type="range" min="7" max="26" step="0.5" value="10" /></label>
       </div>
     </section>
 
@@ -108,9 +108,9 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Lưới mô phỏng: GW × GH ô. Tường chắn ở cột BX, màn hứng ở mép phải. */
-  const GW = 260, GH = 160, BX = 52, SCREEN_W = 40;
+  const GW = 260, GH = 160, BX = 52, SCREEN_W = 80;
   const SUB = 4, SLIT_W = 5;          // mỗi khe gồm vài nguồn điểm trải đều trên bề rộng khe
-  let lam = 12, d = 34, slits = 2, mode = 'wave', detector = false;
+  let lam = 10, d = 48, slits = 2, mode = 'wave', detector = false;
   let amp, pha, scr = new Float32Array(GH), scrMax = 1;
   let ampA, phaA, ampB, phaB;          // trường riêng của từng khe (cho chế độ máy dò)
   const dots = []; let total = 0;

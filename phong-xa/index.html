@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phân rã phóng xạ · Bienac</title>
+  <meta name="description" content="Xem 400 nguyên tử phân rã ngẫu nhiên theo chu kỳ bán rã thật của các đồng vị, và tự tính tuổi một mẫu vật bằng carbon-14." />
+  <meta property="og:title" content="Phân rã phóng xạ · Bienac" />
+  <meta property="og:description" content="Không ai đoán được nguyên tử nào sẽ phân rã, nhưng cả đám thì lại rất đúng giờ." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .px { max-width: 1040px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .px-lede { margin-top: 10px; max-width: 660px; line-height: 1.65; color: var(--text-dim); }
+    .px-iso { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .px-iso button { border: 0; cursor: pointer; padding: 9px 14px; border-radius: 999px; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 .78rem var(--mono); }
+    .px-iso button small { color: var(--text-dim); font-weight: 500; margin-left: 6px; }
+    .px-iso button[aria-pressed="true"] { background: var(--cyan); color: var(--ink); }
+    .px-iso button[aria-pressed="true"] small { color: rgba(6,7,11,.7); }
+    .px-main { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 14px; }
+    .px-box { padding: 16px; border-radius: 18px; }
+    #atoms, #chart { display: block; width: 100%; border-radius: 12px; }
+    #atoms { aspect-ratio: 1; }
+    #chart { aspect-ratio: 16 / 10; background: rgba(0,0,0,.3); }
+    .px-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+    .px-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .px-stat small { display: block; font: 500 .6rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .px-stat b { display: block; margin-top: 3px; font: 600 1.05rem var(--mono); }
+    .px-ctrl { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .px-info { margin-top: 12px; font-size: .9rem; line-height: 1.6; color: var(--text-dim); }
+    .px-info b { color: var(--text); font-weight: 600; }
+    .px-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font: 500 .72rem var(--mono); color: var(--text-dim); }
+    .px-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+    .px-c14 { margin-top: 18px; padding: 20px; border-radius: 18px; }
+    .px-c14 h2 { font: 700 1.3rem var(--display); }
+    .px-c14 > p { margin-top: 6px; color: var(--text-dim); line-height: 1.6; font-size: .92rem; max-width: 700px; }
+    .px-calc { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; }
+    .px-calc label { font: 500 .7rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brass); display: grid; gap: 6px; }
+    .px-calc input[type=range] { width: 100%; accent-color: var(--cyan); }
+    .px-calc .num { display: flex; align-items: center; gap: 8px; }
+    .px-calc input[type=number] { width: 110px; padding: 9px 12px; border-radius: 12px; border: 0; background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 1rem var(--mono); }
+    .px-age { text-align: right; }
+    .px-age b { display: block; font: 700 clamp(1.6rem, 4vw, 2.4rem) var(--display); color: var(--cyan); }
+    .px-age small { color: var(--text-dim); font-size: .82rem; }
+    .px-ref { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .px-ref button { border: 0; cursor: pointer; padding: 6px 12px; border-radius: 999px; background: rgba(201,166,80,.1); box-shadow: inset 0 0 0 1px rgba(201,166,80,.3); color: var(--text); font: 500 .78rem 'Be Vietnam Pro', sans-serif; }
+    .px-note { margin-top: 14px; font-size: .8rem; line-height: 1.6; color: var(--text-dim); }
+    @media (max-width: 760px) {
+      .px { padding-top: 88px; }
+      .px-main { grid-template-columns: 1fr; }
+      .px-calc { grid-template-columns: 1fr; }
+      .px-age { text-align: left; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Phóng xạ</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="px">
+    <p class="ud-kicker">Phân rã phóng xạ</p>
+    <h1 class="ud-title">Từng nguyên tử thì ngẫu nhiên, <span class="accent">cả đám thì đúng giờ</span></h1>
+    <p class="px-lede">Không ai đoán được một nguyên tử phóng xạ sẽ phân rã lúc nào. Nhưng cứ sau một khoảng thời gian cố định, gọi là chu kỳ bán rã, một nửa số nguyên tử sẽ biến mất. Chọn một đồng vị và bấm chạy.</p>
+
+    <div class="px-iso" id="iso" role="group" aria-label="Chọn đồng vị"></div>
+
+    <div class="px-main">
+      <section class="px-box ud-panel">
+        <canvas id="atoms" aria-label="400 nguyên tử, chấm sáng là chưa phân rã"></canvas>
+        <div class="px-legend"><span><i style="background:#37f0cf"></i><span id="lgA"></span></span><span><i style="background:#3a3f48"></i><span id="lgB"></span></span></div>
+        <div class="px-ctrl">
+          <button class="ud-btn" id="play" aria-pressed="false">▶ Chạy</button>
+          <button class="ud-btn" id="reset">Làm lại</button>
+        </div>
+      </section>
+      <section class="px-box ud-panel">
+        <canvas id="chart" aria-label="Số nguyên tử còn lại theo thời gian"></canvas>
+        <div class="px-stats" aria-live="polite">
+          <div class="px-stat"><small>Thời gian</small><b id="sT">0</b></div>
+          <div class="px-stat"><small>Còn lại</small><b id="sN">400</b></div>
+          <div class="px-stat"><small>Lý thuyết</small><b id="sE">400</b></div>
+        </div>
+        <p class="px-info" id="info"></p>
+      </section>
+    </div>
+
+    <section class="px-c14 ud-panel">
+      <h2>Tính tuổi bằng carbon-14</h2>
+      <p>Cây cối hấp thụ CO₂ từ không khí, động vật ăn cây, nên khi còn sống, tỉ lệ carbon-14 trong cơ thể gần bằng tỉ lệ trong khí quyển. Khi chết đi, cơ thể ngừng nạp carbon mới, và carbon-14 cứ thế phân rã dần. Đo xem còn lại bao nhiêu phần trăm là suy ra được đã bao lâu.</p>
+      <div class="px-calc">
+        <label>Lượng carbon-14 còn lại so với mẫu sống
+          <input id="pct" type="range" min="0.2" max="100" step="0.1" value="50" />
+          <span class="num"><input id="pctN" type="number" min="0.1" max="100" step="0.1" value="50" aria-label="Phần trăm còn lại" /> %</span>
+        </label>
+        <div class="px-age"><b id="age"></b><small id="ageSub"></small></div>
+      </div>
+      <div class="px-ref" id="ref"></div>
+      <p class="px-note">Cách tính: tuổi = 5 730 năm × log₂(100 / phần trăm còn lại). Đây là phép tính đơn giản, giả định lượng carbon-14 trong khí quyển luôn như nhau và mẫu không bị nhiễm bẩn. Thực tế lượng này dao động theo thời gian, nên các phòng thí nghiệm phải hiệu chỉnh kết quả bằng đường chuẩn dựng từ vòng gỗ và trầm tích. Sau khoảng 50 000 năm, lượng còn lại quá ít để đo tin cậy.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  $('y').textContent = new Date().getFullYear();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Chu kỳ bán rã tính bằng ngày
+  const Y = 365.25;
+  const ISO = [
+    { id: 'c14', n: 'Carbon-14', T: 5730 * Y, to: 'nitơ-14', how: 'phân rã beta', use: 'Dùng để xác định tuổi xương, gỗ, vải… có nguồn gốc sinh vật, trong vòng khoảng 50 000 năm.' },
+    { id: 'i131', n: 'Iốt-131', T: 8.02, to: 'xenon-131', how: 'phân rã beta', use: 'Dùng để chẩn đoán và điều trị bệnh tuyến giáp. Cũng là chất đáng lo nhất trong những ngày đầu sau sự cố hạt nhân, vì tuyến giáp hấp thụ iốt.' },
+    { id: 'rn222', n: 'Radon-222', T: 3.82, to: 'poloni-218', how: 'phân rã alpha', use: 'Khí phóng xạ tự nhiên thoát ra từ đất đá chứa urani, có thể tích tụ trong nhà kín.' },
+    { id: 'po210', n: 'Poloni-210', T: 138.376, to: 'chì-206', how: 'phân rã alpha', use: 'Do Marie và Pierre Curie phát hiện năm 1898, đặt theo tên Ba Lan, quê hương của Marie.' },
+    { id: 'co60', n: 'Coban-60', T: 5.2714 * Y, to: 'niken-60', how: 'phân rã beta, kèm tia gamma', use: 'Nguồn tia gamma dùng trong xạ trị ung thư và chiếu xạ khử trùng thực phẩm, dụng cụ y tế.' },
+    { id: 'u238', n: 'Urani-238', T: 4.468e9 * Y, to: 'thori-234', how: 'phân rã alpha', use: 'Chu kỳ bán rã gần bằng tuổi Trái Đất, nên đến nay mới khoảng một nửa lượng urani-238 ban đầu của hành tinh đã phân rã.' },
+  ];
+
+  function fmtTime(days) {
+    const f = (x, d = 3) => x.toLocaleString('vi-VN', { maximumSignificantDigits: d });
+    if (days >= 1e9 * Y) return `${f(days / Y / 1e9)} tỷ năm`;
+    if (days >= 1e6 * Y) return `${f(days / Y / 1e6)} triệu năm`;
+    if (days >= 2 * Y) return `${f(days / Y)} năm`;
+    if (days >= 1) return `${f(days)} ngày`;
+    return `${f(days * 24)} giờ`;
+  }
+
+  const N0 = 400, SIDE = 20;
+  let iso = ISO[0], alive, decayAt, tHL = 0, running = false, hist = [];
+  const atomsCv = $('atoms'), ag = atomsCv.getContext('2d');
+  const chartCv = $('chart'), cg = chartCv.getContext('2d');
+  const MAXHL = 6;   // biểu đồ hiển thị 6 chu kỳ bán rã
+
+  $('iso').innerHTML = ISO.map((o, i) => `<button data-i="${i}" aria-pressed="${i === 0}">${o.n}<small>${fmtTime(o.T)}</small></button>`).join('');
+  $('iso').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; iso = ISO[+b.dataset.i]; document.querySelectorAll('#iso button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); reset(); };
+
+  function reset() {
+    alive = new Uint8Array(N0).fill(1); decayAt = new Float32Array(N0).fill(-1);
+    tHL = 0; hist = [[0, N0]];
+    $('lgA').textContent = iso.n + ' (chưa phân rã)';
+    $('lgB').textContent = 'đã thành ' + iso.to;
+    $('info').innerHTML = `<b>${iso.n}</b> biến thành ${iso.to} qua ${iso.how}, chu kỳ bán rã <b>${fmtTime(iso.T)}</b>. ${iso.use}`;
+    update(); drawAtoms(); drawChart();
+  }
+
+  function update() {
+    const n = alive.reduce((a, b) => a + b, 0);
+    $('sT').textContent = tHL === 0 ? '0' : fmtTime(tHL * iso.T);
+    $('sN').textContent = n;
+    $('sE').textContent = Math.round(N0 * Math.pow(2, -tHL));
+    return n;
+  }
+
+  function sizeCanvas(c) {
+    const dpr = Math.min(2, devicePixelRatio || 1), w = c.clientWidth, h = c.clientHeight;
+    if (c.width !== Math.round(w * dpr)) { c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); }
+    const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return [w, h];
+  }
+
+  function drawAtoms() {
+    const [w] = sizeCanvas(atomsCv);
+    const cell = w / SIDE, r = cell * 0.32;
+    ag.clearRect(0, 0, w, w);
+    for (let i = 0; i < N0; i++) {
+      const x = (i % SIDE + 0.5) * cell, y = (Math.floor(i / SIDE) + 0.5) * cell;
+      if (alive[i]) {
+        ag.fillStyle = '#37f0cf'; ag.shadowColor = 'rgba(55,240,207,.7)'; ag.shadowBlur = 6;
+        ag.beginPath(); ag.arc(x, y, r, 0, Math.PI * 2); ag.fill(); ag.shadowBlur = 0;
+      } else {
+        const age = tHL - decayAt[i];
+        ag.fillStyle = '#3a3f48'; ag.beginPath(); ag.arc(x, y, r * 0.8, 0, Math.PI * 2); ag.fill();
+        if (age < 0.15) {   // chớp sáng lúc vừa phân rã
+          const a = 1 - age / 0.15;
+          ag.strokeStyle = `rgba(232,69,46,${a})`; ag.lineWidth = 2;
+          ag.beginPath(); ag.arc(x, y, r + (1 - a) * cell * 0.5, 0, Math.PI * 2); ag.stroke();
+        }
+      }
+    }
+  }
+
+  function drawChart() {
+    const [w, h] = sizeCanvas(chartCv);
+    const L = 36, R = 10, T = 12, B = 26, pw = w - L - R, ph = h - T - B;
+    const X = (hl) => L + (hl / MAXHL) * pw, Yy = (n) => T + ph * (1 - n / N0);
+    cg.clearRect(0, 0, w, h);
+    cg.font = '500 10px "JetBrains Mono", monospace'; cg.fillStyle = 'rgba(157,151,134,.9)';
+    cg.strokeStyle = 'rgba(255,255,255,.07)'; cg.lineWidth = 1;
+    for (let k = 0; k <= MAXHL; k++) {
+      cg.beginPath(); cg.moveTo(X(k), T); cg.lineTo(X(k), T + ph); cg.stroke();
+      cg.fillText(k === 0 ? '0' : `${k}T`, X(k) - (k ? 6 : 2), h - 8);
+    }
+    for (const n of [400, 200, 100, 50]) {
+      cg.beginPath(); cg.moveTo(L, Yy(n)); cg.lineTo(L + pw, Yy(n)); cg.stroke();
+      cg.fillText(String(n), 4, Yy(n) + 3);
+    }
+    // đường lý thuyết
+    cg.strokeStyle = 'rgba(201,166,80,.9)'; cg.setLineDash([5, 5]); cg.lineWidth = 1.5; cg.beginPath();
+    for (let s = 0; s <= 120; s++) { const hl = (s / 120) * MAXHL; const yy = Yy(N0 * Math.pow(2, -hl)); s ? cg.lineTo(X(hl), yy) : cg.moveTo(X(hl), yy); }
+    cg.stroke(); cg.setLineDash([]);
+    // đường thực tế
+    cg.strokeStyle = '#37f0cf'; cg.lineWidth = 2; cg.beginPath();
+    hist.forEach(([hl, n], i) => (i ? cg.lineTo(X(hl), Yy(n)) : cg.moveTo(X(hl), Yy(n))));
+    cg.stroke();
+    cg.fillStyle = 'rgba(201,166,80,.9)'; cg.textAlign = 'right'; cg.fillText('- - lý thuyết: một nửa sau mỗi T', L + pw - 6, T + 12); cg.fillStyle = '#37f0cf'; cg.fillText('— mô phỏng', L + pw - 6, T + 26); cg.textAlign = 'left';
+  }
+
+  let last = 0;
+  function loop(now) {
+    if (!running) return;
+    const dt = Math.min(0.05, (now - last) / 1000) * (reduce ? 0.6 : 0.33);   // ~3 giây cho mỗi chu kỳ bán rã
+    last = now;
+    const p = 1 - Math.pow(2, -dt);
+    tHL += dt;
+    for (let i = 0; i < N0; i++) if (alive[i] && Math.random() < p) { alive[i] = 0; decayAt[i] = tHL; }
+    const n = update();
+    hist.push([tHL, n]);
+    drawAtoms(); drawChart();
+    if (tHL >= MAXHL || n === 0) { running = false; $('play').textContent = '▶ Chạy'; $('play').setAttribute('aria-pressed', 'false'); return; }
+    requestAnimationFrame(loop);
+  }
+  $('play').onclick = () => {
+    if (tHL >= MAXHL) reset();
+    running = !running;
+    $('play').textContent = running ? '❚❚ Dừng' : '▶ Chạy';
+    $('play').setAttribute('aria-pressed', String(running));
+    if (running) { last = performance.now(); requestAnimationFrame(loop); }
+  };
+  $('reset').onclick = () => { running = false; $('play').textContent = '▶ Chạy'; $('play').setAttribute('aria-pressed', 'false'); reset(); };
+  addEventListener('resize', () => { drawAtoms(); drawChart(); });
+
+  /* ------------------------------------------- Tính tuổi carbon-14 */
+  const T14 = 5730;
+  function age(p) {
+    p = Math.max(0.1, Math.min(100, p));
+    const t = T14 * Math.log2(100 / p);
+    $('age').textContent = t < 1 ? 'Mẫu còn sống' : `≈ ${Math.round(t).toLocaleString('vi-VN')} năm`;
+    const hl = t / T14;
+    $('ageSub').textContent = t < 1 ? 'chưa phân rã chút nào' : `tương đương ${hl.toLocaleString('vi-VN', { maximumFractionDigits: 2 })} chu kỳ bán rã${t > 50000 ? ' · vượt giới hạn đo tin cậy' : ''}`;
+  }
+  const pct = $('pct'), pctN = $('pctN');
+  pct.oninput = () => { pctN.value = pct.value; age(+pct.value); };
+  pctN.oninput = () => { if (pctN.value !== '') { pct.value = pctN.value; age(+pctN.value); } };
+  const REF = [[100, 'Mẫu vừa chết'], [88.6, 'Khoảng 1 000 năm'], [50, 'Một chu kỳ'], [25, 'Hai chu kỳ'], [12.5, 'Ba chu kỳ'], [0.24, 'Gần giới hạn 50 000 năm']];
+  $('ref').innerHTML = REF.map(([p, t]) => `<button data-p="${p}">${t} · ${p.toLocaleString('vi-VN')}%</button>`).join('');
+  $('ref').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; pct.value = pctN.value = b.dataset.p; age(+b.dataset.p); };
+
+  reset(); age(50);
+})();
+</script>
+</body>
+</html>

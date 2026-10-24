@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinh Dịch nhị phân · Bienac</title>
+  <meta name="description" content="64 quẻ Kinh Dịch chính là 64 số nhị phân sáu chữ số. Bấm vào từng hào để đổi âm dương và xem quẻ, số thập phân, thứ tự Văn Vương." />
+  <meta property="og:title" content="Kinh Dịch nhị phân · Bienac" />
+  <meta property="og:description" content="64 quẻ Kinh Dịch là 64 số nhị phân từ 0 đến 63." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&family=Noto+Serif+TC:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .kd { max-width: 1040px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .kd-lede { margin-top: 10px; color: var(--text-dim); line-height: 1.65; max-width: 680px; }
+    .kd-main { margin-top: 24px; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 16px; align-items: stretch; }
+    .kd-play { padding: 24px; border-radius: 18px; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; }
+    .kd-lines { display: flex; flex-direction: column; gap: 10px; }
+    .kd-line { display: grid; grid-template-columns: 150px 26px; gap: 12px; align-items: center; background: none; border: 0; padding: 0; cursor: pointer; }
+    .kd-bar { height: 22px; border-radius: 8px; position: relative; transition: background .2s; }
+    .kd-line.yang .kd-bar { background: var(--cyan); box-shadow: 0 0 14px rgba(55,240,207,.35); }
+    .kd-line.yin .kd-bar { background: linear-gradient(90deg, var(--brass) 0 42%, transparent 42% 58%, var(--brass) 58% 100%); }
+    .kd-line:hover .kd-bar { filter: brightness(1.15); }
+    .kd-line b { font: 600 1.1rem var(--mono); color: var(--text-dim); text-align: center; }
+    .kd-line.yang b { color: var(--cyan); }
+    .kd-sep { height: 1px; background: var(--hair); margin: 2px 0; }
+    .kd-read { min-width: 0; }
+    .kd-bin { font: 600 clamp(1.6rem, 4vw, 2.2rem) var(--mono); letter-spacing: .08em; color: var(--text); }
+    .kd-dec { margin-top: 4px; font: 500 .9rem var(--mono); color: var(--text-dim); }
+    .kd-dec b { color: var(--cyan); font-size: 1.3rem; }
+    .kd-acts { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .kd-acts .ud-btn { border-radius: 999px; padding: 8px 12px; }
+
+    .kd-info { padding: 24px; border-radius: 18px; }
+    .kd-head { display: flex; gap: 18px; align-items: center; }
+    .kd-sym { font-size: 4.2rem; line-height: 1; color: var(--cyan); }
+    .kd-no { font: 500 .72rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .kd-name { font: 700 clamp(1.5rem, 3.5vw, 2rem)/1.15 var(--display); margin-top: 4px; }
+    .kd-han { font: 600 1.2rem var(--han); color: var(--text-dim); margin-top: 4px; }
+    .kd-tri { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kd-tri div { padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+    .kd-tri span { display: block; font: 500 .68rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .kd-tri b { font: 600 1.05rem var(--display); }
+    .kd-tri i { font-style: normal; font-size: 1.6rem; color: var(--brass); float: right; line-height: 1; }
+    .kd-desc { margin-top: 14px; font-size: .9rem; line-height: 1.65; color: var(--text-dim); }
+
+    .kd-h2 { margin-top: 36px; font: 700 1.25rem var(--display); }
+    .kd-sub { margin-top: 6px; font-size: .9rem; color: var(--text-dim); line-height: 1.6; max-width: 720px; }
+    .kd-trigs { margin-top: 14px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; }
+    .kd-t { padding: 12px 6px; border-radius: 14px; text-align: center; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+    .kd-t i { display: block; font-style: normal; font-size: 2rem; line-height: 1.1; color: var(--brass); }
+    .kd-t b { display: block; font: 600 .95rem var(--display); margin-top: 4px; }
+    .kd-t span { display: block; font-size: .78rem; color: var(--text-dim); }
+    .kd-t code { display: block; margin-top: 4px; font: 500 .74rem var(--mono); color: var(--cyan); }
+
+    .kd-grid { margin-top: 14px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; }
+    .kd-c { border: 0; border-radius: 12px; padding: 8px 2px 6px; background: rgba(255,255,255,.035); color: var(--text); cursor: pointer; text-align: center; font: inherit; }
+    .kd-c:hover { background: rgba(55,240,207,.1); }
+    .kd-c i { display: block; font-style: normal; font-size: 1.7rem; line-height: 1.1; }
+    .kd-c b { display: block; font: 600 .78rem var(--mono); color: var(--cyan); }
+    .kd-c span { display: block; font-size: .66rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kd-c.on { background: rgba(55,240,207,.2); box-shadow: inset 0 0 0 1px var(--cyan); }
+    .kd-note { margin-top: 32px; font-size: .9rem; line-height: 1.75; color: var(--text-dim); max-width: 760px; }
+    .kd-note p + p { margin-top: 10px; }
+    .kd-note b { color: var(--text); }
+    @media (max-width: 860px) { .kd-main { grid-template-columns: 1fr; } .kd-trigs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    @media (max-width: 520px) {
+      .kd { padding-top: 88px; }
+      .kd-play { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .kd-acts { justify-content: center; }
+      .kd-line { grid-template-columns: 170px 26px; }
+      .kd-grid { gap: 4px; } .kd-c span { display: none; } .kd-c i { font-size: 1.4rem; } .kd-c b { font-size: .7rem; }
+      .kd-sym { font-size: 3.4rem; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Kinh Dịch</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="kd">
+    <p class="ud-kicker">Kinh Dịch nhị phân</p>
+    <h1 class="ud-title">64 quẻ là <span class="accent">64 con số</span></h1>
+    <p class="kd-lede">Thay hào dương bằng số 1, hào âm bằng số 0, mỗi quẻ Kinh Dịch thành một số nhị phân sáu chữ số, từ 0 đến 63. Bấm vào từng hào để đổi âm dương.</p>
+
+    <div class="kd-main">
+      <section class="ud-panel kd-play">
+        <div class="kd-lines" id="lines" aria-label="Sáu hào, hào trên cùng ở trên"></div>
+        <div class="kd-read">
+          <p class="kd-bin" id="bin"></p>
+          <p class="kd-dec">= <b id="dec"></b> trong hệ thập phân</p>
+          <div class="kd-acts">
+            <button class="ud-btn" id="dn" type="button">− 1</button>
+            <button class="ud-btn" id="up" type="button">+ 1</button>
+            <button class="ud-btn" id="inv" type="button">Đảo âm dương</button>
+            <button class="ud-btn" id="rnd" type="button">Ngẫu nhiên</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="ud-panel kd-info" aria-live="polite">
+        <div class="kd-head">
+          <span class="kd-sym" id="sym"></span>
+          <div><p class="kd-no" id="no"></p><h2 class="kd-name" id="name"></h2><p class="kd-han" id="han"></p></div>
+        </div>
+        <div class="kd-tri">
+          <div><span>Quẻ trên (ngoại quái)</span><i id="ui"></i><b id="un"></b></div>
+          <div><span>Quẻ dưới (nội quái)</span><i id="li"></i><b id="ln"></b></div>
+        </div>
+        <p class="kd-desc" id="desc"></p>
+      </section>
+    </div>
+
+    <h2 class="kd-h2">Tám quẻ đơn</h2>
+    <p class="kd-sub">Ba hào cho tám tổ hợp, tức các số nhị phân ba chữ số từ 000 đến 111. Hai quẻ đơn chồng lên nhau thành một quẻ kép.</p>
+    <div class="kd-trigs" id="trigs"></div>
+
+    <h2 class="kd-h2">Bảng 64 quẻ theo thứ tự Phục Hy</h2>
+    <p class="kd-sub">Xếp từ quẻ Khôn (000000 = 0) đến quẻ Càn (111111 = 63). Đây chính là cách đếm nhị phân, và cũng là thứ tự Thiệu Ung đời Tống đã vẽ. Số nhỏ màu xanh là giá trị thập phân, tên bên dưới là quẻ tương ứng.</p>
+    <div class="kd-grid" id="grid"></div>
+
+    <div class="kd-note">
+      <p><b>Leibniz và Kinh Dịch.</b> Nhà toán học người Đức Gottfried Wilhelm Leibniz đã nghĩ ra hệ nhị phân từ khoảng năm 1679. Năm 1701, giáo sĩ dòng Tên Joachim Bouvet ở Trung Hoa gửi cho ông bản vẽ 64 quẻ theo thứ tự của Thiệu Ung (thế kỷ 11). Leibniz nhận ra thứ tự ấy trùng khớp với dãy số nhị phân từ 0 đến 63, và năm 1703 ông nhắc chuyện này trong bài viết về số học nhị phân gửi Viện Hàn lâm Khoa học Pháp.</p>
+      <p><b>Cách đọc ở trang này.</b> Hào dưới cùng là chữ số đầu tiên (giá trị lớn nhất), hào trên cùng là chữ số cuối. Đọc như vậy thì bảng 64 quẻ đi đúng từ 0 đến 63. Số thứ tự 1 đến 64 trong tên quẻ là thứ tự Văn Vương, thứ tự quen dùng trong sách Kinh Dịch, không theo quy luật nhị phân.</p>
+      <p>Hệ nhị phân về sau trở thành ngôn ngữ của mọi máy tính. Còn người xưa dùng 64 quẻ để bói toán và bàn về sự biến đổi, chứ không dùng để làm tính.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  $('y').textContent = new Date().getFullYear();
+
+  // Quẻ đơn: giá trị 3 bit (hào dưới là bit lớn nhất)
+  const TRI = [
+    { v: 7, n: 'Càn', img: 'Thiên', nghia: 'trời', s: '☰' },
+    { v: 6, n: 'Đoài', img: 'Trạch', nghia: 'đầm', s: '☱' },
+    { v: 5, n: 'Ly', img: 'Hỏa', nghia: 'lửa', s: '☲' },
+    { v: 4, n: 'Chấn', img: 'Lôi', nghia: 'sấm', s: '☳' },
+    { v: 3, n: 'Tốn', img: 'Phong', nghia: 'gió', s: '☴' },
+    { v: 2, n: 'Khảm', img: 'Thủy', nghia: 'nước', s: '☵' },
+    { v: 1, n: 'Cấn', img: 'Sơn', nghia: 'núi', s: '☶' },
+    { v: 0, n: 'Khôn', img: 'Địa', nghia: 'đất', s: '☷' },
+  ];
+  const byImg = Object.fromEntries(TRI.map((t) => [t.img, t]));
+  const byName = Object.fromEntries(TRI.map((t) => [t.n, t]));
+
+  // 64 quẻ theo thứ tự Văn Vương: [tên đầy đủ (quẻ trên, quẻ dưới, tên), chữ Hán]
+  const KW = [
+    ['Thuần Càn', '乾'], ['Thuần Khôn', '坤'], ['Thủy Lôi Truân', '屯'], ['Sơn Thủy Mông', '蒙'],
+    ['Thủy Thiên Nhu', '需'], ['Thiên Thủy Tụng', '訟'], ['Địa Thủy Sư', '師'], ['Thủy Địa Tỷ', '比'],
+    ['Phong Thiên Tiểu Súc', '小畜'], ['Thiên Trạch Lý', '履'], ['Địa Thiên Thái', '泰'], ['Thiên Địa Bĩ', '否'],
+    ['Thiên Hỏa Đồng Nhân', '同人'], ['Hỏa Thiên Đại Hữu', '大有'], ['Địa Sơn Khiêm', '謙'], ['Lôi Địa Dự', '豫'],
+    ['Trạch Lôi Tùy', '隨'], ['Sơn Phong Cổ', '蠱'], ['Địa Trạch Lâm', '臨'], ['Phong Địa Quan', '觀'],
+    ['Hỏa Lôi Phệ Hạp', '噬嗑'], ['Sơn Hỏa Bí', '賁'], ['Sơn Địa Bác', '剝'], ['Địa Lôi Phục', '復'],
+    ['Thiên Lôi Vô Vọng', '無妄'], ['Sơn Thiên Đại Súc', '大畜'], ['Sơn Lôi Di', '頤'], ['Trạch Phong Đại Quá', '大過'],
+    ['Thuần Khảm', '坎'], ['Thuần Ly', '離'], ['Trạch Sơn Hàm', '咸'], ['Lôi Phong Hằng', '恆'],
+    ['Thiên Sơn Độn', '遯'], ['Lôi Thiên Đại Tráng', '大壯'], ['Hỏa Địa Tấn', '晉'], ['Địa Hỏa Minh Di', '明夷'],
+    ['Phong Hỏa Gia Nhân', '家人'], ['Hỏa Trạch Khuê', '睽'], ['Thủy Sơn Kiển', '蹇'], ['Lôi Thủy Giải', '解'],
+    ['Sơn Trạch Tổn', '損'], ['Phong Lôi Ích', '益'], ['Trạch Thiên Quải', '夬'], ['Thiên Phong Cấu', '姤'],
+    ['Trạch Địa Tụy', '萃'], ['Địa Phong Thăng', '升'], ['Trạch Thủy Khốn', '困'], ['Thủy Phong Tỉnh', '井'],
+    ['Trạch Hỏa Cách', '革'], ['Hỏa Phong Đỉnh', '鼎'], ['Thuần Chấn', '震'], ['Thuần Cấn', '艮'],
+    ['Phong Sơn Tiệm', '漸'], ['Lôi Trạch Quy Muội', '歸妹'], ['Lôi Hỏa Phong', '豐'], ['Hỏa Sơn Lữ', '旅'],
+    ['Thuần Tốn', '巽'], ['Thuần Đoài', '兌'], ['Phong Thủy Hoán', '渙'], ['Thủy Trạch Tiết', '節'],
+    ['Phong Trạch Trung Phu', '中孚'], ['Lôi Sơn Tiểu Quá', '小過'], ['Thủy Hỏa Ký Tế', '既濟'], ['Hỏa Thủy Vị Tế', '未濟'],
+  ];
+  // Dựng bảng tra: giá trị nhị phân → quẻ
+  const HEX = new Array(64);
+  KW.forEach(([full, han], i) => {
+    const w = full.split(' ');
+    let up, lo, short;
+    if (w[0] === 'Thuần') { up = lo = byName[w[1]]; short = w[1]; }
+    else { up = byImg[w[0]]; lo = byImg[w[1]]; short = w.slice(2).join(' '); }
+    const v = lo.v * 8 + up.v;   // 3 hào dưới là 3 bit lớn
+    HEX[v] = { kw: i + 1, full, short, han, up, lo, sym: String.fromCodePoint(0x4DC0 + i) };
+  });
+
+  let val = 0b100010;   // Thủy Lôi Truân cho vui mắt
+  const bits = (v) => v.toString(2).padStart(6, '0');   // chữ số đầu = hào dưới cùng
+
+  function render() {
+    const b = bits(val), h = HEX[val];
+    // vẽ hào: trên cùng (bit cuối) ở trên
+    let html = '';
+    for (let i = 5; i >= 0; i--) {
+      const on = b[i] === '1';
+      html += `<button class="kd-line ${on ? 'yang' : 'yin'}" data-i="${i}" type="button" aria-label="Hào ${i + 1}: ${on ? 'dương' : 'âm'}, bấm để đổi"><span class="kd-bar"></span><b>${b[i]}</b></button>`;
+      if (i === 3) html += '<div class="kd-sep"></div>';
+    }
+    $('lines').innerHTML = html;
+    $('bin').textContent = b;
+    $('dec').textContent = val;
+    $('sym').textContent = h.sym;
+    $('no').textContent = `Quẻ số ${h.kw} theo thứ tự Văn Vương`;
+    $('name').textContent = h.full;
+    $('han').textContent = h.han;
+    $('ui').textContent = h.up.s; $('un').textContent = `${h.up.n} · ${h.up.img} (${h.up.nghia})`;
+    $('li').textContent = h.lo.s; $('ln').textContent = `${h.lo.n} · ${h.lo.img} (${h.lo.nghia})`;
+    const comp = HEX[63 - val];
+    $('desc').innerHTML = h.up === h.lo
+      ? `Quẻ ${h.up.n} chồng lên chính nó nên gọi là “thuần”. Đảo hết âm dương được quẻ <b>${comp.full}</b> (${63 - val}).`
+      : `Tên quẻ đọc theo hình tượng: ${h.up.img} (${h.up.nghia}) ở trên, ${h.lo.img} (${h.lo.nghia}) ở dưới, rồi đến tên riêng là ${h.short}. Đảo hết âm dương được quẻ <b>${comp.full}</b> (${63 - val}).`;
+    document.querySelectorAll('.kd-c').forEach((c) => c.classList.toggle('on', +c.dataset.v === val));
+    history.replaceState(null, '', '#' + val);
+  }
+
+  $('lines').onclick = (e) => { const l = e.target.closest('[data-i]'); if (!l) return; val ^= 1 << (5 - +l.dataset.i); render(); };
+  $('up').onclick = () => { val = (val + 1) % 64; render(); };
+  $('dn').onclick = () => { val = (val + 63) % 64; render(); };
+  $('inv').onclick = () => { val = 63 - val; render(); };
+  $('rnd').onclick = () => { val = Math.floor(Math.random() * 64); render(); };
+
+  $('trigs').innerHTML = TRI.map((t) => `<div class="kd-t"><i>${t.s}</i><b>${t.n}</b><span>${t.img} · ${t.nghia}</span><code>${t.v.toString(2).padStart(3, '0')}</code></div>`).join('');
+  $('grid').innerHTML = HEX.map((h, v) => `<button class="kd-c" type="button" data-v="${v}" title="${v} · ${bits(v)} · ${h.full} (quẻ ${h.kw})"><i>${h.sym}</i><b>${v}</b><span>${h.short}</span></button>`).join('');
+  $('grid').onclick = (e) => { const c = e.target.closest('[data-v]'); if (!c) return; val = +c.dataset.v; render(); scrollTo({ top: 0, behavior: 'smooth' }); };
+
+  const hv = parseInt(location.hash.slice(1), 10);
+  if (hv >= 0 && hv < 64) val = hv;
+  render();
+})();
+</script>
+</body>
+</html>
