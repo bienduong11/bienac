@@ -51,17 +51,15 @@ const fmtDate = (iso) => {
 /** Thời gian đọc ước lượng: ~200 từ/phút tiếng Việt. */
 const readingMinutes = (text) => Math.max(1, Math.round(text.split(/\s+/).filter(Boolean).length / 200));
 
-const header = (active) => `
+const header = () => `
   <header class="site-header scrolled">
     <a class="brand" href="/">
       <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
       <span class="brand-name">Bienac</span>
     </a>
     <nav class="site-nav">
-      <a href="/#videos">Video</a>
-      <a href="/bai-viet/"${active ? ' class="nav-active"' : ''}>Bài viết</a>
-      <a href="/elements.html">Nguyên tố</a>
-      <a href="/#about">Về Bienac</a>
+      <span class="nav-here">Bài viết</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
       <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
     </nav>
   </header>`;
@@ -92,7 +90,7 @@ const page = ({ title, description, url, image, body, type = 'website' }) => `<!
 </head>
 <body class="no-webgl blog">
   <div class="vignette" aria-hidden="true"></div>
-${header(true)}
+${header()}
   <main class="blog-main">
 ${body}
   </main>
