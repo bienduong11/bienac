@@ -531,3 +531,22 @@ body.home .hero-title { margin-top: 4px; }
   .app-ico { width: 38px; height: 38px; }
   .hero-cta { margin-top: 20px; }
 }
+
+/* ---- Trang chủ, bản gọn (24/10 16:40): khẩu hiệu + nút ở trên cùng, ô chức năng đè lên logo nhị phân ---- */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+body.home .hero { min-height: 0; justify-content: flex-start; padding-top: 22px !important; padding-bottom: 40px; }
+body.home .hero-tagline { margin: 0; font-size: clamp(1.15rem, 2.4vw, 1.5rem); }
+body.home .hero-sub { margin-top: 6px; }
+.hero-row { margin-top: 16px; width: min(100%, 760px); display: flex; gap: 10px; align-items: center; justify-content: center; }
+.hero-row .hero-cta { margin-top: 0; flex: none; }
+.hero-row .search { margin-top: 0; flex: 1; width: auto; }
+.apps-stage { position: relative; width: min(100%, 880px); margin-top: 22px; }
+body.home .hero-logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(96vw, 640px); margin: 0; z-index: 0; pointer-events: none; }
+.apps-stage .app-grid { margin-top: 0; width: 100%; position: relative; z-index: 1; }
+@media (max-width: 720px) {
+  body.home .hero { padding-top: 16px !important; }
+  .hero-row { flex-direction: column; gap: 10px; }
+  .hero-row .search { width: 100%; }
+  .hero-row .hero-cta { padding: 12px 24px; }
+  body.home .hero-logo { width: 104vw; }
+}

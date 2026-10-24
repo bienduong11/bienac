@@ -30,14 +30,10 @@
   <main id="top">
     <!-- HERO -->
     <section class="hero">
-      <p class="hero-readout tl" aria-hidden="true">Tàng thư số<br><b>Khoa học · Lịch sử · Ngôn ngữ</b></p>
-      <p class="hero-readout br" aria-hidden="true">Đông <b>⇄</b> Tây<br>bienac.com</p>
-      <div class="hero-logo" role="img" aria-label="Logo Bienac">
-        <img src="assets/logo.svg" alt="" />
-      </div>
-      <h1 class="hero-title">Bien<span class="accent">ac</span></h1>
+      <h1 class="sr-only">Bienac</h1>
       <p class="hero-tagline">Chuyện trên Trái Đất 🌏</p>
       <p class="hero-sub">Đạo khả đạo &middot; Phi thường đạo</p>
+      <div class="hero-row">
       <a class="btn btn-primary hero-cta" id="hero-subscribe" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
         Đăng ký kênh
@@ -47,6 +43,9 @@
         <input id="q" type="search" placeholder="Tìm video, bài viết, chữ Hán…" aria-label="Tìm trên bienac.com" autocomplete="off" />
         <div class="search-res" id="search-res" role="listbox" hidden></div>
       </div>
+      </div>
+      <div class="apps-stage">
+        <div class="hero-logo" role="img" aria-label="Logo Bienac"><img src="assets/logo.svg" alt="" /></div>
       <nav class="app-grid" id="apps" aria-label="Các mục của Bienac">
         <a class="app" href="#videos"><span class="app-ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="app-name">Video</span><span class="app-desc">Các video mới nhất</span></a>
         <a class="app" href="/bai-viet/"><span class="app-ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></span><span class="app-name">Bài viết</span><span class="app-desc">Đọc chậm, có nguồn</span></a>
@@ -61,6 +60,7 @@
         <a class="app" href="#request"><span class="app-ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></span><span class="app-name">Đề xuất</span><span class="app-desc">Gợi ý video tiếp theo</span></a>
         <a class="app" href="/ung-ho/"><span class="app-ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span><span class="app-name">Ủng hộ</span><span class="app-desc">Cùng Bienac đi xa hơn</span></a>
       </nav>
+      </div>
     </section>
 
     <!-- VIDEOS -->

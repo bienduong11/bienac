@@ -30,6 +30,9 @@
     .uh-card .btn { margin-top: 14px; }
     .uh-qr { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: center; }
     .uh-qr img { width: 180px; height: 180px; object-fit: contain; background: #fff; border-radius: 14px; padding: 8px; }
+    .uh-bank { margin-top: 10px; font: 600 .95rem var(--mono); color: var(--text) !important; }
+    .uh-pay { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .uh-pay .btn { margin-top: 0; padding: 9px 16px; font-size: .8rem; }
     .uh-ico { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: rgba(55,240,207,.12); color: var(--cyan); margin-bottom: 12px; }
     @media (max-width: 560px) { .uh-qr { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
   </style>
@@ -57,7 +60,9 @@
         <img id="qr-img" alt="Mã QR ủng hộ Bienac" />
         <div>
           <h2>Mời Bienac một ly cà phê</h2>
-          <p id="qr-note">Quét mã bằng ứng dụng ngân hàng hoặc ví điện tử. Mọi khoản ủng hộ đều dùng cho việc làm video: tài liệu, phần mềm, âm nhạc và hình ảnh có bản quyền.</p>
+          <p id="qr-note">Quét mã bằng ứng dụng ngân hàng. Mọi khoản ủng hộ đều dùng cho việc làm video: tài liệu, phần mềm, âm nhạc và hình ảnh có bản quyền.</p>
+          <p class="uh-bank" id="bank"></p>
+          <div class="uh-pay" id="pay"></div>
         </div>
       </div>
     </section>
@@ -67,7 +72,7 @@
         <div class="uh-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6-.7z"/></svg></div>
         <h2>Hội viên kênh</h2>
         <p>Tham gia Hội viên trên YouTube để ủng hộ hằng tháng và nhận huy hiệu riêng cạnh tên khi bình luận.</p>
-        <a class="btn btn-primary" href="https://www.youtube.com/@bienac/join" target="_blank" rel="noopener">Tham gia</a>
+        <a class="btn btn-primary" id="member-link" href="https://www.youtube.com/@bienac/join" target="_blank" rel="noopener">Tham gia</a>
       </section>
 
       <section class="ud-panel uh-card">
@@ -91,6 +96,13 @@
         <a class="btn btn-ghost" href="/#request">Gửi góp ý</a>
       </section>
     </div>
+
+    <section class="ud-panel uh-card" id="cd-box" style="margin-top:14px" hidden>
+      <h2>Cộng đồng Bienac</h2>
+      <p>Nơi trò chuyện, hỏi đáp và nhận tin video mới.</p>
+      <div class="uh-pay" id="cd"></div>
+      <p id="mail" style="margin-top:12px"></p>
+    </section>
   </main>
 
   <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
@@ -98,8 +110,14 @@
   document.getElementById('y').textContent = new Date().getFullYear();
   fetch('/data/config.json').then((r) => r.json()).then((c) => {
     const u = c.ungHo || {};
-    if (u.qr) { document.getElementById('qr-img').src = u.qr; document.getElementById('qr-box').hidden = false; if (u.ghiChuQr) document.getElementById('qr-note').textContent = u.ghiChuQr; }
-    if (u.hoiVien) document.getElementById('member-box').hidden = false;
+    const $ = (id) => document.getElementById(id);
+    const btn = (t, h, cls = 'btn-ghost') => `<a class="btn ${cls}" href="${h}" target="_blank" rel="noopener">${t}</a>`;
+    if (u.qr) { $('qr-img').src = u.qr; $('qr-box').hidden = false; if (u.ghiChuQr) $('qr-note').textContent = u.ghiChuQr; }
+    if (u.nganHang) $('bank').textContent = u.nganHang;
+    $('pay').innerHTML = [u.momo && btn('MoMo', u.momo), u.paypal && btn('PayPal', u.paypal), u.patreon && btn('Patreon', u.patreon)].filter(Boolean).join('');
+    if (u.hoiVien) { $('member-box').hidden = false; $('member-link').href = u.hoiVien; }
+    if (u.congDong && u.congDong.length) { $('cd').innerHTML = u.congDong.map(([t, h]) => btn(t, h)).join(''); $('cd-box').hidden = false; }
+    if (u.lienHe) $('mail').innerHTML = `Liên hệ: <a href="mailto:${u.lienHe}">${u.lienHe}</a>`;
   }).catch(() => {});
   document.getElementById('share').onclick = async (e) => {
     const link = 'https://www.youtube.com/@bienac';

@@ -147,20 +147,47 @@ const CHAPTER_JS = `
 
 let CFG = {};
 /** Mô tả YouTube dựng sẵn: câu mở, link, mục lục, chân mô tả, hashtag. */
+/** Markdown → chữ thuần cho mô tả YouTube: danh sách thành "• ", link thành "chữ URL". */
+function plain(md) {
+  return md
+    .split(/\r?\n/)
+    .map((l) => l
+      .replace(/^\s*(?:[-*]|\d+\.)\s+/, '• ')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) => (u.replace(/^https?:\/\//, '').startsWith(t) ? u : `${t} ${u}`))
+      .replace(/(^|[\s(])[*_]+|[*_]+(?=[\s).,;:]|$)/g, '$1')
+      .replace(/`/g, ''))
+    .join('\n')
+    .trim();
+}
+/** Lấy nội dung một mục "## Tên" mà không bỏ nó khỏi bài. */
+const peekSection = (body, names) => takeSection(body, names)[0];
+
+/**
+ * Mô tả YouTube dựng sẵn, theo đúng khuôn mô tả quen dùng của kênh:
+ * câu mở · link hồ sơ · ủng hộ · liên kết · lưu ý · tài liệu · hình ảnh · bản quyền · mục lục
+ * Các khối cố định nằm ở data/config.json → moTa.
+ */
 function youtubeDescription(p) {
   const m = CFG.moTa || {};
-  const parts = [];
-  if (p.hook) parts.push(p.hook);
-  parts.push(`Nguồn tham khảo, bài đọc đầy đủ và đính chính (nếu có): ${SITE}/v/${p.short}`);
+  const SEP = m.ngan || '▁';
+  const blocks = [];
+  blocks.push([p.hook, `Nguồn, bài đọc và đính chính: ${SITE}/v/${p.short}`].filter(Boolean).join('\n'));
+  if (m.ungHo) blocks.push(m.ungHo);
+  if (m.lienKet) blocks.push(m.lienKet);
+  if (p.luuY) blocks.push('Lưu ý\n' + plain(p.luuY));
+  if (p.nguon) blocks.push('Tài liệu tham khảo\n' + plain(p.nguon));
+  if (p.hinhAnh) blocks.push('Hình ảnh, video, âm thanh\n' + plain(p.hinhAnh));
+  if (m.banQuyen) blocks.push(m.banQuyen.replace('{nam}', p.date.slice(0, 4)));
   if (p.chapters.length) {
     const ch = p.chapters.slice();
-    if (ch[0].s !== 0) ch.unshift({ t: '0:00', name: 'Mở đầu', s: 0 });   // YouTube cần mốc 0:00
-    parts.push('Mục lục\n' + ch.map((c) => `${c.t} ${c.name}`).join('\n'));
+    if (ch[0].s !== 0) ch.unshift({ t: '00:00', name: 'Mở đầu', s: 0 });   // YouTube cần mốc 0:00
+    blocks.push(ch.map((c) => `${c.t} ${c.name}`).join('\n'));
   }
-  if (m.chanTrang) parts.push(m.chanTrang);
   const tags = [...(m.hashtags || []), ...p.hashtags].map((t) => '#' + String(t).replace(/^#/, '').replace(/\s+/g, ''));
-  if (tags.length) parts.push([...new Set(tags)].join(' '));
-  return parts.join('\n\n') + '\n';
+  if (tags.length) blocks.push([...new Set(tags)].join(' '));
+  let out = blocks.join(`\n${SEP}\n`) + '\n';
+  if (out.length > 5000) out = out.slice(0, 4990) + '…\n';   // giới hạn của YouTube
+  return out;
 }
 
 async function main() {
@@ -186,6 +213,10 @@ async function main() {
     let chapText, fixText;
     [chapText, rest] = takeSection(rest, ['Chương', 'Mục lục']);
     [fixText, rest] = takeSection(rest, ['Đính chính']);
+    let luuY, hinhAnh;
+    [luuY, rest] = takeSection(rest, ['Lưu ý']);
+    [hinhAnh, rest] = takeSection(rest, ['Hình ảnh, video, âm thanh', 'Hình ảnh']);
+    const nguon = peekSection(rest, ['Nguồn tham khảo', 'Tài liệu tham khảo']);
     const list = (v) => (Array.isArray(v) ? v : v ? [v] : []);
     posts.push({
       slug,
@@ -199,6 +230,9 @@ async function main() {
       hashtags: list(data.hashtags),
       chapters: parseChapters(chapText),
       fix: fixText ? marked.parse(fixText) : '',
+      luuY, hinhAnh, nguon,
+      luuYHtml: luuY ? marked.parse(luuY) : '',
+      hinhAnhHtml: hinhAnh ? marked.parse(hinhAnh) : '',
       html: marked.parse(rest),
       minutes: readingMinutes(rest),
     });
@@ -239,7 +273,9 @@ async function main() {
       ${player}
       ${chapterNav(p)}
       <p class="post-short">Link ngắn của video này: <a href="/v/${esc(p.short)}">bienac.com/v/${esc(p.short)}</a></p>
+      ${p.luuYHtml ? `<aside class="post-note"><p class="post-fix-k">Lưu ý</p>${p.luuYHtml}</aside>` : ''}
       <div class="post-body">${p.html}</div>
+      ${p.hinhAnhHtml ? `<section class="post-credits"><h2>Hình ảnh, video, âm thanh</h2>${p.hinhAnhHtml}</section>` : ''}
       <footer class="post-cta">
         <p>Bài viết này đi kèm video trên kênh Bienac. Đăng ký để không lỡ những câu chuyện tiếp theo.</p>
         <a class="btn btn-primary" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
