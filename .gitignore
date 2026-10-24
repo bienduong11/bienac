@@ -1,0 +1,4 @@
+node_modules/
+# Sinh ra lúc build, không lưu vào repo
+bai-viet/
+sitemap.xml
