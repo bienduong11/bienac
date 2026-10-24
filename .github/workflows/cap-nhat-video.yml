@@ -1,2 +1,36 @@
-{"name": "Cap nhat video", "on": {"schedule": [{"cron": "17 */6 * * *"}], "workflow_dispatch": {}}, "permissions": {"contents": "write"}, "jobs": {"update": {"runs-on": "ubuntu-latest", "steps": [{"uses": "actions/checkout@v4"}, {"uses": "actions/setup-node@v4", "with": {"node-version": 20}}, {"run": "node scripts/fetch-videos.mjs"}, {"run": "git config user.name bienac-bot && git config user.email bienac-bot@users.noreply.github.com && git add data/videos.json && (git diff --cached --quiet || (git commit -m 'Cap nhat danh sach video' && git push))"}]}}}
+# Tự lấy danh sách video mới nhất của kênh mỗi 6 tiếng.
+# Nếu có video mới, file data/videos.json được cập nhật và Cloudflare Pages tự dựng lại web.
+name: Cap nhat video
 
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Lấy video mới từ YouTube
+        run: node scripts/fetch-videos.mjs
+
+      - name: Lưu nếu có thay đổi
+        run: |
+          git config user.name "bienac-bot"
+          git config user.email "bienac-bot@users.noreply.github.com"
+          git add data/videos.json
+          if git diff --cached --quiet; then
+            echo "Không có video mới."
+          else
+            git commit -m "Cập nhật danh sách video"
+            git push
+          fi
