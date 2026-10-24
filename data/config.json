@@ -4,11 +4,41 @@
   "autoFetchVideos": true,
   "maxVideos": 6,
   "videos": [
-    { "id": "", "title": "Cực quang sinh ra như thế nào?", "tag": "Vật lý" },
-    { "id": "", "title": "Vì sao đại dương có sóng?", "tag": "Tự nhiên" },
-    { "id": "", "title": "Tinh vân — vườn ươm của những vì sao", "tag": "Vũ trụ" },
-    { "id": "", "title": "Ánh sáng của đom đóm: hóa học kỳ diệu", "tag": "Sinh học" },
-    { "id": "", "title": "Lỗ đen có thực sự \"đen\"?", "tag": "Vũ trụ" },
-    { "id": "", "title": "Thời gian có trôi như nhau ở mọi nơi?", "tag": "Vật lý" }
-  ]
+    {
+      "id": "",
+      "title": "Cực quang sinh ra như thế nào?",
+      "tag": "Vật lý"
+    },
+    {
+      "id": "",
+      "title": "Vì sao đại dương có sóng?",
+      "tag": "Tự nhiên"
+    },
+    {
+      "id": "",
+      "title": "Tinh vân — vườn ươm của những vì sao",
+      "tag": "Vũ trụ"
+    },
+    {
+      "id": "",
+      "title": "Ánh sáng của đom đóm: hóa học kỳ diệu",
+      "tag": "Sinh học"
+    },
+    {
+      "id": "",
+      "title": "Lỗ đen có thực sự \"đen\"?",
+      "tag": "Vũ trụ"
+    },
+    {
+      "id": "",
+      "title": "Thời gian có trôi như nhau ở mọi nơi?",
+      "tag": "Vật lý"
+    }
+  ],
+  "moTa": {
+    "chanTrang": "Đăng ký kênh: https://bienac.com/dk\nĐề xuất chủ đề cho video sau: https://bienac.com/goi-y",
+    "hashtags": [
+      "Bienac"
+    ]
+  }
 }

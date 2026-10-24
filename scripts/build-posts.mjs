@@ -3,8 +3,16 @@
  * Dựng kho bài viết từ thư mục posts/ (Markdown) ra HTML tĩnh.
  *
  *   posts/ten-bai-viet.md  →  bai-viet/ten-bai-viet/index.html
+ *                          →  bai-viet/ten-bai-viet/mo-ta.txt  (mô tả YouTube dựng sẵn)
  *                          →  bai-viet/index.html   (danh sách bài)
+ *                          →  cong-cu/mo-ta/index.html  (trang chép mô tả, không lên Google)
+ *                          →  _redirects   (link ngắn: /v/ten-ngan, /dk, /yt…)
  *                          →  sitemap.xml
+ *
+ * Trong bài, các mục đặc biệt (tiêu đề ## đúng tên):
+ *   ## Chương         danh sách "- 0:00 Tên chương", hiện thành mục lục bấm nhảy phút
+ *   ## Đính chính     hiện thành khung đỏ ở đầu bài
+ *   ## Nguồn tham khảo  danh sách nguồn, chữ nhỏ ở cuối bài
  *
  * Chạy lúc Cloudflare Pages dựng web (npm run build).
  * File bắt đầu bằng dấu _ hoặc có `draft: true` sẽ bị bỏ qua.
@@ -51,6 +59,26 @@ const fmtDate = (iso) => {
 /** Thời gian đọc ước lượng: ~200 từ/phút tiếng Việt. */
 const readingMinutes = (text) => Math.max(1, Math.round(text.split(/\s+/).filter(Boolean).length / 200));
 
+/** Tách mục "## Tên" ra khỏi thân bài, trả về [nội dung mục, thân còn lại]. */
+function takeSection(body, names) {
+  const re = new RegExp(`^##\\s+(?:${names.join('|')})\\s*$`, 'mi');
+  const m = body.match(re);
+  if (!m) return ['', body];
+  const start = m.index, after = start + m[0].length;
+  const next = body.slice(after).search(/^##\s+/m);
+  const end = next === -1 ? body.length : after + next;
+  return [body.slice(after, end).trim(), body.slice(0, start) + body.slice(end)];
+}
+
+/** "- 1:02:03 Tên" → { t: '1:02:03', s: 3723, name } */
+function parseChapters(text) {
+  return text
+    .split(/\r?\n/)
+    .map((l) => l.match(/^\s*[-*]?\s*((?:\d{1,2}:)?\d{1,2}:\d{2})\s+[-–—:]?\s*(.+)$/))
+    .filter(Boolean)
+    .map(([, t, name]) => ({ t, name: name.trim(), s: t.split(':').reduce((a, x) => a * 60 + Number(x), 0) }));
+}
+
 const header = () => `
   <header class="site-header scrolled">
     <a class="brand" href="/">
@@ -64,14 +92,14 @@ const header = () => `
     </nav>
   </header>`;
 
-const page = ({ title, description, url, image, body, type = 'website' }) => `<!DOCTYPE html>
+const page = ({ title, description, url, image, body, type = 'website', noindex = false }) => `<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}" />
-  <link rel="canonical" href="${url}" />
+  <link rel="canonical" href="${url}" />${noindex ? '\n  <meta name="robots" content="noindex, nofollow" />' : ''}
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(description)}" />
   <meta property="og:type" content="${type}" />
@@ -99,7 +127,44 @@ ${body}
 </html>
 `;
 
+/** Mục lục chương: bấm là tua video tới đúng giây. */
+function chapterNav(p) {
+  if (!p.chapters.length) return '';
+  const items = p.chapters
+    .map((c) => `<li><a href="https://www.youtube.com/watch?v=${esc(p.video)}&t=${c.s}s" data-s="${c.s}"><b>${c.t}</b> ${esc(c.name)}</a></li>`)
+    .join('');
+  return `<nav class="post-chapters" aria-label="Mục lục video"><p class="post-chapters-k">Mục lục</p><ol>${items}</ol></nav>`;
+}
+const CHAPTER_JS = `
+    <script>
+      document.querySelectorAll('.post-chapters a[data-s]').forEach((a) => a.addEventListener('click', (e) => {
+        const f = document.getElementById('player'); if (!f) return;
+        e.preventDefault();
+        f.src = f.src.split('?')[0] + '?start=' + a.dataset.s + '&autoplay=1';
+        f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }));
+    </script>`;
+
+let CFG = {};
+/** Mô tả YouTube dựng sẵn: câu mở, link, mục lục, chân mô tả, hashtag. */
+function youtubeDescription(p) {
+  const m = CFG.moTa || {};
+  const parts = [];
+  if (p.hook) parts.push(p.hook);
+  parts.push(`Nguồn tham khảo, bài đọc đầy đủ và đính chính (nếu có): ${SITE}/v/${p.short}`);
+  if (p.chapters.length) {
+    const ch = p.chapters.slice();
+    if (ch[0].s !== 0) ch.unshift({ t: '0:00', name: 'Mở đầu', s: 0 });   // YouTube cần mốc 0:00
+    parts.push('Mục lục\n' + ch.map((c) => `${c.t} ${c.name}`).join('\n'));
+  }
+  if (m.chanTrang) parts.push(m.chanTrang);
+  const tags = [...(m.hashtags || []), ...p.hashtags].map((t) => '#' + String(t).replace(/^#/, '').replace(/\s+/g, ''));
+  if (tags.length) parts.push([...new Set(tags)].join(' '));
+  return parts.join('\n\n') + '\n';
+}
+
 async function main() {
+  try { CFG = JSON.parse(await readFile(path.join(ROOT, 'data', 'config.json'), 'utf8')); } catch {}
   let files = [];
   try {
     files = (await readdir(SRC)).filter((f) => f.endsWith('.md') && !f.startsWith('_'));
@@ -117,15 +182,25 @@ async function main() {
       continue;
     }
     const slug = f.replace(/\.md$/, '');
+    let rest = body;
+    let chapText, fixText;
+    [chapText, rest] = takeSection(rest, ['Chương', 'Mục lục']);
+    [fixText, rest] = takeSection(rest, ['Đính chính']);
+    const list = (v) => (Array.isArray(v) ? v : v ? [v] : []);
     posts.push({
       slug,
+      short: data.link || slug,                 // bienac.com/v/<link>
       title: data.title,
       description: data.description || '',
+      hook: data.hook || data.description || '',
       date: String(data.date).slice(0, 10),
       video: data.video || '',
-      tags: Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [],
-      html: marked.parse(body),
-      minutes: readingMinutes(body),
+      tags: list(data.tags),
+      hashtags: list(data.hashtags),
+      chapters: parseChapters(chapText),
+      fix: fixText ? marked.parse(fixText) : '',
+      html: marked.parse(rest),
+      minutes: readingMinutes(rest),
     });
   }
   posts.sort((a, b) => b.date.localeCompare(a.date));
@@ -138,7 +213,7 @@ async function main() {
     const url = `${SITE}/bai-viet/${p.slug}/`;
     const thumb = p.video ? `https://i.ytimg.com/vi/${p.video}/maxresdefault.jpg` : '';
     const player = p.video
-      ? `<div class="post-player"><iframe src="https://www.youtube-nocookie.com/embed/${esc(p.video)}" title="${esc(p.title)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
+      ? `<div class="post-player"><iframe id="player" src="https://www.youtube-nocookie.com/embed/${esc(p.video)}" title="${esc(p.title)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
       : '';
     const jsonld = JSON.stringify({
       '@context': 'https://schema.org',
@@ -160,15 +235,19 @@ async function main() {
         <h1 class="post-title">${esc(p.title)}</h1>
         ${p.description ? `<p class="post-lede">${esc(p.description)}</p>` : ''}
       </header>
+      ${p.fix ? `<aside class="post-fix"><p class="post-fix-k">Đính chính</p>${p.fix}</aside>` : ''}
       ${player}
+      ${chapterNav(p)}
+      <p class="post-short">Link ngắn của video này: <a href="/v/${esc(p.short)}">bienac.com/v/${esc(p.short)}</a></p>
       <div class="post-body">${p.html}</div>
       <footer class="post-cta">
         <p>Bài viết này đi kèm video trên kênh Bienac. Đăng ký để không lỡ những câu chuyện tiếp theo.</p>
         <a class="btn btn-primary" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
       </footer>
     </article>
-    <script type="application/ld+json">${jsonld}</script>`;
+    <script type="application/ld+json">${jsonld}</script>${p.chapters.length && p.video ? CHAPTER_JS : ''}`;
     await mkdir(path.join(OUT, p.slug), { recursive: true });
+    await writeFile(path.join(OUT, p.slug, 'mo-ta.txt'), youtubeDescription(p));
     await writeFile(
       path.join(OUT, p.slug, 'index.html'),
       page({ title: `${p.title} · Bienac`, description: p.description, url, image: thumb, body, type: 'article' })
@@ -208,6 +287,50 @@ async function main() {
     })
   );
 
+  // Trang công cụ: chép mô tả YouTube (không cho Google lập chỉ mục)
+  const tool = posts.filter((p) => p.video || p.chapters.length);
+  const TOOL_OUT = path.join(ROOT, 'cong-cu', 'mo-ta');
+  await rm(path.join(ROOT, 'cong-cu'), { recursive: true, force: true });
+  await mkdir(TOOL_OUT, { recursive: true });
+  await writeFile(
+    path.join(TOOL_OUT, 'index.html'),
+    page({
+      title: 'Mô tả YouTube · Bienac',
+      description: 'Công cụ nội bộ.',
+      url: `${SITE}/cong-cu/mo-ta/`,
+      noindex: true,
+      body: `
+    <section class="blog-intro">
+      <h1 class="section-title">Mô tả <span class="accent">YouTube</span></h1>
+      <p class="section-sub">Dựng tự động từ thư mục posts/. Bấm “Sao chép” rồi dán vào ô mô tả trên YouTube Studio.</p>
+    </section>
+    ${tool.length ? tool.map((p) => `
+    <section class="tool-item">
+      <div class="tool-head"><h2>${esc(p.title)}</h2><button class="btn btn-ghost" type="button" data-copy>Sao chép</button></div>
+      <textarea readonly rows="10">${esc(youtubeDescription(p))}</textarea>
+    </section>`).join('') : '<div class="post-empty"><h2>Chưa có video nào</h2><p>Thêm file .md có dòng video: vào thư mục posts/.</p></div>'}
+    <script>
+      document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+        const t = b.closest('.tool-item').querySelector('textarea');
+        try { await navigator.clipboard.writeText(t.value); } catch { t.select(); document.execCommand('copy'); }
+        b.textContent = 'Đã chép ✓'; setTimeout(() => (b.textContent = 'Sao chép'), 1600);
+      }));
+    </script>`,
+    })
+  );
+
+  // Link ngắn (Cloudflare Pages đọc file _redirects ở thư mục gốc)
+  const yt = (CFG.channelUrl || 'https://www.youtube.com/@bienac').replace(/\/$/, '');
+  const redirects = [
+    `/dk ${yt}?sub_confirmation=1 302`,
+    `/yt ${yt} 302`,
+    `/goi-y /#request 302`,
+    `/v /bai-viet/ 302`,
+    ...posts.map((p) => `/v/${p.short} /bai-viet/${p.slug}/ 302`),
+    ...posts.filter((p) => p.short !== p.slug).map((p) => `/v/${p.slug} /bai-viet/${p.slug}/ 302`),
+  ];
+  await writeFile(path.join(ROOT, '_redirects'), redirects.join('\n') + '\n');
+
   // Sitemap
   const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/bai-viet/', ...posts.map((p) => `/bai-viet/${p.slug}/`)];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
@@ -215,7 +338,7 @@ async function main() {
     .join('\n')}\n</urlset>\n`;
   await writeFile(path.join(ROOT, 'sitemap.xml'), sitemap);
 
-  console.log(`Đã dựng ${posts.length} bài viết.`);
+  console.log(`Đã dựng ${posts.length} bài viết, ${redirects.length} link ngắn.`);
 }
 
 main().catch((e) => {
