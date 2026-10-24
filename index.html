@@ -23,7 +23,9 @@
 </head>
 <body class="home">
 
-  <!-- Nền: mưa mã nhị phân ghép thành logo -->
+  <!-- Nền hiệu ứng WebGL (cực quang, sóng biển…) -->
+  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+  <!-- Lớp trên: mưa mã nhị phân ghép thành logo -->
   <canvas id="bin-canvas" aria-hidden="true"></canvas>
   <div class="vignette" aria-hidden="true"></div>
 
@@ -100,34 +102,48 @@
       </script>
     </section>
 
-    <!-- ABOUT -->
-    <section class="section" id="about">
+    <!-- ỦNG HỘ -->
+    <section class="section" id="ung-ho">
       <div class="about-card">
-        <div class="about-logo"><img src="assets/logo.svg" alt="logo Bienac" /></div>
+        <div class="about-logo"><img src="https://img.vietqr.io/image/BIDV-4506285887-print.png" alt="Mã QR chuyển khoản BIDV ủng hộ Bienac" loading="lazy" class="about-qr" /></div>
         <div class="about-text">
-          <p class="sec-label">Hồ sơ</p>
-          <h2 class="section-title">Về <span class="accent">Bienac</span></h2>
-          <p>
-         Đạo khả đạo phi thường Đạo. Danh khả danh phi thường Danh.<br>
-Vô danh thiên địa chi Thủy. Hữu danh vạn vật chi Mẫu.<br>
-Cố thường vô dục dĩ quan kỳ Diệu. Thường hữu dục dĩ quan kỳ Kiếu.<br>
-Thử lưỡng giả đồng xuất nhi dị Danh. Đồng vị chi Huyền. Huyền chi hựu Huyền. Chúng diệu chi Môn. Môn chi <strong>Biên Ác 边 幄</strong>.
-          </p>
-          <p>
-            Bienac là nơi để bạn xem linh tinh.
-          </p>
-          <a class="btn btn-primary" id="about-subscribe" href="#" target="_blank" rel="noopener">Theo dõi hành trình</a>
+          <p class="sec-label">Ủng hộ</p>
+          <h2 class="section-title">Cùng Bienac <span class="accent">đi xa hơn</span></h2>
+          <p>Mỗi video mất nhiều tuần đọc tài liệu, viết, thu âm và dựng hình. Nếu bạn thấy những câu chuyện ở đây đáng giá, bạn có thể ủng hộ kênh qua:</p>
+          <p class="about-bank">BIDV • 4506 285 887 • Duong Van Bien</p>
+          <div class="about-pay">
+            <a class="btn btn-ghost" href="https://me.momo.vn/bienac" target="_blank" rel="noopener">MoMo</a>
+            <a class="btn btn-ghost" href="https://paypal.me/bienac" target="_blank" rel="noopener">PayPal</a>
+            <a class="btn btn-ghost" href="https://patreon.com/bienac/join" target="_blank" rel="noopener">Patreon</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/@Bienac/join" target="_blank" rel="noopener">Hội viên kênh</a>
+          </div>
+          <p>Sự ủng hộ của bạn giúp đỡ mình rất nhiều. Cảm ơn bạn!</p>
+          <a class="btn btn-primary" href="/ung-ho/">Các cách ủng hộ khác</a>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- Bảng chọn hiệu ứng nền -->
+  <aside class="fx-switcher" aria-label="Chọn hiệu ứng nền">
+    <button class="fx-toggle" id="fx-toggle" aria-expanded="false" title="Hiệu ứng nền">✦</button>
+    <div class="fx-options collapsed" id="fx-options" role="group">
+      <span class="fx-label">Hiệu ứng nền</span>
+      <button data-effect="aurora" title="Phím 1">🌌 Cực quang</button>
+      <button data-effect="waves"  title="Phím 2">🌊 Sóng biển</button>
+      <button data-effect="nebula" title="Phím 3">✨ Tinh vân</button>
+      <button data-effect="fireflies" title="Phím 4">🔆 Đom đóm</button>
+    </div>
+  </aside>
+
   <footer class="site-footer">
-    <p><a href="#about">Về Bienac</a> · <a href="/ung-ho/">Ủng hộ</a> · <a href="/bai-viet/">Bài viết</a> · <a href="https://www.youtube.com/@bienac" target="_blank" rel="noopener">YouTube</a></p>
+    <p><a href="/ung-ho/">Ủng hộ</a> · <a href="/bai-viet/">Bài viết</a> · <a href="https://www.youtube.com/@bienac" target="_blank" rel="noopener">YouTube</a></p>
     <p>© <span id="year"></span> Bienac.</p>
   </footer>
 
+  <script src="js/effects.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/bubble.js"></script>
   <script src="js/nen-logo.js"></script>
   <script src="js/tim-kiem.js"></script>
 </body>
