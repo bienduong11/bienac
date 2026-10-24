@@ -101,11 +101,14 @@
     "wxWKco46QlY": [
       "luc",
       "hat-co-ban",
-      "luong-tu"
+      "luong-tu",
+      "vu-tru"
     ],
     "nOVl0rxpK8s": [
       "hat-co-ban",
-      "luong-tu"
+      "luong-tu",
+      "luc",
+      "anh-sang"
     ],
     "QNKt1YczyoY": [
       "kiem",
@@ -117,7 +120,8 @@
     ],
     "0uzHwiQWavE": [
       "han-the",
-      "thuc-pham"
+      "thuc-pham",
+      "viet-nam"
     ],
     "pMWjwZhdMvY": [
       "han-the",
@@ -127,61 +131,82 @@
     "Mio70FQUPYE": [
       "han-the",
       "thuc-pham",
-      "hoa-hoc-doi-song"
+      "nguyen-to",
+      "dong-a",
+      "viet-nam",
+      "chien-tranh"
     ],
     "xXixaqB1754": [
       "kiem",
-      "hoa-hoc-doi-song"
+      "hoa-hoc-doi-song",
+      "lich-su-khoa-hoc"
     ],
     "b647OJtakDw": [
       "kiem",
-      "nguyen-to"
-    ],
-    "3znEaW-Ul64": [
-      "vu-tru"
-    ],
-    "Fhxhm_9PqbU": [
-      "lich-su-khoa-hoc",
+      "nguyen-to",
       "hoa-hoc-doi-song"
     ],
-    "Aqp8Pq_qX5A": [
+    "3znEaW-Ul64": [
+      "y-thuc",
+      "luong-tu",
+      "cong-nghe",
       "hon-loan"
     ],
+    "Fhxhm_9PqbU": [
+      "hoa-hoc-doi-song",
+      "lich-su-khoa-hoc",
+      "chien-tranh",
+      "viet-nam",
+      "dong-a"
+    ],
+    "Aqp8Pq_qX5A": [
+      "hon-loan",
+      "vu-tru"
+    ],
     "RMQJVMw91ms": [
-      "nguyen-to"
+      "nguyen-to",
+      "lich-su-khoa-hoc"
     ],
     "2S3AvoXkIB0": [
-      "nguyen-to"
+      "nguyen-to",
+      "lich-su-khoa-hoc"
     ],
     "gKp5FWfeyw8": [
       "lich-su-khoa-hoc",
       "nguyen-to",
-      "phat-minh"
+      "phat-minh",
+      "hoa-hoc-doi-song",
+      "chien-tranh"
     ],
     "YhP85uD5aYk": [
       "anh-sang",
-      "y-thuc"
+      "y-thuc",
+      "cong-nghe"
     ],
     "sqM2vRDQw7k": [
       "anh-sang",
       "phat-minh",
-      "cong-nghe"
+      "cong-nghe",
+      "dong-a"
     ],
     "eN2e8kl9Cw0": [
       "hat-nhan",
       "chien-tranh",
-      "lich-su-khoa-hoc"
+      "lich-su-khoa-hoc",
+      "luc"
     ],
     "wR72fqNAZJQ": [
       "phat-minh",
       "hoa-hoc-doi-song",
-      "lich-su-khoa-hoc"
+      "lich-su-khoa-hoc",
+      "chien-tranh"
     ],
     "zUxxbQVj0Ho": [
       "viet-nam"
     ],
     "ovOyJ0IrcyM": [
-      "cong-nghe"
+      "cong-nghe",
+      "dong-a"
     ],
     "E0220RjoBiQ": [
       "than-thoai",
