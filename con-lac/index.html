@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Con lắc kép · Bienac</title>
+  <meta name="description" content="Ba con lắc kép thả lệch nhau một phần nghìn độ. Vài giây sau, chúng đi ba đường khác hẳn nhau. Mô phỏng hỗn loạn chạy ngay trên trình duyệt." />
+  <meta property="og:title" content="Con lắc kép · Bienac" />
+  <meta property="og:description" content="Lệch một phần nghìn độ, chừng mươi giây sau mỗi con lắc một ngả." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .cl { max-width: 1180px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 32px) 64px; }
+    .cl-lede { margin-top: 10px; max-width: 680px; font-size: .98rem; line-height: 1.65; color: var(--text-dim); }
+    .cl-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; margin-top: 22px; align-items: start; }
+    .cl-stage { position: relative; border-radius: 18px; overflow: hidden; background: rgba(5, 7, 10, .82); box-shadow: inset 0 0 0 1px var(--glass-border); aspect-ratio: 1 / 1; max-height: 78vh; touch-action: none; cursor: grab; }
+    .cl-stage.drag { cursor: grabbing; }
+    .cl-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .cl-hint { position: absolute; left: 14px; bottom: 12px; font: 500 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
+    .cl-side { display: flex; flex-direction: column; gap: 14px; }
+    .cl-box { padding: 16px 18px; border-radius: 18px; }
+    .cl-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .cl-row .ud-btn { padding: 9px 14px; border-radius: 999px; clip-path: none; }
+    .cl-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .cl-chip { padding: 6px 12px; border-radius: 999px; border: 0; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 .78rem 'Be Vietnam Pro', sans-serif; cursor: pointer; }
+    .cl-chip:hover, .cl-chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
+    .cl-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cl-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .cl-stat b { display: block; font: 600 1.1rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
+    .cl-stat span { font: 500 .62rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .cl-stat.wide { grid-column: 1 / -1; }
+    .cl-range { display: grid; gap: 6px; margin-top: 12px; }
+    .cl-range label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text); }
+    .cl-range output { font: 600 .8rem var(--mono); color: var(--brass); }
+    .cl-range input { width: 100%; accent-color: #37f0cf; }
+    .cl-k { font: 600 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .cl-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; font-size: .8rem; color: var(--text-dim); }
+    .cl-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+    .cl-text h2 { font: 700 1.05rem var(--display); margin-bottom: 6px; }
+    .cl-text p { font-size: .9rem; line-height: 1.65; color: var(--text-dim); }
+    .cl-text p + p { margin-top: 8px; }
+    .cl-text b { color: var(--text); font-weight: 600; }
+    .cl-text a { color: var(--cyan); }
+    .cl-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: var(--text); }
+    .cl-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
+    .cl-video small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .cl-video b { font: 600 .95rem var(--display); }
+    .cl-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    @media (max-width: 900px) {
+      .cl { padding-top: 84px; }
+      .cl-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="ud" data-nen="luong">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Con lắc kép</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="cl">
+    <p class="ud-kicker">Con lắc kép</p>
+    <h1 class="ud-title">Lệch một phần nghìn độ, <span class="accent">mỗi con một ngả</span></h1>
+    <p class="cl-lede">Ba con lắc kép được thả gần như cùng một chỗ, chỉ lệch nhau 0,001 độ. Lúc đầu chúng chồng khít lên nhau. Chờ chừng mươi giây rồi xem chuyện gì xảy ra. Kéo quả nặng để đặt vị trí thả mới.</p>
+
+    <div class="cl-grid">
+      <div class="cl-stage ud-panel" id="stage">
+        <canvas id="cv" aria-label="Mô phỏng con lắc kép, kéo quả nặng để đặt vị trí thả"></canvas>
+        <p class="cl-hint" id="hint">Kéo quả nặng để đặt lại</p>
+      </div>
+
+      <div class="cl-side">
+        <div class="ud-panel cl-box">
+          <div class="cl-row">
+            <button class="ud-btn" id="play" aria-pressed="true">❚❚ Dừng</button>
+            <button class="ud-btn" id="reset">Thả lại</button>
+            <button class="ud-btn" id="rand">Vị trí ngẫu nhiên</button>
+          </div>
+          <div class="cl-chips" role="group" aria-label="Loại con lắc">
+            <button class="cl-chip" data-mode="kep" aria-pressed="true">Con lắc kép</button>
+            <button class="cl-chip" data-mode="don" aria-pressed="false">Con lắc đơn</button>
+          </div>
+          <div class="cl-legend"><span><i style="background:#37f0cf"></i>Con lắc A</span><span><i style="background:#c9a650"></i>B (lệch 0,001°)</span><span><i style="background:#e8452e"></i>C (lệch 0,002°)</span></div>
+        </div>
+
+        <div class="ud-panel cl-box">
+          <div class="cl-stats">
+            <div class="cl-stat"><b id="sT">0,0 s</b><span>Thời gian</span></div>
+            <div class="cl-stat"><b id="sD">0,000°</b><span>A và B lệch nhau</span></div>
+            <div class="cl-stat wide"><b id="sSplit">Chưa tách</b><span>Lúc A và B tách hẳn (lệch quá 10°)</span></div>
+            <div class="cl-stat wide"><b id="sE">0,000%</b><span>Sai số năng lượng của mô phỏng</span></div>
+          </div>
+        </div>
+
+        <div class="ud-panel cl-box">
+          <p class="cl-k">Thông số</p>
+          <div class="cl-chips" role="group" aria-label="Trọng trường">
+            <button class="cl-chip" data-g="9.81" aria-pressed="true">Trái Đất 9,81</button>
+            <button class="cl-chip" data-g="1.62" aria-pressed="false">Mặt Trăng 1,62</button>
+            <button class="cl-chip" data-g="24.79" aria-pressed="false">Sao Mộc 24,79</button>
+          </div>
+          <div class="cl-range"><label for="g">Gia tốc trọng trường <output id="og">9,81 m/s²</output></label><input id="g" type="range" min="0.5" max="30" step="0.01" value="9.81" /></div>
+          <div class="cl-range"><label for="m2">Quả dưới nặng gấp <output id="om2">1,0 lần</output></label><input id="m2" type="range" min="0.2" max="4" step="0.1" value="1" /></div>
+          <div class="cl-range"><label for="l2">Thanh dưới dài gấp <output id="ol2">1,0 lần</output></label><input id="l2" type="range" min="0.4" max="1.6" step="0.05" value="1" /></div>
+          <div class="cl-range"><label for="tr">Độ dài vệt sáng <output id="otr">300</output></label><input id="tr" type="range" min="0" max="1200" step="50" value="300" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cl-grid" style="margin-top:16px">
+      <div class="ud-panel cl-box cl-text">
+        <h2>Vì sao lại khó đoán đến vậy?</h2>
+        <p>Con lắc đơn chỉ có một khớp, nó đung đưa đều đặn và dễ đoán: thả lệch một chút thì sau đó cũng chỉ lệch một chút. Bấm <b>Con lắc đơn</b> để thấy ba con lắc gần như dính vào nhau mãi.</p>
+        <p>Thêm một khớp nữa, mọi thứ đổi khác. Quả dưới vừa bị quả trên kéo, vừa giật ngược lại quả trên. Hệ vẫn tuân theo định luật Newton, không có gì ngẫu nhiên, nhưng sai lệch ban đầu bị khuếch đại lên rất nhanh. Đó là <b>hỗn loạn</b>: biết hết quy luật mà vẫn không đoán được xa.</p>
+        <p>Đây cũng chính là điều Edward Lorenz gặp ở mô hình thời tiết, sau này được gọi là <a href="/canh-buom/">hiệu ứng cánh bướm</a>.</p>
+        <p>Mô phỏng dùng phương pháp Runge–Kutta bậc 4 với bước 1/600 giây. Ô “sai số năng lượng” cho thấy tổng năng lượng gần như không đổi, tức phần lệch nhau là do vật lý thật, không phải do máy tính tính sai.</p>
+      </div>
+      <a class="ud-panel cl-video" href="https://www.youtube.com/watch?v=Aqp8Pq_qX5A" target="_blank" rel="noopener">
+        <img src="https://i.ytimg.com/vi/Aqp8Pq_qX5A/mqdefault.jpg" alt="" loading="lazy" />
+        <span><small>Video trên kênh</small><b>Hiệu Ứng Cánh Bướm</b></span>
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+<script>
+(() => {
+  document.getElementById('y').textContent = new Date().getFullYear();
+  const $ = (id) => document.getElementById(id);
+  const cv = $('cv'), g = cv.getContext('2d'), stage = $('stage');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COLORS = ['#37f0cf', '#c9a650', '#e8452e'];
+  const RAD = Math.PI / 180, OFF = 0.001 * RAD;
+  const DT = 1 / 600;
+  const fmt = (x, d) => x.toLocaleString('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  const P = { g: 9.81, m1: 1, m2: 1, l1: 1, l2: 1 };
+  let mode = 'kep', running = !reduce, trailMax = 300;
+  let start = { a1: 120 * RAD, a2: 160 * RAD };
+  let pens = [], time = 0, E0 = 0, splitAt = null;
+
+  // Phương trình chuyển động con lắc kép (khối lượng điểm, thanh không khối lượng)
+  function deriv(s) {
+    const [a1, w1, a2, w2] = s, { g: G, m1, m2, l1, l2 } = P;
+    if (mode === 'don') return [w1, -(G / l1) * Math.sin(a1), 0, 0];
+    const d = a1 - a2, den = 2 * m1 + m2 - m2 * Math.cos(2 * d);
+    const dw1 = (-G * (2 * m1 + m2) * Math.sin(a1) - m2 * G * Math.sin(a1 - 2 * a2) - 2 * Math.sin(d) * m2 * (w2 * w2 * l2 + w1 * w1 * l1 * Math.cos(d))) / (l1 * den);
+    const dw2 = (2 * Math.sin(d) * (w1 * w1 * l1 * (m1 + m2) + G * (m1 + m2) * Math.cos(a1) + w2 * w2 * l2 * m2 * Math.cos(d))) / (l2 * den);
+    return [w1, dw1, w2, dw2];
+  }
+  function rk4(s, h) {
+    const k1 = deriv(s);
+    const k2 = deriv(s.map((v, i) => v + k1[i] * h / 2));
+    const k3 = deriv(s.map((v, i) => v + k2[i] * h / 2));
+    const k4 = deriv(s.map((v, i) => v + k3[i] * h));
+    return s.map((v, i) => v + (h / 6) * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]));
+  }
+  function energy(s) {
+    const [a1, w1, a2, w2] = s, { g: G, m1, m2, l1, l2 } = P;
+    if (mode === 'don') return 0.5 * m1 * l1 * l1 * w1 * w1 - m1 * G * l1 * Math.cos(a1);
+    const ke = 0.5 * m1 * l1 * l1 * w1 * w1 + 0.5 * m2 * (l1 * l1 * w1 * w1 + l2 * l2 * w2 * w2 + 2 * l1 * l2 * w1 * w2 * Math.cos(a1 - a2));
+    const pe = -(m1 + m2) * G * l1 * Math.cos(a1) - m2 * G * l2 * Math.cos(a2);
+    return ke + pe;
+  }
+
+  function reset() {
+    pens = COLORS.map((c, i) => ({ s: [start.a1 + i * OFF, 0, start.a2, 0], c, trail: [] }));
+    time = 0; splitAt = null;
+    E0 = energy(pens[0].s);
+    stats();
+  }
+
+  // Bố cục khung vẽ
+  let W, H, DPR, ox, oy, scale;
+  function size() {
+    DPR = Math.min(2, devicePixelRatio || 1);
+    const r = stage.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = W * DPR; cv.height = H * DPR;
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ox = W / 2; oy = H * 0.42;
+    scale = Math.min(W, H) * 0.44 / (P.l1 + (mode === 'don' ? 0 : P.l2));
+  }
+  const pos = (s) => {
+    const x1 = ox + Math.sin(s[0]) * P.l1 * scale, y1 = oy + Math.cos(s[0]) * P.l1 * scale;
+    if (mode === 'don') return [x1, y1, x1, y1];
+    return [x1, y1, x1 + Math.sin(s[2]) * P.l2 * scale, y1 + Math.cos(s[2]) * P.l2 * scale];
+  };
+  const r1 = () => 7 + 4 * Math.cbrt(P.m1), r2 = () => 7 + 4 * Math.cbrt(P.m2);
+
+  function draw() {
+    g.clearRect(0, 0, W, H);
+    // vệt sáng
+    for (let i = pens.length - 1; i >= 0; i--) {
+      const p = pens[i], t = p.trail;
+      if (t.length < 2) continue;
+      g.lineCap = 'round';
+      for (let k = 1; k < t.length; k++) {
+        const a = k / t.length;
+        g.strokeStyle = p.c; g.globalAlpha = a * 0.75; g.lineWidth = 1 + a * 1.8;
+        g.beginPath(); g.moveTo(t[k - 1][0], t[k - 1][1]); g.lineTo(t[k][0], t[k][1]); g.stroke();
+      }
+      g.globalAlpha = 1;
+    }
+    // trục treo
+    g.fillStyle = 'rgba(236,230,214,.6)'; g.beginPath(); g.arc(ox, oy, 4, 0, 6.283); g.fill();
+    // thanh và quả nặng (vẽ C, B trước để A nằm trên)
+    for (let i = pens.length - 1; i >= 0; i--) {
+      const p = pens[i], [x1, y1, x2, y2] = pos(p.s);
+      g.strokeStyle = i === 0 ? 'rgba(236,230,214,.75)' : 'rgba(236,230,214,.25)'; g.lineWidth = i === 0 ? 2.5 : 1.5;
+      g.beginPath(); g.moveTo(ox, oy); g.lineTo(x1, y1); if (mode === 'kep') g.lineTo(x2, y2); g.stroke();
+      g.shadowColor = p.c; g.shadowBlur = 16;
+      g.fillStyle = p.c;
+      g.beginPath(); g.arc(x1, y1, r1(), 0, 6.283); g.fill();
+      if (mode === 'kep') { g.beginPath(); g.arc(x2, y2, r2(), 0, 6.283); g.fill(); }
+      g.shadowBlur = 0;
+    }
+  }
+
+  function stats() {
+    $('sT').textContent = fmt(time, 1) + ' s';
+    const k = mode === 'don' ? 0 : 2;
+    const d = Math.abs(((pens[0].s[k] - pens[1].s[k] + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI) / RAD;
+    $('sD').textContent = (d < 10 ? fmt(d, 3) : fmt(d, 0)) + '°';
+    if (splitAt === null && d > 10) splitAt = time;
+    $('sSplit').textContent = splitAt === null ? (mode === 'don' ? 'Không bao giờ tách' : 'Chưa tách') : `Sau ${fmt(splitAt, 1)} giây`;
+    const e = energy(pens[0].s), base = Math.max(Math.abs(E0), P.g * (P.m1 + P.m2) * (P.l1 + P.l2) * 0.1);
+    $('sE').textContent = fmt(Math.abs(e - E0) / base * 100, 4) + '%';
+  }
+
+  let last = performance.now();
+  function loop(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (running && !dragging) {
+      const steps = Math.round(dt / DT);
+      for (let n = 0; n < steps; n++) for (const p of pens) p.s = rk4(p.s, DT);
+      time += steps * DT;
+      for (const p of pens) {
+        const [, , x2, y2] = pos(p.s);
+        p.trail.push([x2, y2]);
+        if (p.trail.length > trailMax) p.trail.splice(0, p.trail.length - trailMax);
+      }
+      stats();
+    }
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  // Kéo quả nặng để đặt vị trí thả
+  let dragging = null;
+  const pt = (e) => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener('pointerdown', (e) => {
+    const [x, y] = pt(e), [x1, y1, x2, y2] = pos(pens[0].s);
+    const d1 = Math.hypot(x - x1, y - y1), d2 = Math.hypot(x - x2, y - y2);
+    if (mode === 'kep' && d2 < 40 && d2 <= d1) dragging = 2;
+    else if (d1 < 40) dragging = 1;
+    else return;
+    cv.setPointerCapture(e.pointerId); stage.classList.add('drag'); $('hint').style.opacity = 0;
+  });
+  cv.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const [x, y] = pt(e);
+    if (dragging === 1) start.a1 = Math.atan2(x - ox, y - oy);
+    else { const [x1, y1] = pos(pens[0].s); start.a2 = Math.atan2(x - x1, y - y1); }
+    reset();
+  });
+  const up = () => { if (dragging) { dragging = null; stage.classList.remove('drag'); reset(); } };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  // Nút điều khiển
+  const setPlay = (v) => { running = v; $('play').setAttribute('aria-pressed', String(v)); $('play').textContent = v ? '❚❚ Dừng' : '▶ Chạy'; };
+  $('play').onclick = () => setPlay(!running);
+  $('reset').onclick = () => { reset(); };
+  $('rand').onclick = () => { start = { a1: (60 + Math.random() * 120) * RAD * (Math.random() < 0.5 ? -1 : 1), a2: (Math.random() * 360 - 180) * RAD }; reset(); setPlay(true); };
+  document.querySelectorAll('[data-mode]').forEach((b) => b.onclick = () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll('[data-mode]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    size(); reset();
+  });
+  const setG = (v) => { P.g = v; $('g').value = v; $('og').textContent = fmt(v, 2) + ' m/s²'; document.querySelectorAll('[data-g]').forEach((x) => x.setAttribute('aria-pressed', String(Math.abs(+x.dataset.g - v) < 0.001))); reset(); };
+  document.querySelectorAll('[data-g]').forEach((b) => b.onclick = () => setG(+b.dataset.g));
+  $('g').oninput = (e) => setG(+e.target.value);
+  $('m2').oninput = (e) => { P.m2 = +e.target.value; $('om2').textContent = fmt(P.m2, 1) + ' lần'; reset(); };
+  $('l2').oninput = (e) => { P.l2 = +e.target.value; $('ol2').textContent = fmt(P.l2, 2) + ' lần'; size(); reset(); };
+  $('tr').oninput = (e) => { trailMax = +e.target.value; $('otr').textContent = trailMax; };
+
+  addEventListener('resize', () => { size(); for (const p of pens) p.trail = []; });
+  size(); reset(); setPlay(!reduce);
+  requestAnimationFrame(loop);
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+</body>
+</html>
