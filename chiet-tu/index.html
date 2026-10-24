@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Chiết tự · Bienac</title>
+  <meta name="description" content="Tách một chữ Hán thành các bộ phận cấu tạo, kèm âm Hán Việt, pinyin, số nét và các từ ghép quen thuộc. Hơn 10.000 chữ." />
+  <meta property="og:title" content="Chiết tự · Bienac" />
+  <meta property="og:description" content="Tách chữ Hán thành từng bộ phận, kèm âm Hán Việt và từ ghép." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    [hidden] { display: none !important; }
+    .ct-main { max-width: 1080px; margin: 0 auto; padding: 104px clamp(16px, 4vw, 40px) 64px; }
+    .ct-search { margin-top: 18px; display: flex; gap: 8px; }
+    .ct-search input { flex: 1; min-width: 0; padding: 14px 16px; font: 500 1.05rem 'Be Vietnam Pro', sans-serif; color: var(--text); background: rgba(8,10,14,.8); border: 0; box-shadow: inset 0 0 0 1px var(--glass-border); outline: none; }
+    .ct-search input:focus { box-shadow: inset 0 0 0 1px var(--cyan); }
+    .ct-sub { margin-top: 10px; font-size: .88rem; color: var(--text-dim); }
+    .ct-sub button { background: none; border: 0; padding: 0 3px; font: 600 1.15rem var(--han); color: var(--text); cursor: pointer; }
+    .ct-sub button:hover { color: var(--cyan); }
+
+    .ct-cands { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 6px; }
+    .ct-cand { padding: 8px 4px 6px; text-align: center; background: rgba(8,10,14,.7); border: 0; box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); cursor: pointer; }
+    .ct-cand b { display: block; font: 600 1.9rem/1.1 var(--han); }
+    .ct-cand span { font: 500 .7rem var(--mono); color: var(--text-dim); }
+    .ct-cand:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+
+    .ct-view { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; }
+    .ct-tree-wrap { padding: 24px 18px 28px; overflow-x: auto; position: relative; }
+    .ct-tree-wrap::before { content: ''; position: absolute; inset: 10px; pointer-events: none; background:
+      linear-gradient(var(--brass), var(--brass)) left top / 14px 1px no-repeat, linear-gradient(var(--brass), var(--brass)) left top / 1px 14px no-repeat,
+      linear-gradient(var(--brass), var(--brass)) right bottom / 14px 1px no-repeat, linear-gradient(var(--brass), var(--brass)) right bottom / 1px 14px no-repeat; opacity: .7; }
+
+    #tree { width: max-content; min-width: 100%; display: flex; justify-content: center; }
+    /* cây cấu tạo */
+    .t-node { display: flex; flex-direction: column; align-items: center; }
+    .t-glyph { position: relative; display: grid; place-items: center; min-width: 64px; padding: 4px 10px 2px; background: none; border: 0; color: var(--text); cursor: pointer; font: 600 2.6rem/1.1 var(--han); }
+    .t-node.root > .t-glyph { font-size: clamp(5rem, 14vw, 8rem); color: var(--text); text-shadow: 0 0 30px rgba(55,240,207,.25); cursor: default; }
+    .t-glyph small { font: 500 .72rem 'Be Vietnam Pro', sans-serif; color: var(--cyan); margin-top: 2px; }
+    .t-glyph:not(:disabled):hover { color: var(--cyan); }
+    .t-glyph.leaf small { color: var(--text-dim); }
+    .t-kind { margin: 6px 0 0; font: 600 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .t-kind .idc { font-family: var(--han); font-size: .9rem; color: var(--cinnabar); margin-right: 4px; letter-spacing: 0; }
+    .t-kids { position: relative; display: flex; gap: 18px; padding-top: 22px; margin-top: 4px; }
+    .t-kids::before { content: ''; position: absolute; top: 0; left: 50%; width: 1px; height: 10px; background: var(--hair); }
+    .t-kids > .t-node { position: relative; }
+    .t-kids > .t-node::before { content: ''; position: absolute; top: -12px; left: -9px; right: -9px; height: 1px; background: var(--hair); }
+    .t-kids > .t-node:first-child::before { left: 50%; }
+    .t-kids > .t-node:last-child::before { right: 50%; }
+    .t-kids > .t-node::after { content: ''; position: absolute; top: -12px; left: 50%; width: 1px; height: 12px; background: var(--hair); }
+    .t-node.unk > .t-glyph { font-size: 1.4rem; color: var(--text-dim); cursor: default; }
+
+    .ct-info { padding: 22px 22px 24px; }
+    .ct-hv { font: 700 clamp(2rem, 4vw, 2.8rem)/1.1 var(--display); color: var(--cyan); }
+    .ct-hv-k { font: 600 .66rem var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brass); }
+    .ct-rows { margin-top: 16px; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; font-size: .92rem; }
+    .ct-rows dt { font: 500 .72rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); padding-top: 3px; }
+    .ct-rows dd { color: var(--text); }
+    .ct-rows dd.en { color: var(--text-dim); font-size: .85rem; }
+    .ct-words { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .ct-word { padding: 5px 9px; background: rgba(201,166,80,.08); box-shadow: inset 0 0 0 1px rgba(201,166,80,.25); font-size: .85rem; }
+    .ct-word b { font: 600 1rem var(--han); margin-right: 6px; }
+    .ct-h3 { margin-top: 22px; font: 600 .66rem var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brass); }
+    .ct-used { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+    .ct-used button { width: 46px; padding: 4px 0 3px; background: rgba(8,10,14,.7); border: 0; box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); cursor: pointer; text-align: center; }
+    .ct-used button b { display: block; font: 600 1.35rem/1.1 var(--han); }
+    .ct-used button span { display: block; font: 500 .58rem var(--mono); color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 2px; }
+    .ct-used button:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+    .ct-src { margin-top: 36px; font-size: .76rem; line-height: 1.6; color: var(--text-dim); }
+    .ct-src a { color: var(--text-dim); }
+    .ct-empty { margin-top: 18px; color: var(--text-dim); }
+
+    @media (max-width: 860px) {
+      .t-kids > .t-node::before { left: -5px; right: -5px; }
+      .t-kids > .t-node:first-child::before { left: 50%; }
+      .t-kids > .t-node:last-child::before { right: 50%; }
+      .ct-view { grid-template-columns: 1fr; }
+      .ct-main { padding-top: 88px; }
+      .t-glyph { font-size: 2.1rem; min-width: 52px; }
+      .t-kids { gap: 10px; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Chiết tự</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="ct-main">
+    <p class="ud-kicker"><span class="han">字</span> &nbsp;06 // Chiết tự</p>
+    <h1 class="ud-title">Mỗi chữ Hán là <span class="accent">một bản lắp ráp</span></h1>
+    <form class="ct-search" id="form" autocomplete="off">
+      <input id="q" type="search" placeholder="Dán một chữ Hán, hoặc gõ âm Hán Việt: minh, quốc, ái…" aria-label="Chữ Hán hoặc âm Hán Việt" />
+      <button class="ud-btn" type="submit">Tách</button>
+    </form>
+    <p class="ct-sub" id="sug">Thử: </p>
+    <div class="ct-cands" id="cands"></div>
+    <p class="ct-empty" id="msg" hidden></p>
+
+    <section class="ct-view" id="view" hidden>
+      <div class="ct-tree-wrap ud-panel"><div id="tree"></div></div>
+      <aside class="ct-info ud-panel" id="info"></aside>
+    </section>
+
+    <p class="ct-src">
+      Nguồn dữ liệu: âm Hán Việt và từ ghép từ <a href="https://en.wiktionary.org/" rel="noopener">Wiktionary</a> (CC BY-SA 4.0, qua kaikki.org);
+      âm đọc dự phòng, pinyin, số nét và nghĩa tiếng Anh từ <a href="https://www.unicode.org/charts/unihan.html" rel="noopener">Unicode Unihan</a>;
+      cấu tạo chữ từ <a href="https://github.com/cjkvi/cjkvi-ids" rel="noopener">CJKVI IDS</a> (dựa trên CHISE, GPL v2).
+      Chữ chưa có âm Hán Việt trên Wiktionary sẽ hiện âm đọc của Unihan, vốn có thể là âm Nôm.
+    </p>
+  </main>
+
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const SUG = ['明', '森', '愛', '國', '學', '道', '邊', '休', '好', '鳴', '想', '曉'];
+  $('sug').innerHTML = 'Thử: ' + SUG.map((c) => `<button type="button" data-c="${c}">${c}</button>`).join('');
+  $('sug').onclick = (e) => { const b = e.target.closest('[data-c]'); if (b) go(b.dataset.c); };
+
+  $('msg').hidden = false; $('msg').textContent = 'Đang nạp hơn 10.000 chữ…';
+  const D = await fetch('/chiet-tu/du-lieu.json').then((r) => r.json()).catch(() => null);
+  if (!D) { $('msg').textContent = 'Không tải được dữ liệu.'; return; }
+  $('msg').hidden = true;
+
+  const IDC = { '⿰': 'trái – phải', '⿱': 'trên – dưới', '⿲': 'trái – giữa – phải', '⿳': 'trên – giữa – dưới', '⿴': 'bao quanh', '⿵': 'bao từ trên', '⿶': 'bao từ dưới', '⿷': 'bao từ trái', '⿸': 'bao trên-trái', '⿹': 'bao trên-phải', '⿺': 'bao dưới-trái', '⿻': 'chồng lên nhau', '⿼': 'bao từ phải', '⿽': 'bao dưới-phải', '⿾': 'lật ngang', '⿿': 'xoay', '㇯': 'bớt đi' };
+  const ARITY = (c) => (c === '⿲' || c === '⿳' ? 3 : c === '⿾' || c === '⿿' ? 1 : 2);
+  const reading = (c) => { const r = D[c]; return r ? (r[0] || r[1]).split(' ')[0] : ''; };
+
+  // Chỉ mục ngược: bộ phận → các chữ trực tiếp chứa nó; âm → chữ
+  const usedIn = {}, byHv = {};
+  const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').toLowerCase();
+  for (const [c, r] of Object.entries(D)) {
+    for (const p of new Set([...r[5]].filter((x) => !IDC[x]))) (usedIn[p] = usedIn[p] || []).push(c);
+    for (const h of (r[0] || r[1]).split(' ')) if (h) {
+      (byHv[h] = byHv[h] || []).push(c);
+      const f = fold(h); if (f !== h) (byHv['~' + f] = byHv['~' + f] || []).push(c);
+    }
+  }
+
+  function parse(seq) {
+    const a = [...seq]; let i = 0;
+    const node = () => {
+      const c = a[i++];
+      if (c === undefined) return null;
+      if (IDC[c]) { const kids = []; for (let k = 0; k < ARITY(c); k++) kids.push(node()); return { idc: c, kids }; }
+      return { ch: c };
+    };
+    return node();
+  }
+
+  // Dựng cây: mỗi chữ có cấu tạo riêng thì tách tiếp, tối đa 4 tầng
+  function build(ch, depth, root) {
+    const r = D[ch];
+    const el = document.createElement('div');
+    el.className = 't-node' + (root ? ' root' : '');
+    const leaf = !r || !r[5] || depth >= (innerWidth < 720 ? 2 : 3);
+    const isUnk = /[①-⑳]/.test(ch);
+    if (isUnk) el.classList.add('unk');
+    const rd = reading(ch);
+    el.innerHTML = `<button class="t-glyph${leaf ? ' leaf' : ''}" ${root || isUnk ? 'disabled' : ''} data-c="${esc(ch)}" title="${isUnk ? 'Bộ phận chưa có mã Unicode' : esc(ch)}">${isUnk ? '?' : esc(ch)}${!root && rd ? `<small>${esc(rd)}</small>` : ''}</button>`;
+    if (!leaf) {
+      const t = parse(r[5]);
+      if (t && t.idc) appendIdc(el, t, depth);
+    }
+    return el;
+  }
+  function appendIdc(el, t, depth) {
+    const k = document.createElement('p'); k.className = 't-kind';
+    k.innerHTML = `<span class="idc">${t.idc}</span>${IDC[t.idc]}`;
+    el.appendChild(k);
+    const kids = document.createElement('div'); kids.className = 't-kids';
+    for (const kid of t.kids) {
+      if (!kid) continue;
+      if (kid.idc) { const sub = document.createElement('div'); sub.className = 't-node'; appendIdc(sub, kid, depth + 1); kids.appendChild(sub); }
+      else kids.appendChild(build(kid.ch, depth + 1, false));
+    }
+    el.appendChild(kids);
+  }
+
+  function show(ch) {
+    const r = D[ch];
+    $('cands').innerHTML = '';
+    if (!r) { $('view').hidden = true; $('msg').hidden = false; $('msg').textContent = `Chưa có dữ liệu cho chữ “${ch}”.`; return; }
+    $('msg').hidden = true; $('view').hidden = false;
+    const tree = $('tree'); tree.innerHTML = ''; tree.appendChild(build(ch, 0, true));
+    if (!r[5]) { const p = document.createElement('p'); p.className = 't-kind'; p.style.textAlign = 'center'; p.textContent = 'Chữ đơn thể · không tách được nữa'; tree.firstChild.appendChild(p); }
+
+    const words = r[6] ? r[6].split(',').map((w) => w.split('|')) : [];
+    const used = (usedIn[ch] || []).filter((c) => c.codePointAt(0) <= 0xffff).sort((a, b) => (D[b][0] ? 1 : 0) - (D[a][0] ? 1 : 0) || D[a][3] - D[b][3]).slice(0, 48);
+    $('info').innerHTML = `
+      <p class="ct-hv-k">${r[0] ? 'Âm Hán Việt' : r[1] ? 'Âm đọc (Unihan)' : 'Âm đọc'}</p>
+      <p class="ct-hv">${esc((r[0] || r[1] || '—').split(' ').join(' · '))}</p>
+      <dl class="ct-rows">
+        ${r[0] && r[1] && r[1] !== r[0] ? `<dt>Âm khác</dt><dd>${esc(r[1].split(' ').join(', '))}</dd>` : ''}
+        ${r[2] ? `<dt>Pinyin</dt><dd>${esc(r[2])}</dd>` : ''}
+        ${r[3] ? `<dt>Số nét</dt><dd>${r[3]}</dd>` : ''}
+        ${r[4] ? `<dt>Nghĩa</dt><dd class="en">${esc(r[4])} <small>(tiếng Anh, Unihan)</small></dd>` : ''}
+        <dt>Mã</dt><dd><code>U+${ch.codePointAt(0).toString(16).toUpperCase()}</code></dd>
+      </dl>
+      ${words.length ? `<p class="ct-h3">Từ ghép</p><div class="ct-words">${words.map(([h, v]) => `<span class="ct-word"><b>${esc(h)}</b>${esc(v)}</span>`).join('')}</div>` : ''}
+      ${used.length ? `<p class="ct-h3">Có mặt trong ${usedIn[ch].length} chữ khác</p><div class="ct-used">${used.map((c) => `<button data-c="${c}" title="${c} ${esc(reading(c))}"><b>${c}</b><span>${esc(reading(c))}</span></button>`).join('')}</div>` : ''}`;
+    document.title = `${ch} ${reading(ch)} · Chiết tự · Bienac`;
+  }
+
+  function go(q, push = true) {
+    q = q.trim();
+    if (!q) return;
+    const chars = [...q].filter((c) => D[c]);
+    if (chars.length === 1 || (chars.length && [...q].length === 1)) {
+      show(chars[0]);
+      if (push) history.pushState(null, '', '#' + encodeURIComponent(chars[0]));
+      $('q').value = chars[0];
+      return;
+    }
+    if (chars.length > 1) return listCands(chars);
+    const k = q.toLowerCase();
+    const bmp = (c) => c.codePointAt(0) <= 0xffff;
+    const exact = (byHv[k] || []).filter(bmp);
+    const found = exact.length ? exact : [...new Set(byHv['~' + fold(k)] || [])].filter(bmp);
+    if (!found.length) { $('view').hidden = true; $('cands').innerHTML = ''; $('msg').hidden = false; $('msg').textContent = `Không tìm thấy chữ nào đọc là “${q}”.`; return; }
+    const hvHit = (c) => (D[c][0] ? D[c][0].split(' ').includes(k) : false);
+    found.sort((a, b) => hvHit(b) - hvHit(a) || (D[b][0] ? 1 : 0) - (D[a][0] ? 1 : 0) || (usedIn[b] || []).length - (usedIn[a] || []).length);
+    if (found.length === 1) return go(found[0], push);
+    listCands(found.slice(0, 80));
+  }
+  function listCands(list) {
+    $('view').hidden = true; $('msg').hidden = true;
+    $('cands').innerHTML = list.map((c) => `<button class="ct-cand" data-c="${c}"><b>${c}</b><span>${esc(reading(c))}</span></button>`).join('');
+  }
+
+  document.addEventListener('click', (e) => { const b = e.target.closest('[data-c]'); if (b && !b.disabled && !b.closest('#sug')) { go(b.dataset.c); scrollTo({ top: 0, behavior: 'smooth' }); } });
+  $('form').onsubmit = (e) => { e.preventDefault(); go($('q').value); };
+  addEventListener('popstate', () => { const c = decodeURIComponent(location.hash.slice(1)); if (c) go(c, false); });
+  const start = decodeURIComponent(location.hash.slice(1));
+  go(start && D[[...start][0]] ? start : '明', false);
+})();
+</script>
+</body>
+</html>
