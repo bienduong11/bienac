@@ -97,7 +97,7 @@
     <div>
       <p class="ud-kicker">Dòng thời gian</p>
       <h1 class="ud-title">Đông <span class="accent">⇄</span> Tây</h1>
-      <p class="ud-dim">Chạm vào bất kỳ năm nào để xem cùng lúc hai phía thế giới đang ra sao. Đường chấm đỏ nối hai phát minh giống nhau ở hai đầu lục địa.</p>
+      <p class="ud-dim">Chạm vào bất kỳ năm nào để xem cùng lúc hai phía thế giới đang ra sao. Đường chấm đỏ nối các cặp sự kiện tương ứng ở hai đầu lục địa.</p>
     </div>
     <div class="dt-tools">
       <button class="ud-btn" id="zout" aria-label="Thu nhỏ">−</button>
@@ -151,28 +151,28 @@
   const EV = [
     [-3200, 'w', 'Chữ hình nêm ra đời', 'Người Sumer khắc chữ lên tấm đất sét, một trong những hệ chữ viết sớm nhất loài người.'],
     [-2560, 'w', 'Kim tự tháp Khufu', 'Công trình cao nhất do con người dựng suốt gần 4.000 năm sau đó.'],
-    [-1754, 'w', 'Bộ luật Hammurabi', 'Một trong những bộ luật thành văn cổ nhất, khắc trên bia đá đen ở Babylon.'],
+    [-1754, 'w', 'Bộ luật Hammurabi', 'Một trong những bộ luật thành văn cổ nhất, khắc trên bia đá đen thời Babylon cổ.'],
     [-1250, 'e', 'Giáp cốt văn', 'Chữ khắc trên mai rùa, xương thú dùng để bói thời Thương, tổ tiên trực tiếp của chữ Hán.'],
     [-776, 'w', 'Thế vận hội đầu tiên', 'Theo truyền thống Hy Lạp, Olympic cổ đại bắt đầu năm này.'],
     [-551, 'e', 'Khổng Tử ra đời', 'Học thuyết của ông chi phối nền giáo dục và khoa cử Việt Nam suốt gần một nghìn năm.', 'truc'],
-    [-470, 'w', 'Socrates ra đời', 'Cùng thế kỷ với Khổng Tử, Phật Thích Ca: thời mà sử gia gọi là “thời trục” của tư tưởng loài người.', 'truc'],
+    [-470, 'w', 'Socrates ra đời', 'Gần cùng thời với Khổng Tử, Phật Thích Ca: thời mà triết gia Karl Jaspers gọi là “thời trục” của tư tưởng loài người.', 'truc'],
     [-334, 'w', 'Alexander Đại đế đông chinh', 'Trong chưa đầy 11 năm, đế quốc Macedonia vươn tới tận Ấn Độ.'],
     [-257, 'e', 'An Dương Vương lập Âu Lạc', 'Năm theo sử truyền thống. Thành Cổ Loa có thể là tòa thành lớn nhất Đông Nam Á thời đó.'],
     [-240, 'w', 'Eratosthenes đo Trái Đất', 'Chỉ bằng bóng nắng ở hai thành phố, ông ước tính chu vi Trái Đất sai lệch chỉ vài phần trăm.'],
     [-221, 'e', 'Tần thống nhất Trung Hoa', 'Tần Thủy Hoàng thống nhất chữ viết, đo lường, tiền tệ và trục xe.'],
-    [-111, 'e', 'Nhà Hán chiếm Nam Việt', 'Mở đầu giai đoạn Bắc thuộc kéo dài hơn một nghìn năm.'],
-    [-44, 'w', 'Julius Caesar bị ám sát', 'Cộng hòa La Mã sụp đổ, Đế quốc La Mã ra đời ngay sau đó.'],
-    [40, 'e', 'Khởi nghĩa Hai Bà Trưng', 'Hai chị em đánh đuổi thái thú Tô Định, xưng vương ở Mê Linh.'],
+    [-111, 'e', 'Nhà Hán chiếm Nam Việt', 'Nhiều sử gia hiện nay lấy năm này làm mốc mở đầu thời Bắc thuộc kéo dài hơn một nghìn năm.'],
+    [-44, 'w', 'Julius Caesar bị ám sát', 'Cộng hòa La Mã đi vào hồi kết. 17 năm sau, Đế quốc La Mã ra đời.'],
+    [40, 'e', 'Khởi nghĩa Hai Bà Trưng', 'Hai chị em đánh đuổi thái thú Tô Định, Trưng Trắc xưng vương, đóng đô ở Mê Linh.'],
     [79, 'w', 'Núi Vesuvius vùi Pompeii', 'Tro núi lửa giữ nguyên cả một thành phố La Mã cho khảo cổ học ngày nay.'],
     [105, 'e', 'Thái Luân cải tiến giấy', 'Giấy làm từ vỏ cây, giẻ rách, lưới cũ: rẻ, nhẹ và thay đổi cách loài người lưu giữ chữ.', 'giay'],
     [248, 'e', 'Khởi nghĩa Bà Triệu', 'Cuộc nổi dậy chống quân Đông Ngô ở vùng Cửu Chân.'],
     [476, 'w', 'Tây La Mã sụp đổ', 'Mốc quen dùng để đánh dấu hết thời cổ đại, bắt đầu thời Trung cổ ở châu Âu.'],
     [544, 'e', 'Lý Bí lập nước Vạn Xuân', 'Lần đầu tiên người Việt tự xưng đế, đặt quốc hiệu riêng.'],
-    [537, 'w', 'Hoàn thành Hagia Sophia', 'Mái vòm lớn nhất thế giới suốt gần một nghìn năm.'],
+    [537, 'w', 'Hoàn thành Hagia Sophia', 'Nhà thờ lớn nhất thế giới suốt gần một nghìn năm.'],
     [868, 'e', 'Kinh Kim Cương', 'Cuốn sách in có ghi năm cổ nhất còn lại, in bằng bản khắc gỗ.'],
     [938, 'e', 'Ngô Quyền thắng trận Bạch Đằng', 'Trận cọc gỗ trên sông Bạch Đằng khép lại thời Bắc thuộc.'],
     [1010, 'e', 'Dời đô ra Thăng Long', 'Lý Thái Tổ ban Chiếu dời đô từ Hoa Lư ra thành Đại La, đổi tên Thăng Long.'],
-    [1044, 'e', 'Công thức thuốc súng được in', 'Sách quân sự Vũ kinh tổng yếu thời Tống in công thức thuốc súng sớm nhất còn biết.', 'sung'],
+    [1044, 'e', 'Công thức thuốc súng được ghi lại', 'Sách quân sự Vũ kinh tổng yếu thời Tống ghi công thức thuốc súng sớm nhất còn biết.', 'sung'],
     [1045, 'e', 'Tất Thăng làm chữ in rời', 'Chữ rời bằng đất sét nung, theo ghi chép của Thẩm Quát. Sớm hơn Gutenberg khoảng 400 năm.', 'in'],
     [1070, 'e', 'Lập Văn Miếu', 'Thờ Khổng Tử ở Thăng Long. Sáu năm sau, Quốc Tử Giám ra đời.'],
     [1077, 'e', 'Trận sông Như Nguyệt', 'Lý Thường Kiệt chặn quân Tống. Gắn với bài thơ “Nam quốc sơn hà”.'],
@@ -205,7 +205,7 @@
     [1975, 'e', 'Thống nhất đất nước', 'Ngày 30 tháng 4.'],
     [1986, 'e', 'Đổi Mới', 'Đại hội VI mở đường cho kinh tế thị trường.'],
     [1989, 'w', 'Bức tường Berlin sụp đổ', 'Chiến tranh Lạnh đi tới hồi kết.'],
-    [1991, 'w', 'World Wide Web', 'Tim Berners-Lee đưa trang web đầu tiên lên mạng tại CERN.'],
+    [1991, 'w', 'World Wide Web', 'Tim Berners-Lee ở CERN mở World Wide Web cho mọi người dùng, sau khi chạy thử trang web đầu tiên từ cuối năm 1990.'],
   ];
 
   const YMIN = -3300, YMAX = 2030;

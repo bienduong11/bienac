@@ -245,7 +245,7 @@
     $('swt').innerHTML = preset === 'magenta'
       ? '<b>Hồng sen.</b> Nón S và L cùng được kích thích, còn M yếu hơn hẳn, kiểu kích thích mà không bước sóng đơn lẻ nào tạo ra được, vì S và L nằm ở hai đầu phổ. Não vẫn đưa ra một màu cho tổ hợp ấy. Hồng sen có thật trong cảm nhận, nhưng không có chỗ trên cầu vồng.'
       : preset === 'yellow'
-      ? '<b>Vàng giả.</b> Đỏ trộn lục kích thích nón M và L gần giống hệt ánh sáng vàng 580 nm. Não không phân biệt được, đó là lý do màn hình hiện được màu vàng dù không có điểm ảnh vàng nào.'
+      ? '<b>Vàng giả.</b> Đỏ trộn lục, với độ mạnh vừa phải, kích thích nón M và L theo đúng tỉ lệ như ánh sáng vàng 580 nm. Não không phân biệt được, đó là lý do màn hình hiện được màu vàng dù không có điểm ảnh vàng nào.'
       : `<b>${+$('wl').value} nm.</b> Một bước sóng thuần. Kéo thử: vùng 560–590 nm làm cả M lẫn L cùng kêu, não đọc ra màu vàng.`;
     $('wlo').textContent = preset === 'single' ? $('wl').value + ' nm' : sources().join(' + ') + ' nm';
   }

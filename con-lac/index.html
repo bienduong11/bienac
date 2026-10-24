@@ -76,7 +76,7 @@
   <main class="cl">
     <p class="ud-kicker">Con lắc kép</p>
     <h1 class="ud-title">Lệch một phần nghìn độ, <span class="accent">mỗi con một ngả</span></h1>
-    <p class="cl-lede">Ba con lắc kép được thả gần như cùng một chỗ, chỉ lệch nhau 0,001 độ. Lúc đầu chúng chồng khít lên nhau. Chờ chừng mươi giây rồi xem chuyện gì xảy ra. Kéo quả nặng để đặt vị trí thả mới.</p>
+    <p class="cl-lede">Ba con lắc kép được thả gần như cùng một chỗ, chỉ lệch nhau 0,001 độ. Lúc đầu chúng chồng khít lên nhau. Chờ vài giây rồi xem chuyện gì xảy ra. Kéo quả nặng để đặt vị trí thả mới.</p>
 
     <div class="cl-grid">
       <div class="cl-stage ud-panel" id="stage">
@@ -116,7 +116,7 @@
           </div>
           <div class="cl-range"><label for="g">Gia tốc trọng trường <output id="og">9,81 m/s²</output></label><input id="g" type="range" min="0.5" max="30" step="0.01" value="9.81" /></div>
           <div class="cl-range"><label for="m2">Quả dưới nặng gấp <output id="om2">1,0 lần</output></label><input id="m2" type="range" min="0.2" max="4" step="0.1" value="1" /></div>
-          <div class="cl-range"><label for="l2">Thanh dưới dài gấp <output id="ol2">1,0 lần</output></label><input id="l2" type="range" min="0.4" max="1.6" step="0.05" value="1" /></div>
+          <div class="cl-range"><label for="l2">Thanh dưới dài gấp <output id="ol2">1,00 lần</output></label><input id="l2" type="range" min="0.4" max="1.6" step="0.05" value="1" /></div>
           <div class="cl-range"><label for="tr">Độ dài vệt sáng <output id="otr">300</output></label><input id="tr" type="range" min="0" max="1200" step="50" value="300" /></div>
         </div>
       </div>
@@ -128,7 +128,7 @@
         <p>Con lắc đơn chỉ có một khớp, nó đung đưa đều đặn và dễ đoán: thả lệch một chút thì sau đó cũng chỉ lệch một chút. Bấm <b>Con lắc đơn</b> để thấy ba con lắc gần như dính vào nhau mãi.</p>
         <p>Thêm một khớp nữa, mọi thứ đổi khác. Quả dưới vừa bị quả trên kéo, vừa giật ngược lại quả trên. Hệ vẫn tuân theo định luật Newton, không có gì ngẫu nhiên, nhưng sai lệch ban đầu bị khuếch đại lên rất nhanh. Đó là <b>hỗn loạn</b>: biết hết quy luật mà vẫn không đoán được xa.</p>
         <p>Đây cũng chính là điều Edward Lorenz gặp ở mô hình thời tiết, sau này được gọi là <a href="/canh-buom/">hiệu ứng cánh bướm</a>.</p>
-        <p>Mô phỏng dùng phương pháp Runge–Kutta bậc 4 với bước 1/600 giây. Ô “sai số năng lượng” cho thấy tổng năng lượng gần như không đổi, tức phần lệch nhau là do vật lý thật, không phải do máy tính tính sai.</p>
+        <p>Mô phỏng dùng phương pháp Runge–Kutta bậc 4 với bước 1/600 giây. Ô “sai số năng lượng” cho thấy tổng năng lượng gần như không đổi, tức mô phỏng đủ chính xác: ba con lắc tách nhau là do chính bản chất của hệ, không phải do máy tính tính sai.</p>
       </div>
       <a class="ud-panel cl-video" href="https://www.youtube.com/watch?v=Aqp8Pq_qX5A" target="_blank" rel="noopener">
         <img src="https://i.ytimg.com/vi/Aqp8Pq_qX5A/mqdefault.jpg" alt="" loading="lazy" />

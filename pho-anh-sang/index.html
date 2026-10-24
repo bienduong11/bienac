@@ -72,7 +72,7 @@
   <main class="pa">
     <p class="ud-kicker">Phổ điện từ</p>
     <h1 class="ud-title">Mắt ta chỉ thấy <span class="accent">một khe rất hẹp</span></h1>
-    <p class="pa-lede">Tia gamma, tia X, ánh sáng, sóng Wi-Fi hay sóng radio đều là một thứ: sóng điện từ. Chúng chỉ khác nhau ở bước sóng. Kéo thanh trượt để đi từ sóng ngắn cỡ hạt nhân nguyên tử tới sóng dài hàng chục ki-lô-mét.</p>
+    <p class="pa-lede">Tia gamma, tia X, ánh sáng, sóng Wi-Fi hay sóng radio đều là một thứ: sóng điện từ. Chúng chỉ khác nhau ở bước sóng. Kéo thanh trượt để đi từ sóng ngắn hơn cả nguyên tử tới sóng dài cỡ chục ki-lô-mét.</p>
 
     <section class="pa-stage ud-panel">
       <canvas id="wave" aria-hidden="true"></canvas>
@@ -119,7 +119,7 @@
     { to: 3.8e-7, n: 'Tử ngoại', t: 'Phần năng lượng cao trong ánh nắng, gây cháy nắng và giúp da tạo vitamin D. Tầng ô-dôn chặn gần hết tia tử ngoại ngắn nhất trước khi chúng xuống tới mặt đất.' },
     { to: 7.5e-7, n: 'Ánh sáng nhìn thấy', t: 'Khe hẹp duy nhất mà mắt người cảm nhận được, từ tím (khoảng 380 nm) tới đỏ (khoảng 750 nm). Mặt Trời phát mạnh nhất quanh vùng này, và mắt ta tiến hóa để tận dụng đúng điều đó.' },
     { to: 1e-3, n: 'Hồng ngoại', t: 'Mọi vật có nhiệt độ đều phát hồng ngoại, kể cả cơ thể bạn. Camera nhiệt, điều khiển ti-vi và cáp quang đều làm việc trong dải này.' },
-    { to: 1, n: 'Vi sóng', t: 'Lò vi sóng, Wi-Fi, Bluetooth, sóng điện thoại và radar. Ánh sáng còn sót lại từ thuở vũ trụ mới hình thành, bức xạ nền vũ trụ, ngày nay cũng nằm ở dải này.' },
+    { to: 1, n: 'Vi sóng', t: 'Lò vi sóng, Wi-Fi, Bluetooth, sóng điện thoại và radar. Bức xạ nền vũ trụ, thứ ánh sáng còn sót lại từ thuở vũ trụ mới hình thành, ngày nay cũng nằm ở dải này.' },
     { to: Infinity, n: 'Sóng vô tuyến', t: 'Sóng dài nhất, đi được rất xa và vòng qua vật cản. Đài FM, AM, liên lạc tàu biển, tàu ngầm và kính thiên văn vô tuyến đều dùng dải này.' },
   ];
   const bandOf = (l) => BANDS.find((b) => l < b.to);
@@ -127,13 +127,13 @@
   // Ví dụ thực tế: [bước sóng m, tên, ghi chú]
   const EX = [
     [1.06e-12, 'Tia gamma của coban-60', '1,17 và 1,33 MeV, dùng trong xạ trị'],
-    [2.43e-12, 'Chụp PET', 'phô-tôn 511 keV từ cặp electron, pô-di-tơ-rôn hủy nhau'],
+    [2.43e-12, 'Chụp PET', 'phô-tôn 511 keV sinh ra khi electron và pôzitron hủy nhau'],
     [3e-11, 'Chụp X-quang y tế', 'khoảng 0,01 tới 0,1 nm'],
     [1.54e-10, 'Tia X dùng soi tinh thể', 'vạch đồng 0,154 nm, cỡ khoảng cách nguyên tử'],
     [1.216e-7, 'Vạch Lyman-alpha của hiđrô', '121,6 nm, kính thiên văn ngoài khí quyển mới thấy'],
     [2.54e-7, 'Đèn diệt khuẩn', '254 nm, tử ngoại C'],
     [3.65e-7, 'Đèn soi tiền giả', '365 nm, tử ngoại A'],
-    [5.89e-7, 'Đèn đường cao áp natri', '589 nm, ánh vàng cam'],
+    [5.89e-7, 'Đèn đường natri áp suất thấp', '589 nm, ánh vàng cam'],
     [6.328e-7, 'Laser heli-neon', '632,8 nm, đỏ'],
     [9.4e-7, 'Điều khiển ti-vi', 'khoảng 940 nm, mắt không thấy nhưng camera điện thoại thấy'],
     [1.55e-6, 'Cáp quang Internet', '1 550 nm, ít suy hao nhất trong sợi thủy tinh'],
@@ -144,10 +144,10 @@
     [0.2110, 'Vạch 21 cm của hiđrô', '1 420 MHz, dùng để vẽ bản đồ Ngân Hà'],
     [3.05, 'Đài FM', 'khoảng 98 MHz'],
     [300, 'Đài AM sóng trung', 'khoảng 1 MHz'],
-    [1.25e4, 'Liên lạc tàu ngầm', 'sóng rất dài 3 tới 30 kHz, xuyên được nước biển'],
+    [1e4, 'Liên lạc tàu ngầm', 'sóng rất dài 3 tới 30 kHz, xuyên được nước biển'],
   ];
   // So sánh kích thước bước sóng
-  const SIZE = [[1e-14, 'một hạt nhân nguyên tử'], [1e-10, 'một nguyên tử'], [1e-7, 'một con virus'], [2e-6, 'một con vi khuẩn'], [7e-5, 'bề ngang sợi tóc'], [4e-3, 'một con kiến'], [0.2, 'một bàn tay'], [1.7, 'một người lớn'], [50, 'một tòa nhà mười tầng'], [1e3, 'một cây số'], [1e5, 'một thành phố']];
+  const SIZE = [[1e-14, 'một hạt nhân nguyên tử'], [1e-10, 'một nguyên tử'], [1e-7, 'một con virus'], [2e-6, 'một con vi khuẩn'], [7e-5, 'bề ngang sợi tóc'], [4e-3, 'một con kiến'], [0.2, 'một bàn tay'], [1.7, 'một người lớn'], [30, 'một tòa nhà mười tầng'], [1e3, 'một cây số'], [1e5, 'một thành phố']];
 
   const sup = (n) => String(n).replace(/-/g, '⁻').replace(/\d/g, (d) => '⁰¹²³⁴⁵⁶⁷⁸⁹'[d]);
   const fmt = (x, d = 3) => x.toLocaleString('vi-VN', { maximumSignificantDigits: d });

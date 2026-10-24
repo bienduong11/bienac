@@ -71,7 +71,7 @@
   <div class="bt-head">
     <p class="ud-kicker">Bầu trời Đông Tây</p>
     <h1 class="ud-title">Một bầu trời, <span class="accent">hai cách vẽ</span></h1>
-    <p class="ud-dim" style="margin-top:8px;font-size:.88rem;line-height:1.5">Người Hy Lạp nối sao thành anh hùng và quái vật. Người Trung Hoa chia trời thành 28 “trạm nghỉ” của Mặt Trăng, mỗi phương một linh thú canh giữ.</p>
+    <p class="ud-dim" style="margin-top:8px;font-size:.88rem;line-height:1.5">Người Hy Lạp nối sao thành anh hùng và quái vật. Người Trung Hoa chia dải trời Mặt Trăng đi qua thành 28 “trạm nghỉ”, mỗi phương một linh thú canh giữ.</p>
   </div>
 
   <div class="bt-modes" role="group" aria-label="Cách vẽ">
@@ -130,13 +130,13 @@
       ['井宿', '井', 'Tỉnh', 'cái giếng', 'Gem', 'Tám sao ở chân chòm Song Tử.'],
       ['鬼宿', '鬼', 'Quỷ', 'ma quỷ', 'Cnc', 'Bốn sao bao quanh cụm sao Tổ Ong (M44) trong chòm Cự Giải.'],
       ['柳宿', '柳', 'Liễu', 'cành liễu', 'Hya', 'Đầu chòm Trường Xà, cong như cành liễu.'],
-      ['星宿', '星', 'Tinh', 'ngôi sao', 'Hya', 'Sao chính là Alphard, sao sáng nhất Trường Xà, cũng là “tim” của chim đỏ.'],
+      ['星宿', '星', 'Tinh', 'ngôi sao', 'Hya', 'Sao chính là Alphard, sao sáng nhất Trường Xà. Trong hình chim đỏ, Tinh là phần cổ.'],
       ['张宿', '張', 'Trương', 'giương rộng', 'Hya', 'Sáu sao trong chòm Trường Xà, như diều chim giương rộng.'],
       ['翼宿', '翼', 'Dực', 'đôi cánh', 'Crt', 'Hai mươi hai sao, phần lớn trong chòm Cự Tước (cái chén).'],
       ['轸宿', '軫', 'Chẩn', 'cỗ xe', 'Crv', 'Bốn sao hình tứ giác của chòm Ô Nha (con quạ).'],
     ] },
   ];
-  const EXTRA = { '北斗': ['北斗', 'Bắc Đẩu', 'Bảy sao gáo nước trong chòm Đại Hùng. Cán gáo chỉ mùa: chỉ đông là xuân, chỉ nam là hạ.'], '织女': ['織女', 'Chức Nữ', 'Sao Vega rực rỡ. Bên kia Ngân Hà là chàng Ngưu Lang.'], '河鼓': ['河鼓', 'Hà Cổ', 'Sao Altair, dân gian gọi là sao Ngưu Lang, đối diện Chức Nữ qua sông Ngân.'], '天狼': ['天狼', 'Thiên Lang', 'Sirius, ngôi sao sáng nhất bầu trời đêm. Phương Đông gọi là con sói trời, phương Tây gọi là sao Chó.'], '老人': ['老人', 'Lão Nhân', 'Canopus, sáng thứ nhì bầu trời. Ở Việt Nam chỉ thấy thấp sát chân trời phía nam, xưa coi là sao trường thọ.'] };
+  const EXTRA = { '北斗': ['北斗', 'Bắc Đẩu', 'Bảy sao gáo nước trong chòm Đại Hùng. Cán gáo chỉ mùa: chỉ đông là xuân, chỉ nam là hạ.'], '织女': ['織女', 'Chức Nữ', 'Sao Vega rực rỡ. Bên kia Ngân Hà là chàng Ngưu Lang.'], '河鼓': ['河鼓', 'Hà Cổ', 'Sao Altair, dân gian gọi là sao Ngưu Lang, đối diện Chức Nữ qua sông Ngân.'], '天狼': ['天狼', 'Thiên Lang', 'Sirius, ngôi sao sáng nhất bầu trời đêm. Phương Đông gọi là con sói trời, phương Tây gọi là sao Chó.'], '老人': ['老人', 'Lão Nhân', 'Canopus, sáng thứ nhì bầu trời. Ở Việt Nam chỉ thấy khá thấp trên chân trời phía nam, xưa coi là sao trường thọ.'] };
   const VN = { And: 'Tiên Nữ', Aqr: 'Bảo Bình', Aql: 'Thiên Ưng', Ari: 'Bạch Dương', Aur: 'Ngự Phu', Boo: 'Mục Phu', Cnc: 'Cự Giải', CMa: 'Đại Khuyển', CMi: 'Tiểu Khuyển', Cap: 'Ma Kết', Cas: 'Thiên Hậu', Cen: 'Bán Nhân Mã', Cep: 'Tiên Vương', Cet: 'Kình Ngư', Cyg: 'Thiên Nga', Crv: 'Ô Nha', Crt: 'Cự Tước', Cru: 'Nam Thập Tự', Dra: 'Thiên Long', Gem: 'Song Tử', Her: 'Vũ Tiên', Hya: 'Trường Xà', Leo: 'Sư Tử', Lib: 'Thiên Bình', Lyr: 'Thiên Cầm', Oph: 'Xà Phu', Ori: 'Lạp Hộ', Peg: 'Phi Mã', Per: 'Anh Tiên', Psc: 'Song Ngư', Sgr: 'Nhân Mã', Sco: 'Thiên Yết', Tau: 'Kim Ngưu', UMa: 'Đại Hùng', UMi: 'Tiểu Hùng', Vir: 'Xử Nữ', Del: 'Hải Đồn', Lep: 'Thiên Thố', Eri: 'Ba Giang', CrB: 'Bắc Miện', Car: 'Thuyền Để', Ser: 'Cự Xà' };
   const TU = {};
   TT.forEach((t, ti) => t.tu.forEach((u) => (TU[u[0]] = { u, t, ti })));
