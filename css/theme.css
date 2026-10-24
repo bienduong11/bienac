@@ -333,3 +333,127 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   .hero-scroll::after { animation: none; display: none; }
 }
+
+/* =====================================================================
+ * Lưới ô ứng dụng ở đầu trang chủ (thay cho dòng menu)
+ * ===================================================================== */
+.hero { min-height: auto; padding-top: 110px; padding-bottom: 72px; }
+.hero-logo img { width: clamp(64px, 8vw, 96px); }
+.hero-title { margin-top: 10px; }
+
+.app-grid {
+  margin-top: 40px;
+  width: min(100%, 880px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.app {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  justify-items: start;
+  gap: 4px;
+  min-height: 132px;
+  padding: 12px 14px 14px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--text);
+  background: rgba(8, 10, 14, 0.66);
+  box-shadow: inset 0 0 0 1px var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.app::before {                      /* góc vát sáng */
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(225deg, var(--brass) 0 1px, transparent 1px);
+  opacity: 0.8;
+}
+.app-no { font: 500 0.66rem/1 var(--mono); letter-spacing: 0.14em; color: var(--brass); }
+.app-han {
+  align-self: center;
+  font-family: var(--han);
+  font-weight: 600;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--text);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+.app-name { font: 600 1rem/1.2 var(--display); letter-spacing: 0.02em; }
+.app-desc { font-size: 0.76rem; line-height: 1.35; color: var(--text-dim); }
+
+.app:hover, .app:focus-visible {
+  background: rgba(55, 240, 207, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(55, 240, 207, 0.6);
+  transform: translateY(-2px);
+}
+.app:hover .app-han, .app:focus-visible .app-han {
+  color: var(--cyan);
+  text-shadow: 0 0 16px rgba(55, 240, 207, 0.6);
+}
+/* Ô đang làm: mờ, có nhãn son */
+.app.soon { cursor: default; }
+.app.soon .app-han, .app.soon .app-name { opacity: 0.45; }
+.app.soon .app-desc {
+  justify-self: start;
+  font: 500 0.62rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cinnabar);
+  border: 1px solid rgba(232, 69, 46, 0.5);
+  padding: 3px 5px;
+}
+.app.soon:hover { transform: none; background: rgba(8, 10, 14, 0.66); box-shadow: inset 0 0 0 1px var(--glass-border); }
+.app.soon:hover .app-han { color: var(--text); text-shadow: none; }
+
+/* Trang chủ: chỉ còn nút đăng ký trên thanh đầu, không cần nút menu */
+.site-nav { gap: 0; }
+
+@media (max-width: 860px) {
+  .app-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 720px) {
+  .hero { padding-top: 92px; padding-bottom: 48px; }
+  /* trên điện thoại thanh đầu không dùng menu xổ xuống nữa */
+  .site-nav, .site-nav.open {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    flex-direction: row;
+  }
+  .site-nav .nav-cta { margin-top: 0; padding: 8px 12px; font-size: 0.72rem; }
+  .app-grid { gap: 8px; margin-top: 28px; }
+  .app { min-height: 104px; padding: 10px; }
+  .app-han { font-size: 1.8rem; }
+  .app-name { font-size: 0.86rem; }
+  .app-desc { display: none; }
+  .app.soon .app-desc { display: inline-block; font-size: 0.55rem; }
+}
+@media (max-width: 360px) {
+  .app-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Thanh mỏng ở trang con: tên mục + nút ⊞ về lưới ứng dụng ---- */
+.site-nav .nav-here{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+.site-nav .nav-apps{display:inline-grid;place-items:center;width:38px;height:38px;font-size:1.3rem;line-height:1;color:var(--cyan);border:1px solid var(--glass-border);background:var(--glass);text-decoration:none;transition:border-color .2s,color .2s}
+.site-nav .nav-apps:hover,.site-nav .nav-apps:focus-visible{border-color:var(--cyan);color:var(--mint)}
+.site-nav:has(.nav-apps){display:flex;align-items:center;gap:12px}
+@media(max-width:720px){
+  .site-nav:has(.nav-apps){position:static;flex-direction:row;background:none;padding:0;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0}
+  .site-nav .nav-here{display:none}
+}
