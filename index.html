@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap&text=道可非常名无天地之始有万物母边幄卷一二三" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap&text=道可非常名无天地之始有万物母边幄卷一二三影文素象字網宙時議邊" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/theme.css" />
 </head>
@@ -32,17 +32,7 @@
       <span class="brand-logo"><img src="assets/logo.svg" alt="logo Bienac" /></span>
       <span class="brand-name">Bienac</span>
     </a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="site-nav">
-      <span></span><span></span><span></span>
-    </button>
     <nav class="site-nav" id="site-nav">
-      <a href="#videos">Video</a>
-      <a href="/bai-viet/">Bài viết</a>
-      <a href="elements.html">Nguyên tố</a>
-      <a href="phenomena.html">Hiện tượng</a>
-      <a href="thegioi/index.html">Trái Đất</a>
-      <a href="#request">Đề xuất</a>
-      <a href="#about">Về Bienac</a>
       <a class="nav-cta" id="nav-subscribe" href="#" target="_blank" rel="noopener">Đăng ký kênh</a>
     </nav>
   </header>
@@ -60,14 +50,20 @@
       <h1 class="hero-title">Bien<span class="accent">ac</span><span class="seal" aria-hidden="true"><span>边</span><span>幄</span></span></h1>
       <p class="hero-tagline">Chuyện trên Trái Đất 🌏</p>
       <p class="hero-sub">Đạo khả đạo &middot; Phi thường đạo</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" id="hero-subscribe" href="#" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
-          Đăng ký kênh
-        </a>
-        <a class="btn btn-ghost" href="#videos">Khám phá video</a>
-      </div>
-      <div class="scroll-hint" aria-hidden="true"><span></span></div>
+      <nav class="app-grid" id="apps" aria-label="Các mục của Bienac">
+        <a class="app" href="#videos"><span class="app-no">01</span><span class="app-han" aria-hidden="true">影</span><span class="app-name">Video</span><span class="app-desc">Các video mới nhất</span></a>
+        <a class="app" href="/bai-viet/"><span class="app-no">02</span><span class="app-han" aria-hidden="true">文</span><span class="app-name">Bài viết</span><span class="app-desc">Đọc chậm, có nguồn</span></a>
+        <a class="app" href="elements.html"><span class="app-no">03</span><span class="app-han" aria-hidden="true">素</span><span class="app-name">Nguyên tố</span><span class="app-desc">118 nguyên tố sống động</span></a>
+        <a class="app" href="phenomena.html"><span class="app-no">04</span><span class="app-han" aria-hidden="true">象</span><span class="app-name">Hiện tượng</span><span class="app-desc">Vật lý thành ánh sáng</span></a>
+        <a class="app" href="thegioi/index.html"><span class="app-no">05</span><span class="app-han" aria-hidden="true">地</span><span class="app-name">Trái Đất</span><span class="app-desc">Quả địa cầu lịch sử</span></a>
+        <a class="app soon" aria-disabled="true" data-href="/chiet-tu/"><span class="app-no">06</span><span class="app-han" aria-hidden="true">字</span><span class="app-name">Chiết tự</span><span class="app-desc">Đang chế tác</span></a>
+        <a class="app soon" aria-disabled="true" data-href="/mang-tri-thuc/"><span class="app-no">07</span><span class="app-han" aria-hidden="true">網</span><span class="app-name">Mạng tri thức</span><span class="app-desc">Đang chế tác</span></a>
+        <a class="app soon" aria-disabled="true" data-href="/bau-troi/"><span class="app-no">08</span><span class="app-han" aria-hidden="true">天</span><span class="app-name">Bầu trời</span><span class="app-desc">Đang chế tác</span></a>
+        <a class="app soon" aria-disabled="true" data-href="/thang-vu-tru/"><span class="app-no">09</span><span class="app-han" aria-hidden="true">宙</span><span class="app-name">Thang vũ trụ</span><span class="app-desc">Đang chế tác</span></a>
+        <a class="app soon" aria-disabled="true" data-href="/dong-thoi-gian/"><span class="app-no">10</span><span class="app-han" aria-hidden="true">時</span><span class="app-name">Dòng thời gian</span><span class="app-desc">Đang chế tác</span></a>
+        <a class="app" href="#request"><span class="app-no">11</span><span class="app-han" aria-hidden="true">議</span><span class="app-name">Đề xuất</span><span class="app-desc">Gợi ý video tiếp theo</span></a>
+        <a class="app" href="#about"><span class="app-no">12</span><span class="app-han" aria-hidden="true">邊</span><span class="app-name">Về Bienac</span><span class="app-desc">Hồ sơ kênh</span></a>
+      </nav>
     </section>
 
     <!-- VIDEOS -->
