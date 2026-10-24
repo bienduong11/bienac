@@ -486,3 +486,48 @@ body::after {
 .app.soon .app-ico { opacity: .45; }
 @media (max-width: 720px) { .app-ico { width: 34px; height: 34px; } .app-ico svg { width: 20px; height: 20px; } }
 @media (max-width: 720px) { body:not(.ud) .fx-switcher { display: none; } }
+
+/* =====================================================================
+ * Trang chủ (24/10 chiều): không thanh đầu trang, logo lớn bằng mã nhị phân,
+ * nút đăng ký ở giữa, ô kính mờ căn giữa
+ * ===================================================================== */
+#bin-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+body.home { background: radial-gradient(120% 80% at 50% 20%, #0b1418 0%, var(--ink) 60%); background-attachment: fixed; }
+body.home main, body.home .site-footer { position: relative; z-index: 1; }
+body.home .vignette { z-index: 0; }
+body.home .hero { padding-top: clamp(40px, 7vh, 80px); }
+body.home .hero-readout.tl { top: 28px; }
+body.home .hero-logo { width: min(64vw, 340px); aspect-ratio: 1; margin: 0 auto; position: relative; }
+body.home .hero-logo img { width: 100% !important; height: 100%; opacity: .16; filter: blur(10px) !important; animation: none; }
+body.home .hero-title { margin-top: 4px; }
+.hero-cta { margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; font-size: .95rem; }
+
+/* ô tìm kiếm */
+.search { position: relative; z-index: 3; margin-top: 22px; width: min(100%, 520px); }
+.search input { width: 100%; padding: 13px 18px 13px 46px; font: 500 .95rem 'Be Vietnam Pro', sans-serif; color: var(--text); background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .14); border-radius: 999px; outline: none; backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); }
+.search input:focus { border-color: var(--cyan); }
+.search-ico { z-index: 2; position: absolute; left: 17px; top: 50%; transform: translateY(-50%); color: var(--text-dim); pointer-events: none; }
+.search-res { position: absolute; left: 0; right: 0; top: calc(100% + 8px); max-height: 60vh; overflow-y: auto; padding: 6px; text-align: left; background: rgba(12, 16, 20, .9); border: 1px solid rgba(255, 255, 255, .12); border-radius: 18px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+.search-res a { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; padding: 8px; border-radius: 12px; color: var(--text); text-decoration: none; }
+.search-res a:hover, .search-res a.on { background: rgba(55, 240, 207, .1); }
+.search-res .k { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+.search-res .t { display: block; font-size: .92rem; line-height: 1.35; }
+.search-res img, .search-res .ic { width: 64px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; display: grid; place-items: center; background: rgba(55, 240, 207, .08); color: var(--cyan); font-size: 1.3rem; }
+.search-res p { padding: 12px; color: var(--text-dim); font-size: .9rem; }
+
+/* ô ứng dụng: kính mờ, căn giữa, không số thứ tự */
+.app-grid { gap: 12px; margin-top: 34px; }
+.app { justify-items: center !important; align-content: center; text-align: center !important; grid-template-rows: auto auto auto !important; gap: 8px !important; padding: 18px 12px !important; min-height: 140px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .02)) !important;
+  border: 1px solid rgba(255, 255, 255, .12); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 10px 30px rgba(0, 0, 0, .25) !important;
+  backdrop-filter: blur(18px) saturate(150%) !important; -webkit-backdrop-filter: blur(18px) saturate(150%) !important; }
+.app:hover, .app:focus-visible { border-color: rgba(55, 240, 207, .55); background: linear-gradient(160deg, rgba(55, 240, 207, .16), rgba(255, 255, 255, .03)) !important; }
+.app-no { display: none !important; }
+.app-ico { align-self: auto; width: 46px; height: 46px; border-radius: 14px; background: rgba(55, 240, 207, .12); }
+.app-name, .app-desc { text-align: center; }
+@media (max-width: 720px) {
+  body.home .hero { padding-top: 28px; }
+  .app { min-height: 112px; padding: 14px 8px !important; }
+  .app-ico { width: 38px; height: 38px; }
+  .hero-cta { margin-top: 20px; }
+}

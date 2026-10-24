@@ -55,7 +55,9 @@
   const DEFAULT_EFFECT = 'aurora';
 
   /* ----------------------------------------------- Hiệu ứng nền --- */
+  // Trang chủ dùng nền mã nhị phân riêng (js/nen-logo.js), không có fx-canvas
   const canvas = document.getElementById('fx-canvas');
+  if (canvas && window.BienacFX) {
   const engine = new window.BienacFX.FXEngine(canvas);
 
   const saved = localStorage.getItem(EFFECT_KEY);
@@ -97,6 +99,8 @@
       const open = options.classList.toggle('collapsed') === false;
       toggle.setAttribute('aria-expanded', String(open));
     });
+  }
+
   }
 
   /* ----------------------------------------- Menu mobile (nav) ---- */
@@ -193,7 +197,7 @@
   // Header đổi nền khi cuộn
   const header = document.querySelector('.site-header');
   window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 30);
+    if (header) header.classList.toggle('scrolled', window.scrollY > 30);
   }, { passive: true });
 
   // Hiện dần các section khi cuộn tới

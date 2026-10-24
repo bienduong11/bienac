@@ -40,5 +40,11 @@
     "hashtags": [
       "Bienac"
     ]
+  },
+  "ungHo": {
+    "_huong_dan": "Đặt ảnh mã QR vào assets/ung-ho/ rồi điền đường dẫn ở qr (ví dụ /assets/ung-ho/qr.png). Bật hoiVien thành true khi kênh đã mở Hội viên YouTube.",
+    "qr": "",
+    "ghiChuQr": "",
+    "hoiVien": false
   }
 }

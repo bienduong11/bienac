@@ -331,11 +331,14 @@ async function main() {
   ];
   await writeFile(path.join(ROOT, '_redirects'), redirects.join('\n') + '\n');
 
+  // Mục lục bài cho ô tìm kiếm trang chủ
+  await writeFile(path.join(OUT, 'muc-luc.json'), JSON.stringify(posts.map((p) => ({ slug: p.slug, title: p.title, description: p.description, video: p.video }))));
+
   // Bảng tra video → hồ sơ (Mạng tri thức dùng)
   await writeFile(path.join(OUT, 'ho-so.json'), JSON.stringify(Object.fromEntries(posts.filter((p) => p.video).map((p) => [p.video, `/v/${p.short}`]))));
 
   // Sitemap
-  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/bai-viet/', ...posts.map((p) => `/bai-viet/${p.slug}/`)];
+  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/ung-ho/', '/bai-viet/', ...posts.map((p) => `/bai-viet/${p.slug}/`)];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
     .map((u) => `  <url><loc>${SITE}${u}</loc></url>`)
     .join('\n')}\n</urlset>\n`;
