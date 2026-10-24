@@ -152,3 +152,11 @@ body.blog { background-attachment: fixed; min-height: 100vh; }
 .tool-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
 .tool-head h2 { font-size: 1.1rem; }
 .tool-item textarea { width: 100%; padding: 12px; font: 500 .85rem/1.55 var(--mono, monospace); color: var(--text); background: rgba(6, 7, 11, .8); border: 1px solid var(--glass-border); resize: vertical; }
+.post-note { margin: 0 0 28px; padding: 14px 18px; border-left: 3px solid var(--brass, #c9a650); background: rgba(201, 166, 80, .07); font-size: .92rem; line-height: 1.6; color: var(--text-dim); border-radius: 14px; }
+.post-note .post-fix-k { color: var(--brass, #c9a650); }
+.post-credits { margin-top: 40px; font-size: .85rem; line-height: 1.6; color: var(--text-dim); }
+.post-credits h2 { font-size: 1rem; color: var(--text); margin-bottom: 8px; }
+.post-credits ul { padding-left: 1.2em; }
+.post-credits a { color: var(--text-dim); }
+.post-comments { margin-top: 48px; }
+.post-comments h2 { font: 700 1.3rem var(--display, sans-serif); margin-bottom: 14px; }

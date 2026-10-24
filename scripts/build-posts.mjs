@@ -276,6 +276,11 @@ async function main() {
       ${p.luuYHtml ? `<aside class="post-note"><p class="post-fix-k">Lưu ý</p>${p.luuYHtml}</aside>` : ''}
       <div class="post-body">${p.html}</div>
       ${p.hinhAnhHtml ? `<section class="post-credits"><h2>Hình ảnh, video, âm thanh</h2>${p.hinhAnhHtml}</section>` : ''}
+      <section class="post-comments">
+        <h2>Thảo luận</h2>
+        <div class="giscus"></div>
+        <script src="https://giscus.app/client.js" data-repo="bienduong11/bienac" data-repo-id="R_kgDOVVi1CQ" data-category="General" data-category-id="DIC_kwDOVVi1Cc4DJfa2" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="transparent_dark" data-lang="vi" data-loading="lazy" crossorigin="anonymous" async></script>
+      </section>
       <footer class="post-cta">
         <p>Bài viết này đi kèm video trên kênh Bienac. Đăng ký để không lỡ những câu chuyện tiếp theo.</p>
         <a class="btn btn-primary" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
