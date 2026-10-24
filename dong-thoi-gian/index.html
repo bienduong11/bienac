@@ -13,7 +13,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap&text=時東西越華歐近" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/theme.css" />
   <link rel="stylesheet" href="/css/ung-dung.css" />
@@ -93,7 +92,7 @@
 
   <section class="dt-top">
     <div>
-      <p class="ud-kicker"><span class="han">時</span> &nbsp;10 // Dòng thời gian</p>
+      <p class="ud-kicker">10 // Dòng thời gian</p>
       <h1 class="ud-title">Đông <span class="accent">⇄</span> Tây</h1>
       <p class="ud-dim">Chạm vào bất kỳ năm nào để xem cùng lúc hai phía thế giới đang ra sao. Đường chấm đỏ nối hai phát minh giống nhau ở hai đầu lục địa.</p>
     </div>
@@ -107,8 +106,8 @@
   <div class="dt-wrap" id="wrap"><div class="dt-stage" id="stage"></div></div>
 
   <section class="dt-info" aria-live="polite">
-    <div class="dt-col e"><h3><span class="han">東</span>Phương Đông</h3><div class="now" id="ie"></div><p id="pe"></p></div>
-    <div class="dt-col w"><h3><span class="han">西</span>Phương Tây</h3><div class="now" id="iw"></div><p id="pw"></p></div>
+    <div class="dt-col e"><h3>Phương Đông</h3><div class="now" id="ie"></div><p id="pe"></p></div>
+    <div class="dt-col w"><h3>Phương Tây</h3><div class="now" id="iw"></div><p id="pw"></p></div>
   </section>
 
 <script>
@@ -229,7 +228,7 @@
     ROWS.forEach((r) => {
       const n = document.createElement('div');
       n.className = 'dt-lane-name'; n.style.cssText = `position:absolute;top:${rowY[r.id] - 1}px;`;
-      n.innerHTML = `<span class="han">${r.han}</span>${r.name}`;
+      n.innerHTML = `${r.name}`;
       names.appendChild(n);
     });
 

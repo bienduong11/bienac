@@ -13,7 +13,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap&text=網量粒力識光素核鹼硼食化沌宙明戰東華龍越藝史機" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/theme.css" />
   <link rel="stylesheet" href="/css/ung-dung.css" />
@@ -62,7 +61,7 @@
 
   <canvas id="net" aria-label="Mạng các video và khái niệm"></canvas>
   <div class="mt-head">
-    <p class="ud-kicker"><span class="han">網</span> &nbsp;07 // Mạng tri thức</p>
+    <p class="ud-kicker">07 // Mạng tri thức</p>
     <h1 class="ud-title">Mọi video <span class="accent">đều nối</span> với nhau</h1>
     <p class="ud-dim">Ô vuông là video, chấm tròn là khái niệm chung. Chạm vào một khái niệm để xem nó dẫn tới những video nào.</p>
   </div>
@@ -151,13 +150,11 @@
       const [x, y] = toScreen(n), dim = near && !near.has(n);
       g.globalAlpha = dim ? 0.18 : 1;
       if (n.kind === 'c') {
-        const r = (7 + Math.sqrt(n.deg) * 4) * Math.min(1.4, cam.k);
-        g.fillStyle = n === focus ? '#e8452e' : 'rgba(10,12,16,.95)';
+        const r = (5 + Math.sqrt(n.deg) * 3) * Math.min(1.4, cam.k);
+        g.fillStyle = n === focus ? '#e8452e' : 'rgba(232,69,46,.25)';
         g.strokeStyle = '#e8452e'; g.lineWidth = 1.2;
         g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill(); g.stroke();
-        g.fillStyle = n === focus ? '#06070b' : '#ece6d6';
-        g.font = `600 ${Math.round(r * 1.1)}px "Noto Serif TC", serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
-        g.fillText(n.han, x, y + 1);
+        g.textAlign = 'center'; g.textBaseline = 'middle';
         if (n === focus || (near && near.has(n)) || (!near && (n.deg >= 3 || cam.k > 0.9))) {
           g.font = '600 12px "Chakra Petch", sans-serif'; g.fillStyle = '#ece6d6';
           g.fillText(n.name, x, y + r + 11);
@@ -231,12 +228,12 @@
       const hs = hoSo && hoSo[n.vid];
       card.innerHTML = `${close}<p class="ud-kicker">Video</p><h2>${esc(n.name)}</h2>
         <img src="https://i.ytimg.com/vi/${n.vid}/hqdefault.jpg" alt="" />
-        <div class="tags">${cs.map((c) => `<button class="mt-chip" data-id="${c.id}"><span class="han">${c.han}</span>${esc(c.name)}</button>`).join('') || '<span class="ud-dim">Chưa gắn khái niệm.</span>'}</div>
+        <div class="tags">${cs.map((c) => `<button class="mt-chip" data-id="${c.id}">${esc(c.name)}</button>`).join('') || '<span class="ud-dim">Chưa gắn khái niệm.</span>'}</div>
         <div class="acts"><a class="ud-btn" href="https://www.youtube.com/watch?v=${n.vid}" target="_blank" rel="noopener">Xem trên YouTube</a>${hs ? `<a class="ud-btn" href="${hs}">Nguồn & bài đọc</a>` : ''}</div>`;
       history.replaceState(null, '', '#v=' + n.vid);
     } else {
       const vs = links.filter((l) => l.t === n).map((l) => l.s);
-      card.innerHTML = `${close}<p class="ud-kicker"><span class="han">${n.han}</span> &nbsp;Khái niệm · ${vs.length} video</p><h2>${esc(n.name)}</h2>
+      card.innerHTML = `${close}<p class="ud-kicker">Khái niệm · ${vs.length} video</p><h2>${esc(n.name)}</h2>
         ${n.link ? `<div class="acts" style="margin-bottom:12px"><a class="ud-btn" href="${n.link}">Mở ứng dụng liên quan</a></div>` : ''}
         <ul>${vs.map((v) => `<li><button data-id="${v.id}"><img src="https://i.ytimg.com/vi/${v.vid}/mqdefault.jpg" alt="" />${esc(v.name)}</button></li>`).join('')}</ul>`;
       history.replaceState(null, '', '#k=' + n.key);
@@ -250,7 +247,7 @@
   nodes.filter((n) => n.kind === 'c').sort((a, b) => b.deg - a.deg).forEach((n) => {
     const b = document.createElement('button');
     b.className = 'mt-chip'; b.dataset.id = n.id; b.setAttribute('aria-pressed', 'false');
-    b.innerHTML = `<span class="han">${n.han}</span>${esc(n.name)} <small>${n.deg}</small>`;
+    b.innerHTML = `${esc(n.name)} <small>${n.deg}</small>`;
     b.onclick = () => select(sel === n ? null : n);
     chips.appendChild(b);
   });

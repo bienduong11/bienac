@@ -457,3 +457,31 @@ body::after {
   .site-nav:has(.nav-apps){position:static;flex-direction:row;background:none;padding:0;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0}
   .site-nav .nav-here{display:none}
 }
+
+/* =====================================================================
+ * Bo tròn toàn bộ, bỏ chữ Hán trang trí và con dấu (theo yêu cầu 24/10)
+ * ===================================================================== */
+:root { --radius: 16px; }
+.hero-scroll, .seal, .hero-frame, .sec-label .han, .ud-kicker .han, .video-thumb::before,
+.video-card::after, .about-card::after, .request-card::after, .post-item::after, .post-cta::after,
+.app::before { display: none !important; }
+.sec-label::after { display: none; }
+
+.btn, .nav-cta, .ud-btn, .fx-toggle, .app, .app.soon .app-desc, .mt-chip { clip-path: none !important; }
+.btn, .nav-cta, .ud-btn { border-radius: 999px !important; }
+.fx-toggle, .nav-apps, .site-nav .nav-apps, .home-apps { border-radius: 12px !important; }
+.app, .ud-panel, .video-card, .about-card, .request-card, .post-item, .post-cta, .post-chapters, .post-fix,
+.post-player, .post-empty, .tool-item textarea, .ct-cand, .ct-search input, .ct-used button, .ct-word,
+.bt-tu button, .bt-tt button, .mt-chip, .dt-band, .dt-ev span, .dt-cursor b, .tvt-east, .fx-options, .fx-options button,
+.phys-menu button, .video-thumb, .post-item-thumb, .t-glyph { border-radius: 14px !important; }
+.ct-used button, .bt-tu button, .dt-band, .dt-ev span, .dt-cursor b, .mt-chip, .ct-word, .app.soon .app-desc { border-radius: 8px !important; }
+.video-thumb { overflow: hidden; }
+.ct-tree-wrap::before { display: none; }
+
+/* Ô ứng dụng: biểu tượng nét mảnh thay cho chữ Hán */
+.app { border-radius: 18px !important; }
+.app-ico { align-self: center; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; color: var(--cyan); background: rgba(55, 240, 207, .08); }
+.app-ico svg { width: 24px; height: 24px; }
+.app:hover .app-ico, .app:focus-visible .app-ico { background: rgba(55, 240, 207, .18); }
+.app.soon .app-ico { opacity: .45; }
+@media (max-width: 720px) { .app-ico { width: 34px; height: 34px; } .app-ico svg { width: 20px; height: 20px; } }

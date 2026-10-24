@@ -82,7 +82,7 @@
   <canvas id="tvt" aria-label="Các vật thể xếp theo kích thước, thu phóng bằng cuộn chuột hoặc kéo"></canvas>
 
   <div class="tvt-read" aria-live="polite">
-    <p class="ud-kicker"><span class="han">宙</span> &nbsp;09 // Thang vũ trụ</p>
+    <p class="ud-kicker">09 // Thang vũ trụ</p>
     <p class="tvt-exp" id="exp">10<sup>0</sup><small>mét</small></p>
     <p class="tvt-alt" id="alt"></p>
     <div class="tvt-east ud-panel" id="east">
@@ -219,18 +219,6 @@
     for (const [x, y, b] of STARS) {
       g.fillStyle = `rgba(236,230,214,${(sa * b * 0.6).toFixed(3)})`;
       g.fillRect(x * W, y * H, b > 0.8 ? 1.6 : 1, b > 0.8 ? 1.6 : 1);
-    }
-
-    // Chữ Hán lớn mờ phía sau cho bậc cổ gần nhất
-    const k = Math.round(z), e = EAST[k];
-    if (e) {
-      const a = Math.max(0, 1 - Math.abs(z - k) * 2.2) * 0.07;
-      if (a > 0.002) {
-        g.save(); g.globalAlpha = a; g.fillStyle = '#e8452e';
-        g.font = `600 ${Math.min(W, H) * (e[0].length > 1 ? 0.42 : 0.62)}px "Noto Serif TC", serif`;
-        g.textAlign = 'center'; g.textBaseline = 'middle';
-        g.fillText(e[0], cx, cy + Math.min(W, H) * 0.02); g.restore();
-      }
     }
 
     // Vòng lũy thừa 10

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bầu trời Đông Tây · Bienac</title>
+  <meta name="description" content="Cùng một bầu trời, hai cách vẽ: 88 chòm sao phương Tây và Nhị thập bát tú của phương Đông chồng lên nhau trên một bản đồ sao tương tác." />
+  <meta property="og:title" content="Bầu trời Đông Tây · Bienac" />
+  <meta property="og:description" content="88 chòm sao phương Tây và Nhị thập bát tú trên cùng một bản đồ sao." />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+    #sky { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+    #sky.drag { cursor: grabbing; }
+    .bt-head { position: fixed; left: clamp(16px, 4vw, 48px); top: 92px; z-index: 5; max-width: 340px; pointer-events: none; }
+    .bt-modes { position: fixed; right: clamp(16px, 4vw, 48px); top: 92px; z-index: 6; display: flex; gap: 6px; }
+    .bt-side { position: fixed; left: clamp(16px, 4vw, 48px); bottom: 16px; z-index: 5; width: min(340px, calc(100vw - 32px)); padding: 12px 14px 14px; }
+    .bt-tt { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
+    .bt-tt button { padding: 6px 6px; text-align: left; background: none; border: 0; box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); cursor: pointer; font: 600 .76rem var(--display); }
+    .bt-tt button .han { font-size: .95rem; margin-right: 4px; }
+    .bt-tt button[aria-pressed="true"] { box-shadow: inset 0 0 0 1px currentColor; }
+    .bt-tu { display: flex; flex-wrap: wrap; gap: 4px; }
+    .bt-tu button { min-width: 56px; padding-left: 8px; padding-right: 8px; padding: 3px 0 2px; background: rgba(8,10,14,.6); border: 0; box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); cursor: pointer; text-align: center; }
+    .bt-tu button b { display: block; font: 600 .8rem/1.6 var(--display); }
+    .bt-tu button span { display: block; font: 500 .58rem var(--mono); color: var(--text-dim); }
+    .bt-tu button[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--cyan); }
+    .bt-card { position: fixed; right: clamp(16px, 4vw, 48px); bottom: 16px; z-index: 6; width: min(360px, calc(100vw - 32px)); padding: 16px 18px 18px; display: none; }
+    .bt-card.on { display: block; }
+    .bt-card .x { position: absolute; right: 8px; top: 6px; background: none; border: 0; color: var(--text-dim); font-size: 1.3rem; cursor: pointer; }
+    .bt-card .g { font: 600 3rem/1 var(--han); }
+    .bt-card h2 { font: 700 1.3rem var(--display); margin-top: 6px; }
+    .bt-card p { margin-top: 8px; font-size: .9rem; line-height: 1.6; color: var(--text-dim); }
+    .bt-card p b { color: var(--text); font-weight: 600; }
+    .bt-src { position: fixed; right: clamp(16px, 4vw, 48px); bottom: 4px; z-index: 4; font-size: .62rem; color: var(--text-dim); opacity: .7; }
+    .bt-src a { color: inherit; }
+    @media (max-width: 720px) {
+      .bt-head { top: 76px; } .bt-head p.ud-dim { display: none; }
+      .bt-modes { top: auto; bottom: 214px; right: 16px; }
+      .bt-side { padding: 10px; }
+      .bt-card { bottom: 210px; }
+      .bt-src { display: none; }
+    }
+  </style>
+</head>
+<body class="ud">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Bầu trời</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <canvas id="sky" aria-label="Bản đồ sao: kéo để xoay, cuộn để thu phóng"></canvas>
+
+  <div class="bt-head">
+    <p class="ud-kicker">08 // Bầu trời Đông Tây</p>
+    <h1 class="ud-title">Một bầu trời, <span class="accent">hai cách vẽ</span></h1>
+    <p class="ud-dim" style="margin-top:8px;font-size:.88rem;line-height:1.5">Người Hy Lạp nối sao thành anh hùng và quái vật. Người Trung Hoa chia trời thành 28 “trạm nghỉ” của Mặt Trăng, mỗi phương một linh thú canh giữ.</p>
+  </div>
+
+  <div class="bt-modes" role="group" aria-label="Cách vẽ">
+    <button class="ud-btn" data-m="w" aria-pressed="false">Tây</button>
+    <button class="ud-btn" data-m="b" aria-pressed="true">Cả hai</button>
+    <button class="ud-btn" data-m="e" aria-pressed="false">Đông</button>
+  </div>
+
+  <aside class="bt-side ud-panel">
+    <p class="ud-kicker" style="margin-bottom:8px">Nhị thập bát tú</p>
+    <div class="bt-tt" id="tt"></div>
+    <div class="bt-tu" id="tu"></div>
+  </aside>
+
+  <article class="bt-card ud-panel" id="card" aria-live="polite"></article>
+  <p class="bt-src">Dữ liệu sao: <a href="https://github.com/ofrohn/d3-celestial" rel="noopener">d3-celestial</a> © Olaf Frohn (BSD)</p>
+
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id);
+  const D = await fetch('/bau-troi/du-lieu.json').then((r) => r.json()).catch(() => null);
+  if (!D) return;
+
+  /* -------------------------------------------- Tứ tượng & 28 tú
+   * [tên trong dữ liệu (giản thể), chữ phồn thể, âm Hán Việt, nghĩa, chòm phương Tây tương ứng, ghi chú]
+   */
+  const TT = [
+    { han: '青龍', hv: 'Thanh Long', dir: 'phương Đông', mua: 'mùa xuân', col: '#37f0cf', tu: [
+      ['角宿', '角', 'Giác', 'cái sừng', 'Vir', 'Sao chính là Spica, sao sáng nhất chòm Xử Nữ: chiếc sừng của rồng xanh.'],
+      ['亢宿', '亢', 'Cang', 'cái cổ', 'Vir', 'Bốn sao mờ trong chòm Xử Nữ, là cổ con rồng.'],
+      ['氐宿', '氐', 'Đê', 'gốc, nền', 'Lib', 'Nằm trong chòm Thiên Bình, chỗ ngực rồng.'],
+      ['房宿', '房', 'Phòng', 'căn phòng', 'Sco', 'Bốn sao ở đầu chòm Thiên Yết (Bọ Cạp).'],
+      ['心宿', '心', 'Tâm', 'trái tim', 'Sco', 'Sao Antares đỏ rực, quả tim của rồng. Phương Tây coi nó là tim con bọ cạp: hai nền văn hóa cùng chọn “trái tim”.'],
+      ['尾宿', '尾', 'Vĩ', 'cái đuôi', 'Sco', 'Đuôi cong của chòm Bọ Cạp cũng chính là đuôi rồng.'],
+      ['箕宿', '箕', 'Cơ', 'cái nia, cái sàng', 'Sgr', 'Bốn sao thuộc chòm Nhân Mã, hình cái nia sàng thóc.'],
+    ] },
+    { han: '玄武', hv: 'Huyền Vũ', dir: 'phương Bắc', mua: 'mùa đông', col: '#8ea4e8', tu: [
+      ['斗宿', '斗', 'Đẩu', 'cái đấu đong', 'Sgr', 'Còn gọi là Nam Đẩu: sáu sao trong chòm Nhân Mã, hình cái gáo giống Bắc Đẩu.'],
+      ['牛宿', '牛', 'Ngưu', 'con trâu', 'Cap', 'Nằm trong chòm Ma Kết. Đừng nhầm với sao Ngưu Lang (Altair).'],
+      ['女宿', '女', 'Nữ', 'cô gái', 'Aqr', 'Bốn sao mờ trong chòm Bảo Bình.'],
+      ['虚宿', '虛', 'Hư', 'trống rỗng', 'Aqr', 'Hai sao ở Bảo Bình và Tiểu Mã. Vùng trời này rất ít sao sáng, đúng như tên gọi.'],
+      ['危宿', '危', 'Nguy', 'nóc nhà', 'Peg', 'Ba sao nối từ Bảo Bình sang Phi Mã.'],
+      ['室宿', '室', 'Thất', 'ngôi nhà', 'Peg', 'Hai sao ở cạnh tây của “Hình vuông lớn” trong chòm Phi Mã.'],
+      ['壁宿', '壁', 'Bích', 'bức tường', 'Peg', 'Cạnh đông của Hình vuông lớn, nối Phi Mã với Tiên Nữ.'],
+    ] },
+    { han: '白虎', hv: 'Bạch Hổ', dir: 'phương Tây', mua: 'mùa thu', col: '#ece6d6', tu: [
+      ['奎宿', '奎', 'Khuê', 'đôi chân', 'And', 'Mười sáu sao vắt qua Tiên Nữ và Song Ngư. Xưa coi là sao chủ văn chương: Khuê Văn Các ở Văn Miếu Hà Nội lấy tên từ đây.'],
+      ['娄宿', '婁', 'Lâu', 'buộc, kéo', 'Ari', 'Ba sao ở chòm Bạch Dương.'],
+      ['胃宿', '胃', 'Vị', 'cái dạ dày', 'Ari', 'Ba sao mờ ở rìa chòm Bạch Dương.'],
+      ['昴宿', '昴', 'Mão', 'búi lông', 'Tau', 'Cụm sao Thất Nữ (Pleiades) trong chòm Kim Ngưu. Người Việt gọi là sao Rua.'],
+      ['毕宿', '畢', 'Tất', 'cái lưới bắt chim', 'Tau', 'Cụm sao Hyades hình chữ V cùng sao Aldebaran đỏ cam, mặt con bò Kim Ngưu.'],
+      ['觜宿', '觜', 'Chủy', 'cái mỏ', 'Ori', 'Ba sao nhỏ trên đầu chòm Lạp Hộ.'],
+      ['参宿', '參', 'Sâm', 'số ba', 'Ori', 'Ba sao thẳng hàng ở thắt lưng Lạp Hộ cùng bốn sao góc. “Sâm Thương” (sao Sâm và sao Tâm không bao giờ cùng mọc) là thành ngữ chỉ hai người cách biệt.'],
+    ] },
+    { han: '朱雀', hv: 'Chu Tước', dir: 'phương Nam', mua: 'mùa hạ', col: '#e8452e', tu: [
+      ['井宿', '井', 'Tỉnh', 'cái giếng', 'Gem', 'Tám sao ở chân chòm Song Tử.'],
+      ['鬼宿', '鬼', 'Quỷ', 'ma quỷ', 'Cnc', 'Bốn sao bao quanh cụm sao Tổ Ong (M44) trong chòm Cự Giải.'],
+      ['柳宿', '柳', 'Liễu', 'cành liễu', 'Hya', 'Đầu chòm Trường Xà, cong như cành liễu.'],
+      ['星宿', '星', 'Tinh', 'ngôi sao', 'Hya', 'Sao chính là Alphard, sao sáng nhất Trường Xà, cũng là “tim” của chim đỏ.'],
+      ['张宿', '張', 'Trương', 'giương rộng', 'Hya', 'Sáu sao trong chòm Trường Xà, như diều chim giương rộng.'],
+      ['翼宿', '翼', 'Dực', 'đôi cánh', 'Crt', 'Hai mươi hai sao, phần lớn trong chòm Cự Tước (cái chén).'],
+      ['轸宿', '軫', 'Chẩn', 'cỗ xe', 'Crv', 'Bốn sao hình tứ giác của chòm Ô Nha (con quạ).'],
+    ] },
+  ];
+  const EXTRA = { '北斗': ['北斗', 'Bắc Đẩu', 'Bảy sao gáo nước trong chòm Đại Hùng. Cán gáo chỉ mùa: chỉ đông là xuân, chỉ nam là hạ.'], '织女': ['織女', 'Chức Nữ', 'Sao Vega rực rỡ. Bên kia Ngân Hà là chàng Ngưu Lang.'], '河鼓': ['河鼓', 'Hà Cổ', 'Sao Altair, dân gian gọi là sao Ngưu Lang, đối diện Chức Nữ qua sông Ngân.'], '天狼': ['天狼', 'Thiên Lang', 'Sirius, ngôi sao sáng nhất bầu trời đêm. Phương Đông gọi là con sói trời, phương Tây gọi là sao Chó.'], '老人': ['老人', 'Lão Nhân', 'Canopus, sáng thứ nhì bầu trời. Ở Việt Nam chỉ thấy thấp sát chân trời phía nam, xưa coi là sao trường thọ.'] };
+  const VN = { And: 'Tiên Nữ', Aqr: 'Bảo Bình', Aql: 'Thiên Ưng', Ari: 'Bạch Dương', Aur: 'Ngự Phu', Boo: 'Mục Phu', Cnc: 'Cự Giải', CMa: 'Đại Khuyển', CMi: 'Tiểu Khuyển', Cap: 'Ma Kết', Cas: 'Thiên Hậu', Cen: 'Bán Nhân Mã', Cep: 'Tiên Vương', Cet: 'Kình Ngư', Cyg: 'Thiên Nga', Crv: 'Ô Nha', Crt: 'Cự Tước', Cru: 'Nam Thập Tự', Dra: 'Thiên Long', Gem: 'Song Tử', Her: 'Vũ Tiên', Hya: 'Trường Xà', Leo: 'Sư Tử', Lib: 'Thiên Bình', Lyr: 'Thiên Cầm', Oph: 'Xà Phu', Ori: 'Lạp Hộ', Peg: 'Phi Mã', Per: 'Anh Tiên', Psc: 'Song Ngư', Sgr: 'Nhân Mã', Sco: 'Thiên Yết', Tau: 'Kim Ngưu', UMa: 'Đại Hùng', UMi: 'Tiểu Hùng', Vir: 'Xử Nữ', Del: 'Hải Đồn', Lep: 'Thiên Thố', Eri: 'Ba Giang', CrB: 'Bắc Miện', Car: 'Thuyền Để', Ser: 'Cự Xà' };
+  const TU = {};
+  TT.forEach((t, ti) => t.tu.forEach((u) => (TU[u[0]] = { u, t, ti })));
+  D.e.forEach((g) => { if (TU[g.n]) g.tu = TU[g.n]; if (EXTRA[g.n]) g.x = EXTRA[g.n]; });
+
+  /* ------------------------------------------------- PHÉP CHIẾU */
+  const cv = $('sky'), g = cv.getContext('2d');
+  let W, H, DPR, R;
+  let ra0 = 85, dec0 = 5, zoom = 1, mode = 'b', sel = null;
+  const rad = Math.PI / 180;
+  function resize() { DPR = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * DPR; cv.height = H * DPR; R = Math.min(W, H) * 0.42; }
+  resize(); addEventListener('resize', resize);
+  // Chiếu nổi (stereographic), nhìn từ bên trong thiên cầu: phương Đông nằm bên trái
+  function proj(ra, dec) {
+    const a = (ra - ra0) * rad, d = dec * rad, d0 = dec0 * rad;
+    const cosc = Math.sin(d0) * Math.sin(d) + Math.cos(d0) * Math.cos(d) * Math.cos(a);
+    if (cosc < -0.2) return null;
+    const k = (2 / (1 + cosc)) * R * zoom * 0.62;
+    return [W / 2 - k * Math.cos(d) * Math.sin(a), H / 2 - k * (Math.cos(d0) * Math.sin(d) - Math.sin(d0) * Math.cos(d) * Math.cos(a))];
+  }
+  const inView = (p) => p && p[0] > -60 && p[0] < W + 60 && p[1] > -60 && p[1] < H + 60;
+
+  function polyline(pts, close) {
+    let pen = false;
+    g.beginPath();
+    for (const [r, d] of pts) {
+      const p = proj(r, d);
+      if (!p) { pen = false; continue; }
+      if (pen) g.lineTo(p[0], p[1]); else { g.moveTo(p[0], p[1]); pen = true; }
+    }
+    g.stroke();
+  }
+
+  const OBL = 23.44 * rad;
+  const ECL = Array.from({ length: 181 }, (_, i) => { const l = i * 2 * rad; return [((Math.atan2(Math.sin(l) * Math.cos(OBL), Math.cos(l)) / rad) + 360) % 360, Math.asin(Math.sin(OBL) * Math.sin(l)) / rad]; });
+  const EQ = Array.from({ length: 181 }, (_, i) => [i * 2, 0]);
+  const unwrap = (pts) => pts;   // các đoạn đã đủ ngắn, không cần xử lý vắt qua 360°
+
+  function starColor(bv) { return bv < 0 ? '#bcd3ff' : bv < 0.4 ? '#eef2ff' : bv < 0.8 ? '#fff6e0' : bv < 1.3 ? '#ffd9a8' : '#ffb27a'; }
+
+  function draw() {
+    g.setTransform(DPR, 0, 0, DPR, 0, 0);
+    g.fillStyle = '#06070b'; g.fillRect(0, 0, W, H);
+
+    // xích đạo trời và hoàng đạo
+    g.lineWidth = 1; g.setLineDash([2, 6]);
+    g.strokeStyle = 'rgba(157,151,134,.25)'; polyline(EQ);
+    g.strokeStyle = 'rgba(201,166,80,.45)'; polyline(ECL);
+    g.setLineDash([]);
+
+    // đường nối phương Tây
+    if (mode !== 'e') {
+      g.strokeStyle = mode === 'b' ? 'rgba(201,166,80,.32)' : 'rgba(201,166,80,.6)'; g.lineWidth = 1;
+      for (const c of D.w) for (const seg of c.l) polyline(seg);
+    }
+    // đường nối phương Đông
+    if (mode !== 'w') {
+      for (const c of D.e) {
+        const tu = c.tu;
+        if (!tu && !c.x && c.r > 2 && zoom < 1.6) continue;
+        g.strokeStyle = tu ? tu.t.col : c.x ? '#e8452e' : 'rgba(232,69,46,.28)';
+        g.globalAlpha = tu ? (sel && sel !== c ? 0.45 : 0.95) : c.x ? 0.8 : 1;
+        g.lineWidth = tu ? (sel === c ? 2.4 : 1.5) : 1;
+        for (const seg of c.l) polyline(seg);
+        g.globalAlpha = 1;
+      }
+    }
+    // sao
+    for (const [r, d, m, bv] of D.s) {
+      const p = proj(r, d);
+      if (!inView(p)) continue;
+      const s = Math.max(0.5, (6.2 - m) * 0.55) * Math.min(1.6, Math.sqrt(zoom));
+      g.fillStyle = starColor(bv);
+      g.globalAlpha = m > 5 ? 0.55 : 1;
+      g.beginPath(); g.arc(p[0], p[1], s, 0, Math.PI * 2); g.fill();
+    }
+    g.globalAlpha = 1;
+
+    // nhãn
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    if (mode !== 'e') {
+      g.font = '500 11px "JetBrains Mono", monospace';
+      for (const c of D.w) {
+        if (c.r > 2 && !VN[c.id] && zoom < 1.4) continue;
+        const p = proj(c.c[0], c.c[1]); if (!inView(p)) continue;
+        g.fillStyle = mode === 'b' ? 'rgba(201,166,80,.55)' : 'rgba(201,166,80,.9)';
+        g.fillText((VN[c.id] || c.n).toUpperCase(), p[0], p[1] + (mode === 'b' ? 16 : 0));
+      }
+    }
+    if (mode !== 'w') {
+      for (const c of D.e) {
+        if (!c.tu && !c.x) continue;
+        const p = proj(c.c[0], c.c[1]); if (!inView(p)) continue;
+        const col = c.tu ? c.tu.t.col : '#e8452e';
+        const han = c.tu ? c.tu.u[1] : c.x[0], hv = c.tu ? c.tu.u[2] : c.x[1];
+        g.font = '600 13px "Chakra Petch", sans-serif';
+        const tw = g.measureText(hv).width + 14;
+        g.fillStyle = 'rgba(6,7,11,.78)'; g.beginPath(); g.roundRect(p[0] - tw / 2, p[1] - 10, tw, 20, 10); g.fill();
+        g.strokeStyle = col; g.lineWidth = 1; g.stroke();
+        g.fillStyle = col; g.fillText(hv, p[0], p[1] + 1);
+      }
+    }
+  }
+
+  /* ------------------------------------------------- TƯƠNG TÁC */
+  let raf = 0; const redraw = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; draw(); }); };
+  let drag = null; const pts = new Map();
+  cv.addEventListener('pointerdown', (e) => { cv.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); drag = { x: e.clientX, y: e.clientY, ra: ra0, dec: dec0, moved: false }; cv.classList.add('drag'); });
+  cv.addEventListener('pointermove', (e) => {
+    const prev = pts.get(e.pointerId); if (!prev) return;
+    if (pts.size === 2) {
+      const [a, b] = [...pts.values()], d0 = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      pts.set(e.pointerId, [e.clientX, e.clientY]);
+      const [c, d] = [...pts.values()];
+      zoom = Math.max(0.6, Math.min(5, zoom * Math.hypot(c[0] - d[0], c[1] - d[1]) / (d0 || 1))); drag.moved = true; redraw(); return;
+    }
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    const s = 70 / (R * zoom);
+    ra0 = (drag.ra + (e.clientX - drag.x) * s + 360) % 360;
+    dec0 = Math.max(-85, Math.min(85, drag.dec + (e.clientY - drag.y) * s));
+    if (Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) > 4) drag.moved = true;
+    redraw();
+  });
+  cv.addEventListener('pointerup', (e) => {
+    pts.delete(e.pointerId); cv.classList.remove('drag');
+    if (drag && !drag.moved) pickAt(e.clientX, e.clientY);
+    drag = null;
+  });
+  cv.addEventListener('wheel', (e) => { e.preventDefault(); zoom = Math.max(0.6, Math.min(5, zoom * (e.deltaY < 0 ? 1.12 : 0.89))); redraw(); }, { passive: false });
+
+  function pickAt(x, y) {
+    let best = null, bd = 40;
+    for (const c of D.e) {
+      if (!c.tu && !c.x) continue;
+      const p = proj(c.c[0], c.c[1]); if (!p) continue;
+      const d = Math.hypot(p[0] - x, p[1] - y); if (d < bd) { bd = d; best = c; }
+    }
+    if (best && mode !== 'w') select(best, false); else select(null);
+  }
+
+  function animateTo(ra, dec) {
+    const s = { ra: ra0, dec: dec0 }, t0 = performance.now();
+    let dra = ((ra - s.ra + 540) % 360) - 180;
+    const step = (t) => {
+      const k = Math.min(1, (t - t0) / 700), e = 1 - Math.pow(1 - k, 3);
+      ra0 = (s.ra + dra * e + 360) % 360; dec0 = s.dec + (dec - s.dec) * e; redraw();
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const card = $('card');
+  function select(c, move = true) {
+    sel = c;
+    document.querySelectorAll('.bt-tu button').forEach((b) => b.setAttribute('aria-pressed', String(!!c && b.dataset.n === c.n)));
+    if (!c) { card.classList.remove('on'); redraw(); return; }
+    if (move) animateTo(c.c[0], c.c[1]);
+    if (c.tu) {
+      const [, han, hv, nghia, wid, note] = c.tu.u, t = c.tu.t;
+      card.innerHTML = `<button class="x" aria-label="Đóng">×</button>
+        <p class="ud-kicker" style="color:${t.col}">${t.hv} · ${t.dir}</p>
+        <h2>Sao ${hv} <span class="ud-dim" style="font-size:.9rem;font-weight:500">· ${nghia}</span></h2>
+        <p>${note}</p>
+        <p>Phương Tây: <b>chòm ${VN[wid] || wid}</b>. ${t.hv} là linh thú ${t.dir}, ứng với ${t.mua}.</p>`;
+    } else {
+      card.innerHTML = `<button class="x" aria-label="Đóng">×</button>
+        <p class="ud-kicker">Tinh quan nổi tiếng</p><h2>${c.x[1]}</h2><p>${c.x[2]}</p>`;
+    }
+    card.classList.add('on');
+    card.querySelector('.x').onclick = () => select(null);
+    history.replaceState(null, '', '#' + (c.tu ? c.tu.u[2] : c.x[1]).replace(/\s/g, '-'));
+    redraw();
+  }
+
+  // bảng chọn Tứ tượng / 28 tú
+  let ttSel = 0;
+  function renderSide() {
+    $('tt').innerHTML = TT.map((t, i) => `<button data-i="${i}" style="color:${t.col}" aria-pressed="${i === ttSel}">${t.hv}</button>`).join('');
+    $('tu').innerHTML = TT[ttSel].tu.map((u) => `<button data-n="${u[0]}" aria-pressed="${!!sel && sel.n === u[0]}"><b style="color:${TT[ttSel].col}">${u[2]}</b></button>`).join('');
+  }
+  $('tt').onclick = (e) => { const b = e.target.closest('[data-i]'); if (!b) return; ttSel = +b.dataset.i; renderSide(); const first = D.e.find((c) => c.n === TT[ttSel].tu[3][0]); if (first) animateTo(first.c[0], first.c[1]); };
+  $('tu').onclick = (e) => { const b = e.target.closest('[data-n]'); if (!b) return; const c = D.e.find((x) => x.n === b.dataset.n); if (mode === 'w') setMode('b'); select(c); };
+
+  function setMode(m) { mode = m; document.querySelectorAll('[data-m]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.m === m))); if (m === 'w') select(null); redraw(); }
+  document.querySelectorAll('[data-m]').forEach((b) => (b.onclick = () => setMode(b.dataset.m)));
+
+  renderSide();
+  const h = decodeURIComponent(location.hash.slice(1)).replace(/-/g, ' ');
+  const hit = h && D.e.find((c) => (c.tu && c.tu.u[2] === h) || (c.x && c.x[1] === h));
+  if (hit) { if (hit.tu) { ttSel = hit.tu.ti; renderSide(); } ra0 = hit.c[0]; dec0 = hit.c[1]; select(hit, false); }
+  redraw();
+  document.fonts && document.fonts.ready.then(redraw);
+})();
+</script>
+</body>
+</html>
