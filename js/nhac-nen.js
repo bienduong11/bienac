@@ -41,7 +41,7 @@
 
   // ---------- bộ tổng hợp ----------
   let ctx = null, master, padBus, bellBus, verb, playing = false, timers = [];
-  const MASTER = 0.22;
+  const MASTER = 0.9;
 
   function impulse(seconds, decay) {
     const len = Math.floor(ctx.sampleRate * seconds), buf = ctx.createBuffer(2, len, ctx.sampleRate);
@@ -55,21 +55,21 @@
   function build() {
     ctx = new AC();
     master = ctx.createGain(); master.gain.value = 0;
-    const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 3;
+    const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -12; comp.ratio.value = 4; comp.knee.value = 10;
     master.connect(comp).connect(ctx.destination);
     verb = ctx.createConvolver(); verb.buffer = impulse(6, 3);
     const verbGain = ctx.createGain(); verbGain.gain.value = 0.55;
     verb.connect(verbGain).connect(master);
 
     // đệm: lọc thông thấp, tần số cắt dao động rất chậm
-    padBus = ctx.createGain(); padBus.gain.value = 0.5;
+    padBus = ctx.createGain(); padBus.gain.value = 1.0;
     const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700; lp.Q.value = 0.6;
     const lfo = ctx.createOscillator(); lfo.frequency.value = 0.03;
     const lfoAmt = ctx.createGain(); lfoAmt.gain.value = 320;
     lfo.connect(lfoAmt).connect(lp.frequency); lfo.start();
     padBus.connect(lp); lp.connect(master); lp.connect(verb);
 
-    bellBus = ctx.createGain(); bellBus.gain.value = 0.32;
+    bellBus = ctx.createGain(); bellBus.gain.value = 0.6;
     const dl = ctx.createDelay(2); dl.delayTime.value = 0.62;
     const fb = ctx.createGain(); fb.gain.value = 0.38;
     bellBus.connect(master); bellBus.connect(verb); bellBus.connect(dl); dl.connect(fb).connect(dl); dl.connect(verb);
