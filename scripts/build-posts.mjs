@@ -123,6 +123,7 @@ ${header()}
 ${body}
   </main>
   <footer class="site-footer"><p>© ${new Date().getFullYear()} Bienac.</p></footer>
+  <script src="/js/nhac-nen.js"></script>
 </body>
 </html>
 `;
