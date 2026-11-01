@@ -3,8 +3,8 @@
  * không tải file nhạc nào, không lo bản quyền, nhạc không bao giờ lặp y hệt.
  *  - Lớp đệm (pad): hợp âm ngũ cung trầm, đổi chậm mỗi ~18 giây.
  *  - Tiếng chuông: thỉnh thoảng một nốt trong vắt, có tiếng vang dài.
- * Mặc định tắt. Bật một lần thì các trang sau tự phát lại (sau cú chạm
- * đầu tiên, vì trình duyệt không cho tự phát âm thanh).
+ * Mặc định phát: thử phát ngay khi vào trang, trình duyệt chặn thì phát
+ * ở lần chạm/bấm đầu tiên. Người xem tắt thì nhớ lựa chọn đó.
  * ===================================================================== */
 (function () {
   'use strict';
@@ -137,15 +137,23 @@
 
   btn.addEventListener('click', (e) => { e.stopPropagation(); playing ? stop() : start(); });
 
-  // Đã bật ở lần trước: phát lại ngay sau cú chạm/phím đầu tiên trên trang
-  if (get() === '1') {
-    btn.classList.add('cho');
+  // Mặc định phát. Chỉ không phát khi người xem đã tự tắt (lưu '0').
+  // Trình duyệt thường chặn âm thanh trước khi người xem tương tác, nên:
+  // thử phát ngay; nếu bị chặn thì phát ở cú chạm, cú bấm hoặc phím đầu tiên.
+  if (get() !== '0') {
+    const EV = ['pointerdown', 'keydown', 'touchend', 'click'];
     const go = (e) => {
-      if (e && btn.contains(e.target)) return;
-      ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => removeEventListener(ev, go, true));
-      start();
+      if (e && btn.contains(e.target)) return;      // bấm thẳng vào nút: để nút tự xử lý
+      EV.forEach((ev) => removeEventListener(ev, go, true));
+      if (!playing) start();
     };
-    ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => addEventListener(ev, go, true));
+    EV.forEach((ev) => addEventListener(ev, go, true));
+    try {
+      build();
+      ctx.resume().then(() => {
+        if (ctx.state === 'running' && !playing) { EV.forEach((ev) => removeEventListener(ev, go, true)); start(); }
+      }).catch(() => {});
+    } catch (e) {}
   }
 
   // Ẩn tab thì tạm dừng cho đỡ tốn pin
