@@ -202,17 +202,30 @@
 
   let toastTimer;
   function toast(msg) { const el = $('toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('on'), 5000); }
+  /* Chép đồng bộ trước (giữ được "lần chạm" của người dùng, iPhone cần điều này), rồi chép thêm bằng API mới. */
+  function copySync(text) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+      document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand('copy'); ta.remove(); return ok;
+    } catch { return false; }
+  }
   async function copy(text) {
-    try { await navigator.clipboard.writeText(text); return true; } catch {}
-    try { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok; } catch { return false; }
+    const ok = copySync(text);
+    try { await navigator.clipboard.writeText(text); return true; } catch { return ok; }
   }
 
+  // App VietQR không có deeplink trên iPhone (kiểm 02/11/2026).
+  const IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+  const NO_IOS = ['nab'];
+  const shown = (a) => !(IOS && NO_IOS.includes(a[0]));
   const bankBtn = ([id, name, full]) => `<a class="sp-bank" href="${esc(deeplink(id))}" data-app="${esc(id)}" rel="noopener"><img src="/assets/banks/${esc(id)}.webp" alt="" width="44" height="44" loading="lazy" />${esc(name)}${full ? '<i>✓</i>' : ''}</a>`;
 
   function renderBanks() {
-    const top = TOP.map(appById).filter(Boolean);
+    const top = TOP.map(appById).filter(Boolean).filter(shown);
     $('banks').innerHTML = top.map(bankBtn).join('') + `<a class="sp-bank momo" href="${esc(ACC.momo)}" data-momo="1" target="_blank" rel="noopener"><span class="ic">MoMo</span>MoMo</a>`;
-    $('banks-more').innerHTML = APPS.filter((a) => !TOP.includes(a[0])).map(bankBtn).join('');
+    $('banks-more').innerHTML = APPS.filter((a) => !TOP.includes(a[0]) && shown(a)).map(bankBtn).join('');
   }
 
   /* Chạm vào một ngân hàng: chép sẵn số tài khoản (cho app không tự điền), nhớ lựa chọn, rồi để link mở app. */
@@ -222,11 +235,15 @@
     const id = a.dataset.app;
     const app = appById(id);
     if (!app) return;
+    e.preventDefault();
     store.set('bienac-bank', id);
-    if (!app[2]) { copy(ACC.number); toast(t('toastCopy').replace('{n}', ACC.number)); }
-    else toast(t('toastFill').replace('{b}', app[1]));
-    // để trình duyệt tự đi theo href (một lần chạm thật, trình duyệt trong app YouTube chấp nhận)
-    setTimeout(renderFav, 300);
+    const go = () => { location.href = deeplink(id); setTimeout(renderFav, 300); };
+    if (!app[2]) {
+      // App không tự điền: chép xong số tài khoản rồi mới mở app (mở ngay thì iPhone chưa kịp chép).
+      toast(t('toastCopy').replace('{n}', ACC.number));
+      const done = copy(ACC.number);
+      Promise.race([done, new Promise((r) => setTimeout(r, 400))]).then(() => setTimeout(go, 150));
+    } else { toast(t('toastFill').replace('{b}', app[1])); go(); }
   });
 
   function renderFav() {
@@ -258,7 +275,9 @@
     document.querySelectorAll('[data-t]').forEach((el) => { const v = t(el.dataset.t); if (v) el.innerHTML = v; });
     $('lang').textContent = t('lang');
     // Tiếng Anh: quốc tế lên trước, chuyển khoản Việt Nam xuống dưới
-    (lang === 'en' ? ['intl', 'vn', 'acc'] : ['vn', 'acc', 'intl']).forEach((id) => $('order').append($(id)));
+    // Máy tính không mở được app ngân hàng: đưa mã QR lên trước lưới ngân hàng.
+    const vnPart = mobile ? ['vn', 'acc'] : ['acc', 'vn'];
+    (lang === 'en' ? ['intl', ...vnPart] : [...vnPart, 'intl']).forEach((id) => $('order').append($(id)));
     renderFav(); renderIntl();
     if (mailAddr) $('mail').innerHTML = `${t('mail')}: <a href="mailto:${esc(mailAddr)}">${esc(mailAddr)}</a>`;
   }
