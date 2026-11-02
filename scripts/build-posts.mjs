@@ -147,6 +147,42 @@ const CHAPTER_JS = `
     </script>`;
 
 let CFG = {};
+let MANG = { video: {} };
+const TITLES = {};   // id video → tiêu đề (data/tat-ca-video.json)
+const DOVUI = {};    // id video → số câu Đố vui trỏ tới video đó
+
+/** Video liên quan: chọn tay (lien-quan) trước, rồi bù bằng video chung khái niệm trên Mạng tri thức. */
+function related(p, posts) {
+  const byKey = (k) => posts.find((q) => q.slug === k || q.short === k || q.alias.includes(k));
+  const out = [];
+  const add = (q) => { if (q && q !== p && !out.includes(q)) out.push(q); };
+  p.lienQuan.forEach((k) => add(byKey(k)));
+  const mine = (MANG.video || {})[p.video] || [];
+  if (mine.length) {
+    posts
+      .filter((q) => q.video && q !== p)
+      .map((q) => [q, ((MANG.video || {})[q.video] || []).filter((k) => mine.includes(k)).length])
+      .filter(([, n]) => n > 0)
+      .sort((a, b) => b[1] - a[1] || b[0].date.localeCompare(a[0].date))
+      .forEach(([q]) => add(q));
+  }
+  return out.slice(0, 4);
+}
+function relatedHtml(list) {
+  if (!list.length) return '';
+  return `<section class="post-related"><h2>Video liên quan</h2><ul>${list
+    .map((q) => `<li><a href="/v/${esc(q.short)}"><img src="https://i.ytimg.com/vi/${esc(q.video)}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180" /><span>${esc(q.title)}</span></a></li>`)
+    .join('')}</ul></section>`;
+}
+/** Hàng lối sang Đố vui / Mạng tri thức / Ủng hộ. */
+function exploreHtml(p) {
+  const n = DOVUI[p.video] || 0;
+  const items = [];
+  if (n) items.push(`<a href="/do-vui/#v=${esc(p.video)}"><b>Đố vui</b><span>${n} câu hỏi từ video này</span></a>`);
+  if (p.video && (MANG.video || {})[p.video]) items.push(`<a href="/mang-tri-thuc/#v=${esc(p.video)}"><b>Mạng tri thức</b><span>Video này nối với những chủ đề nào</span></a>`);
+  items.push(`<a href="/ung-ho/"><b>Ủng hộ Bienac</b><span>Giúp kênh làm thêm những video như thế này</span></a>`);
+  return `<nav class="post-explore" aria-label="Khám phá thêm">${items.join('')}</nav>`;
+}
 /** Mô tả YouTube dựng sẵn: câu mở, link, mục lục, chân mô tả, hashtag. */
 /** Markdown → chữ thuần cho mô tả YouTube: danh sách thành "• ", link thành "chữ URL". */
 function plain(md) {
@@ -176,7 +212,8 @@ function youtubeDescription(p) {
   if (m.ungHo) blocks.push(m.ungHo);
   if (m.lienKet) blocks.push(m.lienKet);
   if (p.luuY) blocks.push('Lưu ý\n' + plain(p.luuY));
-  if (p.nguon) blocks.push('Tài liệu tham khảo\n' + plain(p.nguon));
+  if (p.nguonChinh) blocks.push('Tài liệu tham khảo chính\n' + plain(p.nguonChinh) + `\nToàn bộ tài liệu: ${SITE}/v/${p.short}`);
+  else if (p.nguon) blocks.push('Tài liệu tham khảo\n' + plain(p.nguon));
   if (p.hinhAnh) blocks.push('Hình ảnh, video, âm thanh\n' + plain(p.hinhAnh));
   if (m.banQuyen) blocks.push(m.banQuyen.replace('{nam}', p.date.slice(0, 4)));
   if (p.chapters.length) {
@@ -193,6 +230,12 @@ function youtubeDescription(p) {
 
 async function main() {
   try { CFG = JSON.parse(await readFile(path.join(ROOT, 'data', 'config.json'), 'utf8')); } catch {}
+  try { MANG = JSON.parse(await readFile(path.join(ROOT, 'data', 'mang-tri-thuc.json'), 'utf8')); } catch {}
+  try { for (const v of JSON.parse(await readFile(path.join(ROOT, 'data', 'tat-ca-video.json'), 'utf8'))) TITLES[v.id] = v.title; } catch {}
+  try {
+    const dv = await readFile(path.join(ROOT, 'do-vui', 'index.html'), 'utf8');
+    for (const m of dv.matchAll(/'([\w-]{11})'\],?\s*$/gm)) DOVUI[m[1]] = (DOVUI[m[1]] || 0) + 1;
+  } catch {}
   let files = [];
   try {
     files = (await readdir(SRC)).filter((f) => f.endsWith('.md') && !f.startsWith('_'));
@@ -217,11 +260,16 @@ async function main() {
     let luuY, hinhAnh;
     [luuY, rest] = takeSection(rest, ['Lưu ý']);
     [hinhAnh, rest] = takeSection(rest, ['Hình ảnh, video, âm thanh', 'Hình ảnh']);
-    const nguon = peekSection(rest, ['Nguồn tham khảo', 'Tài liệu tham khảo']);
+    let tomTat, nguon, nguonChinh;
+    [tomTat, rest] = takeSection(rest, ['Tóm tắt']);
+    [nguonChinh, rest] = takeSection(rest, ['Nguồn chính']);
+    [nguon, rest] = takeSection(rest, ['Nguồn tham khảo', 'Tài liệu tham khảo']);
     const list = (v) => (Array.isArray(v) ? v : v ? [v] : []);
     posts.push({
       slug,
       short: data.link || slug,                 // bienac.com/v/<link>
+      alias: list(data.alias),                  // link phụ, giữ vĩnh viễn: bienac.com/v/<alias>
+      lienQuan: list(data['lien-quan']),        // tên file (hoặc link) hồ sơ liên quan, chọn tay
       title: data.title,
       description: data.description || '',
       hook: data.hook || data.description || '',
@@ -231,7 +279,9 @@ async function main() {
       hashtags: list(data.hashtags),
       chapters: parseChapters(chapText),
       fix: fixText ? marked.parse(fixText) : '',
-      luuY, hinhAnh, nguon,
+      luuY, hinhAnh, nguon, nguonChinh,
+      tomTatHtml: tomTat ? marked.parse(tomTat) : '',
+      nguonHtml: nguon ? marked.parse(nguon) : '',
       luuYHtml: luuY ? marked.parse(luuY) : '',
       hinhAnhHtml: hinhAnh ? marked.parse(hinhAnh) : '',
       html: marked.parse(rest),
@@ -270,13 +320,17 @@ async function main() {
         <h1 class="post-title">${esc(p.title)}</h1>
         ${p.description ? `<p class="post-lede">${esc(p.description)}</p>` : ''}
       </header>
+      ${p.tomTatHtml ? `<section class="post-summary"><p class="post-fix-k">Tóm tắt</p>${p.tomTatHtml}</section>` : ''}
       ${p.fix ? `<aside class="post-fix"><p class="post-fix-k">Đính chính</p>${p.fix}</aside>` : ''}
       ${player}
       ${chapterNav(p)}
-      <p class="post-short">Link ngắn của video này: <a href="/v/${esc(p.short)}">bienac.com/v/${esc(p.short)}</a></p>
+      <p class="post-short">Link ngắn của video này: <a href="/v/${esc(p.short)}">bienac.com/v/${esc(p.short)}</a>${p.nguonHtml ? ' · <a href="#nguon">Tài liệu tham khảo</a>' : ''}${p.hinhAnhHtml ? ' · <a href="#tu-lieu">Tư liệu</a>' : ''}</p>
       ${p.luuYHtml ? `<aside class="post-note"><p class="post-fix-k">Lưu ý</p>${p.luuYHtml}</aside>` : ''}
       <div class="post-body">${p.html}</div>
-      ${p.hinhAnhHtml ? `<section class="post-credits"><h2>Hình ảnh, video, âm thanh</h2>${p.hinhAnhHtml}</section>` : ''}
+      ${p.nguonHtml ? `<section class="post-refs" id="nguon"><h2>Tài liệu tham khảo</h2>${p.nguonHtml}</section>` : ''}
+      ${p.hinhAnhHtml ? `<section class="post-credits" id="tu-lieu"><h2>Hình ảnh, video, âm thanh</h2>${p.hinhAnhHtml}</section>` : ''}
+      ${relatedHtml(related(p, posts))}
+      ${exploreHtml(p)}
       <section class="post-comments">
         <h2>Thảo luận</h2>
         <div class="giscus"></div>
@@ -371,7 +425,15 @@ async function main() {
     `/v /bai-viet/ 302`,
     ...posts.map((p) => `/v/${p.short} /bai-viet/${p.slug}/ 302`),
     ...posts.filter((p) => p.short !== p.slug).map((p) => `/v/${p.slug} /bai-viet/${p.slug}/ 302`),
+    ...posts.flatMap((p) => p.alias.filter((a) => a !== p.short && a !== p.slug).map((a) => `/v/${a} /bai-viet/${p.slug}/ 302`)),
   ];
+  // Một link /v/... chỉ được trỏ một chỗ: trùng thì dừng dựng, tránh link cũ bị đè lặng lẽ.
+  const seen = new Map();
+  for (const r of redirects) {
+    const [from, to] = r.split(' ');
+    if (seen.has(from) && seen.get(from) !== to) throw new Error(`Link ${from} bị trùng: ${seen.get(from)} và ${to}`);
+    seen.set(from, to);
+  }
   await writeFile(path.join(ROOT, '_redirects'), redirects.join('\n') + '\n');
 
   // Mục lục bài cho ô tìm kiếm trang chủ

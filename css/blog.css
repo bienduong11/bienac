@@ -160,3 +160,25 @@ body.blog { background-attachment: fixed; min-height: 100vh; }
 .post-credits a { color: var(--text-dim); }
 .post-comments { margin-top: 48px; }
 .post-comments h2 { font: 700 1.3rem var(--display, sans-serif); margin-bottom: 14px; }
+
+/* Hồ sơ video: tóm tắt, tài liệu, video liên quan, lối khám phá */
+.post-summary { margin: 0 0 28px; padding: 16px 20px; border-left: 3px solid var(--cyan, #37f0cf); background: rgba(55, 240, 207, .06); border-radius: 14px; line-height: 1.65; }
+.post-summary .post-fix-k { color: var(--cyan, #37f0cf); }
+.post-summary p:last-child { margin-bottom: 0; }
+.post-refs { margin-top: 40px; font-size: .88rem; line-height: 1.6; color: var(--text-dim); }
+.post-refs h2 { font-size: 1rem; color: var(--text); margin-bottom: 8px; }
+.post-refs h3 { font-size: .9rem; color: var(--text); margin: 18px 0 6px; }
+.post-refs ol, .post-refs ul { padding-left: 1.4em; }
+.post-refs li { margin: 4px 0; overflow-wrap: anywhere; }
+.post-refs a { color: var(--cyan, #37f0cf); }
+.post-related { margin-top: 44px; }
+.post-related h2 { font-size: 1rem; margin-bottom: 12px; }
+.post-related ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.post-related a { display: block; color: var(--text); text-decoration: none; font-size: .82rem; line-height: 1.4; }
+.post-related img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; margin-bottom: 6px; display: block; }
+.post-related a:hover span { color: var(--cyan, #37f0cf); }
+.post-explore { margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.post-explore a { display: block; padding: 14px 16px; border: 1px solid rgba(236, 230, 214, .14); border-radius: 14px; background: rgba(255, 255, 255, .03); text-decoration: none; color: var(--text); transition: border-color .2s; }
+.post-explore a:hover { border-color: var(--cyan, #37f0cf); }
+.post-explore b { display: block; font-size: .92rem; margin-bottom: 2px; }
+.post-explore span { font-size: .8rem; color: var(--text-dim); }

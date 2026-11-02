@@ -97,7 +97,13 @@
   let round = [], i = 0, score = 0;
   const shuffle = (a) => { a = a.slice(); for (let k = a.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [a[k], a[j]] = [a[j], a[k]]; } return a; };
 
-  function start() { round = shuffle(BANK).slice(0, 10); i = 0; score = 0; show(); }
+  // #v=<id video>: câu hỏi của video đó lên trước, còn lại bốc ngẫu nhiên cho đủ 10.
+  const VID = new URLSearchParams(location.hash.slice(1)).get('v') || '';
+  function start() {
+    const mine = VID ? shuffle(BANK.filter((q) => q[4] === VID)) : [];
+    round = mine.concat(shuffle(BANK.filter((q) => !mine.includes(q)))).slice(0, 10);
+    i = 0; score = 0; show();
+  }
   function show() {
     const [cat, q, opts, exp, vid] = round[i];
     $('prog').style.width = (i / round.length) * 100 + '%';
