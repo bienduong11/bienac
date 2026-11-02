@@ -122,6 +122,12 @@
     try {
       const r = await fetch('/api/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fd) });
       if (!r.ok) throw 0;
+      const j = await r.json();
+      if (!j.forwarded && j.payload) {
+        // Máy chủ chưa chuyển được thư: gửi thẳng từ trình duyệt.
+        const f2 = await fetch('https://formsubmit.co/ajax/' + ADDR, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(j.payload) }).then((x) => x.json()).catch(() => ({}));
+        if (String(f2.success) === 'true') fetch('/api/message', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: j.id }) }).catch(() => {});
+      }
       msg.className = 'em-msg ok'; msg.textContent = t('sent'); e.target.reset();
     } catch { msg.className = 'em-msg err'; msg.textContent = t('fail'); }
     btn.disabled = false;
