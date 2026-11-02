@@ -1,0 +1,42 @@
+# Kiểm tra mỗi lần đẩy code/dữ liệu: file JSON trang video đúng quy cách, bản dựng chạy được,
+# mã Functions không lỗi cú pháp. Lỗi thì mở issue để không ai bỏ sót.
+name: Kiem tra du lieu
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - name: Dựng thử (nghiêm ngặt)
+        id: build
+        run: |
+          set -o pipefail
+          node scripts/build-posts.mjs --strict 2>&1 | tee build.log
+          for f in functions/*.js functions/api/*.js lib/*.js; do node --check "$f"; done
+      - name: Báo lỗi
+        if: failure() && github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create du-lieu --color c9a650 --description "Lỗi dữ liệu / bản dựng" 2>/dev/null || true
+          {
+            echo "Commit ${GITHUB_SHA::7} (${{ github.event.head_commit.author.name }}) làm bản dựng nghiêm ngặt thất bại."
+            echo "Trang lỗi bị bỏ qua, các trang khác vẫn lên. Sửa file rồi đẩy lại."
+            echo; echo '```'; tail -n 30 build.log 2>/dev/null; echo '```'
+            echo; echo "Chi tiết: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > body.md
+          gh issue create --title "Dữ liệu web lỗi: ${GITHUB_SHA::7}" --label du-lieu --body-file body.md

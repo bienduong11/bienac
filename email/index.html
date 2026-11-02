@@ -40,7 +40,7 @@
 <body class="ud" data-nen="sao">
   <header class="site-header scrolled">
     <a class="brand" href="/">
-      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
       <span class="brand-name">Bienac</span>
     </a>
     <nav class="site-nav">
@@ -81,8 +81,8 @@
   const ADDR = 'bienacvn@gmail.com';
   const MAILTO = `mailto:${ADDR}?subject=${encodeURIComponent('Lien he Bienac')}`;
   const T = {
-    vi: { sub: 'Đăng ký kênh', kicker: 'Liên hệ', title: 'Gửi thư cho <span class="accent">Bienac</span>', hint: 'Nếu app thư không tự mở, chép địa chỉ dưới đây rồi dán vào Gmail hay app thư bạn dùng.', copy: 'Sao chép địa chỉ', copied: 'Đã chép ✓', open: 'Mở app thư', formTitle: 'Hoặc nhắn ngay ở đây', formHint: 'Tin nhắn tới thẳng hộp thư của Bienac. Muốn được trả lời thì để lại email hoặc Facebook.', send: 'Gửi', name: 'Tên bạn', contact: 'Email hoặc Facebook để trả lời (không bắt buộc)', body: 'Nội dung', sending: 'Đang gửi…', sent: 'Đã gửi. Cảm ơn bạn!', fail: 'Chưa gửi được. Bạn thử lại, hoặc gửi thư tới địa chỉ ở trên.', lang: 'English' },
-    en: { sub: 'Subscribe', kicker: 'Contact', title: 'Write to <span class="accent">Bienac</span>', hint: 'If your mail app did not open, copy the address below and paste it into Gmail or any mail app.', copy: 'Copy address', copied: 'Copied ✓', open: 'Open mail app', formTitle: 'Or send a message right here', formHint: 'It goes straight to Bienac’s inbox. Leave an email or Facebook if you’d like a reply.', send: 'Send', name: 'Your name', contact: 'Email or Facebook for a reply (optional)', body: 'Message', sending: 'Sending…', sent: 'Sent. Thank you!', fail: 'Could not send. Please try again, or email the address above.', lang: 'Tiếng Việt' },
+    vi: { sub: 'Đăng ký kênh', kicker: 'Liên hệ', title: 'Gửi thư cho <span class="accent">Bienac</span>', hint: 'Nếu app thư không tự mở, chép địa chỉ dưới đây rồi dán vào Gmail hay app thư bạn dùng.', copy: 'Sao chép địa chỉ', copied: 'Đã chép ✓', open: 'Mở app thư', formTitle: 'Hoặc nhắn ngay ở đây', formHint: 'Tin nhắn tới thẳng hộp thư của Bienac. Muốn được trả lời thì để lại email hoặc Facebook.', send: 'Gửi', name: 'Tên bạn', contact: 'Email hoặc Facebook để trả lời (không bắt buộc)', body: 'Nội dung', sending: 'Đang gửi…', sent: 'Đã gửi. Cảm ơn bạn!', fail: 'Chưa gửi được. Bạn thử lại, hoặc gửi thư tới địa chỉ ở trên.', rate: 'Bạn vừa gửi mấy tin liền. Đợi ít phút rồi gửi tiếp nhé.', lang: 'English' },
+    en: { sub: 'Subscribe', kicker: 'Contact', title: 'Write to <span class="accent">Bienac</span>', hint: 'If your mail app did not open, copy the address below and paste it into Gmail or any mail app.', copy: 'Copy address', copied: 'Copied ✓', open: 'Open mail app', formTitle: 'Or send a message right here', formHint: 'It goes straight to Bienac’s inbox. Leave an email or Facebook if you’d like a reply.', send: 'Send', name: 'Your name', contact: 'Email or Facebook for a reply (optional)', body: 'Message', sending: 'Sending…', sent: 'Sent. Thank you!', fail: 'Could not send. Please try again, or email the address above.', rate: 'You just sent several messages. Please wait a few minutes.', lang: 'Tiếng Việt' },
   };
   const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
   const $ = (id) => document.getElementById(id);
@@ -121,6 +121,7 @@
     msg.className = 'em-msg'; msg.textContent = t('sending'); btn.disabled = true;
     try {
       const r = await fetch('/api/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fd) });
+      if (r.status === 429) { msg.className = 'em-msg err'; msg.textContent = t('rate'); btn.disabled = false; return; }
       if (!r.ok) throw 0;
       const j = await r.json();
       if (!j.forwarded && j.payload) {

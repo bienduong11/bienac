@@ -82,7 +82,7 @@ function parseChapters(text) {
 const header = () => `
   <header class="site-header scrolled">
     <a class="brand" href="/">
-      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
       <span class="brand-name">Bienac</span>
     </a>
     <nav class="site-nav">
@@ -123,7 +123,7 @@ ${header()}
 ${body}
   </main>
   <footer class="site-footer"><p>© ${new Date().getFullYear()} Bienac.</p></footer>
-  <script src="/js/nhac-nen.js"></script>${url.includes('/v/') ? '\n  <script src="/js/dem.js"></script>' : ''}
+${url.includes('/v/') ? '  <script src="/js/dem.js"></script>' : ''}
 </body>
 </html>
 `;
@@ -138,12 +138,26 @@ function chapterNav(p) {
 }
 const CHAPTER_JS = `
     <script>
-      document.querySelectorAll('.post-chapters a[data-s]').forEach((a) => a.addEventListener('click', (e) => {
-        const f = document.getElementById('player'); if (!f) return;
-        e.preventDefault();
-        f.src = f.src.split('?')[0] + '?start=' + a.dataset.s + '&autoplay=1';
-        f.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }));
+      (() => {
+        const box = document.getElementById('player-box'); if (!box) return;
+        const play = (start) => {
+          let f = document.getElementById('player');
+          const src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.id + '?autoplay=1&rel=0' + (start ? '&start=' + start : '');
+          if (f) { f.src = src; return f; }
+          f = document.createElement('iframe');
+          f.id = 'player'; f.src = src; f.title = box.dataset.title;
+          f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+          f.allowFullscreen = true;
+          box.replaceChildren(f);
+          return f;
+        };
+        box.querySelector('.post-play').addEventListener('click', () => play(0));
+        document.querySelectorAll('.post-chapters a[data-s]').forEach((a) => a.addEventListener('click', (e) => {
+          e.preventDefault();
+          play(a.dataset.s);
+          box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }));
+      })();
     </script>`;
 
 let CFG = {};
@@ -260,23 +274,55 @@ function groupedHtml(list, tag) {
     .map(({ g, items }) => `${g ? `<h3>${esc(g)}</h3>` : ''}<${tag}>${items
       .map((it) => {
         const text = marked.parseInline(String(it.text || '').trim() || it.url || '');
+        if (!okUrl(it.url)) return '';
         return `<li>${text}${it.url ? ` <a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '').slice(0, 60))}</a>` : ''}</li>`;
       })
       .join('')}</${tag}>`)
     .join('');
 }
 
+// --strict (dùng ở GitHub Actions): file lỗi làm dừng hẳn để báo động.
+// Bình thường (Cloudflare dựng web): bỏ qua file lỗi, các trang khác vẫn lên.
+const STRICT = process.argv.includes('--strict');
+const PROBLEMS = [];
+const problem = (msg) => { if (STRICT) throw new Error(msg); PROBLEMS.push(msg); console.warn('⚠ BỎ QUA: ' + msg); };
+const okUrl = (u) => !u || /^https?:\/\/[^\s"<>]+$/i.test(String(u));
+const YT_ID = /^[\w-]{11}$/;
+
+function checkVideo(d, f) {
+  const bad = [];
+  if (!d.youtube_id || !YT_ID.test(d.youtube_id)) bad.push('youtube_id phải là mã 11 ký tự');
+  if (!d.title || typeof d.title !== 'string') bad.push('thiếu title');
+  if (d.date && !/^\d{4}-\d{2}-\d{2}$/.test(d.date)) bad.push('date phải dạng YYYY-MM-DD');
+  for (const key of ['references', 'footage']) {
+    if (d[key] != null && !Array.isArray(d[key])) { bad.push(`${key} phải là danh sách`); continue; }
+    (d[key] || []).forEach((it, i) => {
+      if (!it || typeof it !== 'object') bad.push(`${key}[${i}] phải là {group, text, url}`);
+      else if (!okUrl(it.url)) bad.push(`${key}[${i}].url chỉ được bắt đầu bằng http:// hoặc https://`);
+    });
+  }
+  if (d.chapters != null && !Array.isArray(d.chapters)) bad.push('chapters phải là danh sách');
+  else if ((d.chapters || []).length && !jsonChapters(d.chapters).length) bad.push('chapters không đọc được mốc nào (dạng "0:00 Tên" hoặc {time, title})');
+  if (bad.length) throw new Error(`${f}: ${bad.join('; ')}`);
+}
+
 async function readJsonVideos() {
   let files = [];
   try { files = (await readdir(VIDEO_SRC)).filter((f) => f.endsWith('.json') && !f.startsWith('_')); } catch { return []; }
   const out = [];
-  for (const f of files) {
-    const d = JSON.parse(await readFile(path.join(VIDEO_SRC, f), 'utf8'));
-    const slug = d.slug || f.replace(/\.json$/, '');
-    if (slug !== f.replace(/\.json$/, '')) throw new Error(`${f}: slug "${slug}" phải trùng tên file`);
-    if (!SLUG_RE.test(slug)) throw new Error(`${f}: slug chỉ gồm chữ thường a-z, số và gạch ngang`);
-    if (!d.youtube_id || !d.title) throw new Error(`${f}: thiếu youtube_id hoặc title`);
-    out.push({ ...d, slug });
+  const ids = new Map();
+  for (const f of files.sort()) {
+    try {
+      let d;
+      try { d = JSON.parse(await readFile(path.join(VIDEO_SRC, f), 'utf8')); } catch (e) { throw new Error(`${f}: JSON hỏng (${e.message})`); }
+      const slug = d.slug || f.replace(/\.json$/, '');
+      if (slug !== f.replace(/\.json$/, '')) throw new Error(`${f}: slug "${slug}" phải trùng tên file`);
+      if (!SLUG_RE.test(slug)) throw new Error(`${f}: slug chỉ gồm chữ thường a-z, số và gạch ngang`);
+      checkVideo(d, f);
+      if (ids.has(d.youtube_id)) throw new Error(`${f}: youtube_id trùng với ${ids.get(d.youtube_id)}`);
+      ids.set(d.youtube_id, f);
+      out.push({ ...d, slug });
+    } catch (e) { problem(e.message); }
   }
   return out;
 }
@@ -358,6 +404,14 @@ async function main() {
       footageList: foot,
     });
   }
+  // Slug mới trùng link cũ của một bài .md khác video: bỏ trang mới (không để link cũ bị đè).
+  for (const m of mdPosts) {
+    if (usedMd.has(m)) continue;
+    const taken = new Set([m.short, m.slug, ...m.alias]);
+    for (let i = posts.length - 1; i >= 0; i--) {
+      if (taken.has(posts[i].slug)) { problem(`content/videos/${posts[i].slug}.json: slug trùng link cũ bienac.com/v/${posts[i].slug} của bài posts/${m.slug}.md`); posts.splice(i, 1); }
+    }
+  }
   for (const m of mdPosts) if (!usedMd.has(m)) posts.push({ ...m, kind: 'post', url: `/bai-viet/${m.slug}/`, link: `/v/${m.short}` });
   posts.sort((a, b) => (b.date || '0').localeCompare(a.date || '0'));
 
@@ -369,8 +423,9 @@ async function main() {
   for (const p of posts) {
     const url = SITE + p.url;
     const thumb = p.video ? `https://i.ytimg.com/vi/${p.video}/hqdefault.jpg` : '';
+    // Khung YouTube nặng ~1 MB: chỉ tải khi người xem bấm phát (hoặc bấm một chương).
     const player = p.video
-      ? `<div class="post-player"><iframe id="player" src="https://www.youtube-nocookie.com/embed/${esc(p.video)}" title="${esc(p.title)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
+      ? `<div class="post-player" id="player-box" data-id="${esc(p.video)}" data-title="${esc(p.title)}"><button class="post-play" type="button" aria-label="Phát video ${esc(p.title)}"><img src="https://i.ytimg.com/vi/${esc(p.video)}/hqdefault.jpg" alt="" width="480" height="360" fetchpriority="high" /><span class="post-play-ico" aria-hidden="true"></span></button></div>`
       : '';
     const jsonld = JSON.stringify({
       '@context': 'https://schema.org',
@@ -415,7 +470,7 @@ async function main() {
         <a class="btn btn-primary" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
       </footer>
     </article>
-    <script type="application/ld+json">${jsonld}</script>${p.chapters.length && p.video ? CHAPTER_JS : ''}`;
+    <script type="application/ld+json">${jsonld}</script>${p.video ? CHAPTER_JS : ''}`;
     const dir = p.kind === 'video' ? path.join(VIDEO_OUT, p.slug) : path.join(OUT, p.slug);
     await mkdir(dir, { recursive: true });
     await writeFile(path.join(dir, 'mo-ta.txt'), youtubeDescription(p));
@@ -518,6 +573,7 @@ async function main() {
   const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', '/email/', ...posts.map((p) => p.url)];
   await writeFile(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 
+  if (PROBLEMS.length) console.warn(`⚠ ${PROBLEMS.length} file dữ liệu bị bỏ qua (chạy với --strict để xem lỗi).`);
   console.log(`Đã dựng ${posts.filter((p) => p.kind === 'video').length} trang video, ${posts.filter((p) => p.kind === 'post').length} bài cũ, ${redirects.length} chuyển hướng.`);
 }
 

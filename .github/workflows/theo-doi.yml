@@ -1,0 +1,46 @@
+# Theo dõi bienac.com 30 phút một lần. Lỗi thì mở issue "Sự cố bienac.com"
+# (GitHub gửi thư báo cho chủ repo); hết lỗi thì tự đóng issue.
+name: Theo doi bienac.com
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency: theo-doi
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Kiểm tra web
+        id: run
+        run: node scripts/theo-doi.mjs
+        continue-on-error: true
+      - name: Mở hoặc cập nhật issue khi có lỗi
+        if: steps.run.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create su-co --color e8452e --description "Web gặp sự cố" 2>/dev/null || true
+          n=$(gh issue list --label su-co --state open --json number --jq '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file theo-doi.md
+          else gh issue create --title "Sự cố bienac.com" --label su-co --body-file theo-doi.md; fi
+          exit 1
+      - name: Tự đóng issue khi đã ổn
+        if: steps.run.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --label su-co --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "Đã ổn lại lúc $(TZ=Asia/Ho_Chi_Minh date '+%H:%M %d/%m/%Y')."
+          done

@@ -1,3 +1,27 @@
+# An ninh cho mọi trang.
+# - HSTS: trình duyệt luôn dùng HTTPS (1 năm). Chưa bật preload: muốn bật thì thêm "; preload" và đăng ký hstspreload.org.
+# - frame-ancestors / X-Frame-Options: không web nào khác nhúng được trang Bienac vào khung
+#   (chặn trò giả trang ủng hộ, che nút bấm). CSP không giới hạn script để không vỡ các ứng dụng.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: frame-ancestors 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; upgrade-insecure-requests
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+
+# Trang nội bộ: không lưu đệm, không lên Google.
+/stats/*
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+/cong-cu/*
+  X-Robots-Tag: noindex, nofollow
+
+# Logo ngân hàng, ảnh: đổi tên file khi đổi nội dung nên lưu lâu được.
+/assets/banks/*
+  Cache-Control: public, max-age=2592000
+
 # Cloudflare Pages: thời gian lưu đệm. CSS/JS đã có dấu ?v= theo từng lần dựng,
 # nên chỉ cần lưu ngắn để các file nạp gián tiếp cũng sớm được làm mới.
 /css/*

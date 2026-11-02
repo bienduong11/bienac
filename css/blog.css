@@ -68,6 +68,7 @@
 .post-lede { color: var(--text-dim); font-size: 1.15rem; line-height: 1.65; }
 
 .post-player {
+  position: relative;
   aspect-ratio: 16 / 9;
   max-width: 100%;
   border-radius: var(--radius);
@@ -182,3 +183,10 @@ body.blog { background-attachment: fixed; min-height: 100vh; }
 .post-explore a:hover { border-color: var(--cyan, #37f0cf); }
 .post-explore b { display: block; font-size: .92rem; margin-bottom: 2px; }
 .post-explore span { font-size: .8rem; color: var(--text-dim); }
+
+/* Khung video tải khi bấm */
+.post-play { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: #000; cursor: pointer; display: block; }
+.post-play img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .92; transition: opacity .2s; }
+.post-play:hover img { opacity: 1; }
+.post-play-ico { position: absolute; left: 50%; top: 50%; width: 72px; height: 50px; margin: -25px 0 0 -36px; border-radius: 14px; background: rgba(232, 69, 46, .95); box-shadow: 0 6px 24px rgba(0,0,0,.45); }
+.post-play-ico::after { content: ''; position: absolute; left: 29px; top: 15px; border-style: solid; border-width: 10px 0 10px 17px; border-color: transparent transparent transparent #fff; }
