@@ -1,4 +1,4 @@
-// Tin nhắn từ trang /email: lưu vào D1 rồi chuyển tới hộp thư qua FormSubmit.
+// Tin nhắn từ trang /email: lưu vào D1, trả nội dung để trình duyệt chuyển tới hộp thư qua FormSubmit.
 const TO = 'bienacvn@gmail.com';
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -16,20 +16,8 @@ export async function onRequestPost(context) {
       .bind(Date.now(), name, contact, body, country).run().catch(() => null);
     id = r && r.meta ? r.meta.last_row_id : null;
   }
-  // Chuyển thư qua FormSubmit, chờ tối đa 6 giây. Không được thì báo trình duyệt tự gửi.
-  let forwarded = false;
-  try {
-    const res = await fetch(`https://formsubmit.co/ajax/${TO}`, {
-      method: 'POST',
-      signal: AbortSignal.timeout(6000),
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: 'https://bienac.com', Referer: 'https://bienac.com/email/' },
-      body: JSON.stringify(payload(name, contact, body, country)),
-    });
-    const j = await res.json().catch(() => ({}));
-    forwarded = String(j.success) === 'true';
-  } catch {}
-  if (forwarded && env.DB && id) context.waitUntil(env.DB.prepare('UPDATE messages SET forwarded = 1 WHERE id = ?').bind(id).run().catch(() => {}));
-  return Response.json({ ok: true, forwarded, payload: forwarded ? null : payload(name, contact, body, country), id });
+  // FormSubmit chặn yêu cầu gửi từ máy chủ Cloudflare, nên trình duyệt người gửi chuyển thư (xem email/index.html).
+  return Response.json({ ok: true, forwarded: false, payload: payload(name, contact, body, country), id });
 }
 
 export const payload = (name, contact, body, country) => ({
