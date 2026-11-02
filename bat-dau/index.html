@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/style.css?v=mvm9rsiy" />
-  <link rel="stylesheet" href="/css/theme.css?v=mvm9rsiy" />
-  <link rel="stylesheet" href="/css/ung-dung.css?v=mvm9rsiy" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
   <style>
     .bd { max-width: 1080px; margin: 0 auto; padding: 108px clamp(16px, 4vw, 32px) 64px; }
     .bd-lede { margin-top: 12px; font-size: 1.05rem; line-height: 1.7; color: var(--text-dim); max-width: 660px; }
@@ -123,11 +123,11 @@
       <h2><small>${esc(p.nhan)}</small>${esc(p.ten)}</h2>
       <p>${esc(p.gioi)}</p>
       ${p.vids.length ? `<div class="bd-vids">${p.vids.map(([id, slug, t, d]) => `
-        <a class="bd-vid" href="/bai-viet/${slug}/"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/mqdefault.jpg" alt="" width="320" height="180" /><b>${esc(t)}</b><span>${esc(d)}</span></a>`).join('')}</div>` : ''}
+        <a class="bd-vid" href="/v/${slug}"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/mqdefault.jpg" alt="" width="320" height="180" /><b>${esc(t)}</b><span>${esc(d)}</span></a>`).join('')}</div>` : ''}
       <div class="bd-apps"><em>Tự tay thử</em>${p.apps.map(([t, u]) => `<a href="${u}">${esc(t)}</a>`).join('')}</div>
     </section>`).join('');
 })();
 </script>
-<script src="/js/nen-ung-dung.js?v=mvm9rsiy"></script>
+<script src="/js/nen-ung-dung.js"></script>
 </body>
 </html>

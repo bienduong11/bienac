@@ -1,0 +1,23 @@
+{
+  "slug": "asbestos",
+  "youtube_id": "Fhxhm_9PqbU",
+  "title": "Vật Liệu Kinh Dị Nhất Lịch Sử",
+  "description": "Một câu dưới 160 ký tự, hiện ở kết quả Google và khi chia sẻ lên Facebook, Zalo. Không có thì lấy đoạn đầu của summary.",
+  "date": "2025-07-04",
+  "summary": "Đoạn tóm tắt thứ nhất.\n\nĐoạn thứ hai (các đoạn cách nhau bằng một dòng trống).",
+  "chapters": [
+    { "time": "0:00", "title": "Mở đầu" },
+    { "time": "1:50", "title": "Vải lông kỳ nhông" }
+  ],
+  "references": [
+    { "group": "Vải lông kỳ nhông", "text": "Pliny the Elder, *Naturalis Historia*, quyển 19", "url": "https://www.perseus.tufts.edu/..." },
+    { "group": "Vải lông kỳ nhông", "text": "Wikipedia: Huoshu", "url": "https://en.wikipedia.org/wiki/Huoshu" },
+    { "group": "Bệnh tật", "text": "WHO, Asbestos fact sheet, 2018", "url": "https://www.who.int/news-room/fact-sheets/detail/asbestos" }
+  ],
+  "footage": [
+    { "group": "Hình ảnh", "text": "Sợi amiăng dưới kính hiển vi · USGS · Public domain", "url": "https://commons.wikimedia.org/wiki/File:Asbestos_fibers.jpg" },
+    { "group": "Video", "text": "Tư liệu dỡ mái amiăng · Tên kênh", "url": "https://www.youtube.com/watch?v=K-MCZ2wcNfo" }
+  ],
+  "related": ["leaded-gasoline", "haber-process"],
+  "tags": ["Hóa học", "Lịch sử", "Sức khỏe"]
+}

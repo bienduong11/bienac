@@ -153,7 +153,7 @@ const DOVUI = {};    // id video → số câu Đố vui trỏ tới video đó
 
 /** Video liên quan: chọn tay (lien-quan) trước, rồi bù bằng video chung khái niệm trên Mạng tri thức. */
 function related(p, posts) {
-  const byKey = (k) => posts.find((q) => q.slug === k || q.short === k || q.alias.includes(k));
+  const byKey = (k) => posts.find((q) => q.slug === k || q.short === k || q.alias.includes(k) || q.legacy.includes(k));
   const out = [];
   const add = (q) => { if (q && q !== p && !out.includes(q)) out.push(q); };
   p.lienQuan.forEach((k) => add(byKey(k)));
@@ -171,7 +171,7 @@ function related(p, posts) {
 function relatedHtml(list) {
   if (!list.length) return '';
   return `<section class="post-related"><h2>Video liên quan</h2><ul>${list
-    .map((q) => `<li><a href="/v/${esc(q.short)}"><img src="https://i.ytimg.com/vi/${esc(q.video)}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180" /><span>${esc(q.title)}</span></a></li>`)
+    .map((q) => `<li><a href="${esc(q.url)}"><img src="https://i.ytimg.com/vi/${esc(q.video)}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180" /><span>${esc(q.title)}</span></a></li>`)
     .join('')}</ul></section>`;
 }
 /** Hàng lối sang Đố vui / Mạng tri thức / Ủng hộ. */
@@ -180,7 +180,7 @@ function exploreHtml(p) {
   const items = [];
   if (n) items.push(`<a href="/do-vui/#v=${esc(p.video)}"><b>Đố vui</b><span>${n} câu hỏi từ video này</span></a>`);
   if (p.video && (MANG.video || {})[p.video]) items.push(`<a href="/mang-tri-thuc/#v=${esc(p.video)}"><b>Mạng tri thức</b><span>Video này nối với những chủ đề nào</span></a>`);
-  items.push(`<a href="/ung-ho/"><b>Ủng hộ Bienac</b><span>Giúp kênh làm thêm những video như thế này</span></a>`);
+  items.push(`<a href="/support/"><b>Ủng hộ Bienac</b><span>Giúp kênh làm thêm những video như thế này</span></a>`);
   return `<nav class="post-explore" aria-label="Khám phá thêm">${items.join('')}</nav>`;
 }
 /** Mô tả YouTube dựng sẵn: câu mở, link, mục lục, chân mô tả, hashtag. */
@@ -208,13 +208,14 @@ function youtubeDescription(p) {
   const m = CFG.moTa || {};
   const SEP = m.ngan || '▁';
   const blocks = [];
-  blocks.push([p.hook, `Nguồn, bài đọc và đính chính: ${SITE}/v/${p.short}`].filter(Boolean).join('\n'));
+  blocks.push([p.hook, `Nguồn, bài đọc và đính chính: ${SITE}${p.link}`].filter(Boolean).join('\n'));
   if (m.ungHo) blocks.push(m.ungHo);
   if (m.lienKet) blocks.push(m.lienKet);
   if (p.luuY) blocks.push('Lưu ý\n' + plain(p.luuY));
-  if (p.nguonChinh) blocks.push('Tài liệu tham khảo chính\n' + plain(p.nguonChinh) + `\nToàn bộ tài liệu: ${SITE}/v/${p.short}`);
+  if (p.nguonChinh) blocks.push('Tài liệu tham khảo chính\n' + plain(p.nguonChinh) + `\nToàn bộ tài liệu: ${SITE}${p.link}`);
   else if (p.nguon) blocks.push('Tài liệu tham khảo\n' + plain(p.nguon));
   if (p.hinhAnh) blocks.push('Hình ảnh, video, âm thanh\n' + plain(p.hinhAnh));
+  else if (p.footageList && p.footageList.length) blocks.push(`Hình ảnh, video, âm thanh: ${SITE}${p.url}#footage`);
   if (m.banQuyen) blocks.push(m.banQuyen.replace('{nam}', p.date.slice(0, 4)));
   if (p.chapters.length) {
     const ch = p.chapters.slice();
@@ -228,6 +229,58 @@ function youtubeDescription(p) {
   return out;
 }
 
+/* ---------------------------------------------------------------------
+ * Trang từng video: content/videos/<slug>.json  →  video/<slug>/index.html
+ *   { slug, youtube_id, title, summary, chapters[], references[{group,text,url}],
+ *     footage[{group,text,url}],  (tùy chọn) description, date, related[], tags[] }
+ * Nếu posts/*.md có cùng youtube_id thì gộp: bài .md góp lời bình, lưu ý, đính chính,
+ * hashtag; JSON góp tóm tắt, chương, tài liệu, tư liệu. Link cũ /v/… và /bai-viet/…
+ * của bài .md chuyển hẳn (301) sang /video/<slug>/.
+ * ------------------------------------------------------------------- */
+const VIDEO_SRC = path.join(ROOT, 'content', 'videos');
+const VIDEO_OUT = path.join(ROOT, 'video');
+const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/** Chương trong JSON: "12:34 Tên" hoặc { time, title } (chấp nhận cả t/start, name). */
+function jsonChapters(list) {
+  return (list || [])
+    .map((c) => (typeof c === 'string' ? c : `${c.time ?? c.t ?? c.start ?? ''} ${c.title ?? c.name ?? ''}`))
+    .flatMap((l) => parseChapters(l));
+}
+/** Danh sách {group, text, url} → HTML, mỗi nhóm một tiêu đề nhỏ, giữ đúng thứ tự xuất hiện. */
+function groupedHtml(list, tag) {
+  const groups = [];
+  for (const it of list || []) {
+    const g = String(it.group || '').trim();
+    let cur = groups.find((x) => x.g === g);
+    if (!cur) groups.push((cur = { g, items: [] }));
+    cur.items.push(it);
+  }
+  return groups
+    .map(({ g, items }) => `${g ? `<h3>${esc(g)}</h3>` : ''}<${tag}>${items
+      .map((it) => {
+        const text = marked.parseInline(String(it.text || '').trim() || it.url || '');
+        return `<li>${text}${it.url ? ` <a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '').slice(0, 60))}</a>` : ''}</li>`;
+      })
+      .join('')}</${tag}>`)
+    .join('');
+}
+
+async function readJsonVideos() {
+  let files = [];
+  try { files = (await readdir(VIDEO_SRC)).filter((f) => f.endsWith('.json') && !f.startsWith('_')); } catch { return []; }
+  const out = [];
+  for (const f of files) {
+    const d = JSON.parse(await readFile(path.join(VIDEO_SRC, f), 'utf8'));
+    const slug = d.slug || f.replace(/\.json$/, '');
+    if (slug !== f.replace(/\.json$/, '')) throw new Error(`${f}: slug "${slug}" phải trùng tên file`);
+    if (!SLUG_RE.test(slug)) throw new Error(`${f}: slug chỉ gồm chữ thường a-z, số và gạch ngang`);
+    if (!d.youtube_id || !d.title) throw new Error(`${f}: thiếu youtube_id hoặc title`);
+    out.push({ ...d, slug });
+  }
+  return out;
+}
+
 async function main() {
   try { CFG = JSON.parse(await readFile(path.join(ROOT, 'data', 'config.json'), 'utf8')); } catch {}
   try { MANG = JSON.parse(await readFile(path.join(ROOT, 'data', 'mang-tri-thuc.json'), 'utf8')); } catch {}
@@ -236,176 +289,184 @@ async function main() {
     const dv = await readFile(path.join(ROOT, 'do-vui', 'index.html'), 'utf8');
     for (const m of dv.matchAll(/'([\w-]{11})'\],?\s*$/gm)) DOVUI[m[1]] = (DOVUI[m[1]] || 0) + 1;
   } catch {}
-  let files = [];
-  try {
-    files = (await readdir(SRC)).filter((f) => f.endsWith('.md') && !f.startsWith('_'));
-  } catch {
-    console.log('Không có thư mục posts/, bỏ qua.');
-  }
 
-  const posts = [];
+  // 1. Bài Markdown (posts/)
+  let files = [];
+  try { files = (await readdir(SRC)).filter((f) => f.endsWith('.md') && !f.startsWith('_')); } catch {}
+  const list = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+  const mdPosts = [];
   for (const f of files) {
     const raw = await readFile(path.join(SRC, f), 'utf8');
     const { data, body } = parseFrontmatter(raw);
     if (data.draft === true) continue;
-    if (!data.title || !data.date) {
-      console.warn(`Bỏ qua ${f}: thiếu title hoặc date.`);
-      continue;
-    }
+    if (!data.title || !data.date) { console.warn(`Bỏ qua ${f}: thiếu title hoặc date.`); continue; }
     const slug = f.replace(/\.md$/, '');
-    let rest = body;
-    let chapText, fixText;
+    let rest = body, chapText, fixText, luuY, hinhAnh, tomTat, nguon, nguonChinh;
     [chapText, rest] = takeSection(rest, ['Chương', 'Mục lục']);
     [fixText, rest] = takeSection(rest, ['Đính chính']);
-    let luuY, hinhAnh;
     [luuY, rest] = takeSection(rest, ['Lưu ý']);
     [hinhAnh, rest] = takeSection(rest, ['Hình ảnh, video, âm thanh', 'Hình ảnh']);
-    let tomTat, nguon, nguonChinh;
     [tomTat, rest] = takeSection(rest, ['Tóm tắt']);
     [nguonChinh, rest] = takeSection(rest, ['Nguồn chính']);
     [nguon, rest] = takeSection(rest, ['Nguồn tham khảo', 'Tài liệu tham khảo']);
-    const list = (v) => (Array.isArray(v) ? v : v ? [v] : []);
-    posts.push({
-      slug,
-      short: data.link || slug,                 // bienac.com/v/<link>
-      alias: list(data.alias),                  // link phụ, giữ vĩnh viễn: bienac.com/v/<alias>
-      lienQuan: list(data['lien-quan']),        // tên file (hoặc link) hồ sơ liên quan, chọn tay
-      title: data.title,
-      description: data.description || '',
-      hook: data.hook || data.description || '',
-      date: String(data.date).slice(0, 10),
-      video: data.video || '',
-      tags: list(data.tags),
-      hashtags: list(data.hashtags),
-      chapters: parseChapters(chapText),
-      fix: fixText ? marked.parse(fixText) : '',
+    mdPosts.push({
+      slug, short: data.link || slug, alias: list(data.alias), lienQuan: list(data['lien-quan']), legacy: [],
+      title: data.title, description: data.description || '', hook: data.hook || data.description || '',
+      date: String(data.date).slice(0, 10), video: data.video || '', tags: list(data.tags), hashtags: list(data.hashtags),
+      chapters: parseChapters(chapText), fix: fixText ? marked.parse(fixText) : '',
       luuY, hinhAnh, nguon, nguonChinh,
-      tomTatHtml: tomTat ? marked.parse(tomTat) : '',
-      nguonHtml: nguon ? marked.parse(nguon) : '',
-      luuYHtml: luuY ? marked.parse(luuY) : '',
-      hinhAnhHtml: hinhAnh ? marked.parse(hinhAnh) : '',
-      html: marked.parse(rest),
-      minutes: readingMinutes(rest),
+      luuYHtml: luuY ? marked.parse(luuY) : '', hinhAnhHtml: hinhAnh ? marked.parse(hinhAnh) : '',
+      tomTatHtml: tomTat ? marked.parse(tomTat) : '', nguonHtml: nguon ? marked.parse(nguon) : '',
+      html: marked.parse(rest), minutes: readingMinutes(rest), bodyText: rest.trim(),
     });
   }
-  posts.sort((a, b) => b.date.localeCompare(a.date));
+
+  // 2. Trang video (content/videos/*.json), gộp với bài .md cùng video
+  const jsonVideos = await readJsonVideos();
+  const posts = [];
+  const usedMd = new Set();
+  for (const d of jsonVideos) {
+    const md = mdPosts.find((m) => m.video === d.youtube_id);
+    if (md) usedMd.add(md);
+    const chapters = jsonChapters(d.chapters);
+    const refs = d.references || [], foot = d.footage || [];
+    const summary = String(d.summary || '').trim();
+    posts.push({
+      ...(md || { alias: [], lienQuan: [], hashtags: [], tags: [], luuYHtml: '', fix: '', html: '', minutes: 0, bodyText: '', nguonChinh: '' }),
+      kind: 'video',
+      slug: d.slug,
+      short: d.slug,
+      url: `/video/${d.slug}/`,
+      link: `/video/${d.slug}`,
+      legacy: md ? [...new Set([md.short, md.slug, ...md.alias])] : [],
+      // Thảo luận cũ (giscus) gắn theo đường dẫn /bai-viet/<tên>/: giữ nguyên để không mất bình luận.
+      talk: md ? `bai-viet/${md.slug}/` : `video/${d.slug}`,
+      alias: [],
+      lienQuan: list(d.related).concat(md ? md.lienQuan : []),
+      title: d.title,
+      description: d.description || (md && md.description) || summary.split(/\n\s*\n/)[0].slice(0, 200),
+      hook: (md && md.hook) || d.description || '',
+      date: String(d.date || (md && md.date) || '').slice(0, 10),
+      video: d.youtube_id,
+      tags: list(d.tags).length ? list(d.tags) : md ? md.tags : [],
+      chapters: chapters.length ? chapters : md ? md.chapters : [],
+      tomTatHtml: summary ? marked.parse(summary) : md ? md.tomTatHtml : '',
+      nguon: refs.length ? '' : md ? md.nguon : '',
+      nguonHtml: refs.length ? groupedHtml(refs, 'ol') : md ? md.nguonHtml : '',
+      hinhAnh: foot.length ? '' : md ? md.hinhAnh : '',
+      hinhAnhHtml: foot.length ? groupedHtml(foot, 'ul') : md ? md.hinhAnhHtml : '',
+      footageList: foot,
+    });
+  }
+  for (const m of mdPosts) if (!usedMd.has(m)) posts.push({ ...m, kind: 'post', url: `/bai-viet/${m.slug}/`, link: `/v/${m.short}` });
+  posts.sort((a, b) => (b.date || '0').localeCompare(a.date || '0'));
 
   await rm(OUT, { recursive: true, force: true });
   await mkdir(OUT, { recursive: true });
+  await rm(VIDEO_OUT, { recursive: true, force: true });
 
-  // Từng bài
+  // 3. Dựng từng trang
   for (const p of posts) {
-    const url = `${SITE}/bai-viet/${p.slug}/`;
-    const thumb = p.video ? `https://i.ytimg.com/vi/${p.video}/maxresdefault.jpg` : '';
+    const url = SITE + p.url;
+    const thumb = p.video ? `https://i.ytimg.com/vi/${p.video}/hqdefault.jpg` : '';
     const player = p.video
       ? `<div class="post-player"><iframe id="player" src="https://www.youtube-nocookie.com/embed/${esc(p.video)}" title="${esc(p.title)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
       : '';
     const jsonld = JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: p.title,
+      '@type': p.kind === 'video' ? 'VideoObject' : 'Article',
+      [p.kind === 'video' ? 'name' : 'headline']: p.title,
       description: p.description,
-      datePublished: p.date,
+      ...(p.kind === 'video'
+        ? { thumbnailUrl: thumb, embedUrl: `https://www.youtube.com/embed/${p.video}`, uploadDate: p.date || undefined, contentUrl: `https://www.youtube.com/watch?v=${p.video}` }
+        : { datePublished: p.date, image: thumb || undefined }),
       inLanguage: 'vi',
       author: { '@type': 'Person', name: 'Dương Văn Biên' },
       publisher: { '@type': 'Organization', name: 'Bienac', url: SITE },
-      image: thumb || undefined,
       mainEntityOfPage: url,
     });
+    const meta = [p.date && fmtDate(p.date), p.minutes && p.bodyText ? `${p.minutes} phút đọc` : '', ...p.tags.map(esc)].filter(Boolean).join(' · ');
+    const jumps = [p.nguonHtml && '<a href="#references">Tài liệu tham khảo</a>', p.hinhAnhHtml && '<a href="#footage">Tư liệu</a>'].filter(Boolean).join(' · ');
     const body = `
     <article class="post">
-      <a class="post-back" href="/bai-viet/">← Tất cả bài viết</a>
+      <a class="post-back" href="/bai-viet/">← Tất cả video</a>
       <header class="post-head">
-        <p class="post-meta">${fmtDate(p.date)} · ${p.minutes} phút đọc${p.tags.length ? ' · ' + p.tags.map(esc).join(' · ') : ''}</p>
+        ${meta ? `<p class="post-meta">${meta}</p>` : ''}
         <h1 class="post-title">${esc(p.title)}</h1>
-        ${p.description ? `<p class="post-lede">${esc(p.description)}</p>` : ''}
       </header>
-      ${p.tomTatHtml ? `<section class="post-summary"><p class="post-fix-k">Tóm tắt</p>${p.tomTatHtml}</section>` : ''}
+      ${p.tomTatHtml ? `<section class="post-summary" id="summary"><p class="post-fix-k">Tóm tắt</p>${p.tomTatHtml}</section>` : p.description ? `<p class="post-lede">${esc(p.description)}</p>` : ''}
       ${p.fix ? `<aside class="post-fix"><p class="post-fix-k">Đính chính</p>${p.fix}</aside>` : ''}
       ${player}
-      ${chapterNav(p)}
-      <p class="post-short">Link ngắn của video này: <a href="/v/${esc(p.short)}">bienac.com/v/${esc(p.short)}</a>${p.nguonHtml ? ' · <a href="#nguon">Tài liệu tham khảo</a>' : ''}${p.hinhAnhHtml ? ' · <a href="#tu-lieu">Tư liệu</a>' : ''}</p>
+      <div id="chapters">${chapterNav(p)}</div>
+      <p class="post-short">Link: <a href="${esc(p.link)}">bienac.com${esc(p.link)}</a>${jumps ? ' · ' + jumps : ''}</p>
       ${p.luuYHtml ? `<aside class="post-note"><p class="post-fix-k">Lưu ý</p>${p.luuYHtml}</aside>` : ''}
-      <div class="post-body">${p.html}</div>
-      ${p.nguonHtml ? `<section class="post-refs" id="nguon"><h2>Tài liệu tham khảo</h2>${p.nguonHtml}</section>` : ''}
-      ${p.hinhAnhHtml ? `<section class="post-credits" id="tu-lieu"><h2>Hình ảnh, video, âm thanh</h2>${p.hinhAnhHtml}</section>` : ''}
+      ${p.bodyText ? `<div class="post-body">${p.html}</div>` : ''}
+      ${p.nguonHtml ? `<section class="post-refs" id="references"><h2>Tài liệu tham khảo</h2>${p.nguonHtml}</section>` : ''}
+      ${p.hinhAnhHtml ? `<section class="post-credits post-refs" id="footage"><h2>Hình ảnh, video, âm thanh</h2>${p.hinhAnhHtml}</section>` : ''}
       ${relatedHtml(related(p, posts))}
       ${exploreHtml(p)}
       <section class="post-comments">
         <h2>Thảo luận</h2>
         <div class="giscus"></div>
-        <script src="https://giscus.app/client.js" data-repo="bienduong11/bienac" data-repo-id="R_kgDOVVi1CQ" data-category="General" data-category-id="DIC_kwDOVVi1Cc4DJfa2" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="transparent_dark" data-lang="vi" data-loading="lazy" crossorigin="anonymous" async></script>
+        <script src="https://giscus.app/client.js" data-repo="bienduong11/bienac" data-repo-id="R_kgDOVVi1CQ" data-category="General" data-category-id="DIC_kwDOVVi1Cc4DJfa2" data-mapping="specific" data-term="${esc(p.talk || `bai-viet/${p.slug}/`)}" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="transparent_dark" data-lang="vi" data-loading="lazy" crossorigin="anonymous" async></script>
       </section>
       <footer class="post-cta">
-        <p>Bài viết này đi kèm video trên kênh Bienac. Đăng ký để không lỡ những câu chuyện tiếp theo.</p>
+        <p>Trang này đi kèm video trên kênh Bienac. Đăng ký để không lỡ những câu chuyện tiếp theo.</p>
         <a class="btn btn-primary" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
       </footer>
     </article>
     <script type="application/ld+json">${jsonld}</script>${p.chapters.length && p.video ? CHAPTER_JS : ''}`;
-    await mkdir(path.join(OUT, p.slug), { recursive: true });
-    await writeFile(path.join(OUT, p.slug, 'mo-ta.txt'), youtubeDescription(p));
-    await writeFile(
-      path.join(OUT, p.slug, 'index.html'),
-      page({ title: `${p.title} · Bienac`, description: p.description, url, image: thumb, body, type: 'article' })
-    );
+    const dir = p.kind === 'video' ? path.join(VIDEO_OUT, p.slug) : path.join(OUT, p.slug);
+    await mkdir(dir, { recursive: true });
+    await writeFile(path.join(dir, 'mo-ta.txt'), youtubeDescription(p));
+    await writeFile(path.join(dir, 'index.html'), page({ title: `${p.title} · Bienac`, description: p.description, url, image: thumb, body, type: p.kind === 'video' ? 'video.other' : 'article' }));
   }
 
-  // Trang danh sách
-  const list = posts.length
+  // 4. Trang danh sách
+  const listHtml = posts.length
     ? `<ul class="post-list">${posts
-        .map(
-          (p) => `
-        <li><a class="post-item" href="/bai-viet/${p.slug}/">
+        .map((p) => `
+        <li><a class="post-item" href="${p.url}">
           ${p.video ? `<img class="post-item-thumb" src="https://i.ytimg.com/vi/${p.video}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360" />` : ''}
           <div class="post-item-text">
-            <p class="post-meta">${fmtDate(p.date)} · ${p.minutes} phút đọc</p>
+            ${p.date ? `<p class="post-meta">${fmtDate(p.date)}</p>` : ''}
             <h2>${esc(p.title)}</h2>
             ${p.description ? `<p>${esc(p.description)}</p>` : ''}
           </div>
-        </a></li>`
-        )
+        </a></li>`)
         .join('')}
       </ul>`
-    : `<div class="post-empty"><h2>Bài viết đầu tiên đang được biên soạn</h2><p>Trong lúc chờ, bạn xem video trên kênh nhé.</p><a class="btn btn-ghost" href="/#videos">Xem video</a></div>`;
-
-  await writeFile(
-    path.join(OUT, 'index.html'),
-    page({
-      title: 'Bài viết · Bienac',
-      image: `${SITE}/assets/og/bai-viet.jpg`,
-      description: 'Nội dung các video của Bienac ở dạng đọc, kèm đầy đủ nguồn tham khảo.',
-      url: `${SITE}/bai-viet/`,
-      body: `
+    : `<div class="post-empty"><h2>Đang biên soạn</h2><p>Trong lúc chờ, bạn xem video trên kênh nhé.</p><a class="btn btn-ghost" href="/#videos">Xem video</a></div>`;
+  await writeFile(path.join(OUT, 'index.html'), page({
+    title: 'Bài viết · Bienac',
+    image: `${SITE}/assets/og/bai-viet.jpg`,
+    description: 'Hồ sơ từng video của Bienac: tóm tắt, chương, tài liệu tham khảo và tư liệu.',
+    url: `${SITE}/bai-viet/`,
+    body: `
     <section class="blog-intro">
       <h1 class="section-title">Bài <span class="accent">viết</span></h1>
-      <p class="section-sub">Câu chuyện trong mỗi video, viết lại để đọc chậm, kèm đủ nguồn để bạn tự kiểm chứng.</p>
+      <p class="section-sub">Mỗi video một trang: tóm tắt, chương, đủ nguồn để bạn tự kiểm chứng.</p>
     </section>
-    ${list}`,
-    })
-  );
+    ${listHtml}`,
+  }));
 
-  // Trang công cụ: chép mô tả YouTube (không cho Google lập chỉ mục)
+  // 5. Công cụ chép mô tả YouTube (không lên Google)
   const tool = posts.filter((p) => p.video || p.chapters.length);
   const TOOL_OUT = path.join(ROOT, 'cong-cu', 'mo-ta');
   await rm(path.join(ROOT, 'cong-cu'), { recursive: true, force: true });
   await mkdir(TOOL_OUT, { recursive: true });
-  await writeFile(
-    path.join(TOOL_OUT, 'index.html'),
-    page({
-      title: 'Mô tả YouTube · Bienac',
-      description: 'Công cụ nội bộ.',
-      url: `${SITE}/cong-cu/mo-ta/`,
-      noindex: true,
-      body: `
+  await writeFile(path.join(TOOL_OUT, 'index.html'), page({
+    title: 'Mô tả YouTube · Bienac', description: 'Công cụ nội bộ.', url: `${SITE}/cong-cu/mo-ta/`, noindex: true,
+    body: `
     <section class="blog-intro">
       <h1 class="section-title">Mô tả <span class="accent">YouTube</span></h1>
-      <p class="section-sub">Dựng tự động từ thư mục posts/. Bấm “Sao chép” rồi dán vào ô mô tả trên YouTube Studio.</p>
+      <p class="section-sub">Dựng tự động. Bấm “Sao chép” rồi dán vào ô mô tả trên YouTube Studio.</p>
     </section>
-    ${tool.length ? tool.map((p) => `
+    ${tool.map((p) => `
     <section class="tool-item">
       <div class="tool-head"><h2>${esc(p.title)}</h2><button class="btn btn-ghost" type="button" data-copy>Sao chép</button></div>
       <textarea readonly rows="10">${esc(youtubeDescription(p))}</textarea>
-    </section>`).join('') : '<div class="post-empty"><h2>Chưa có video nào</h2><p>Thêm file .md có dòng video: vào thư mục posts/.</p></div>'}
+    </section>`).join('')}
     <script>
       document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
         const t = b.closest('.tool-item').querySelector('textarea');
@@ -413,43 +474,51 @@ async function main() {
         b.textContent = 'Đã chép ✓'; setTimeout(() => (b.textContent = 'Sao chép'), 1600);
       }));
     </script>`,
-    })
-  );
+  }));
 
-  // Link ngắn (Cloudflare Pages đọc file _redirects ở thư mục gốc)
+  // 6. Chuyển hướng (Cloudflare Pages đọc _redirects ở thư mục gốc)
   const yt = (CFG.channelUrl || 'https://www.youtube.com/@bienac').replace(/\/$/, '');
   const redirects = [
     `/dk ${yt}?sub_confirmation=1 302`,
     `/yt ${yt} 302`,
     `/goi-y /#request 302`,
+    `/ung-ho /support/ 301`,
+    `/ung-ho/ /support/ 301`,
+    `/donate /support/ 301`,
     `/v /bai-viet/ 302`,
-    ...posts.map((p) => `/v/${p.short} /bai-viet/${p.slug}/ 302`),
-    ...posts.filter((p) => p.short !== p.slug).map((p) => `/v/${p.slug} /bai-viet/${p.slug}/ 302`),
-    ...posts.flatMap((p) => p.alias.filter((a) => a !== p.short && a !== p.slug).map((a) => `/v/${a} /bai-viet/${p.slug}/ 302`)),
+    `/video /bai-viet/ 302`,
+    `/video/ /bai-viet/ 302`,
   ];
-  // Một link /v/... chỉ được trỏ một chỗ: trùng thì dừng dựng, tránh link cũ bị đè lặng lẽ.
+  for (const p of posts) {
+    if (p.kind === 'video') {
+      for (const k of p.legacy) redirects.push(`/v/${k} ${p.url} 301`);
+      const mdSlug = p.talk.startsWith('bai-viet/') ? p.talk.split('/')[1] : '';
+      if (mdSlug) redirects.push(`/bai-viet/${mdSlug}/ ${p.url} 301`, `/bai-viet/${mdSlug} ${p.url} 301`);
+    } else {
+      redirects.push(`/v/${p.short} ${p.url} 302`);
+      if (p.short !== p.slug) redirects.push(`/v/${p.slug} ${p.url} 302`);
+      for (const a of p.alias) if (a !== p.short && a !== p.slug) redirects.push(`/v/${a} ${p.url} 302`);
+    }
+  }
+  // Mỗi đường dẫn chỉ được trỏ một chỗ, và không được đè lên trang thật đang có.
   const seen = new Map();
   for (const r of redirects) {
     const [from, to] = r.split(' ');
-    if (seen.has(from) && seen.get(from) !== to) throw new Error(`Link ${from} bị trùng: ${seen.get(from)} và ${to}`);
+    if (seen.has(from) && seen.get(from) !== to) throw new Error(`Đường dẫn ${from} bị trùng: ${seen.get(from)} và ${to}`);
     seen.set(from, to);
   }
-  await writeFile(path.join(ROOT, '_redirects'), redirects.join('\n') + '\n');
+  for (const p of posts) if (p.kind === 'video' && seen.has(p.url)) throw new Error(`${p.url} vừa là trang vừa là chuyển hướng`);
+  await writeFile(path.join(ROOT, '_redirects'), [...new Set(redirects)].join('\n') + '\n');
 
-  // Mục lục bài cho ô tìm kiếm trang chủ
-  await writeFile(path.join(OUT, 'muc-luc.json'), JSON.stringify(posts.map((p) => ({ slug: p.slug, title: p.title, description: p.description, video: p.video }))));
+  // 7. Dữ liệu cho ô tìm kiếm, Mạng tri thức
+  await writeFile(path.join(OUT, 'muc-luc.json'), JSON.stringify(posts.map((p) => ({ slug: p.slug, url: p.url, title: p.title, description: p.description, video: p.video }))));
+  await writeFile(path.join(OUT, 'ho-so.json'), JSON.stringify(Object.fromEntries(posts.filter((p) => p.video).map((p) => [p.video, p.url]))));
 
-  // Bảng tra video → hồ sơ (Mạng tri thức dùng)
-  await writeFile(path.join(OUT, 'ho-so.json'), JSON.stringify(Object.fromEntries(posts.filter((p) => p.video).map((p) => [p.video, `/v/${p.short}`]))));
+  // 8. Sitemap
+  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', ...posts.map((p) => p.url)];
+  await writeFile(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 
-  // Sitemap
-  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/ung-ho/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', ...posts.map((p) => `/bai-viet/${p.slug}/`)];
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-    .map((u) => `  <url><loc>${SITE}${u}</loc></url>`)
-    .join('\n')}\n</urlset>\n`;
-  await writeFile(path.join(ROOT, 'sitemap.xml'), sitemap);
-
-  console.log(`Đã dựng ${posts.length} bài viết, ${redirects.length} link ngắn.`);
+  console.log(`Đã dựng ${posts.filter((p) => p.kind === 'video').length} trang video, ${posts.filter((p) => p.kind === 'post').length} bài cũ, ${redirects.length} chuyển hướng.`);
 }
 
 main().catch((e) => {

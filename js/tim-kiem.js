@@ -34,7 +34,7 @@
     ['Trộn ánh sáng', '/tron-mau/', 'tron mau anh sang rgb te bao non'],
     ['Con lắc kép', '/con-lac/', 'con lac kep hon loan'],
     ['Bắt đầu từ đây', '/bat-dau/', 'bat dau moi xem gioi thieu lo trinh nen xem video nao'],
-    ['Ủng hộ Bienac', '/ung-ho/', 'ung ho donate'],
+    ['Ủng hộ Bienac', '/support/', 'ung ho donate'],
   ];
   const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase();
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -45,7 +45,7 @@
     const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
     const [videos, posts, hoSo] = await Promise.all([get('/data/tat-ca-video.json'), get('/bai-viet/muc-luc.json'), get('/bai-viet/ho-so.json')]);
     data = [];
-    (posts || []).forEach((p) => data.push({ k: 'Bài viết', t: p.title, u: `/bai-viet/${p.slug}/`, img: p.video ? `https://i.ytimg.com/vi/${p.video}/mqdefault.jpg` : '', f: fold(p.title + ' ' + (p.description || '')) }));
+    (posts || []).forEach((p) => data.push({ k: 'Bài viết', t: p.title, u: p.url || `/bai-viet/${p.slug}/`, img: p.video ? `https://i.ytimg.com/vi/${p.video}/mqdefault.jpg` : '', f: fold(p.title + ' ' + (p.description || '')) }));
     (videos || []).forEach((v) => data.push({ k: 'Video', t: v.title, u: (hoSo && hoSo[v.id]) || `https://www.youtube.com/watch?v=${v.id}`, img: `https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`, f: fold(v.title) }));
     APPS.forEach(([t, u, kw]) => data.push({ k: 'Ứng dụng', t, u, ic: '◈', f: fold(t) + ' ' + kw }));
   }
