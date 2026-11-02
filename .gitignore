@@ -4,4 +4,5 @@ bai-viet/
 sitemap.xml
 cong-cu/
 _redirects
-/video/
+/v/
+.wrangler/

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liên hệ Bienac · Contact</title>
+  <meta name="description" content="Gửi thư cho Bienac: bienacvn@gmail.com, hoặc nhắn ngay trên trang." />
+  <link rel="canonical" href="https://bienac.com/email/" />
+  <meta property="og:title" content="Liên hệ Bienac" />
+  <meta property="og:description" content="Gửi thư cho Bienac: bienacvn@gmail.com, hoặc nhắn ngay trên trang." />
+  <meta property="og:url" content="https://bienac.com/email/" />
+  <meta property="og:image" content="https://bienac.com/assets/preview.jpeg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .em { max-width: 640px; margin: 0 auto; padding: 100px clamp(14px, 4vw, 32px) 64px; }
+    .em-top { display: flex; justify-content: space-between; align-items: center; }
+    .em-lang { background: none; border: 1px solid rgba(236,230,214,.2); color: var(--text-dim); border-radius: 999px; padding: 6px 14px; font: 600 .78rem var(--mono); cursor: pointer; }
+    .em-card { padding: 22px; margin-top: 16px; }
+    .em-card h2 { font: 700 1.1rem/1.3 var(--display); margin-bottom: 8px; }
+    .em-card p { font-size: .9rem; line-height: 1.6; color: var(--text-dim); }
+    .em-addr { display: block; margin: 14px 0 12px; font: 700 clamp(1.25rem, 6vw, 1.7rem)/1.2 var(--mono); color: var(--cyan); word-break: break-all; text-decoration: none; }
+    .em-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .em-row .btn, .em-send { font: 700 .95rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 13px 20px; }
+    .em-f { display: grid; gap: 10px; margin-top: 14px; }
+    .em-f input, .em-f textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(236,230,214,.18); background: rgba(255,255,255,.04); color: var(--text); font: 400 1rem/1.5 'Be Vietnam Pro', sans-serif; }
+    .em-f textarea { min-height: 140px; resize: vertical; }
+    .em-f input:focus, .em-f textarea:focus { outline: none; border-color: var(--cyan); }
+    .em-hp { position: absolute; left: -9999px; }
+    .em-msg { font-size: .9rem; min-height: 1.4em; }
+    .em-msg.ok { color: var(--cyan); } .em-msg.err { color: #e8452e; }
+  </style>
+</head>
+<body class="ud" data-nen="sao">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo.svg" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener" data-t="sub">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="em">
+    <div class="em-top"><p class="ud-kicker" data-t="kicker">Liên hệ</p><button class="em-lang" id="lang" type="button">English</button></div>
+    <h1 class="ud-title" data-t="title">Gửi thư cho <span class="accent">Bienac</span></h1>
+
+    <section class="ud-panel em-card">
+      <p data-t="hint">Nếu app thư không tự mở, chép địa chỉ dưới đây rồi dán vào Gmail hay app thư bạn dùng.</p>
+      <a class="em-addr" id="addr" href="mailto:bienacvn@gmail.com?subject=Lien%20he%20Bienac">bienacvn@gmail.com</a>
+      <div class="em-row">
+        <button class="btn btn-primary" id="copy" type="button" data-t="copy">Sao chép địa chỉ</button>
+        <a class="btn btn-ghost" id="open" href="mailto:bienacvn@gmail.com?subject=Lien%20he%20Bienac" data-t="open">Mở app thư</a>
+      </div>
+    </section>
+
+    <section class="ud-panel em-card">
+      <h2 data-t="formTitle">Hoặc nhắn ngay ở đây</h2>
+      <p data-t="formHint">Tin nhắn tới thẳng hộp thư của Bienac. Muốn được trả lời thì để lại email hoặc Facebook.</p>
+      <form class="em-f" id="f">
+        <input name="name" autocomplete="name" maxlength="120" data-ph="name" placeholder="Tên bạn" />
+        <input name="contact" autocomplete="email" maxlength="200" data-ph="contact" placeholder="Email hoặc Facebook để trả lời (không bắt buộc)" />
+        <textarea name="body" required maxlength="5000" data-ph="body" placeholder="Nội dung"></textarea>
+        <input class="em-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="em-row" style="align-items:center"><button class="btn btn-primary em-send" type="submit" data-t="send">Gửi</button><span class="em-msg" id="msg" role="status"></span></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
+<script>
+(() => {
+  const ADDR = 'bienacvn@gmail.com';
+  const MAILTO = `mailto:${ADDR}?subject=${encodeURIComponent('Lien he Bienac')}`;
+  const T = {
+    vi: { sub: 'Đăng ký kênh', kicker: 'Liên hệ', title: 'Gửi thư cho <span class="accent">Bienac</span>', hint: 'Nếu app thư không tự mở, chép địa chỉ dưới đây rồi dán vào Gmail hay app thư bạn dùng.', copy: 'Sao chép địa chỉ', copied: 'Đã chép ✓', open: 'Mở app thư', formTitle: 'Hoặc nhắn ngay ở đây', formHint: 'Tin nhắn tới thẳng hộp thư của Bienac. Muốn được trả lời thì để lại email hoặc Facebook.', send: 'Gửi', name: 'Tên bạn', contact: 'Email hoặc Facebook để trả lời (không bắt buộc)', body: 'Nội dung', sending: 'Đang gửi…', sent: 'Đã gửi. Cảm ơn bạn!', fail: 'Chưa gửi được. Bạn thử lại, hoặc gửi thư tới địa chỉ ở trên.', lang: 'English' },
+    en: { sub: 'Subscribe', kicker: 'Contact', title: 'Write to <span class="accent">Bienac</span>', hint: 'If your mail app did not open, copy the address below and paste it into Gmail or any mail app.', copy: 'Copy address', copied: 'Copied ✓', open: 'Open mail app', formTitle: 'Or send a message right here', formHint: 'It goes straight to Bienac’s inbox. Leave an email or Facebook if you’d like a reply.', send: 'Send', name: 'Your name', contact: 'Email or Facebook for a reply (optional)', body: 'Message', sending: 'Sending…', sent: 'Sent. Thank you!', fail: 'Could not send. Please try again, or email the address above.', lang: 'Tiếng Việt' },
+  };
+  const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
+  const $ = (id) => document.getElementById(id);
+  const qs = new URLSearchParams(location.search).get('lang');
+  let lang = qs === 'en' || qs === 'vi' ? qs : store.get('bienac-lang') || ((navigator.language || 'vi').toLowerCase().startsWith('vi') ? 'vi' : 'en');
+  const t = (k) => T[lang][k];
+  function apply() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-t]').forEach((el) => (el.innerHTML = t(el.dataset.t)));
+    document.querySelectorAll('[data-ph]').forEach((el) => (el.placeholder = t(el.dataset.ph)));
+    $('lang').textContent = t('lang');
+  }
+  $('lang').onclick = () => { lang = lang === 'vi' ? 'en' : 'vi'; store.set('bienac-lang', lang); apply(); };
+  apply();
+  $('y').textContent = new Date().getFullYear();
+
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    try { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok; } catch { return false; }
+  }
+  $('copy').onclick = async () => { if (await copy(ADDR)) { $('copy').textContent = t('copied'); setTimeout(() => ($('copy').textContent = t('copy')), 1800); } };
+
+  // Tự mở app thư một lần mỗi phiên. Trình duyệt trong app YouTube có thể chặn: khi đó địa chỉ và nút vẫn ở sẵn.
+  try {
+    if (!sessionStorage.getItem('bienac-mail') && !/[?&]stay=1/.test(location.search)) {
+      sessionStorage.setItem('bienac-mail', '1');
+      setTimeout(() => { location.href = MAILTO; }, 500);
+    }
+  } catch {}
+
+  $('f').onsubmit = async (e) => {
+    e.preventDefault();
+    const fd = Object.fromEntries(new FormData(e.target));
+    if (!String(fd.body || '').trim()) return;
+    const msg = $('msg'); const btn = e.target.querySelector('button[type=submit]');
+    msg.className = 'em-msg'; msg.textContent = t('sending'); btn.disabled = true;
+    try {
+      const r = await fetch('/api/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fd) });
+      if (!r.ok) throw 0;
+      msg.className = 'em-msg ok'; msg.textContent = t('sent'); e.target.reset();
+    } catch { msg.className = 'em-msg err'; msg.textContent = t('fail'); }
+    btn.disabled = false;
+  };
+})();
+</script>
+<script src="/js/dem.js"></script>
+<script src="/js/nen-ung-dung.js"></script>
+</body>
+</html>

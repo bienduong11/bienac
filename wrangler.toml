@@ -1,0 +1,9 @@
+# Cấu hình Cloudflare Pages cho bienac.com (Functions + cơ sở dữ liệu đếm lượt).
+name = "bienac"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bienac-stats"
+database_id = "ccccba32-f6e2-458d-aa19-6f0ad752f502"

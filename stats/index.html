@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lượt bấm · Bienac</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <style>
+    .st { max-width: 860px; margin: 0 auto; padding: 96px clamp(12px, 4vw, 28px) 60px; }
+    .st table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: .88rem; }
+    .st th, .st td { padding: 9px 8px; border-bottom: 1px solid rgba(236,230,214,.1); text-align: right; font-variant-numeric: tabular-nums; }
+    .st th:first-child, .st td:first-child { text-align: left; }
+    .st th { color: var(--text-dim); font: 600 .72rem var(--mono); text-transform: uppercase; }
+    .st td:first-child { font-family: var(--mono); color: var(--text); }
+    .st small { color: var(--text-dim); }
+    .st h2 { margin-top: 32px; font: 700 1.05rem var(--display); }
+    .st-card { padding: 18px; margin-top: 14px; overflow-x: auto; }
+  </style>
+</head>
+<body class="ud">
+  <main class="st">
+    <p class="ud-kicker">Nội bộ</p>
+    <h1 class="ud-title">Lượt <span class="accent">bấm</span></h1>
+    <p style="color:var(--text-dim)">Link ngắn (bienac.com/facebook…) và lượt mở trang /v/…, /support, /email. Không lưu IP hay cookie. <span id="at"></span></p>
+    <section class="ud-panel st-card"><table id="t"><thead><tr><th>Đường dẫn</th><th>24 giờ</th><th>7 ngày</th><th>30 ngày</th><th>Tất cả</th><th>Điện thoại</th></tr></thead><tbody></tbody></table></section>
+    <h2>Nguồn 30 ngày</h2>
+    <section class="ud-panel st-card"><table id="s"><thead><tr><th>Đến từ</th><th>Lượt</th></tr></thead><tbody></tbody></table></section>
+  </main>
+<script>
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  fetch('/api/stats').then((r) => r.json()).then((d) => {
+    document.querySelector('#t tbody').innerHTML = (d.rows || []).map((r) => `<tr><td>${esc(r.path)} <small>${r.kind === 'link' ? 'link' : 'trang'}</small></td><td>${r.d1}</td><td>${r.d7}</td><td>${r.d30}</td><td>${r.total}</td><td>${r.total ? Math.round((r.mobile / r.total) * 100) + '%' : ''}</td></tr>`).join('') || '<tr><td colspan="6">Chưa có lượt nào.</td></tr>';
+    document.querySelector('#s tbody').innerHTML = (d.sources || []).map((r) => `<tr><td>${esc(r.ref || 'gõ thẳng / không rõ')}</td><td>${r.n}</td></tr>`).join('');
+    document.getElementById('at').textContent = 'Cập nhật ' + new Date(d.at).toLocaleString('vi-VN');
+  }).catch(() => { document.querySelector('#t tbody').innerHTML = '<tr><td colspan="6">Không tải được số liệu.</td></tr>'; });
+</script>
+</body>
+</html>

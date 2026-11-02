@@ -123,7 +123,7 @@ ${header()}
 ${body}
   </main>
   <footer class="site-footer"><p>© ${new Date().getFullYear()} Bienac.</p></footer>
-  <script src="/js/nhac-nen.js"></script>
+  <script src="/js/nhac-nen.js"></script>${url.includes('/v/') ? '\n  <script src="/js/dem.js"></script>' : ''}
 </body>
 </html>
 `;
@@ -230,15 +230,15 @@ function youtubeDescription(p) {
 }
 
 /* ---------------------------------------------------------------------
- * Trang từng video: content/videos/<slug>.json  →  video/<slug>/index.html
+ * Trang từng video: content/videos/<slug>.json  →  v/<slug>/index.html  (bienac.com/v/<slug>)
  *   { slug, youtube_id, title, summary, chapters[], references[{group,text,url}],
  *     footage[{group,text,url}],  (tùy chọn) description, date, related[], tags[] }
  * Nếu posts/*.md có cùng youtube_id thì gộp: bài .md góp lời bình, lưu ý, đính chính,
  * hashtag; JSON góp tóm tắt, chương, tài liệu, tư liệu. Link cũ /v/… và /bai-viet/…
- * của bài .md chuyển hẳn (301) sang /video/<slug>/.
+ * của bài .md chuyển hẳn (301) sang /v/<slug>/.
  * ------------------------------------------------------------------- */
 const VIDEO_SRC = path.join(ROOT, 'content', 'videos');
-const VIDEO_OUT = path.join(ROOT, 'video');
+const VIDEO_OUT = path.join(ROOT, 'v');
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /** Chương trong JSON: "12:34 Tên" hoặc { time, title } (chấp nhận cả t/start, name). */
@@ -336,11 +336,11 @@ async function main() {
       kind: 'video',
       slug: d.slug,
       short: d.slug,
-      url: `/video/${d.slug}/`,
-      link: `/video/${d.slug}`,
+      url: `/v/${d.slug}/`,
+      link: `/v/${d.slug}`,
       legacy: md ? [...new Set([md.short, md.slug, ...md.alias])] : [],
       // Thảo luận cũ (giscus) gắn theo đường dẫn /bai-viet/<tên>/: giữ nguyên để không mất bình luận.
-      talk: md ? `bai-viet/${md.slug}/` : `video/${d.slug}`,
+      talk: md ? `bai-viet/${md.slug}/` : `v/${d.slug}`,
       alias: [],
       lienQuan: list(d.related).concat(md ? md.lienQuan : []),
       title: d.title,
@@ -485,13 +485,13 @@ async function main() {
     `/ung-ho /support/ 301`,
     `/ung-ho/ /support/ 301`,
     `/donate /support/ 301`,
+    `/contact /email/ 301`,
     `/v /bai-viet/ 302`,
-    `/video /bai-viet/ 302`,
-    `/video/ /bai-viet/ 302`,
+    `/video/* /v/:splat 301`,
   ];
   for (const p of posts) {
     if (p.kind === 'video') {
-      for (const k of p.legacy) redirects.push(`/v/${k} ${p.url} 301`);
+      for (const k of p.legacy) if (k !== p.slug) redirects.push(`/v/${k} ${p.url} 301`);
       const mdSlug = p.talk.startsWith('bai-viet/') ? p.talk.split('/')[1] : '';
       if (mdSlug) redirects.push(`/bai-viet/${mdSlug}/ ${p.url} 301`, `/bai-viet/${mdSlug} ${p.url} 301`);
     } else {
@@ -507,7 +507,7 @@ async function main() {
     if (seen.has(from) && seen.get(from) !== to) throw new Error(`Đường dẫn ${from} bị trùng: ${seen.get(from)} và ${to}`);
     seen.set(from, to);
   }
-  for (const p of posts) if (p.kind === 'video' && seen.has(p.url)) throw new Error(`${p.url} vừa là trang vừa là chuyển hướng`);
+  for (const p of posts) if (p.kind === 'video' && (seen.has(p.url) || seen.has(p.link))) throw new Error(`${p.link} vừa là trang vừa là chuyển hướng`);
   await writeFile(path.join(ROOT, '_redirects'), [...new Set(redirects)].join('\n') + '\n');
 
   // 7. Dữ liệu cho ô tìm kiếm, Mạng tri thức
@@ -515,7 +515,7 @@ async function main() {
   await writeFile(path.join(OUT, 'ho-so.json'), JSON.stringify(Object.fromEntries(posts.filter((p) => p.video).map((p) => [p.video, p.url]))));
 
   // 8. Sitemap
-  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', ...posts.map((p) => p.url)];
+  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', '/email/', ...posts.map((p) => p.url)];
   await writeFile(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 
   console.log(`Đã dựng ${posts.filter((p) => p.kind === 'video').length} trang video, ${posts.filter((p) => p.kind === 'post').length} bài cũ, ${redirects.length} chuyển hướng.`);
