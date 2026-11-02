@@ -17,7 +17,7 @@ const SITE = (process.argv[2] || 'https://bienac.com').replace(/\/$/, '');
 const SLOW_MS = 8000;
 
 // Thông tin thanh toán phải luôn có trên /support. Đổi tài khoản thì sửa cả ở đây.
-const PAY = { number: '4506285887', holder: 'DUONG VAN BIEN', bank: '@bidv' };
+const PAY = { number: '4506285887', holder: 'DUONG VAN BIEN', bank: "bank: 'bidv'" };
 const QR_SHA256 = '7607d4807acab56190ebaff7d89bf904fdc9086f202334b657c612762fb3c74b'; // assets/qr-bidv.png
 
 const fails = [];
