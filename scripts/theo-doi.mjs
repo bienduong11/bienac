@@ -55,7 +55,7 @@ const redir = (s) => s === 301 || s === 302 || s === 308;
 
 // 1. Trang chính
 await hit('/', { expect: ok200, contains: ['Bienac'] });
-await hit('/support/', { expect: ok200, contains: [PAY.number, PAY.holder, PAY.bank, '/assets/qr-bidv.svg'], header: { 'strict-transport-security': /max-age=\d{7,}/, 'x-frame-options': 'SAMEORIGIN' } });
+await hit('/support/', { expect: ok200, contains: [PAY.number, PAY.holder, PAY.bank, '/assets/qr-bidv.svg', "&url=${encodeURIComponent(BACK)}"], header: { 'strict-transport-security': /max-age=\d{7,}/, 'x-frame-options': 'SAMEORIGIN' } });
 await hit('/assets/qr-bidv.png', { expect: ok200, sha: QR_SHA256 });
 await hit('/assets/qr-bidv.svg', { expect: ok200 });
 await hit('/email/', { expect: ok200, contains: ['bienacvn@gmail.com'] });
