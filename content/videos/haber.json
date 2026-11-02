@@ -1,0 +1,161 @@
+{
+  "slug": "haber",
+  "youtube_id": "wR72fqNAZJQ",
+  "title": "Phát Minh Nuôi Sống Loài Người",
+  "description": "Fritz Haber, người nuôi sống và giết hàng triệu người",
+  "date": "2024-07-20",
+  "summary": "Fritz Haber, người nuôi sống và giết hàng triệu người",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:22",
+      "title": "Phân chim"
+    },
+    {
+      "time": "3:07",
+      "title": "Nitơ"
+    },
+    {
+      "time": "5:07",
+      "title": "Khai thác phân chim"
+    },
+    {
+      "time": "6:54",
+      "title": "Tách nitơ"
+    },
+    {
+      "time": "14:17",
+      "title": "Thuốc nổ"
+    },
+    {
+      "time": "16:27",
+      "title": "Khí độc"
+    },
+    {
+      "time": "20:52",
+      "title": "Tách vàng"
+    },
+    {
+      "time": "21:53",
+      "title": "Số phận"
+    },
+    {
+      "time": "22:44",
+      "title": "Zyklon B"
+    },
+    {
+      "time": "23:17",
+      "title": "Kết"
+    }
+  ],
+  "references": [
+    {
+      "group": "Phân chim",
+      "text": "Wikipedia, Guano",
+      "url": "https://en.wikipedia.org/wiki/Guano"
+    },
+    {
+      "group": "Phân chim",
+      "text": "Science History Institute, Dirty Business, Distillations (2013)",
+      "url": "https://www.sciencehistory.org/stories/magazine/dirty-business/"
+    },
+    {
+      "group": "Nitơ",
+      "text": "Wikipedia tiếng Việt, Amonia",
+      "url": "https://vi.wikipedia.org/wiki/Amonia"
+    },
+    {
+      "group": "Nitơ",
+      "text": "Wikipedia, Ammonia",
+      "url": "https://en.wikipedia.org/wiki/Ammonia"
+    },
+    {
+      "group": "Khai thác phân chim",
+      "text": "Wikipedia, Chincha Islands War",
+      "url": "https://en.wikipedia.org/wiki/Chincha_Islands_War"
+    },
+    {
+      "group": "Tách nitơ",
+      "text": "Wikipedia, Fritz Haber",
+      "url": "https://en.wikipedia.org/wiki/Fritz_Haber"
+    },
+    {
+      "group": "Tách nitơ",
+      "text": "Wikipedia, Haber process",
+      "url": "https://en.wikipedia.org/wiki/Haber_process"
+    },
+    {
+      "group": "Tách nitơ",
+      "text": "Jan Willem Erisman và cs., How a century of ammonia synthesis changed the world, Nature Geoscience 1 (2008)",
+      "url": "https://doi.org/10.1038/ngeo325"
+    },
+    {
+      "group": "Thuốc nổ",
+      "text": "Wikipedia, Oppau explosion",
+      "url": "https://en.wikipedia.org/wiki/Oppau_explosion"
+    },
+    {
+      "group": "Thuốc nổ",
+      "text": "VOA Learning English, Ammonium Nitrate: Fertilizer behind the Beirut Explosion (2020)",
+      "url": "https://learningenglish.voanews.com/a/ammonium-nitrate-fertilizer-behind-the-beirut-explosion/5531765.html"
+    },
+    {
+      "group": "Khí độc",
+      "text": "Wikipedia, Second Battle of Ypres",
+      "url": "https://en.wikipedia.org/wiki/Second_Battle_of_Ypres"
+    },
+    {
+      "group": "Khí độc",
+      "text": "Imperial War Museums, 5 Facts About the Second Battle of Ypres",
+      "url": "https://www.iwm.org.uk/history/first-world-war/western-front/second-ypres"
+    },
+    {
+      "group": "Khí độc",
+      "text": "Wikipedia, Clara Immerwahr",
+      "url": "https://en.wikipedia.org/wiki/Clara_Immerwahr"
+    },
+    {
+      "group": "Số phận",
+      "text": "Nobel Prize Outreach, Fritz Haber – Facts (Nobel Hoá học 1918)",
+      "url": "https://www.nobelprize.org/prizes/chemistry/1918/haber/facts/"
+    },
+    {
+      "group": "Zyklon B",
+      "text": "Wikipedia, Zyklon B",
+      "url": "https://en.wikipedia.org/wiki/Zyklon_B"
+    }
+  ],
+  "footage": [
+    {
+      "group": "",
+      "text": "Inspired by Veritasium: Veritasium – The Man Who Killed Millions and Saved Billions (Clean Version)",
+      "url": "https://www.youtube.com/watch?v=QQkmJI63ykI"
+    },
+    {
+      "group": "",
+      "text": "TED-Ed – The chemical reaction that feeds the world - Daniel D. Dulek",
+      "url": "https://www.youtube.com/watch?v=o1_D4FscMnU"
+    },
+    {
+      "group": "",
+      "text": "SciShow – Fritz Haber: Great Minds",
+      "url": "https://www.youtube.com/watch?v=tdEE5uvFhOM"
+    },
+    {
+      "group": "Air",
+      "text": "CSIRO's Technology – Simulation of air",
+      "url": "https://www.youtube.com/watch?v=j9JvX58aRfg"
+    }
+  ],
+  "related": [
+    "lead",
+    "elements"
+  ],
+  "tags": [
+    "Hóa học",
+    "Lịch sử"
+  ]
+}

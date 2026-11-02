@@ -1,0 +1,43 @@
+{
+  "slug": "little-town",
+  "youtube_id": "zDIRRCZMe4I",
+  "title": "Draw a Little Town",
+  "description": "Vẽ một thị trấn nhỏ bằng bút mực",
+  "date": "2018-01-31",
+  "summary": "Vẽ một thị trấn nhỏ bằng bút mực",
+  "chapters": [],
+  "references": [
+    {
+      "group": "Phối cảnh",
+      "text": "Kristen Kennedy, 4.6: Two-Point Perspective, Drawing Perspectives II, LibreTexts",
+      "url": "https://human.libretexts.org/Bookshelves/Art/Studio_Arts/Drawing_Perspectives_II_(Kennedy)/04%3A_Linear_Perspective/4.06%3A_Two-Point_Perspective"
+    },
+    {
+      "group": "Phối cảnh",
+      "text": "Wikipedia tiếng Anh, Vanishing point",
+      "url": "https://en.wikipedia.org/wiki/Vanishing_point"
+    },
+    {
+      "group": "Phối cảnh",
+      "text": "EBSCO Research Starters, Perspective (graphical)",
+      "url": "https://www.ebsco.com/research-starters/visual-arts/perspective-graphical"
+    },
+    {
+      "group": "Vẽ bút mực",
+      "text": "Wikipedia tiếng Anh, Hatching (kỹ thuật đánh bóng bằng nét gạch)",
+      "url": "https://en.wikipedia.org/wiki/Hatching"
+    },
+    {
+      "group": "Vẽ ký họa phố",
+      "text": "Wikipedia tiếng Anh, Urban Sketchers",
+      "url": "https://en.wikipedia.org/wiki/Urban_Sketchers"
+    }
+  ],
+  "footage": [],
+  "related": [
+    "parthenon"
+  ],
+  "tags": [
+    "Hội họa"
+  ]
+}

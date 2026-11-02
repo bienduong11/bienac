@@ -1,0 +1,192 @@
+{
+  "slug": "atomic-bomb",
+  "youtube_id": "eN2e8kl9Cw0",
+  "title": "Sự Thật Về Bom Nguyên Tử",
+  "description": "Từ E=mc² đến quả bom nguyên tử đầu tiên",
+  "date": "2024-11-21",
+  "summary": "Từ E=mc² đến quả bom nguyên tử đầu tiên",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:32",
+      "title": "E=mc^2"
+    },
+    {
+      "time": "8:10",
+      "title": "Phản ứng hạt nhân"
+    },
+    {
+      "time": "12:56",
+      "title": "Einstein"
+    },
+    {
+      "time": "15:10",
+      "title": "Dự án Manhattan"
+    },
+    {
+      "time": "17:31",
+      "title": "Làm giàu Urani"
+    },
+    {
+      "time": "20:12",
+      "title": "Kích nổ"
+    },
+    {
+      "time": "22:33",
+      "title": "Trinity"
+    },
+    {
+      "time": "25:48",
+      "title": "Oppenheimer"
+    },
+    {
+      "time": "29:00",
+      "title": "Hy vọng"
+    }
+  ],
+  "references": [
+    {
+      "group": "Mở đầu",
+      "text": "Wikipedia, Nuclear weapon",
+      "url": "https://en.wikipedia.org/wiki/Nuclear_weapon"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Albert Einstein, Ist die Trägheit eines Körpers von seinem Energieinhalt abhängig?, Annalen der Physik 18 (1905)",
+      "url": "https://doi.org/10.1002/andp.19053231314"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Fourmilab, Does the Inertia of a Body Depend upon its Energy-Content? (bản dịch tiếng Anh bài Einstein 1905)",
+      "url": "https://www.fourmilab.ch/etexts/einstein/E_mc2/www/"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Wikipedia, Mass–energy equivalence",
+      "url": "https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Wikipedia, Tsar Bomba",
+      "url": "https://en.wikipedia.org/wiki/Tsar_Bomba"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Wikipedia tiếng Việt, Chiến dịch Điện Biên Phủ",
+      "url": "https://vi.wikipedia.org/wiki/Chi%E1%BA%BFn_d%E1%BB%8Bch_%C4%90i%E1%BB%87n_Bi%C3%AAn_Ph%E1%BB%A7"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Little Zero (Facebook), bài viết 1",
+      "url": "https://www.facebook.com/LittleZerooos/posts/pfbid0riR6JAf34irhcsAWycbezqzw7qQVSJ4rMuSVnhznkTuGuNX6WjKLEJh2GJEWpykbl"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Little Zero (Facebook), bài viết 2",
+      "url": "https://www.facebook.com/LittleZerooos/posts/pfbid02RNEDWdWqvTeHd4VKnM3MdnZqMbbVXwABho797FPaDtW9NCVLryWmUdR8UQHikzFel"
+    },
+    {
+      "group": "E=mc^2",
+      "text": "Little Zero (Facebook), bài viết 3",
+      "url": "https://www.facebook.com/LittleZerooos/posts/pfbid033jx2XmV6ATSzXxQ1g9iwG6bwkoQnt8nshQ2dMzdxTSi3MaFPMVZQjL2v7p6E422Vl"
+    },
+    {
+      "group": "Phản ứng hạt nhân",
+      "text": "O. Hahn, F. Strassmann, Über den Nachweis und das Verhalten der bei der Bestrahlung des Urans mittels Neutronen entstehenden Erdalkalimetalle, Naturwissenschaften 27 (1939)",
+      "url": "https://link.springer.com/article/10.1007/BF01488241"
+    },
+    {
+      "group": "Phản ứng hạt nhân",
+      "text": "Lise Meitner, O. R. Frisch, Disintegration of Uranium by Neutrons: a New Type of Nuclear Reaction, Nature 143 (1939) – bản in lại của AIP",
+      "url": "https://history.aip.org/exhibits/mod/fission/fission2/09a02-text.html"
+    },
+    {
+      "group": "Einstein",
+      "text": "Wikipedia, Einstein–Szilard letter",
+      "url": "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter"
+    },
+    {
+      "group": "Einstein",
+      "text": "Atomic Heritage Foundation, Einstein Letter (1939)",
+      "url": "https://ahf.nuclearmuseum.org/ahf/history/einstein-letter-1939"
+    },
+    {
+      "group": "Dự án Manhattan",
+      "text": "Wikipedia, Manhattan Project",
+      "url": "https://en.wikipedia.org/wiki/Manhattan_Project"
+    },
+    {
+      "group": "Trinity",
+      "text": "Wikipedia, Trinity (nuclear test)",
+      "url": "https://en.wikipedia.org/wiki/Trinity_(nuclear_test)"
+    },
+    {
+      "group": "Trinity",
+      "text": "Wikipedia, Atomic bombings of Hiroshima and Nagasaki",
+      "url": "https://en.wikipedia.org/wiki/Atomic_bombings_of_Hiroshima_and_Nagasaki"
+    },
+    {
+      "group": "Trinity",
+      "text": "Atomic Heritage Foundation, Jewel Voice Broadcast (Chiếu chỉ chấm dứt chiến tranh, 15/8/1945)",
+      "url": "https://ahf.nuclearmuseum.org/ahf/key-documents/jewel-voice-broadcast/"
+    },
+    {
+      "group": "Oppenheimer",
+      "text": "National Park Service, Manhattan Project Scientists: J. Robert Oppenheimer",
+      "url": "https://www.nps.gov/people/manhattan-project-scientists-j-robert-oppenheimer.htm"
+    },
+    {
+      "group": "Oppenheimer",
+      "text": "Wikipedia, Oppenheimer security clearance hearing",
+      "url": "https://en.wikipedia.org/wiki/Oppenheimer_security_clearance_hearing"
+    }
+  ],
+  "footage": [
+    {
+      "group": "Nuke tests",
+      "text": "atomcentral (kênh YouTube)",
+      "url": "https://www.youtube.com/@atomcentral"
+    },
+    {
+      "group": "Nuke tests",
+      "text": "atomcentral – Plumbbob Fizeau Atomic Test UHD",
+      "url": "https://www.youtube.com/watch?v=8PJEpeU00eU"
+    },
+    {
+      "group": "Interview",
+      "text": "CBS News – From the archives: Robert Oppenheimer in 1965 on if the bomb was necessary",
+      "url": "https://www.youtube.com/watch?v=AdtLxlttrHg"
+    },
+    {
+      "group": "Nuclear bomb",
+      "text": "Curism – What's Inside the Atomic Bomb?  |  Insane Engineering of the Atomic Weapons  |  CURISM",
+      "url": "https://www.youtube.com/watch?v=TPLagTduqvI"
+    },
+    {
+      "group": "Nuclear bomb",
+      "text": "Literacy Corner Global – How Atomic Bomb Works: Little Boy",
+      "url": "https://www.youtube.com/watch?v=k-u3q1KpAKs"
+    },
+    {
+      "group": "Uranium enrichment",
+      "text": "News Direct – Uranium enrichment explained",
+      "url": "https://www.youtube.com/watch?v=pl_E3aIL7G0"
+    },
+    {
+      "group": "Uranium enrichment",
+      "text": "AFP News Agency – Uranium enrichment | AFP",
+      "url": "https://www.youtube.com/watch?v=dsNK5czqviE"
+    }
+  ],
+  "related": [
+    "atomic-power",
+    "haber"
+  ],
+  "tags": [
+    "Vật lý",
+    "Lịch sử"
+  ]
+}

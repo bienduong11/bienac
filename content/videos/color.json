@@ -1,0 +1,212 @@
+{
+  "slug": "color",
+  "youtube_id": "YhP85uD5aYk",
+  "title": "Vì Sao Màu Sắc Không Tồn Tại?",
+  "description": "Vì sao màu sắc chỉ tồn tại trong não ta",
+  "date": "2025-02-13",
+  "summary": "Vì sao màu sắc chỉ tồn tại trong não ta",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "0:27",
+      "title": "Sóng là gì?"
+    },
+    {
+      "time": "2:43",
+      "title": "Ánh sáng"
+    },
+    {
+      "time": "4:04",
+      "title": "Mắt"
+    },
+    {
+      "time": "8:15",
+      "title": "Ảo ảnh"
+    },
+    {
+      "time": "12:06",
+      "title": "Trải nghiệm chủ quan"
+    },
+    {
+      "time": "14:12",
+      "title": "Qualia"
+    },
+    {
+      "time": "20:45",
+      "title": "AI"
+    },
+    {
+      "time": "23:00",
+      "title": "Cô đơn"
+    },
+    {
+      "time": "23:58",
+      "title": "Kết"
+    }
+  ],
+  "references": [
+    {
+      "group": "Sóng là gì?",
+      "text": "Wikipedia, Mechanical wave",
+      "url": "https://en.wikipedia.org/wiki/Mechanical_wave"
+    },
+    {
+      "group": "Ánh sáng",
+      "text": "Wikipedia, Electromagnetic radiation",
+      "url": "https://en.wikipedia.org/wiki/Electromagnetic_radiation"
+    },
+    {
+      "group": "Mắt",
+      "text": "Wikipedia, Trichromacy (thị giác ba màu)",
+      "url": "https://en.wikipedia.org/wiki/Trichromacy"
+    },
+    {
+      "group": "Ảo ảnh",
+      "text": "Brain Den, Color Illusions",
+      "url": "http://brainden.com/color-illusions.htm#prettyPhoto"
+    },
+    {
+      "group": "Ảo ảnh",
+      "text": "Wikipedia, List of optical illusions",
+      "url": "https://en.wikipedia.org/wiki/List_of_optical_illusions"
+    },
+    {
+      "group": "Ảo ảnh",
+      "text": "Wikipedia, The dress",
+      "url": "https://en.wikipedia.org/wiki/The_dress"
+    },
+    {
+      "group": "Trải nghiệm chủ quan",
+      "text": "Alex Byrne, Inverted Qualia, Stanford Encyclopedia of Philosophy",
+      "url": "https://plato.stanford.edu/ENTRIES/qualia-inverted"
+    },
+    {
+      "group": "Qualia",
+      "text": "Wikipedia, Qualia",
+      "url": "https://en.wikipedia.org/wiki/Qualia"
+    },
+    {
+      "group": "Qualia",
+      "text": "Michael Tye, Qualia, Stanford Encyclopedia of Philosophy (bản Winter 2005)",
+      "url": "https://plato.stanford.edu/archives/win2005/entries/qualia/"
+    },
+    {
+      "group": "Qualia",
+      "text": "Thomas Nagel, What Is It Like to Be a Bat?, The Philosophical Review 83 (1974)",
+      "url": "https://doi.org/10.2307/2183914"
+    },
+    {
+      "group": "Qualia",
+      "text": "Frank Jackson, Epiphenomenal Qualia, The Philosophical Quarterly 32 (1982)",
+      "url": "https://doi.org/10.2307/2960077"
+    },
+    {
+      "group": "Qualia",
+      "text": "Wikipedia, Knowledge argument (Căn phòng của Mary)",
+      "url": "https://en.wikipedia.org/wiki/Knowledge_argument"
+    },
+    {
+      "group": "Qualia",
+      "text": "Trang Tử, Thu thuỷ (秋水 – Floods of Autumn), Chinese Text Project",
+      "url": "https://ctext.org/zhuangzi/floods-of-autumn"
+    }
+  ],
+  "footage": [
+    {
+      "group": "",
+      "text": "Vsauce – Is Your Red The Same as My Red?",
+      "url": "https://www.youtube.com/watch?v=evQsOFQju08"
+    },
+    {
+      "group": "",
+      "text": "StarTalk – Neil deGrasse Tyson Explains How We See Colors",
+      "url": "https://www.youtube.com/watch?v=OtcxYsUS_wc"
+    },
+    {
+      "group": "",
+      "text": "TED-Ed – How we see color - Colm Kelleher",
+      "url": "https://www.youtube.com/watch?v=l8_fZPHasdo"
+    },
+    {
+      "group": "Sóng Cơ học",
+      "text": "Animations for Physics and Astronomy – Longitudinal and Transverse Waves",
+      "url": "https://www.youtube.com/watch?v=7cDAYFTXq3E"
+    },
+    {
+      "group": "Sóng Cơ học",
+      "text": "Animations for Physics and Astronomy – Transverse and Longitudinal Waves",
+      "url": "https://www.youtube.com/watch?v=Rbuhdo0AZDU"
+    },
+    {
+      "group": "Sóng Cơ học",
+      "text": "EvanSpace – Transverse waves animation",
+      "url": "https://www.youtube.com/watch?v=Voki54XpVEA"
+    },
+    {
+      "group": "Sóng Cơ học",
+      "text": "Neuro For Lunch – AM Modulated Electromagnetic Wave in 3D",
+      "url": "https://www.youtube.com/watch?v=9DAHsu8fAIw"
+    },
+    {
+      "group": "Photon",
+      "text": "famousandfaded – Understanding electromagnetic waves | ATPL Radio Navigation | 3D animation",
+      "url": "https://www.youtube.com/watch?v=hgKdvBJfB_g"
+    },
+    {
+      "group": "Photon",
+      "text": "Visual Learning – Electromagnetic waves || 3D animated visual explanation || Physics ||12th class",
+      "url": "https://www.youtube.com/watch?v=jHqgDsfEidQ"
+    },
+    {
+      "group": "Photon",
+      "text": "Yasser Ali – Photons, light & electromagnetic waves",
+      "url": "https://www.youtube.com/watch?v=-V8Zd3AOEFA"
+    },
+    {
+      "group": "Bức xạ",
+      "text": "V101 SPACE – What Does The Inside Of The Sun Look Like? (4K UHD)",
+      "url": "https://www.youtube.com/watch?v=8ayHXTnN4fk"
+    },
+    {
+      "group": "Bức xạ",
+      "text": "NASA Goddard – NASA: Why does the Sun Matter for Earth’s Energy Budget?",
+      "url": "https://www.youtube.com/watch?v=82jE-yvB8xU"
+    },
+    {
+      "group": "Cách mắt nhìn màu sắc",
+      "text": "ThisIsPhysics / Voici la physique - Marc Séguin – Color Only Exists In Your Brain!",
+      "url": "https://www.youtube.com/watch?v=fQczp0wtZQQ"
+    },
+    {
+      "group": "The Dress",
+      "text": "ABC Entertainment – Why did some people see a gold and white dress? | Our Brain",
+      "url": "https://www.youtube.com/watch?v=rpHUBUMWjAU"
+    },
+    {
+      "group": "Dơi",
+      "text": "SciToons – Echolocation",
+      "url": "https://www.youtube.com/watch?v=laeE4icRYp4"
+    },
+    {
+      "group": "Âm thanh",
+      "text": "Canon in D Major – Kevin MacLeod, giấy phép Creative Commons Attribution 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "group": "Âm thanh",
+      "text": "Nguồn: incompetech.com (Kevin MacLeod)",
+      "url": "http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100301"
+    }
+  ],
+  "related": [
+    "reality",
+    "blue-led"
+  ],
+  "tags": [
+    "Vật lý",
+    "Sinh học"
+  ]
+}

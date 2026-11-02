@@ -1,0 +1,170 @@
+{
+  "slug": "humans",
+  "youtube_id": "EJkeV9W3ySo",
+  "title": "Nguồn Gốc Con Người",
+  "description": "Nguồn gốc con người, từ tổ tiên tới vũ trụ",
+  "date": "2026-10-31",
+  "summary": "Nguồn gốc con người, từ tổ tiên tới vũ trụ",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:39",
+      "title": "Gia phả"
+    },
+    {
+      "time": "5:58",
+      "title": "Giống cha mẹ"
+    },
+    {
+      "time": "13:59",
+      "title": "Cái bọc"
+    },
+    {
+      "time": "25:03",
+      "title": "Người mẹ chung"
+    },
+    {
+      "time": "31:02",
+      "title": "Tế bào đầu tiên"
+    },
+    {
+      "time": "38:47",
+      "title": "Viên đá rơi từ trời"
+    },
+    {
+      "time": "42:23",
+      "title": "Chữ ký của sao"
+    },
+    {
+      "time": "45:53",
+      "title": "Lò rèn sao"
+    },
+    {
+      "time": "49:27",
+      "title": "Trước khi có hôm qua"
+    },
+    {
+      "time": "52:38",
+      "title": "Chân không"
+    },
+    {
+      "time": "54:57",
+      "title": "Hỗn Độn"
+    }
+  ],
+  "references": [
+    {
+      "group": "Giống cha mẹ",
+      "text": "Wikipedia, Gregor Mendel",
+      "url": "https://en.wikipedia.org/wiki/Gregor_Mendel"
+    },
+    {
+      "group": "Giống cha mẹ",
+      "text": "O. T. Avery, C. M. MacLeod, M. McCarty, Studies on the chemical nature of the substance inducing transformation of pneumococcal types, Journal of Experimental Medicine (1944)",
+      "url": "https://doi.org/10.1084/jem.79.2.137"
+    },
+    {
+      "group": "Giống cha mẹ",
+      "text": "J. D. Watson, F. H. C. Crick, Nature (1953)",
+      "url": "https://doi.org/10.1038/171737a0"
+    },
+    {
+      "group": "Gia phả",
+      "text": "C. Darwin, On the Origin of Species (1859)",
+      "url": "https://darwin-online.org.uk/content/frameset?itemID=F373&viewtype=text&pageseq=1"
+    },
+    {
+      "group": "Người mẹ chung",
+      "text": "R. L. Cann, M. Stoneking, A. C. Wilson, Mitochondrial DNA and human evolution, Nature (1987)",
+      "url": "https://doi.org/10.1038/325031a0"
+    },
+    {
+      "group": "Người mẹ chung",
+      "text": "Wikipedia, Mitochondrial Eve",
+      "url": "https://en.wikipedia.org/wiki/Mitochondrial_Eve"
+    },
+    {
+      "group": "Tế bào đầu tiên",
+      "text": "M. C. Weiss và cs., The physiology and habitat of the last universal common ancestor, Nature Microbiology (2016)",
+      "url": "https://doi.org/10.1038/nmicrobiol.2016.116"
+    },
+    {
+      "group": "Tế bào đầu tiên",
+      "text": "W. Gilbert, Origin of life: The RNA world, Nature (1986)",
+      "url": "https://doi.org/10.1038/319618a0"
+    },
+    {
+      "group": "Tế bào đầu tiên",
+      "text": "S. L. Miller, A Production of Amino Acids Under Possible Primitive Earth Conditions, Science (1953)",
+      "url": "https://doi.org/10.1126/science.117.3046.528"
+    },
+    {
+      "group": "Viên đá rơi từ trời",
+      "text": "Wikipedia, Murchison meteorite",
+      "url": "https://en.wikipedia.org/wiki/Murchison_meteorite"
+    },
+    {
+      "group": "Viên đá rơi từ trời",
+      "text": "NASA, OSIRIS-REx Mission to Asteroid Bennu",
+      "url": "https://science.nasa.gov/mission/osiris-rex/"
+    },
+    {
+      "group": "Chữ ký của sao",
+      "text": "Wikipedia, Fraunhofer lines",
+      "url": "https://en.wikipedia.org/wiki/Fraunhofer_lines"
+    },
+    {
+      "group": "Chữ ký của sao",
+      "text": "Wikipedia, Cecilia Payne-Gaposchkin",
+      "url": "https://en.wikipedia.org/wiki/Cecilia_Payne-Gaposchkin"
+    },
+    {
+      "group": "Lò rèn sao",
+      "text": "E. M. Burbidge, G. R. Burbidge, W. A. Fowler, F. Hoyle, Reviews of Modern Physics (1957)",
+      "url": "https://doi.org/10.1103/RevModPhys.29.547"
+    },
+    {
+      "group": "Trước khi có hôm qua",
+      "text": "J. B. Hartle, S. W. Hawking, Wave function of the Universe, Physical Review D (1983)",
+      "url": "https://doi.org/10.1103/PhysRevD.28.2960"
+    },
+    {
+      "group": "Chân không",
+      "text": "A. Vilenkin, Creation of universes from nothing, Physics Letters B (1982)",
+      "url": "https://doi.org/10.1016/0370-2693(82)90866-8"
+    }
+  ],
+  "footage": [
+    {
+      "group": "Tư liệu",
+      "text": "NASA (Apollo 11, Lunar Receiving Laboratory, OSIRIS-REx, SDO, Hubble)",
+      "url": ""
+    },
+    {
+      "group": "Tư liệu",
+      "text": "ESA/Webb, ESO, NASA/CXC",
+      "url": ""
+    },
+    {
+      "group": "Tư liệu",
+      "text": "The Metropolitan Museum of Art (Open Access)",
+      "url": ""
+    },
+    {
+      "group": "Tư liệu",
+      "text": "Wikimedia Commons",
+      "url": ""
+    }
+  ],
+  "related": [
+    "elements",
+    "reality"
+  ],
+  "tags": [
+    "Sinh học",
+    "Vũ trụ"
+  ]
+}

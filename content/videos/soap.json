@@ -1,0 +1,186 @@
+{
+  "slug": "soap",
+  "youtube_id": "xXixaqB1754",
+  "title": "Sự Thật Về Xà Phòng",
+  "description": "Lịch sử xà phòng và vì sao nó diệt khuẩn",
+  "date": "2026-02-16",
+  "summary": "Lịch sử xà phòng và vì sao nó diệt khuẩn",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:55",
+      "title": "Lịch sử"
+    },
+    {
+      "time": "11:02",
+      "title": "Kiềm"
+    },
+    {
+      "time": "13:33",
+      "title": "Chất hữu cơ"
+    },
+    {
+      "time": "15:04",
+      "title": "Chất béo"
+    },
+    {
+      "time": "18:25",
+      "title": "Xà phòng hoá"
+    },
+    {
+      "time": "21:48",
+      "title": "Diệt khuẩn"
+    },
+    {
+      "time": "24:15",
+      "title": "Thuốc nổ"
+    },
+    {
+      "time": "28:05",
+      "title": "Sức căng bề mặt"
+    },
+    {
+      "time": "32:52",
+      "title": "Dầu và nước"
+    },
+    {
+      "time": "37:32",
+      "title": "Chất nhũ hoá"
+    },
+    {
+      "time": "43:17",
+      "title": "Xà phòng"
+    },
+    {
+      "time": "45:48",
+      "title": "Nấu xà phòng"
+    },
+    {
+      "time": "53:28",
+      "title": "Các xà phòng nổi tiếng"
+    },
+    {
+      "time": "58:18",
+      "title": "Kết"
+    }
+  ],
+  "references": [
+    {
+      "group": "Lịch sử",
+      "text": "Wikipedia, Soap",
+      "url": "https://en.wikipedia.org/wiki/Soap"
+    },
+    {
+      "group": "Lịch sử",
+      "text": "Wikipedia, Natron",
+      "url": "https://en.wikipedia.org/wiki/Natron"
+    },
+    {
+      "group": "Lịch sử",
+      "text": "Wikipedia, Gleditsia sinensis (bồ kết)",
+      "url": "https://en.wikipedia.org/wiki/Gleditsia_sinensis"
+    },
+    {
+      "group": "Kiềm",
+      "text": "Wikipedia, Leblanc process",
+      "url": "https://en.wikipedia.org/wiki/Leblanc_process"
+    },
+    {
+      "group": "Kiềm",
+      "text": "Wikipedia, Solvay process",
+      "url": "https://en.wikipedia.org/wiki/Solvay_process"
+    },
+    {
+      "group": "Chất béo",
+      "text": "Wikipedia, Fatty acid",
+      "url": "https://en.wikipedia.org/wiki/Fatty_acid"
+    },
+    {
+      "group": "Xà phòng hoá",
+      "text": "Wikipedia, Michel Eugène Chevreul",
+      "url": "https://en.wikipedia.org/wiki/Michel_Eug%C3%A8ne_Chevreul"
+    },
+    {
+      "group": "Xà phòng hoá",
+      "text": "Wikipedia, Saponification",
+      "url": "https://en.wikipedia.org/wiki/Saponification"
+    },
+    {
+      "group": "Diệt khuẩn",
+      "text": "Wikipedia, Ignaz Semmelweis",
+      "url": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis"
+    },
+    {
+      "group": "Diệt khuẩn",
+      "text": "Wikipedia, Joseph Lister",
+      "url": "https://en.wikipedia.org/wiki/Joseph_Lister"
+    },
+    {
+      "group": "Thuốc nổ",
+      "text": "Wikipedia, Nitroglycerin",
+      "url": "https://en.wikipedia.org/wiki/Nitroglycerin"
+    },
+    {
+      "group": "Thuốc nổ",
+      "text": "Wikipedia, Dynamite",
+      "url": "https://en.wikipedia.org/wiki/Dynamite"
+    },
+    {
+      "group": "Thuốc nổ",
+      "text": "Wikipedia, Haber process",
+      "url": "https://en.wikipedia.org/wiki/Haber_process"
+    },
+    {
+      "group": "Sức căng bề mặt",
+      "text": "Wikipedia, Surface tension",
+      "url": "https://en.wikipedia.org/wiki/Surface_tension"
+    },
+    {
+      "group": "Chất nhũ hoá",
+      "text": "Wikipedia, Emulsion",
+      "url": "https://en.wikipedia.org/wiki/Emulsion"
+    },
+    {
+      "group": "Chất nhũ hoá",
+      "text": "Wikipedia, Amphiphile",
+      "url": "https://en.wikipedia.org/wiki/Amphiphile"
+    },
+    {
+      "group": "Chất nhũ hoá",
+      "text": "Wikipedia, Casein",
+      "url": "https://en.wikipedia.org/wiki/Casein"
+    },
+    {
+      "group": "Xà phòng",
+      "text": "Wikipedia, Micelle",
+      "url": "https://en.wikipedia.org/wiki/Micelle"
+    },
+    {
+      "group": "Các xà phòng nổi tiếng",
+      "text": "Wikipedia, Aleppo soap",
+      "url": "https://en.wikipedia.org/wiki/Aleppo_soap"
+    },
+    {
+      "group": "Các xà phòng nổi tiếng",
+      "text": "Wikipedia, Marseille soap",
+      "url": "https://en.wikipedia.org/wiki/Marseille_soap"
+    },
+    {
+      "group": "Kết",
+      "text": "Wikipedia, Global Handwashing Day",
+      "url": "https://en.wikipedia.org/wiki/Global_Handwashing_Day"
+    }
+  ],
+  "footage": [],
+  "related": [
+    "soap-making",
+    "human-soap",
+    "alkali"
+  ],
+  "tags": [
+    "Hóa học"
+  ]
+}

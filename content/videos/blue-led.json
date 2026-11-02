@@ -1,0 +1,200 @@
+{
+  "slug": "blue-led",
+  "youtube_id": "sqM2vRDQw7k",
+  "title": "Vì Sao LED Xanh Là Phát Minh Vĩ Đại?",
+  "description": "Nakamura và hành trình làm ra đèn LED xanh dương",
+  "date": "2025-01-28",
+  "summary": "Nakamura và hành trình làm ra đèn LED xanh dương",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "0:52",
+      "title": "LED là gì?"
+    },
+    {
+      "time": "7:31",
+      "title": "Lịch sử LED"
+    },
+    {
+      "time": "9:49",
+      "title": "Nakamura"
+    },
+    {
+      "time": "15:45",
+      "title": "MOCVD"
+    },
+    {
+      "time": "21:47",
+      "title": "Chinh phục LED Xanh"
+    },
+    {
+      "time": "28:55",
+      "title": "Thành công"
+    },
+    {
+      "time": "34:34",
+      "title": "Kiện tụng"
+    },
+    {
+      "time": "37:20",
+      "title": "Nobel"
+    },
+    {
+      "time": "38:33",
+      "title": "GaN"
+    },
+    {
+      "time": "39:52",
+      "title": "Nhật Bản"
+    },
+    {
+      "time": "41:55",
+      "title": "Kết"
+    }
+  ],
+  "references": [
+    {
+      "group": "LED là gì?",
+      "text": "Wikipedia, Light-emitting diode",
+      "url": "https://en.wikipedia.org/wiki/Light-emitting_diode"
+    },
+    {
+      "group": "Lịch sử LED",
+      "text": "Wikipedia, History of the LED",
+      "url": "https://en.wikipedia.org/wiki/History_of_the_LED"
+    },
+    {
+      "group": "Lịch sử LED",
+      "text": "Wikipedia, Oleg Losev",
+      "url": "https://en.wikipedia.org/wiki/Oleg_Losev"
+    },
+    {
+      "group": "Lịch sử LED",
+      "text": "Wikipedia, Nick Holonyak",
+      "url": "https://en.wikipedia.org/wiki/Nick_Holonyak"
+    },
+    {
+      "group": "Nakamura",
+      "text": "Wikipedia, Shuji Nakamura",
+      "url": "https://en.wikipedia.org/wiki/Shuji_Nakamura"
+    },
+    {
+      "group": "Nakamura",
+      "text": "Nobel Prize Outreach, Shuji Nakamura – Biographical",
+      "url": "https://www.nobelprize.org/prizes/physics/2014/nakamura/biographical/"
+    },
+    {
+      "group": "Nakamura",
+      "text": "Wikipedia, Nichia",
+      "url": "https://en.wikipedia.org/wiki/Nichia"
+    },
+    {
+      "group": "MOCVD",
+      "text": "Wikipedia, Metalorganic vapour-phase epitaxy",
+      "url": "https://en.wikipedia.org/wiki/Metalorganic_vapour-phase_epitaxy"
+    },
+    {
+      "group": "Chinh phục LED Xanh",
+      "text": "Hiroshi Amano và cs., Metalorganic vapor phase epitaxial growth of a high quality GaN film using an AlN buffer layer, Applied Physics Letters 48 (1986)",
+      "url": "https://doi.org/10.1063/1.96549"
+    },
+    {
+      "group": "Thành công",
+      "text": "Shuji Nakamura và cs., Candela-class high-brightness InGaN/AlGaN double-heterostructure blue-light-emitting diodes, Applied Physics Letters 64 (1994)",
+      "url": "https://doi.org/10.1063/1.111832"
+    },
+    {
+      "group": "Nobel",
+      "text": "Nobel Prize Outreach, Shuji Nakamura – Facts",
+      "url": "https://www.nobelprize.org/prizes/physics/2014/nakamura/facts/"
+    },
+    {
+      "group": "Nobel",
+      "text": "Nobel Prize Outreach, The Nobel Prize in Physics 2014 – Summary",
+      "url": "https://www.nobelprize.org/prizes/physics/2014/summary/"
+    },
+    {
+      "group": "Nobel",
+      "text": "Physics World, Isamu Akasaki, Hiroshi Amano and Shuji Nakamura win 2014 Nobel Prize for Physics (2014)",
+      "url": "https://physicsworld.com/a/isamu-akasaki-hiroshi-amano-and-shuji-nakamura-win-2014-nobel-prize-for-physics/"
+    },
+    {
+      "group": "GaN",
+      "text": "Wikipedia, Gallium nitride",
+      "url": "https://en.wikipedia.org/wiki/Gallium_nitride"
+    }
+  ],
+  "footage": [
+    {
+      "group": "",
+      "text": "Inspired by Veritasium: Veritasium – Why It Was Almost Impossible to Make the Blue LED",
+      "url": "https://www.youtube.com/watch?v=AF8d72mA41M"
+    },
+    {
+      "group": "Khác",
+      "text": "Michigan Engineering – Shuji Nakamura, Nobel Laureate | The Invention of High Efficient Blue LEDs and Future Lighting",
+      "url": "https://www.youtube.com/watch?v=fUlR9DP6Me4"
+    },
+    {
+      "group": "Khác",
+      "text": "TDElektronik – NICHIA",
+      "url": "https://www.youtube.com/watch?v=4akx_ZHRVi0"
+    },
+    {
+      "group": "Khác",
+      "text": "Nobel Prize – \"I was sleeping.\" Shuji Nakamura on receiving the Nobel Prize call",
+      "url": "https://www.youtube.com/watch?v=VQeYK_AbPg4"
+    },
+    {
+      "group": "Khác",
+      "text": "CampaignForUCSB – Shuji Nakamura",
+      "url": "https://www.youtube.com/watch?v=ipQsHxY4k-c"
+    },
+    {
+      "group": "Khác",
+      "text": "Bloomberg Originals – How Blue LEDs Changed the World",
+      "url": "https://www.youtube.com/watch?v=idwKHQEw78g"
+    },
+    {
+      "group": "Khác",
+      "text": "European Patent Office – Shuji Nakamura - blue Light Emitting Diodes (LED)",
+      "url": "https://www.youtube.com/watch?v=pPWFWpp07cU"
+    },
+    {
+      "group": "Khác",
+      "text": "pascoscientific – Color Mixer & Accessory Kit",
+      "url": "https://www.youtube.com/watch?v=KZ-mEddsYqo"
+    },
+    {
+      "group": "Khác",
+      "text": "Rogue Physics – Zooming into Cell Phone Screen",
+      "url": "https://www.youtube.com/watch?v=pZ5w_BTViYE"
+    },
+    {
+      "group": "Khác",
+      "text": "Warped – How LED and LCD TV's Work in Slow Motion  [Original]",
+      "url": "https://www.youtube.com/watch?v=131S82R5Jjg"
+    },
+    {
+      "group": "Nhạc",
+      "text": "Tobias Voigt – Pieces of Light (Uppbeat, license code DN4BIDWMKAYHY5VS)",
+      "url": "https://uppbeat.io/t/tobias-voigt/pieces-of-light"
+    },
+    {
+      "group": "Nhạc",
+      "text": "Dan Phillipson – Making Progress (Uppbeat, license code 8TL8UH9CXSJGVVJD)",
+      "url": "https://uppbeat.io/t/dan-phillipson/making-progress"
+    }
+  ],
+  "related": [
+    "color",
+    "haber"
+  ],
+  "tags": [
+    "Vật lý",
+    "Công nghệ"
+  ]
+}

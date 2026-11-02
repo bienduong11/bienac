@@ -1,0 +1,166 @@
+{
+  "slug": "elements",
+  "youtube_id": "2S3AvoXkIB0",
+  "title": "118 Nguyên Tố Hoá Học",
+  "description": "Lịch sử tìm ra 118 nguyên tố hoá học",
+  "date": "2025-04-30",
+  "summary": "Lịch sử tìm ra 118 nguyên tố hoá học",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:15",
+      "title": "Chu kỳ 1 • 1H 2He"
+    },
+    {
+      "time": "2:28",
+      "title": "Chu kỳ 2 • 3Li 4Be 5B 6C 7N 8O 9F 10Ne"
+    },
+    {
+      "time": "6:58",
+      "title": "Chu kỳ 3 • 11Na 12Mg 13Al 14Si 15P 16S 17Cl 18Ar"
+    },
+    {
+      "time": "12:03",
+      "title": "Chu kỳ 4 • 19K 20Ca 21Sc 22Ti 23V 24Cr 25Mn 26Fe 27Co 28Ni 29Cu"
+    },
+    {
+      "time": "18:15",
+      "title": "Chu kỳ 4 • 30Zn 31Ga 32Ge 33As 34Se 35Br 36Kr"
+    },
+    {
+      "time": "21:42",
+      "title": "Chu kỳ 5 • 37Rb 38Sr 39Y 40Zr 41Nb 42Mo 43Tc 44Ru 45Rh 46Pd 47Ag"
+    },
+    {
+      "time": "27:16",
+      "title": "Chu kỳ 5 • 48Cd 49In 50Sn 51Sb 52Te 53I 54Xe"
+    },
+    {
+      "time": "30:35",
+      "title": "Chu kỳ 6 • 55Cs 56Ba 57La 58Ce 59Pr 60Nd 61Pm 62Sm 63Eu 64Gd 65Tb"
+    },
+    {
+      "time": "36:02",
+      "title": "Chu kỳ 6 • 66Dy 67Ho 68Er 69Tm 70Yb 71Lu 72Hf 73Ta 74W 75Re 76Os"
+    },
+    {
+      "time": "41:25",
+      "title": "Chu kỳ 6 • 77Ir 78Pt 79Au 80Hg 81Tl 82Pb 83Bi 84Po 85At 86Rn"
+    },
+    {
+      "time": "46:28",
+      "title": "Chu kỳ 7 • 87Fr 88Ra 89Ac 90Th 91Pa 92U 93Np 94Pu 95Am 96Cm 97Bk"
+    },
+    {
+      "time": "51:38",
+      "title": "Chu kỳ 7 • 98Cf 99Es 100Fm 101Md 102No 103Lr 104Rf 105Db 106Sg 107Bh 108Hs"
+    },
+    {
+      "time": "55:31",
+      "title": "Chu kỳ 7 • 109Mt 110Ds 111Rg 112Cn 113Nh 114Fl 115Mc 116Lv 117Ts 118Og"
+    },
+    {
+      "time": "58:41",
+      "title": "Kết"
+    }
+  ],
+  "references": [
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Wikipedia, List of chemical elements",
+      "url": "https://en.wikipedia.org/wiki/List_of_chemical_elements"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Royal Society of Chemistry, Periodic Table",
+      "url": "https://periodic-table.rsc.org/"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "IUPAC, Periodic Table of Elements",
+      "url": "https://iupac.org/what-we-do/periodic-table-of-elements/"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Wikipedia, Periodic table",
+      "url": "https://en.wikipedia.org/wiki/Periodic_table"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Wikipedia, Chemical element",
+      "url": "https://en.wikipedia.org/wiki/Chemical_element"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Encyclopaedia Britannica, Periodic table",
+      "url": "https://britannica.com/science/periodic-table/Introduction"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Encyclopaedia Britannica, Dmitri Mendeleev",
+      "url": "https://www.britannica.com/biography/Dmitri-Mendeleev"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Wikipedia, Dmitri Mendeleev",
+      "url": "https://en.wikipedia.org/wiki/Dmitri_Mendeleev"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Los Alamos National Laboratory, Periodic Table of Elements",
+      "url": "https://periodic.lanl.gov/index.shtml"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Wikipedia, Timeline of chemical element discoveries",
+      "url": "https://en.wikipedia.org/wiki/Timeline_of_chemical_element_discoveries"
+    },
+    {
+      "group": "Bảng tuần hoàn",
+      "text": "Wikipedia, List of chemical element name etymologies (nguồn gốc tên nguyên tố)",
+      "url": "https://en.wikipedia.org/wiki/List_of_chemical_element_name_etymologies"
+    },
+    {
+      "group": "Chu kỳ 7",
+      "text": "Wikipedia, Synthetic element (nguyên tố nhân tạo)",
+      "url": "https://en.wikipedia.org/wiki/Synthetic_element"
+    },
+    {
+      "group": "Chu kỳ 7",
+      "text": "Wikipedia, Superheavy element (nguyên tố siêu nặng)",
+      "url": "https://en.wikipedia.org/wiki/Superheavy_element"
+    },
+    {
+      "group": "Chu kỳ 7",
+      "text": "IUPAC, IUPAC Announces the Names of the Elements 113, 115, 117, and 118 (2016)",
+      "url": "https://iupac.org/iupac-announces-the-names-of-the-elements-113-115-117-and-118/"
+    },
+    {
+      "group": "Chu kỳ 7",
+      "text": "Wikipedia, Oganesson",
+      "url": "https://en.wikipedia.org/wiki/Oganesson"
+    }
+  ],
+  "footage": [
+    {
+      "group": "Nguyên tố 101-118",
+      "text": "Nguyên tố 101-118",
+      "url": "https://periodic-table.rsc.org/"
+    },
+    {
+      "group": "Background",
+      "text": "Eric Whitacre – Deep Field: The Impossible Magnitude of our Universe",
+      "url": "https://www.youtube.com/watch?v=yDiD8F9ItX0"
+    }
+  ],
+  "related": [
+    "particles",
+    "haber"
+  ],
+  "tags": [
+    "Hóa học"
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "slug": "particles",
+  "youtube_id": "nOVl0rxpK8s",
+  "title": "17 Hạt Cơ Bản",
+  "description": "17 hạt cơ bản tạo nên mọi vật chất",
+  "date": "2026-09-07",
+  "summary": "17 hạt cơ bản tạo nên mọi vật chất",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Hạt cơ bản"
+    },
+    {
+      "time": "2:44",
+      "title": "Quark"
+    },
+    {
+      "time": "16:09",
+      "title": "Hadron"
+    },
+    {
+      "time": "27:09",
+      "title": "Lepton"
+    },
+    {
+      "time": "28:35",
+      "title": "Electron"
+    },
+    {
+      "time": "42:08",
+      "title": "Positron"
+    },
+    {
+      "time": "44:19",
+      "title": "Muon"
+    },
+    {
+      "time": "45:28",
+      "title": "Tau"
+    },
+    {
+      "time": "48:37",
+      "title": "Neutrino"
+    },
+    {
+      "time": "56:32",
+      "title": "Onium"
+    },
+    {
+      "time": "1:01:00",
+      "title": "Boson"
+    },
+    {
+      "time": "1:02:43",
+      "title": "Photon"
+    },
+    {
+      "time": "1:12:00",
+      "title": "Huỷ cặp"
+    },
+    {
+      "time": "1:17:32",
+      "title": "Gluon"
+    },
+    {
+      "time": "1:25:12",
+      "title": "W Z"
+    },
+    {
+      "time": "1:28:28",
+      "title": "Higgs"
+    },
+    {
+      "time": "1:31:32",
+      "title": "Graviton"
+    }
+  ],
+  "references": [
+    {
+      "group": "Hạt cơ bản",
+      "text": "Wikipedia, Standard Model",
+      "url": "https://en.wikipedia.org/wiki/Standard_Model"
+    },
+    {
+      "group": "Hạt cơ bản",
+      "text": "Particle Data Group, Review of Particle Physics",
+      "url": "https://pdg.lbl.gov/"
+    },
+    {
+      "group": "Quark",
+      "text": "M. Gell-Mann, A schematic model of baryons and mesons, Physics Letters (1964)",
+      "url": "https://doi.org/10.1016/S0031-9163(64)92001-3"
+    },
+    {
+      "group": "Quark",
+      "text": "E. D. Bloom và cs., High-Energy Inelastic e–p Scattering at 6° and 10°, Physical Review Letters (1969)",
+      "url": "https://doi.org/10.1103/PhysRevLett.23.930"
+    },
+    {
+      "group": "Quark",
+      "text": "M. Breidenbach và cs., Observed Behavior of Highly Inelastic Electron-Proton Scattering, Physical Review Letters (1969)",
+      "url": "https://doi.org/10.1103/PhysRevLett.23.935"
+    },
+    {
+      "group": "Quark",
+      "text": "G. D. Rochester, C. C. Butler, Evidence for the Existence of New Unstable Elementary Particles, Nature (1947)",
+      "url": "https://doi.org/10.1038/160855a0"
+    },
+    {
+      "group": "Quark",
+      "text": "J. J. Aubert và cs., Experimental Observation of a Heavy Particle J, Physical Review Letters (1974)",
+      "url": "https://doi.org/10.1103/PhysRevLett.33.1404"
+    },
+    {
+      "group": "Quark",
+      "text": "J.-E. Augustin và cs., Discovery of a Narrow Resonance in e+e− Annihilation, Physical Review Letters (1974)",
+      "url": "https://doi.org/10.1103/PhysRevLett.33.1406"
+    },
+    {
+      "group": "Quark",
+      "text": "M. Kobayashi, T. Maskawa, CP-Violation in the Renormalizable Theory of Weak Interaction, Progress of Theoretical Physics (1973)",
+      "url": "https://doi.org/10.1143/PTP.49.652"
+    },
+    {
+      "group": "Quark",
+      "text": "S. W. Herb và cs., Observation of a Dimuon Resonance at 9.5 GeV in 400-GeV Proton-Nucleus Collisions, Physical Review Letters (1977)",
+      "url": "https://doi.org/10.1103/PhysRevLett.39.252"
+    },
+    {
+      "group": "Quark",
+      "text": "CDF Collaboration, Observation of Top Quark Production in p̄p Collisions, Physical Review Letters (1995)",
+      "url": "https://doi.org/10.1103/PhysRevLett.74.2626"
+    },
+    {
+      "group": "Quark",
+      "text": "D0 Collaboration, Observation of the Top Quark, Physical Review Letters (1995)",
+      "url": "https://doi.org/10.1103/PhysRevLett.74.2632"
+    },
+    {
+      "group": "Electron",
+      "text": "J. J. Thomson, Cathode Rays, Philosophical Magazine (1897)",
+      "url": "https://doi.org/10.1080/14786449708621070"
+    },
+    {
+      "group": "Positron",
+      "text": "C. D. Anderson, The Positive Electron, Physical Review (1933)",
+      "url": "https://doi.org/10.1103/PhysRev.43.491"
+    },
+    {
+      "group": "Muon",
+      "text": "S. H. Neddermeyer, C. D. Anderson, Note on the Nature of Cosmic-Ray Particles, Physical Review (1937)",
+      "url": "https://doi.org/10.1103/PhysRev.51.884"
+    },
+    {
+      "group": "Tau",
+      "text": "M. L. Perl và cs., Evidence for Anomalous Lepton Production in e+e− Annihilation, Physical Review Letters (1975)",
+      "url": "https://doi.org/10.1103/PhysRevLett.35.1489"
+    },
+    {
+      "group": "Neutrino",
+      "text": "C. L. Cowan và cs., Detection of the Free Neutrino: a Confirmation, Science (1956)",
+      "url": "https://doi.org/10.1126/science.124.3212.103"
+    },
+    {
+      "group": "Neutrino",
+      "text": "Super-Kamiokande Collaboration, Evidence for Oscillation of Atmospheric Neutrinos, Physical Review Letters (1998)",
+      "url": "https://doi.org/10.1103/PhysRevLett.81.1562"
+    },
+    {
+      "group": "Onium",
+      "text": "Wikipedia, Quarkonium",
+      "url": "https://en.wikipedia.org/wiki/Quarkonium"
+    },
+    {
+      "group": "Gluon",
+      "text": "TASSO Collaboration, Evidence for planar events in e+e− annihilation at high energies, Physics Letters B (1979)",
+      "url": "https://doi.org/10.1016/0370-2693(79)90830-X"
+    },
+    {
+      "group": "W Z",
+      "text": "UA1 Collaboration, Experimental observation of isolated large transverse energy electrons with associated missing energy at √s = 540 GeV, Physics Letters B (1983)",
+      "url": "https://doi.org/10.1016/0370-2693(83)91177-2"
+    },
+    {
+      "group": "Higgs",
+      "text": "F. Englert, R. Brout, Broken Symmetry and the Mass of Gauge Vector Mesons, Physical Review Letters (1964)",
+      "url": "https://doi.org/10.1103/PhysRevLett.13.321"
+    },
+    {
+      "group": "Higgs",
+      "text": "P. W. Higgs, Broken Symmetries and the Masses of Gauge Bosons, Physical Review Letters (1964)",
+      "url": "https://doi.org/10.1103/PhysRevLett.13.508"
+    },
+    {
+      "group": "Higgs",
+      "text": "ATLAS Collaboration, Observation of a new particle in the search for the Standard Model Higgs boson, Physics Letters B (2012)",
+      "url": "https://doi.org/10.1016/j.physletb.2012.08.020"
+    },
+    {
+      "group": "Higgs",
+      "text": "CMS Collaboration, Observation of a new boson at a mass of 125 GeV with the CMS experiment at the LHC, Physics Letters B (2012)",
+      "url": "https://doi.org/10.1016/j.physletb.2012.08.021"
+    },
+    {
+      "group": "Graviton",
+      "text": "Wikipedia, Graviton",
+      "url": "https://en.wikipedia.org/wiki/Graviton"
+    }
+  ],
+  "footage": [],
+  "related": [
+    "forces",
+    "elements"
+  ],
+  "tags": [
+    "Vật lý"
+  ]
+}

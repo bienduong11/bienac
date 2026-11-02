@@ -1,0 +1,102 @@
+{
+  "slug": "qa",
+  "youtube_id": "7Dm7BCBHaZU",
+  "title": "Hỏi Đáp Cùng Bienac",
+  "description": "Hỏi đáp mừng kênh đạt 100 nghìn người đăng ký",
+  "date": "2026-07-12",
+  "summary": "Hỏi đáp mừng kênh đạt 100 nghìn người đăng ký",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Xin chào"
+    },
+    {
+      "time": "2:19",
+      "title": "Cá nhân"
+    },
+    {
+      "time": "7:59",
+      "title": "100K"
+    },
+    {
+      "time": "9:25",
+      "title": "Nút Nhôm"
+    },
+    {
+      "time": "13:13",
+      "title": "YouTube"
+    },
+    {
+      "time": "29:18",
+      "title": "Khoa học"
+    },
+    {
+      "time": "39:15",
+      "title": "Đề xuất"
+    },
+    {
+      "time": "45:43",
+      "title": "Give away"
+    },
+    {
+      "time": "48:19",
+      "title": "Câu hỏi"
+    },
+    {
+      "time": "49:29",
+      "title": "Cơm"
+    }
+  ],
+  "references": [
+    {
+      "group": "100K",
+      "text": "Wikipedia, YouTube Creator Awards",
+      "url": "https://en.wikipedia.org/wiki/YouTube_Creator_Awards"
+    },
+    {
+      "group": "YouTube",
+      "text": "Veritasium (Derek Muller), kênh YouTube",
+      "url": "https://www.youtube.com/@veritasium"
+    },
+    {
+      "group": "Khoa học",
+      "text": "Wikipedia, Kilonova",
+      "url": "https://en.wikipedia.org/wiki/Kilonova"
+    },
+    {
+      "group": "Khoa học",
+      "text": "LIGO Scientific Collaboration and Virgo Collaboration, GW170817: Observation of Gravitational Waves from a Binary Neutron Star Inspiral, Physical Review Letters (2017)",
+      "url": "https://doi.org/10.1103/PhysRevLett.119.161101"
+    },
+    {
+      "group": "Khoa học",
+      "text": "Wikipedia, Nitrogen",
+      "url": "https://en.wikipedia.org/wiki/Nitrogen"
+    },
+    {
+      "group": "Khoa học",
+      "text": "Wikipedia, Energy–momentum relation",
+      "url": "https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation"
+    },
+    {
+      "group": "Khoa học",
+      "text": "Wikipedia, Formula for primes",
+      "url": "https://en.wikipedia.org/wiki/Formula_for_primes"
+    },
+    {
+      "group": "Đề xuất",
+      "text": "NobelPrize.org, The Nobel Prize in Physics 2025 (Clarke, Devoret, Martinis)",
+      "url": "https://www.nobelprize.org/prizes/physics/2025/summary/"
+    },
+    {
+      "group": "Đề xuất",
+      "text": "Wikipedia, Schrödinger's cat",
+      "url": "https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat"
+    }
+  ],
+  "footage": [],
+  "related": [],
+  "tags": [
+    "Kênh"
+  ]
+}

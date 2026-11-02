@@ -1,0 +1,92 @@
+{
+  "slug": "borax-food",
+  "youtube_id": "0uzHwiQWavE",
+  "title": "Thực Phẩm Chứa Hàn The",
+  "description": "Hàn the trong thực phẩm và cách tự kiểm tra",
+  "date": "2026-06-20",
+  "summary": "Hàn the trong thực phẩm và cách tự kiểm tra",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:43",
+      "title": "Lịch sử thực phẩm"
+    },
+    {
+      "time": "4:00",
+      "title": "Sự nguy hiểm"
+    },
+    {
+      "time": "7:09",
+      "title": "Trứng cá muối"
+    },
+    {
+      "time": "9:59",
+      "title": "Các vụ việc"
+    },
+    {
+      "time": "11:43",
+      "title": "Việt Nam"
+    },
+    {
+      "time": "13:00",
+      "title": "Kiểm tra"
+    },
+    {
+      "time": "14:49",
+      "title": "Slime"
+    },
+    {
+      "time": "17:11",
+      "title": "Kết"
+    }
+  ],
+  "references": [
+    {
+      "group": "Lịch sử thực phẩm",
+      "text": "Wikipedia, Borax",
+      "url": "https://en.wikipedia.org/wiki/Borax"
+    },
+    {
+      "group": "Sự nguy hiểm",
+      "text": "Wikipedia, Harvey Washington Wiley",
+      "url": "https://en.wikipedia.org/wiki/Harvey_Washington_Wiley"
+    },
+    {
+      "group": "Sự nguy hiểm",
+      "text": "Wikipedia, Pure Food and Drug Act",
+      "url": "https://en.wikipedia.org/wiki/Pure_Food_and_Drug_Act"
+    },
+    {
+      "group": "Sự nguy hiểm",
+      "text": "EFSA Panel on Food Additives, Scientific Opinion on the re-evaluation of boric acid (E 284) and sodium tetraborate (borax) (E 285) as food additives, EFSA Journal (2013)",
+      "url": "https://doi.org/10.2903/j.efsa.2013.3407"
+    },
+    {
+      "group": "Trứng cá muối",
+      "text": "Regulation (EC) No 1333/2008 on food additives, legislation.gov.uk (2008)",
+      "url": "https://www.legislation.gov.uk/eur/2008/1333/contents"
+    },
+    {
+      "group": "Slime",
+      "text": "Wikipedia, Silly Putty",
+      "url": "https://en.wikipedia.org/wiki/Silly_Putty"
+    },
+    {
+      "group": "Slime",
+      "text": "Wikipedia, Slime (toy)",
+      "url": "https://en.wikipedia.org/wiki/Slime_(toy)"
+    }
+  ],
+  "footage": [],
+  "related": [
+    "borax",
+    "borax-flame"
+  ],
+  "tags": [
+    "Hóa học",
+    "Sức khỏe"
+  ]
+}

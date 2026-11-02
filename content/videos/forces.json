@@ -1,0 +1,230 @@
+{
+  "slug": "forces",
+  "youtube_id": "wxWKco46QlY",
+  "title": "4 Lực Cơ Bản",
+  "description": "Bốn lực cơ bản chi phối cả vũ trụ",
+  "date": "2026-10-03",
+  "summary": "Bốn lực cơ bản chi phối cả vũ trụ",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Lực cơ bản"
+    },
+    {
+      "time": "3:11",
+      "title": "LỰC HẤP DẪN"
+    },
+    {
+      "time": "8:13",
+      "title": "Vạn vật Hấp dẫn"
+    },
+    {
+      "time": "15:23",
+      "title": "Tương đối Rộng"
+    },
+    {
+      "time": "22:40",
+      "title": "LỰC ĐIỆN TỪ"
+    },
+    {
+      "time": "24:38",
+      "title": "Điện"
+    },
+    {
+      "time": "30:00",
+      "title": "Từ"
+    },
+    {
+      "time": "34:19",
+      "title": "Điện Từ"
+    },
+    {
+      "time": "42:50",
+      "title": "LỰC MẠNH"
+    },
+    {
+      "time": "45:37",
+      "title": "Sắc tích"
+    },
+    {
+      "time": "50:53",
+      "title": "Giam hãm sắc"
+    },
+    {
+      "time": "55:13",
+      "title": "LỰC YẾU"
+    },
+    {
+      "time": "58:44",
+      "title": "Lực điện yếu"
+    },
+    {
+      "time": "1:00:28",
+      "title": "4 LỰC"
+    },
+    {
+      "time": "1:02:50",
+      "title": "Graviton"
+    },
+    {
+      "time": "1:03:53",
+      "title": "LỰC THỨ NĂM"
+    }
+  ],
+  "references": [
+    {
+      "group": "Lực cơ bản",
+      "text": "Wikipedia, Fundamental interaction",
+      "url": "https://en.wikipedia.org/wiki/Fundamental_interaction"
+    },
+    {
+      "group": "Vạn vật Hấp dẫn",
+      "text": "Wikipedia, Philosophiæ Naturalis Principia Mathematica (I. Newton, 1687)",
+      "url": "https://en.wikipedia.org/wiki/Philosophi%C3%A6_Naturalis_Principia_Mathematica"
+    },
+    {
+      "group": "Vạn vật Hấp dẫn",
+      "text": "Wikipedia, Cavendish experiment",
+      "url": "https://en.wikipedia.org/wiki/Cavendish_experiment"
+    },
+    {
+      "group": "Vạn vật Hấp dẫn",
+      "text": "Wikipedia, Discovery of Neptune",
+      "url": "https://en.wikipedia.org/wiki/Discovery_of_Neptune"
+    },
+    {
+      "group": "Tương đối Rộng",
+      "text": "F. W. Dyson, A. S. Eddington, C. Davidson, A determination of the deflection of light by the sun's gravitational field, Philosophical Transactions of the Royal Society A (1920)",
+      "url": "https://doi.org/10.1098/rsta.1920.0009"
+    },
+    {
+      "group": "Tương đối Rộng",
+      "text": "R. V. Pound, G. A. Rebka, Apparent Weight of Photons, Physical Review Letters (1960)",
+      "url": "https://doi.org/10.1103/PhysRevLett.4.337"
+    },
+    {
+      "group": "Tương đối Rộng",
+      "text": "NobelPrize.org, The Nobel Prize in Physics 1993 (Hulse, Taylor)",
+      "url": "https://www.nobelprize.org/prizes/physics/1993/summary/"
+    },
+    {
+      "group": "Tương đối Rộng",
+      "text": "LIGO Scientific Collaboration and Virgo Collaboration, Observation of Gravitational Waves from a Binary Black Hole Merger, Physical Review Letters (2016)",
+      "url": "https://doi.org/10.1103/PhysRevLett.116.061102"
+    },
+    {
+      "group": "Tương đối Rộng",
+      "text": "NobelPrize.org, The Nobel Prize in Physics 2017 (Weiss, Barish, Thorne)",
+      "url": "https://www.nobelprize.org/prizes/physics/2017/summary/"
+    },
+    {
+      "group": "Tương đối Rộng",
+      "text": "LIGO Scientific Collaboration and Virgo Collaboration, GW170817: Observation of Gravitational Waves from a Binary Neutron Star Inspiral, Physical Review Letters (2017)",
+      "url": "https://doi.org/10.1103/PhysRevLett.119.161101"
+    },
+    {
+      "group": "Điện",
+      "text": "J. J. Thomson, Cathode Rays, Philosophical Magazine (1897)",
+      "url": "https://doi.org/10.1080/14786449708621070"
+    },
+    {
+      "group": "Điện",
+      "text": "Wikipedia, Coulomb's law",
+      "url": "https://en.wikipedia.org/wiki/Coulomb%27s_law"
+    },
+    {
+      "group": "Từ",
+      "text": "Wikipedia, Hans Christian Ørsted",
+      "url": "https://en.wikipedia.org/wiki/Hans_Christian_%C3%98rsted"
+    },
+    {
+      "group": "Điện Từ",
+      "text": "J. C. Maxwell, A dynamical theory of the electromagnetic field, Philosophical Transactions of the Royal Society (1865)",
+      "url": "https://doi.org/10.1098/rstl.1865.0008"
+    },
+    {
+      "group": "Điện Từ",
+      "text": "Wikipedia, Quantum electrodynamics",
+      "url": "https://en.wikipedia.org/wiki/Quantum_electrodynamics"
+    },
+    {
+      "group": "Sắc tích",
+      "text": "M. Gell-Mann, A schematic model of baryons and mesons, Physics Letters (1964)",
+      "url": "https://doi.org/10.1016/S0031-9163(64)92001-3"
+    },
+    {
+      "group": "Giam hãm sắc",
+      "text": "Wikipedia, Quantum chromodynamics",
+      "url": "https://en.wikipedia.org/wiki/Quantum_chromodynamics"
+    },
+    {
+      "group": "Lực yếu",
+      "text": "C. S. Wu và cs., Experimental Test of Parity Conservation in Beta Decay, Physical Review (1957)",
+      "url": "https://doi.org/10.1103/PhysRev.105.1413"
+    },
+    {
+      "group": "Lực điện yếu",
+      "text": "S. L. Glashow, Partial-symmetries of weak interactions, Nuclear Physics (1961)",
+      "url": "https://doi.org/10.1016/0029-5582(61)90469-2"
+    },
+    {
+      "group": "Lực điện yếu",
+      "text": "S. Weinberg, A Model of Leptons, Physical Review Letters (1967)",
+      "url": "https://doi.org/10.1103/PhysRevLett.19.1264"
+    },
+    {
+      "group": "Lực điện yếu",
+      "text": "NobelPrize.org, The Nobel Prize in Physics 1979 (Glashow, Salam, Weinberg)",
+      "url": "https://www.nobelprize.org/prizes/physics/1979/summary/"
+    },
+    {
+      "group": "Graviton",
+      "text": "Wikipedia, Graviton",
+      "url": "https://en.wikipedia.org/wiki/Graviton"
+    },
+    {
+      "group": "Lực thứ năm",
+      "text": "E. Fischbach và cs., Reanalysis of the Eötvös experiment, Physical Review Letters (1986)",
+      "url": "https://doi.org/10.1103/PhysRevLett.56.3"
+    },
+    {
+      "group": "Lực thứ năm",
+      "text": "Wikipedia, Fifth force",
+      "url": "https://en.wikipedia.org/wiki/Fifth_force"
+    }
+  ],
+  "footage": [
+    {
+      "group": "",
+      "text": "ScienceClic English",
+      "url": "https://www.youtube.com/watch?v=YNqTamaKMC8"
+    },
+    {
+      "group": "",
+      "text": "Physics Girl",
+      "url": "https://www.youtube.com/watch?v=DjcS1kRkc6M"
+    },
+    {
+      "group": "",
+      "text": "HubbleWebbESA",
+      "url": "https://www.youtube.com/watch?v=Rsx0AGQhQvs"
+    },
+    {
+      "group": "",
+      "text": "European Southern Observatory (ESO)",
+      "url": "https://www.youtube.com/watch?v=ehWlvoe7AyI"
+    },
+    {
+      "group": "",
+      "text": "MIT Department of Physics",
+      "url": "https://www.youtube.com/watch?v=ach9JLGs2Yc&t=4s"
+    }
+  ],
+  "related": [
+    "particles",
+    "atomic-power"
+  ],
+  "tags": [
+    "Vật lý"
+  ]
+}

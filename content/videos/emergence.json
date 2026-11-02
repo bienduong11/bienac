@@ -1,0 +1,177 @@
+{
+  "slug": "emergence",
+  "youtube_id": "3znEaW-Ul64",
+  "title": "Hiện Tượng Kỳ Diệu Nhất Vũ Trụ",
+  "description": "Trồi sinh, từ quy luật đơn giản tới ý thức",
+  "date": "2025-08-15",
+  "summary": "Trồi sinh, từ quy luật đơn giản tới ý thức",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:23",
+      "title": "Lịch sử"
+    },
+    {
+      "time": "5:32",
+      "title": "Trồi sinh"
+    },
+    {
+      "time": "8:23",
+      "title": "Các loại trồi sinh"
+    },
+    {
+      "time": "10:35",
+      "title": "Công nghệ thông tin"
+    },
+    {
+      "time": "15:40",
+      "title": "Nước đi 37"
+    },
+    {
+      "time": "20:10",
+      "title": "Các loại AI"
+    },
+    {
+      "time": "26:13",
+      "title": "Trồi sinh trong Xã hội"
+    },
+    {
+      "time": "28:06",
+      "title": "Ý thức là gì?"
+    },
+    {
+      "time": "30:13",
+      "title": "Lượng tử là gì?"
+    },
+    {
+      "time": "37:04",
+      "title": "Ý thức lượng tử"
+    },
+    {
+      "time": "47:10",
+      "title": "Linh hồn lượng tử"
+    },
+    {
+      "time": "49:50",
+      "title": "Trồi sinh trong Phật giáo"
+    },
+    {
+      "time": "53:06",
+      "title": "Trồi sinh của Đạo"
+    },
+    {
+      "time": "58:35",
+      "title": "Đấng tạo hoá"
+    }
+  ],
+  "references": [
+    {
+      "group": "Lịch sử",
+      "text": "Wikipedia, Emergence",
+      "url": "https://en.wikipedia.org/wiki/Emergence"
+    },
+    {
+      "group": "Lịch sử",
+      "text": "Wikipedia, George Henry Lewes",
+      "url": "https://en.wikipedia.org/wiki/George_Henry_Lewes"
+    },
+    {
+      "group": "Lịch sử",
+      "text": "Wikipedia, C. D. Broad",
+      "url": "https://en.wikipedia.org/wiki/C._D._Broad"
+    },
+    {
+      "group": "Trồi sinh",
+      "text": "P. W. Anderson, More Is Different, Science (1972)",
+      "url": "https://doi.org/10.1126/science.177.4047.393"
+    },
+    {
+      "group": "Các loại trồi sinh",
+      "text": "NobelPrize.org, The Nobel Prize in Physics 1998 (Laughlin, Störmer, Tsui)",
+      "url": "https://www.nobelprize.org/prizes/physics/1998/summary/"
+    },
+    {
+      "group": "Công nghệ thông tin",
+      "text": "Wikipedia, Conway's Game of Life",
+      "url": "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+    },
+    {
+      "group": "Công nghệ thông tin",
+      "text": "P. Rendell, A Turing Machine in Conway's Game of Life",
+      "url": "http://rendell-attic.org/gol/tm.htm"
+    },
+    {
+      "group": "Nước đi 37",
+      "text": "Wikipedia, Deep Blue versus Garry Kasparov",
+      "url": "https://en.wikipedia.org/wiki/Deep_Blue_versus_Garry_Kasparov"
+    },
+    {
+      "group": "Nước đi 37",
+      "text": "D. Silver và cs., Mastering the game of Go with deep neural networks and tree search, Nature (2016)",
+      "url": "https://doi.org/10.1038/nature16961"
+    },
+    {
+      "group": "Nước đi 37",
+      "text": "Wikipedia, AlphaGo versus Lee Sedol",
+      "url": "https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol"
+    },
+    {
+      "group": "Lượng tử là gì?",
+      "text": "Wikipedia, Schrödinger's cat",
+      "url": "https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat"
+    },
+    {
+      "group": "Ý thức lượng tử",
+      "text": "Wikipedia, The Emperor's New Mind (R. Penrose, 1989)",
+      "url": "https://en.wikipedia.org/wiki/The_Emperor%27s_New_Mind"
+    },
+    {
+      "group": "Ý thức lượng tử",
+      "text": "Wikipedia, Shadows of the Mind (R. Penrose, 1994)",
+      "url": "https://en.wikipedia.org/wiki/Shadows_of_the_Mind"
+    },
+    {
+      "group": "Ý thức lượng tử",
+      "text": "S. Hameroff, R. Penrose, Consciousness in the universe: A review of the 'Orch OR' theory, Physics of Life Reviews (2014)",
+      "url": "https://doi.org/10.1016/j.plrev.2013.08.002"
+    },
+    {
+      "group": "Ý thức lượng tử",
+      "text": "NobelPrize.org, The Nobel Prize in Physics 2020 (Penrose, Genzel, Ghez)",
+      "url": "https://www.nobelprize.org/prizes/physics/2020/summary/"
+    },
+    {
+      "group": "Trồi sinh trong Phật giáo",
+      "text": "Wikipedia, Pratītyasamutpāda",
+      "url": "https://en.wikipedia.org/wiki/Prat%C4%ABtyasamutp%C4%81da"
+    },
+    {
+      "group": "Trồi sinh của Đạo",
+      "text": "Wikipedia, Tao Te Ching",
+      "url": "https://en.wikipedia.org/wiki/Tao_Te_Ching"
+    },
+    {
+      "group": "Tài liệu cũ",
+      "text": "Bienac, Tài liệu tham khảo (Google Docs cũ)",
+      "url": "https://docs.google.com/document/d/1tfxZz-PY-RXRN00qCFdRcRD3tj4OOLJS_qW53zsQ5Gs/edit?tab=t.wqzkpxmkifpc"
+    }
+  ],
+  "footage": [
+    {
+      "group": "",
+      "text": "Hình ảnh & video (Google Docs cũ)",
+      "url": "https://docs.google.com/document/d/1tfxZz-PY-RXRN00qCFdRcRD3tj4OOLJS_qW53zsQ5Gs/edit?tab=t.b76h2clqjw7i"
+    }
+  ],
+  "related": [
+    "reality",
+    "butterfly"
+  ],
+  "tags": [
+    "Vật lý",
+    "Triết học"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "slug": "atomic-power",
+  "youtube_id": "Uvgy6XhF1b0",
+  "title": "Nguồn Gốc Sức Mạnh Nguyên Tử",
+  "description": "E=mc² và nguồn gốc năng lượng hạt nhân",
+  "date": "2023-08-17",
+  "summary": "E=mc² và nguồn gốc năng lượng hạt nhân",
+  "chapters": [],
+  "references": [
+    {
+      "group": "Einstein và E = mc²",
+      "text": "A. Einstein, Ist die Trägheit eines Körpers von seinem Energieinhalt abhängig?, Annalen der Physik 18: 639 (1905), DOI 10.1002/andp.19053231314 (bản lưu Zenodo)",
+      "url": "https://zenodo.org/records/1424057"
+    },
+    {
+      "group": "Einstein và E = mc²",
+      "text": "A. Einstein, Does the Inertia of a Body Depend upon its Energy-Content? (bản dịch tiếng Anh), Fourmilab",
+      "url": "https://www.fourmilab.ch/etexts/einstein/E_mc2/www/"
+    },
+    {
+      "group": "Einstein và E = mc²",
+      "text": "Wikipedia tiếng Anh, Mass–energy equivalence",
+      "url": "https://en.wikipedia.org/wiki/E=mc2"
+    },
+    {
+      "group": "Einstein và E = mc²",
+      "text": "Wikipedia tiếng Anh, Annus mirabilis papers (1905)",
+      "url": "https://en.wikipedia.org/wiki/Annus_mirabilis_papers"
+    },
+    {
+      "group": "Phân hạch hạt nhân",
+      "text": "L. Meitner, O. R. Frisch, Disintegration of Uranium by Neutrons: A New Type of Nuclear Reaction, Nature 143: 239 (1939), bản đăng lại trên Atomic Archive",
+      "url": "https://atomicarchive.com/resources/documents/beginnings/nature_meitner.html"
+    },
+    {
+      "group": "Phân hạch hạt nhân",
+      "text": "Nobel Prize, Otto Hahn – Facts, Nobel Hóa học 1944",
+      "url": "https://www.nobelprize.org/prizes/chemistry/1944/hahn/facts/"
+    },
+    {
+      "group": "Phân hạch hạt nhân",
+      "text": "Atomic Heritage Foundation, Nuclear Fission",
+      "url": "https://ahf.nuclearmuseum.org/history/nuclear-fission"
+    },
+    {
+      "group": "Dự án Manhattan",
+      "text": "Wikipedia tiếng Anh, Einstein–Szilard letter (1939)",
+      "url": "https://en.wikipedia.org/wiki/Einstein%E2%80%93Szilard_letter"
+    },
+    {
+      "group": "Dự án Manhattan",
+      "text": "Wikipedia tiếng Anh, Manhattan Project",
+      "url": "https://en.wikipedia.org/wiki/Manhattan_Project"
+    },
+    {
+      "group": "Dự án Manhattan",
+      "text": "Atomic Heritage Foundation, J. Robert Oppenheimer",
+      "url": "https://ahf.nuclearmuseum.org/profile/j-robert-oppenheimer"
+    },
+    {
+      "group": "Dự án Manhattan",
+      "text": "Encyclopaedia Britannica, J. Robert Oppenheimer summary",
+      "url": "https://www.britannica.com/summary/J-Robert-Oppenheimer"
+    },
+    {
+      "group": "Dự án Manhattan",
+      "text": "Wikipedia tiếng Anh, Trinity (nuclear test), 16/7/1945",
+      "url": "https://en.wikipedia.org/wiki/Trinity_(nuclear_test)"
+    },
+    {
+      "group": "Dự án Manhattan",
+      "text": "Wikipedia tiếng Anh, Atomic bombings of Hiroshima and Nagasaki",
+      "url": "https://en.wikipedia.org/wiki/Atomic_bombings_of_Hiroshima_and_Nagasaki"
+    }
+  ],
+  "footage": [],
+  "related": [
+    "atomic-bomb",
+    "forces"
+  ],
+  "tags": [
+    "Vật lý",
+    "Lịch sử"
+  ]
+}

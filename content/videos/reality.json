@@ -1,0 +1,241 @@
+{
+  "slug": "reality",
+  "youtube_id": "BaGhStLH8vM",
+  "title": "Bản Chất Thực Tại Và Ý Thức",
+  "description": "Thực tại là gì và ý thức đến từ đâu",
+  "date": "2026-10-22",
+  "summary": "Thực tại là gì và ý thức đến từ đâu",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "2:19",
+      "title": "Hang động"
+    },
+    {
+      "time": "6:10",
+      "title": "Ánh sáng"
+    },
+    {
+      "time": "9:49",
+      "title": "Quan sát"
+    },
+    {
+      "time": "15:48",
+      "title": "Wheeler"
+    },
+    {
+      "time": "20:49",
+      "title": "Tính toán"
+    },
+    {
+      "time": "25:30",
+      "title": "Trải nghiệm"
+    },
+    {
+      "time": "32:00",
+      "title": "Nhìn ngược"
+    },
+    {
+      "time": "37:45",
+      "title": "Một"
+    },
+    {
+      "time": "47:51",
+      "title": "Cái tôi"
+    },
+    {
+      "time": "56:06",
+      "title": "Omega"
+    }
+  ],
+  "references": [
+    {
+      "group": "Hang động",
+      "text": "Wikipedia, Allegory of the cave",
+      "url": "https://en.wikipedia.org/wiki/Allegory_of_the_cave"
+    },
+    {
+      "group": "Ánh sáng",
+      "text": "Wikipedia, Fermat's principle",
+      "url": "https://en.wikipedia.org/wiki/Fermat%27s_principle"
+    },
+    {
+      "group": "Ánh sáng",
+      "text": "R. P. Feynman, Nobel Lecture: The Development of the Space-Time View of Quantum Electrodynamics, NobelPrize.org (1965)",
+      "url": "https://www.nobelprize.org/prizes/physics/1965/feynman/lecture/"
+    },
+    {
+      "group": "Quan sát",
+      "text": "Wikipedia, Double-slit experiment",
+      "url": "https://en.wikipedia.org/wiki/Double-slit_experiment"
+    },
+    {
+      "group": "Quan sát",
+      "text": "J. S. Bell, On the Einstein Podolsky Rosen paradox, Physics Physique Fizika (1964)",
+      "url": "https://doi.org/10.1103/PhysicsPhysiqueFizika.1.195"
+    },
+    {
+      "group": "Quan sát",
+      "text": "A. Aspect, J. Dalibard, G. Roger, Physical Review Letters (1982)",
+      "url": "https://doi.org/10.1103/PhysRevLett.49.1804"
+    },
+    {
+      "group": "Quan sát",
+      "text": "NobelPrize.org, The Nobel Prize in Physics 2022 (Aspect, Clauser, Zeilinger)",
+      "url": "https://www.nobelprize.org/prizes/physics/2022/summary/"
+    },
+    {
+      "group": "Quan sát",
+      "text": "C. Rovelli, Relational Quantum Mechanics (1996)",
+      "url": "https://arxiv.org/abs/quant-ph/9609002"
+    },
+    {
+      "group": "Wheeler",
+      "text": "N. Bohr, J. A. Wheeler, The Mechanism of Nuclear Fission, Physical Review (1939)",
+      "url": "https://doi.org/10.1103/PhysRev.56.426"
+    },
+    {
+      "group": "Wheeler",
+      "text": "Wikipedia, Ivy Mike",
+      "url": "https://en.wikipedia.org/wiki/Ivy_Mike"
+    },
+    {
+      "group": "Wheeler",
+      "text": "J. A. Wheeler, Information, Physics, Quantum: The Search for Links (1989)",
+      "url": "https://philarchive.org/rec/WHEIPQ"
+    },
+    {
+      "group": "Wheeler",
+      "text": "V. Jacques và cs., Wheeler's Delayed-Choice Gedanken Experiment, Science (2007)",
+      "url": "https://doi.org/10.1126/science.1136303"
+    },
+    {
+      "group": "Tính toán",
+      "text": "C. Shannon, A Mathematical Theory of Communication (1948)",
+      "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+    },
+    {
+      "group": "Tính toán",
+      "text": "Wikipedia, Calculating Space (K. Zuse, Rechnender Raum, 1969)",
+      "url": "https://en.wikipedia.org/wiki/Calculating_Space"
+    },
+    {
+      "group": "Tính toán",
+      "text": "R. Feynman, Simulating Physics with Computers (1982)",
+      "url": "https://doi.org/10.1007/BF02650179"
+    },
+    {
+      "group": "Tính toán",
+      "text": "N. Bostrom, Are You Living in a Computer Simulation? (2003)",
+      "url": "https://simulation-argument.com/simulation.pdf"
+    },
+    {
+      "group": "Trải nghiệm",
+      "text": "D. Chalmers, Facing Up to the Problem of Consciousness (1995)",
+      "url": "https://consc.net/papers/facing.pdf"
+    },
+    {
+      "group": "Trải nghiệm",
+      "text": "G. Tononi, An Information Integration Theory of Consciousness (2004)",
+      "url": "https://doi.org/10.1186/1471-2202-5-42"
+    },
+    {
+      "group": "Trải nghiệm",
+      "text": "W. M. Wheeler, The ant-colony as an organism, Journal of Morphology (1911)",
+      "url": "https://doi.org/10.1002/jmor.1050220206"
+    },
+    {
+      "group": "Trải nghiệm",
+      "text": "S. Hameroff, R. Penrose, Consciousness in the universe: A review of the 'Orch OR' theory, Physics of Life Reviews (2014)",
+      "url": "https://doi.org/10.1016/j.plrev.2013.08.002"
+    },
+    {
+      "group": "Nhìn ngược",
+      "text": "Wikipedia, Anthropic principle",
+      "url": "https://en.wikipedia.org/wiki/Anthropic_principle"
+    },
+    {
+      "group": "Nhìn ngược",
+      "text": "Wikipedia, Triple-alpha process (trạng thái Hoyle)",
+      "url": "https://en.wikipedia.org/wiki/Triple-alpha_process"
+    },
+    {
+      "group": "Một",
+      "text": "Wikipedia, What Is Life? (E. Schrödinger, 1944)",
+      "url": "https://en.wikipedia.org/wiki/What_Is_Life%3F"
+    },
+    {
+      "group": "Cái tôi",
+      "text": "K. L. Spalding và cs., Retrospective Birth Dating of Cells in Humans, Cell (2005)",
+      "url": "https://doi.org/10.1016/j.cell.2005.04.028"
+    },
+    {
+      "group": "Cái tôi",
+      "text": "H. Everett, \"Relative State\" Formulation of Quantum Mechanics, Reviews of Modern Physics (1957)",
+      "url": "https://doi.org/10.1103/RevModPhys.29.454"
+    },
+    {
+      "group": "Omega",
+      "text": "Wikipedia, Omega Point (P. Teilhard de Chardin)",
+      "url": "https://en.wikipedia.org/wiki/Omega_Point"
+    }
+  ],
+  "footage": [
+    {
+      "group": "Video & phỏng vấn",
+      "text": "John Wheeler, Web of Stories (phần 1)",
+      "url": "https://www.webofstories.com/play/john.wheeler/108"
+    },
+    {
+      "group": "Video & phỏng vấn",
+      "text": "John Wheeler, Web of Stories (phần 2)",
+      "url": "https://www.webofstories.com/play/john.wheeler/109"
+    },
+    {
+      "group": "Video & phỏng vấn",
+      "text": "Richard Feynman talks about light",
+      "url": "https://www.youtube.com/watch?v=FjHJ7FmV0M4"
+    },
+    {
+      "group": "Video & phỏng vấn",
+      "text": "Elon Musk, Code Conference 2016",
+      "url": "https://www.youtube.com/watch?v=2KK_kzrJPS8"
+    },
+    {
+      "group": "Video & phỏng vấn",
+      "text": "No Man's Sky, Hello Games",
+      "url": "https://www.youtube.com/watch?v=inZfjVQxC3o"
+    },
+    {
+      "group": "Video & phỏng vấn",
+      "text": "Thích Nhất Hạnh",
+      "url": "https://www.youtube.com/watch?v=XyAOzp_aJqc"
+    },
+    {
+      "group": "Video & phỏng vấn",
+      "text": "J. Krishnamurti",
+      "url": "https://www.youtube.com/watch?v=JRxconuIIVk"
+    },
+    {
+      "group": "Tư liệu",
+      "text": "U.S. Army Air Forces, B-17 bombing raids 1943",
+      "url": ""
+    },
+    {
+      "group": "Tư liệu",
+      "text": "Thử nghiệm Ivy Mike 1952",
+      "url": ""
+    }
+  ],
+  "related": [
+    "emergence",
+    "color"
+  ],
+  "tags": [
+    "Vật lý",
+    "Triết học"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "slug": "soap-making",
+  "youtube_id": "QNKt1YczyoY",
+  "title": "Thử Nấu Xà Phòng",
+  "description": "Tự nấu xà phòng bằng tro và mỡ lợn",
+  "date": "2026-06-28",
+  "summary": "Tự nấu xà phòng bằng tro và mỡ lợn",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:30",
+      "title": "Kiềm"
+    },
+    {
+      "time": "2:15",
+      "title": "Xà phòng Ả Rập"
+    },
+    {
+      "time": "3:09",
+      "title": "Tro & Vôi"
+    },
+    {
+      "time": "6:33",
+      "title": "Mỡ lợn"
+    },
+    {
+      "time": "8:20",
+      "title": "Xà phòng La Mã"
+    },
+    {
+      "time": "10:30",
+      "title": "Test"
+    },
+    {
+      "time": "11:31",
+      "title": "Đóng dấu"
+    },
+    {
+      "time": "12:41",
+      "title": "Phơi"
+    },
+    {
+      "time": "15:27",
+      "title": "Kết"
+    }
+  ],
+  "references": [
+    {
+      "group": "Kiềm",
+      "text": "Wikipedia, Lye",
+      "url": "https://en.wikipedia.org/wiki/Lye"
+    },
+    {
+      "group": "Xà phòng Ả Rập",
+      "text": "Wikipedia, Aleppo soap",
+      "url": "https://en.wikipedia.org/wiki/Aleppo_soap"
+    },
+    {
+      "group": "Tro & Vôi",
+      "text": "Wikipedia, Potash",
+      "url": "https://en.wikipedia.org/wiki/Potash"
+    },
+    {
+      "group": "Mỡ lợn",
+      "text": "Wikipedia, Lard",
+      "url": "https://en.wikipedia.org/wiki/Lard"
+    },
+    {
+      "group": "Xà phòng La Mã",
+      "text": "Wikipedia, Soap",
+      "url": "https://en.wikipedia.org/wiki/Soap"
+    },
+    {
+      "group": "Test",
+      "text": "Wikipedia, Saponification",
+      "url": "https://en.wikipedia.org/wiki/Saponification"
+    },
+    {
+      "group": "Test",
+      "text": "Wikipedia, Saponification value",
+      "url": "https://en.wikipedia.org/wiki/Saponification_value"
+    }
+  ],
+  "footage": [],
+  "related": [
+    "soap",
+    "alkali"
+  ],
+  "tags": [
+    "Hóa học"
+  ]
+}
