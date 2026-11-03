@@ -79,6 +79,22 @@ for (const f of (await readdir(path.join(ROOT, 'posts'))).filter((f) => f.endsWi
   const link = (raw.match(/^link:\s*(\S+)/m) || [])[1] || f.slice(0, -3);
   await hit(`/v/${link}`, { expect: redir });
 }
+// 4. Tên miền: còn khóa chuyển nhượng, máy chủ tên miền vẫn là Cloudflare, chưa sắp hết hạn.
+try {
+  const r = await fetch('https://rdap.verisign.com/com/v1/domain/bienac.com', { signal: AbortSignal.timeout(15000) });
+  const d = await r.json();
+  const st = (d.status || []).join(', ');
+  const ns = (d.nameservers || []).map((n) => n.ldhName.toLowerCase()).sort().join(', ');
+  const exp = (d.events || []).find((e) => e.eventAction === 'expiration');
+  const changed = (d.events || []).find((e) => e.eventAction === 'last changed');
+  if (!/client transfer prohibited/.test(st)) fails.push(`- Tên miền: MẤT khóa chuyển nhượng (trạng thái: ${st})`);
+  if (ns !== 'pedro.ns.cloudflare.com, thea.ns.cloudflare.com') fails.push(`- Tên miền: máy chủ tên miền bị đổi thành ${ns}`);
+  if (exp && new Date(exp.eventDate) - Date.now() < 45 * 86400000) fails.push(`- Tên miền: sắp hết hạn (${exp.eventDate.slice(0, 10)})`);
+  // Lần sửa gần nhất ở nhà đăng ký đã biết: 24/10/2026 (đổi sang Cloudflare). Mới hơn thì báo để Bien xác nhận.
+  if (changed && changed.eventDate > '2026-10-24T23:59:59Z' && changed.eventDate !== (process.env.DOMAIN_LAST_CHANGED_OK || ''))
+    fails.push(`- Tên miền: có thay đổi ở nhà đăng ký lúc ${changed.eventDate} (nếu không phải bạn làm, kiểm tra tài khoản PA Vietnam ngay)`);
+} catch (e) { notes.push(`(không tra được thông tin tên miền: ${e.message})`); }
+
 notes.push(`${slugs.length} trang video, ${Object.keys(LINKS).length} link mạng xã hội.`);
 
 const stamp = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
