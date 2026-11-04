@@ -267,6 +267,17 @@
   }
 
   /* Chạm vào một ngân hàng: chép sẵn số tài khoản (cho app không tự điền), nhớ lựa chọn, rồi để link mở app. */
+  /* Đếm lượt chạm từng lựa chọn (ngân hàng, MoMo, PayPal…) để biết người xem dùng gì nhiều, sắp xếp lại cho đúng. */
+  const tap = (what) => { try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/support/tap/' + what, r: document.referrer })); } catch {} };
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-momo], #intl-btns a, [data-copy], #qr-link, #fav-change');
+    if (!el) return;
+    if (el.dataset.momo) tap('momo');
+    else if (el.id === 'qr-link') tap('qr');
+    else if (el.id === 'fav-change') tap('change-bank');
+    else if (el.dataset.copy) tap('copy-' + el.dataset.copy);
+    else tap(/paypal/.test(el.href) ? 'paypal' : /patreon/.test(el.href) ? 'patreon' : 'member');
+  }, true);
   document.addEventListener('click', (e) => {
     const a = e.target.closest('.sp-bank[data-app], #fav-go');
     if (!a) return;
@@ -274,6 +285,7 @@
     const app = appById(id);
     if (!app) return;
     e.preventDefault();
+    tap((a.id === 'fav-go' ? 'fav-' : '') + id + (amount ? '-' + Math.round(amount / 1000) + 'k' : ''));
     store.set('bienac-bank', id);
     const go = () => { location.href = deeplink(id); setTimeout(renderFav, 300); };
     if (!app[2]) {
@@ -341,6 +353,7 @@
   const fav = store.get('bienac-bank');
   if (mobile && fav && appById(fav) && !thanks && !sess.get('bienac-auto') && !/[?&]pick=1/.test(location.search)) {
     sess.set('bienac-auto', '1');
+    tap('auto-' + fav);
     setTimeout(() => { location.href = deeplink(fav); }, 400);
   }
 

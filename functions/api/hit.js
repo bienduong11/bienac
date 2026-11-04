@@ -1,6 +1,6 @@
 import { record } from '../../lib/count.js';
 // Trang gửi về khi được mở: navigator.sendBeacon('/api/hit', JSON {p, r}).
-const OK = /^\/(v\/[a-z0-9-]+\/?|support\/?|email\/?)$/;
+const OK = /^\/(v\/[a-z0-9-]+\/?|support\/?|support\/tap\/[a-z0-9-]{1,30}|email\/?)$/;
 export async function onRequestPost(context) {
   try {
     const { p, r } = JSON.parse(await context.request.text());

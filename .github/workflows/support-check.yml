@@ -1,0 +1,52 @@
+# Kiểm tra sâu trang ủng hộ bienac.com/support mỗi ngày (7:23 giờ VN) và sau mỗi lần sửa trang.
+# Lỗi thì mở/cập nhật issue "Trang ủng hộ cần sửa" (nhãn support); ổn lại thì tự đóng.
+name: Support page check
+
+on:
+  schedule:
+    - cron: '23 0 * * *'
+  push:
+    branches: [master]
+    paths: ['support/**', 'assets/banks/**', 'scripts/support-check.mjs']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency: support-check
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Chờ Cloudflare dựng xong (khi vừa đẩy code)
+        if: github.event_name == 'push'
+        run: sleep 150
+      - name: Kiểm tra trang ủng hộ
+        id: run
+        run: node scripts/support-check.mjs
+        continue-on-error: true
+      - name: Mở hoặc cập nhật issue khi có vấn đề
+        if: steps.run.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create support --color 37f0cf --description "Trang ủng hộ" 2>/dev/null || true
+          n=$(gh issue list --label support --state open --json number --jq '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file support-check.md
+          else gh issue create --title "Trang ủng hộ cần sửa" --label support --body-file support-check.md; fi
+          exit 1
+      - name: Tự đóng issue khi đã ổn
+        if: steps.run.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --label support --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "Đã ổn lại lúc $(TZ=Asia/Ho_Chi_Minh date '+%H:%M %d/%m/%Y')."
+          done
