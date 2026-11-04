@@ -31,6 +31,8 @@ jobs:
       - name: Kiểm tra trang ủng hộ
         id: run
         run: node scripts/support-check.mjs
+        env:
+          SKIP_TICKET: '1'   # VietQR không cấp ticket cho IP máy GitHub; Claude kiểm bước này hằng tuần
         continue-on-error: true
       - name: Mở hoặc cập nhật issue khi có vấn đề
         if: steps.run.outcome == 'failure'

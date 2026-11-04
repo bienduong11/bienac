@@ -70,7 +70,9 @@ for (const [id, name, full] of APPS) {
       const r = { status: Number(code) };
       const opens = (r.status === 302 && loc.startsWith('intent://')) || /"fallback":"[^"]*:\/\//.test(body);
       if (!opens) { fails.push(`- ${name} trên ${os}: deeplink không mở app (mã ${r.status}).`); continue; }
-      if (full && !/"ticket":"/.test(body)) fails.push(`- ${name} trên ${os}: VietQR không cấp ticket, app sẽ KHÔNG tự điền.`);
+      // VietQR không cấp ticket cho IP trung tâm dữ liệu (máy GitHub), nên ở đó bỏ qua bước này (SKIP_TICKET=1);
+      // lần rà soát hằng tuần của Claude chạy đủ.
+      if (full && !process.env.SKIP_TICKET && !/"ticket":"/.test(body)) fails.push(`- ${name} trên ${os}: VietQR không cấp ticket, app sẽ KHÔNG tự điền.`);
       ok++;
     } catch (e) { fails.push(`- ${name} trên ${os}: lỗi kết nối VietQR (${e.message}).`); }
   }
