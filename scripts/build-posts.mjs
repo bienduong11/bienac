@@ -110,9 +110,9 @@ const page = ({ title, description, url, image, body, type = 'website', noindex 
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" /></noscript>
   <link rel="stylesheet" href="/css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" /></noscript>
   <link rel="stylesheet" href="/css/blog.css" />
   <link rel="stylesheet" href="/css/theme.css" />
 </head>
@@ -453,7 +453,7 @@ async function main() {
       ${p.fix ? `<aside class="post-fix"><p class="post-fix-k">Đính chính</p>${p.fix}</aside>` : ''}
       ${player}
       <div id="chapters">${chapterNav(p)}</div>
-      <p class="post-short">Link: <a href="${esc(p.link)}">bienac.com${esc(p.link)}</a>${jumps ? ' · ' + jumps : ''}</p>
+      <p class="post-short">Link: <a href="${esc(p.url)}">bienac.com${esc(p.link)}</a>${jumps ? ' · ' + jumps : ''}</p>
       ${p.luuYHtml ? `<aside class="post-note"><p class="post-fix-k">Lưu ý</p>${p.luuYHtml}</aside>` : ''}
       ${p.bodyText ? `<div class="post-body">${p.html}</div>` : ''}
       ${p.nguonHtml ? `<section class="post-refs" id="references"><h2>Tài liệu tham khảo</h2>${p.nguonHtml}</section>` : ''}
@@ -570,7 +570,7 @@ async function main() {
   await writeFile(path.join(OUT, 'ho-so.json'), JSON.stringify(Object.fromEntries(posts.filter((p) => p.video).map((p) => [p.video, p.url]))));
 
   // 8. Sitemap
-  const urls = ['/', '/elements.html', '/phenomena.html', '/thegioi/index.html', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', '/email/', ...posts.map((p) => p.url)];
+  const urls = ['/', '/elements', '/phenomena', '/thegioi/', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', '/email/', ...posts.map((p) => p.url)];
   await writeFile(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 
   if (PROBLEMS.length) console.warn(`⚠ ${PROBLEMS.length} file dữ liệu bị bỏ qua (chạy với --strict để xem lỗi).`);

@@ -7,9 +7,9 @@
   const q = document.getElementById('q'), box = document.getElementById('search-res');
   if (!q || !box) return;
   const APPS = [
-    ['Bảng tuần hoàn', '/elements.html', 'nguyen to hoa hoc bang tuan hoan'],
-    ['Hiện tượng vật lý', '/phenomena.html', 'hien tuong vat ly cuc quang set'],
-    ['Quả địa cầu lịch sử', '/thegioi/index.html', 'trai dat dia cau lich su phat minh'],
+    ['Bảng tuần hoàn', '/elements', 'nguyen to hoa hoc bang tuan hoan'],
+    ['Hiện tượng vật lý', '/phenomena', 'hien tuong vat ly cuc quang set'],
+    ['Quả địa cầu lịch sử', '/thegioi/', 'trai dat dia cau lich su phat minh'],
     ['Chiết tự chữ Hán', '/chiet-tu/', 'chiet tu chu han han viet'],
     ['Mạng tri thức', '/mang-tri-thuc/', 'mang tri thuc khai niem'],
     ['Bầu trời Đông Tây', '/bau-troi/', 'bau troi sao chom sao nhi thap bat tu'],

@@ -76,7 +76,9 @@
     localStorage.setItem(EFFECT_KEY, name);
     buttons.forEach((b) => b.classList.toggle('active', b.dataset.effect === name));
   }
-  selectEffect(initial, true);
+  // Biên dịch shader sau khi trang đã hiện xong, để nội dung lên trước
+  const firstFx = () => (window.requestIdleCallback || setTimeout)(() => { if (!engine.current) selectEffect(initial, true); }, { timeout: 1200 });
+  if (document.readyState === 'complete') firstFx(); else addEventListener('load', firstFx, { once: true });
 
   // Cho bong bóng hiện tượng vật lý (js/bubble.js) đổi hiệu ứng nền
   window.bienacSelectEffect = (name) => selectEffect(name, false);

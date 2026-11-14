@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bắt đầu từ đây · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/bat-dau/" />
   <meta name="description" content="Mới biết Bienac? Năm lối vào, mỗi lối vài video xem theo thứ tự và vài ứng dụng để tự tay khám phá." />
   <meta property="og:title" content="Bắt đầu từ đây · Bienac" />
   <meta property="og:description" content="Năm lối vào thế giới của Bienac: video xem theo thứ tự và ứng dụng để tự khám phá." />
@@ -15,7 +16,8 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" /></noscript>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/theme.css" />
   <link rel="stylesheet" href="/css/ung-dung.css" />
@@ -79,38 +81,38 @@
     { id: 'vat-chat', ten: 'Vật chất và thực tại', nhan: 'Lối 1 · Vật lý',
       gioi: 'Từ những hạt nhỏ nhất, qua bốn lực giữ chúng lại với nhau, tới câu hỏi lớn nhất: thế giới có còn đó khi không ai nhìn?',
       vids: [
-        ['nOVl0rxpK8s', 'hat-co-ban', '17 Hạt Cơ Bản', 'Mười bảy viên gạch của Mô hình Chuẩn.'],
-        ['wxWKco46QlY', 'luc-co-ban', '4 Lực Cơ Bản', 'Hấp dẫn, điện từ, lực mạnh, lực yếu.'],
-        ['eN2e8kl9Cw0', 'bom-nguyen-tu', 'Sự Thật Về Bom Nguyên Tử', 'Khi E = mc² rời trang giấy.'],
-        ['BaGhStLH8vM', 'thuc-tai-va-y-thuc', 'Bản Chất Thực Tại và Ý Thức', 'Người quan sát, thí nghiệm hai khe và cái tôi.'],
+        ['nOVl0rxpK8s', 'particles', '17 Hạt Cơ Bản', 'Mười bảy viên gạch của Mô hình Chuẩn.'],
+        ['wxWKco46QlY', 'forces', '4 Lực Cơ Bản', 'Hấp dẫn, điện từ, lực mạnh, lực yếu.'],
+        ['eN2e8kl9Cw0', 'atomic-bomb', 'Sự Thật Về Bom Nguyên Tử', 'Khi E = mc² rời trang giấy.'],
+        ['BaGhStLH8vM', 'reality', 'Bản Chất Thực Tại và Ý Thức', 'Người quan sát, thí nghiệm hai khe và cái tôi.'],
       ],
       apps: [['Thang vũ trụ', '/thang-vu-tru/'], ['Hai khe', '/hai-khe/'], ['Phóng xạ', '/phong-xa/'], ['Lịch vũ trụ', '/lich-vu-tru/']] },
     { id: 'hoa-hoc', ten: 'Hóa học quanh bếp nhà', nhan: 'Lối 2 · Hóa học đời sống',
       gioi: 'Tro bếp, xà phòng, hàn the trong giò chả: những thứ quen đến mức ít ai hỏi chúng từ đâu ra.',
       vids: [
-        ['b647OJtakDw', 'kiem', 'Sức Mạnh Của Kiềm', 'Loại chất quan trọng bậc nhất lịch sử.'],
-        ['xXixaqB1754', 'xa-phong', 'Sự Thật Về Xà Phòng', 'Chất nhờn đã cứu hàng triệu người.'],
-        ['Mio70FQUPYE', 'han-the', 'Sự Thật Về Hàn The', 'Từ khoáng vật lạ tới mâm cơm.'],
-        ['pMWjwZhdMvY', 'lua-han-the', 'Ngọn Lửa Của Hàn The', 'Vì sao mỗi nguyên tố cháy một màu.'],
+        ['b647OJtakDw', 'alkali', 'Sức Mạnh Của Kiềm', 'Loại chất quan trọng bậc nhất lịch sử.'],
+        ['xXixaqB1754', 'soap', 'Sự Thật Về Xà Phòng', 'Chất nhờn đã cứu hàng triệu người.'],
+        ['Mio70FQUPYE', 'borax', 'Sự Thật Về Hàn The', 'Từ khoáng vật lạ tới mâm cơm.'],
+        ['pMWjwZhdMvY', 'borax-flame', 'Ngọn Lửa Của Hàn The', 'Vì sao mỗi nguyên tố cháy một màu.'],
       ],
-      apps: [['Nguyên tố', '/elements.html'], ['Ngọn lửa màu', '/ngon-lua/'], ['Phổ điện từ', '/pho-anh-sang/']] },
+      apps: [['Nguyên tố', '/elements'], ['Ngọn lửa màu', '/ngon-lua/'], ['Phổ điện từ', '/pho-anh-sang/']] },
     { id: 'hon-loan', ten: 'Hỗn loạn, trồi sinh và tâm trí', nhan: 'Lối 3 · Hệ phức hợp',
       gioi: 'Vì sao không ai đoán được thời tiết tháng sau, vì sao đàn chim bay đẹp mà không cần thủ lĩnh, và màu đỏ trong đầu bạn có giống trong đầu mình?',
       vids: [
-        ['Aqp8Pq_qX5A', 'hieu-ung-canh-buom', 'Hiệu Ứng Cánh Bướm', 'Tương lai và định mệnh.'],
-        ['3znEaW-Ul64', 'troi-sinh', 'Hiện Tượng Kỳ Diệu Nhất Vũ Trụ', 'Trồi sinh: toàn thể lớn hơn tổng các phần.'],
-        ['YhP85uD5aYk', 'mau-sac', 'Vì Sao Màu Sắc Không Tồn Tại?', 'Ánh sáng, con mắt và qualia.'],
+        ['Aqp8Pq_qX5A', 'butterfly', 'Hiệu Ứng Cánh Bướm', 'Tương lai và định mệnh.'],
+        ['3znEaW-Ul64', 'emergence', 'Hiện Tượng Kỳ Diệu Nhất Vũ Trụ', 'Trồi sinh: toàn thể lớn hơn tổng các phần.'],
+        ['YhP85uD5aYk', 'color', 'Vì Sao Màu Sắc Không Tồn Tại?', 'Ánh sáng, con mắt và qualia.'],
       ],
       apps: [['Cánh bướm', '/canh-buom/'], ['Con lắc kép', '/con-lac/'], ['Đàn chim', '/dan-chim/'], ['Sự sống', '/su-song/'], ['Trộn ánh sáng', '/tron-mau/']] },
     { id: 'phat-minh', ten: 'Những phát minh đổi đời', nhan: 'Lối 4 · Lịch sử khoa học',
       gioi: 'Mỗi phát minh dưới đây vừa cứu, vừa làm hại hàng triệu người. Câu chuyện của những con người đứng sau chúng.',
       vids: [
         ['wR72fqNAZJQ', 'haber', 'Phát Minh Nuôi Sống Loài Người', 'Fritz Haber và nitơ từ không khí.'],
-        ['gKp5FWfeyw8', 'xang-pha-chi', 'Kẻ Đầu Độc Toàn Bộ Loài Người', 'Xăng pha chì và Clair Patterson.'],
-        ['Fhxhm_9PqbU', 'amiang', 'Vật Liệu Kinh Dị Nhất Lịch Sử', 'Amiăng, khoáng vật không cháy.'],
-        ['sqM2vRDQw7k', 'led-xanh', 'Vì Sao LED Xanh Là Phát Minh Vĩ Đại?', 'Shuji Nakamura và giải Nobel.'],
+        ['gKp5FWfeyw8', 'lead', 'Kẻ Đầu Độc Toàn Bộ Loài Người', 'Xăng pha chì và Clair Patterson.'],
+        ['Fhxhm_9PqbU', 'asbestos', 'Vật Liệu Kinh Dị Nhất Lịch Sử', 'Amiăng, khoáng vật không cháy.'],
+        ['sqM2vRDQw7k', 'blue-led', 'Vì Sao LED Xanh Là Phát Minh Vĩ Đại?', 'Shuji Nakamura và giải Nobel.'],
       ],
-      apps: [['Dòng thời gian', '/dong-thoi-gian/'], ['Hiện tượng', '/phenomena.html']] },
+      apps: [['Dòng thời gian', '/dong-thoi-gian/'], ['Hiện tượng', '/phenomena']] },
     { id: 'dong-tay', ten: 'Phương Đông cổ', nhan: 'Lối 5 · Chữ, lịch và bầu trời',
       gioi: 'Không có video riêng, nhưng là phần mình thích nhất của trang: người xưa đặt tên chữ, tính lịch và đọc bầu trời thế nào.',
       vids: [],
@@ -123,7 +125,7 @@
       <h2><small>${esc(p.nhan)}</small>${esc(p.ten)}</h2>
       <p>${esc(p.gioi)}</p>
       ${p.vids.length ? `<div class="bd-vids">${p.vids.map(([id, slug, t, d]) => `
-        <a class="bd-vid" href="/v/${slug}"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/mqdefault.jpg" alt="" width="320" height="180" /><b>${esc(t)}</b><span>${esc(d)}</span></a>`).join('')}</div>` : ''}
+        <a class="bd-vid" href="/v/${slug}/"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/mqdefault.jpg" alt="" width="320" height="180" /><b>${esc(t)}</b><span>${esc(d)}</span></a>`).join('')}</div>` : ''}
       <div class="bd-apps"><em>Tự tay thử</em>${p.apps.map(([t, u]) => `<a href="${u}">${esc(t)}</a>`).join('')}</div>
     </section>`).join('');
 })();

@@ -370,6 +370,17 @@
       this.lastFrame = 0;
       this.rendered = null; // shader đã vẽ gần nhất (cho chế độ giảm chuyển động)
 
+      // Máy không có tăng tốc đồ họa (GPU giả lập bằng CPU): shader sẽ chiếm trọn CPU,
+      // làm cả trang đơ. Khi đó chỉ vẽ một khung tĩnh, như chế độ giảm chuyển động.
+      this.scale = 1;          // hệ số hạ độ phân giải, tự giảm khi máy không theo kịp
+      this.still = false;      // true = chỉ vẽ khung tĩnh
+      try {
+        const dbg = this.gl.getExtension('WEBGL_debug_renderer_info');
+        const r = dbg ? this.gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '';
+        if (/swiftshader|llvmpipe|softpipe|software|basic render/i.test(r)) { this.still = true; this.scale = 0.5; }
+      } catch (e) {}
+      this.slow = { avg: 16, since: performance.now(), prev: 0 };
+
       const gl = this.gl;
       const buf = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -443,7 +454,7 @@
       // Trần số điểm ảnh: shader fbm rất nặng, màn lớn/HiDPI sẽ giật nếu vẽ
       // ở độ phân giải gốc. Canvas được CSS kéo full màn nên hạ nội bộ gần
       // như không thấy khác biệt với một lớp nền mờ chuyển động.
-      const MAX_PIXELS = this.lite ? 640 * 360 : 1280 * 720;
+      const MAX_PIXELS = (this.lite ? 640 * 360 : 1280 * 720) * this.scale * this.scale;
       const over = (w * h) / MAX_PIXELS;
       if (over > 1) {
         const s = Math.sqrt(over);
@@ -460,9 +471,24 @@
       requestAnimationFrame(this.loop);
       const gl = this.gl;
       if (!gl || !this.current) return;
-      if (document.hidden) return; // không vẽ khi tab ẩn
+      if (document.hidden) { if (this.slow) this.slow.prev = 0; return; } // không vẽ khi tab ẩn
 
-      if (this.reducedMotion) {
+      // Bộ điều tốc: đo khoảng cách giữa các khung của trình duyệt. Trung bình quá 45 ms
+      // (dưới ~22 hình/giây) suốt 3 giây thì hạ độ phân giải; hạ ba lần vẫn chậm thì đứng hình.
+      if (!this.still && !this.reducedMotion) {
+        const sl = this.slow;
+        if (sl.prev) sl.avg = sl.avg * 0.9 + Math.min(250, now - sl.prev) * 0.1;
+        sl.prev = now;
+        if (now - sl.since > 3000) {
+          sl.since = now;
+          if (sl.avg > 45) {
+            if (this.scale > 0.4) { this.scale *= 0.7; this.resize(); }
+            else this.still = true;
+          }
+        }
+      }
+
+      if (this.reducedMotion || this.still) {
         // Giảm chuyển động: chỉ vẽ một khung tĩnh mỗi lần đổi hiệu ứng
         if (this.rendered === this.current) return;
         this.rendered = this.current;
@@ -476,7 +502,7 @@
       this.mouse.x += (this.mouse.tx - this.mouse.x) * 0.05;
       this.mouse.y += (this.mouse.ty - this.mouse.y) * 0.05;
 
-      const t = this.reducedMotion ? 10.0 : (now - this.start) / 1000;
+      const t = (this.reducedMotion || this.still) ? 10.0 : (now - this.start) / 1000;
       const e = this.current;
       gl.useProgram(e.prog);
       gl.enableVertexAttribArray(e.aPos);
