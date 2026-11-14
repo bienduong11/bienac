@@ -1,0 +1,315 @@
+{
+ "slug": "entropy",
+ "youtube_id": "LFn2Uy9--qQ",
+ "title": "Sự Thật Về Cái Chết",
+ "description": "Entropy và cái chết",
+ "date": "2026-11-14",
+ "summary": "Entropy và cái chết",
+ "chapters": [
+  {
+   "time": "0:00",
+   "title": "Mở đầu"
+  },
+  {
+   "time": "1:37",
+   "title": "Đồng hồ tế bào"
+  },
+  {
+   "time": "10:55",
+   "title": "Tro bụi"
+  },
+  {
+   "time": "15:03",
+   "title": "Cốc nước"
+  },
+  {
+   "time": "19:53",
+   "title": "Sắp xếp"
+  },
+  {
+   "time": "23:15",
+   "title": "Mặt Trời"
+  },
+  {
+   "time": "29:57",
+   "title": "Hạn chót"
+  },
+  {
+   "time": "35:27",
+   "title": "Ngọn lửa cuối cùng"
+  },
+  {
+   "time": "39:37",
+   "title": "Mũi tên thời gian"
+  },
+  {
+   "time": "46:01",
+   "title": "Trả lại"
+  },
+  {
+   "time": "49:00",
+   "title": "Chết mỗi ngày"
+  },
+  {
+   "time": "56:30",
+   "title": "Về đâu"
+  }
+ ],
+ "references": [
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Wikipedia, Appointment in Samarra",
+   "url": "https://en.wikipedia.org/wiki/Appointment_in_Samarra"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Wikipedia, Epic of Gilgamesh",
+   "url": "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Wikipedia, Xu Fu",
+   "url": "https://en.wikipedia.org/wiki/Xu_Fu"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Wikipedia, Qin Shi Huang",
+   "url": "https://en.wikipedia.org/wiki/Qin_Shi_Huang"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "E. Schrödinger, What Is Life? (1944)",
+   "url": "https://doi.org/10.1017/CBO9781139644129"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "P. B. Medawar, An Unsolved Problem of Biology (1952)",
+   "url": "https://en.wikipedia.org/wiki/Peter_Medawar"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "L. Hayflick, P. S. Moorhead, The serial cultivation of human diploid cell strains, Experimental Cell Research (1961)",
+   "url": "https://doi.org/10.1016/0014-4827(61)90192-6"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "T. B. L. Kirkwood, Evolution of ageing, Nature (1977)",
+   "url": "https://doi.org/10.1038/270301a0"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Nobel Prize, Carol W. Greider, Biographical (2009)",
+   "url": "https://www.nobelprize.org/prizes/medicine/2009/greider/biographical/"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Wikipedia, Henrietta Lacks",
+   "url": "https://en.wikipedia.org/wiki/Henrietta_Lacks"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Wikipedia, Turritopsis dohrnii",
+   "url": "https://en.wikipedia.org/wiki/Turritopsis_dohrnii"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "J. Nielsen et al., Eye lens radiocarbon reveals centuries of longevity in the Greenland shark, Science (2016)",
+   "url": "https://doi.org/10.1126/science.aaf1703"
+  },
+  {
+   "group": "Đồng hồ tế bào",
+   "text": "Wikipedia, Jeanne Calment",
+   "url": "https://en.wikipedia.org/wiki/Jeanne_Calment"
+  },
+  {
+   "group": "Tro bụi",
+   "text": "Wikipedia, Cadaverine",
+   "url": "https://en.wikipedia.org/wiki/Cadaverine"
+  },
+  {
+   "group": "Tro bụi",
+   "text": "Wikipedia, Cremation by country",
+   "url": "https://en.wikipedia.org/wiki/Cremation_by_country"
+  },
+  {
+   "group": "Tro bụi",
+   "text": "Physics World, The day Einstein died",
+   "url": "https://physicsworld.com/a/the-day-einstein-died/"
+  },
+  {
+   "group": "Cốc nước",
+   "text": "S. Carnot, Réflexions sur la puissance motrice du feu (1824)",
+   "url": "https://en.wikipedia.org/wiki/Reflections_on_the_Motive_Power_of_Fire"
+  },
+  {
+   "group": "Cốc nước",
+   "text": "W. Thomson, On a universal tendency in nature to the dissipation of mechanical energy, Philosophical Magazine (1852)",
+   "url": "https://doi.org/10.1080/14786445208647126"
+  },
+  {
+   "group": "Cốc nước",
+   "text": "R. Clausius, Über verschiedene für die Anwendung bequeme Formen der Hauptgleichungen der mechanischen Wärmetheorie, Annalen der Physik (1865)",
+   "url": "https://doi.org/10.1002/andp.18652010702"
+  },
+  {
+   "group": "Sắp xếp",
+   "text": "L. Boltzmann, Über die Beziehung zwischen dem zweiten Hauptsatze der mechanischen Wärmetheorie und der Wahrscheinlichkeitsrechnung, Wiener Berichte (1877)",
+   "url": "https://doi.org/10.3390/e17041971"
+  },
+  {
+   "group": "Sắp xếp",
+   "text": "Wikipedia, Boltzmann's entropy formula",
+   "url": "https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula"
+  },
+  {
+   "group": "Mặt Trời",
+   "text": "J. L. England, Statistical physics of self-replication, Journal of Chemical Physics (2013)",
+   "url": "https://doi.org/10.1063/1.4818538"
+  },
+  {
+   "group": "Hạn chót",
+   "text": "Wikipedia, Extinction event",
+   "url": "https://en.wikipedia.org/wiki/Extinction_event"
+  },
+  {
+   "group": "Hạn chót",
+   "text": "J. R. Gott III, Implications of the Copernican principle for our future prospects, Nature (1993)",
+   "url": "https://doi.org/10.1038/363315a0"
+  },
+  {
+   "group": "Hạn chót",
+   "text": "Wikipedia, Future of Earth",
+   "url": "https://en.wikipedia.org/wiki/Future_of_Earth"
+  },
+  {
+   "group": "Hạn chót",
+   "text": "Wikipedia, Kardashev scale",
+   "url": "https://en.wikipedia.org/wiki/Kardashev_scale"
+  },
+  {
+   "group": "Ngọn lửa cuối cùng",
+   "text": "S. W. Hawking, Black hole explosions?, Nature (1974)",
+   "url": "https://doi.org/10.1038/248030a0"
+  },
+  {
+   "group": "Ngọn lửa cuối cùng",
+   "text": "F. J. Dyson, Time without end: physics and biology in an open universe, Reviews of Modern Physics (1979)",
+   "url": "https://doi.org/10.1103/RevModPhys.51.447"
+  },
+  {
+   "group": "Ngọn lửa cuối cùng",
+   "text": "F. C. Adams, G. Laughlin, A dying universe: the long-term fate and evolution of astrophysical objects, Reviews of Modern Physics (1997)",
+   "url": "https://doi.org/10.1103/RevModPhys.69.337"
+  },
+  {
+   "group": "Ngọn lửa cuối cùng",
+   "text": "L. M. Krauss, G. D. Starkman, Life, the universe, and nothing: life and death in an ever-expanding universe, The Astrophysical Journal (2000)",
+   "url": "https://doi.org/10.1086/308434"
+  },
+  {
+   "group": "Ngọn lửa cuối cùng",
+   "text": "Wikipedia, Heat death of the universe",
+   "url": "https://en.wikipedia.org/wiki/Heat_death_of_the_universe"
+  },
+  {
+   "group": "Mũi tên thời gian",
+   "text": "H. Putnam, Time and physical geometry, Journal of Philosophy (1967)",
+   "url": "https://doi.org/10.2307/2024493"
+  },
+  {
+   "group": "Mũi tên thời gian",
+   "text": "R. Landauer, Irreversibility and heat generation in the computing process, IBM Journal of Research and Development (1961)",
+   "url": "https://doi.org/10.1147/rd.53.0183"
+  },
+  {
+   "group": "Mũi tên thời gian",
+   "text": "Wikipedia, Maxwell's demon",
+   "url": "https://en.wikipedia.org/wiki/Maxwell%27s_demon"
+  },
+  {
+   "group": "Mũi tên thời gian",
+   "text": "Wikipedia, Arrow of time",
+   "url": "https://en.wikipedia.org/wiki/Arrow_of_time"
+  },
+  {
+   "group": "Trả lại",
+   "text": "K. L. Spalding et al., Retrospective birth dating of cells in humans, Cell (2005)",
+   "url": "https://doi.org/10.1016/j.cell.2005.04.028"
+  },
+  {
+   "group": "Trả lại",
+   "text": "Wikipedia, Huineng",
+   "url": "https://en.wikipedia.org/wiki/Huineng"
+  },
+  {
+   "group": "Chết mỗi ngày",
+   "text": "S. Aaronson, S. M. Carroll, L. Ouellette, Quantifying the rise and fall of complexity in closed systems: the coffee automaton, arXiv (2014)",
+   "url": "https://arxiv.org/abs/1405.6903"
+  },
+  {
+   "group": "Chết mỗi ngày",
+   "text": "R. Chetty et al., The association between income and life expectancy in the United States, 2001–2014, JAMA (2016)",
+   "url": "https://doi.org/10.1001/jama.2016.4226"
+  },
+  {
+   "group": "Chết mỗi ngày",
+   "text": "Wikipedia, The Makropulos Affair",
+   "url": "https://en.wikipedia.org/wiki/The_Makropulos_Affair"
+  },
+  {
+   "group": "Chết mỗi ngày",
+   "text": "Wikipedia, Myth of Er",
+   "url": "https://en.wikipedia.org/wiki/Myth_of_Er"
+  }
+ ],
+ "footage": [
+  {
+   "group": "Tư liệu",
+   "text": "NASA (SDO, Hubble, Voyager)",
+   "url": ""
+  },
+  {
+   "group": "Tư liệu",
+   "text": "ESA/Webb, ESO",
+   "url": ""
+  },
+  {
+   "group": "Tư liệu",
+   "text": "Wellcome Collection",
+   "url": ""
+  },
+  {
+   "group": "Tư liệu",
+   "text": "Bundesarchiv",
+   "url": ""
+  },
+  {
+   "group": "Tư liệu",
+   "text": "The Metropolitan Museum of Art (Open Access)",
+   "url": ""
+  },
+  {
+   "group": "Tư liệu",
+   "text": "Wikimedia Commons (tranh, ảnh, chân dung tư liệu, phạm vi công cộng và giấy phép mở)",
+   "url": ""
+  },
+  {
+   "group": "Tư liệu",
+   "text": "Envato Elements (video nền)",
+   "url": ""
+  },
+  {
+   "group": "Tư liệu",
+   "text": "Nhạc: Epidemic Sound và các bản thu nhạc cổ điển thuộc phạm vi công cộng",
+   "url": ""
+  }
+ ],
+ "related": [
+  "humans",
+  "reality"
+ ],
+ "tags": [
+  "Vật lý",
+  "Sinh học"
+ ]
+}
