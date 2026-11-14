@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Phân rã phóng xạ · Bienac</title>
   <link rel="canonical" href="https://bienac.com/phong-xa/" />
-  <meta name="description" content="Xem 400 nguyên tử phân rã ngẫu nhiên theo chu kỳ bán rã thật của các đồng vị, và tự tính tuổi một mẫu vật bằng carbon-14." />
+  <meta name="description" content="Xem 400 nguyên tử phân rã ngẫu nhiên theo chu kỳ bán rã thật của các đồng vị, và tự tính tuổi một mẫu vật bằng cacbon-14." />
   <meta property="og:title" content="Phân rã phóng xạ · Bienac" />
   <meta property="og:description" content="Không ai đoán được nguyên tử nào sẽ phân rã, nhưng cả đám thì lại rất đúng giờ." />
   <meta property="og:image" content="https://bienac.com/assets/og/phong-xa.jpg" />
@@ -108,17 +108,17 @@
     </div>
 
     <section class="px-c14 ud-panel">
-      <h2>Tính tuổi bằng carbon-14</h2>
-      <p>Cây cối hấp thụ CO₂ từ không khí, động vật ăn cây, nên khi còn sống, tỉ lệ carbon-14 trong cơ thể gần bằng tỉ lệ trong khí quyển. Khi chết đi, cơ thể ngừng nạp carbon mới, và carbon-14 cứ thế phân rã dần. Đo xem còn lại bao nhiêu phần trăm là suy ra được đã bao lâu.</p>
+      <h2>Tính tuổi bằng cacbon-14</h2>
+      <p>Cây cối hấp thụ CO₂ từ không khí, động vật ăn cây, nên khi còn sống, tỉ lệ cacbon-14 trong cơ thể gần bằng tỉ lệ trong khí quyển. Khi chết đi, cơ thể ngừng nạp cacbon mới, và cacbon-14 cứ thế phân rã dần. Đo xem còn lại bao nhiêu phần trăm là suy ra được đã bao lâu.</p>
       <div class="px-calc">
-        <label>Lượng carbon-14 còn lại so với mẫu sống
+        <label>Lượng cacbon-14 còn lại so với mẫu sống
           <input id="pct" type="range" min="0.2" max="100" step="0.1" value="50" />
           <span class="num"><input id="pctN" type="number" min="0.1" max="100" step="0.1" value="50" aria-label="Phần trăm còn lại" /> %</span>
         </label>
         <div class="px-age"><b id="age"></b><small id="ageSub"></small></div>
       </div>
       <div class="px-ref" id="ref"></div>
-      <p class="px-note">Cách tính: tuổi = 5 730 năm × log₂(100 / phần trăm còn lại). Đây là phép tính đơn giản, giả định lượng carbon-14 trong khí quyển luôn như nhau và mẫu không bị nhiễm bẩn. Thực tế lượng này dao động theo thời gian, nên các phòng thí nghiệm phải hiệu chỉnh kết quả bằng đường chuẩn dựng từ vòng gỗ và trầm tích. Sau khoảng 50 000 năm, lượng còn lại quá ít để đo tin cậy.</p>
+      <p class="px-note">Cách tính: tuổi = 5.730 năm × log₂(100 / phần trăm còn lại). Đây là phép tính đơn giản, giả định lượng cacbon-14 trong khí quyển luôn như nhau và mẫu không bị nhiễm bẩn. Thực tế lượng này dao động theo thời gian, nên các phòng thí nghiệm phải hiệu chỉnh kết quả bằng đường chuẩn dựng từ vòng gỗ và trầm tích. Sau khoảng 50.000 năm, lượng còn lại quá ít để đo tin cậy.</p>
     </section>
   </main>
 
@@ -133,7 +133,7 @@
   // Chu kỳ bán rã tính bằng ngày
   const Y = 365.25;
   const ISO = [
-    { id: 'c14', n: 'Carbon-14', T: 5730 * Y, to: 'nitơ-14', how: 'phân rã beta', use: 'Dùng để xác định tuổi xương, gỗ, vải… có nguồn gốc sinh vật, trong vòng khoảng 50 000 năm.' },
+    { id: 'c14', n: 'Cacbon-14', T: 5730 * Y, to: 'nitơ-14', how: 'phân rã beta', use: 'Dùng để xác định tuổi xương, gỗ, vải… có nguồn gốc sinh vật, trong vòng khoảng 50.000 năm.' },
     { id: 'i131', n: 'Iốt-131', T: 8.02, to: 'xenon-131', how: 'phân rã beta', use: 'Dùng để chẩn đoán và điều trị bệnh tuyến giáp. Cũng là chất đáng lo nhất trong những ngày đầu sau sự cố hạt nhân, vì tuyến giáp hấp thụ iốt.' },
     { id: 'rn222', n: 'Radon-222', T: 3.82, to: 'poloni-218', how: 'phân rã alpha', use: 'Khí phóng xạ tự nhiên thoát ra từ đất đá chứa urani, có thể tích tụ trong nhà kín.' },
     { id: 'po210', n: 'Poloni-210', T: 138.376, to: 'chì-206', how: 'phân rã alpha', use: 'Do Marie và Pierre Curie phát hiện năm 1898, đặt theo tên Ba Lan, quê hương của Marie.' },
@@ -254,7 +254,7 @@
   $('reset').onclick = () => { running = false; $('play').textContent = '▶ Chạy'; $('play').setAttribute('aria-pressed', 'false'); reset(); };
   addEventListener('resize', () => { drawAtoms(); drawChart(); });
 
-  /* ------------------------------------------- Tính tuổi carbon-14 */
+  /* ------------------------------------------- Tính tuổi cacbon-14 */
   const T14 = 5730;
   function age(p) {
     p = Math.max(0.1, Math.min(100, p));
@@ -266,7 +266,7 @@
   const pct = $('pct'), pctN = $('pctN');
   pct.oninput = () => { pctN.value = pct.value; age(+pct.value); };
   pctN.oninput = () => { if (pctN.value !== '') { pct.value = pctN.value; age(+pctN.value); } };
-  const REF = [[100, 'Mẫu vừa chết'], [88.6, 'Khoảng 1 000 năm'], [50, 'Một chu kỳ'], [25, 'Hai chu kỳ'], [12.5, 'Ba chu kỳ'], [0.24, 'Gần giới hạn 50 000 năm']];
+  const REF = [[100, 'Mẫu vừa chết'], [88.6, 'Khoảng 1.000 năm'], [50, 'Một chu kỳ'], [25, 'Hai chu kỳ'], [12.5, 'Ba chu kỳ'], [0.24, 'Gần giới hạn 50.000 năm']];
   $('ref').innerHTML = REF.map(([p, t]) => `<button data-p="${p}">${t} · ${p.toLocaleString('vi-VN')}%</button>`).join('');
   $('ref').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; pct.value = pctN.value = b.dataset.p; age(+b.dataset.p); };
 
