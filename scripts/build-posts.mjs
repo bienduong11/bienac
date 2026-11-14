@@ -306,6 +306,16 @@ function checkVideo(d, f) {
   if (bad.length) throw new Error(`${f}: ${bad.join('; ')}`);
 }
 
+/** Mô tả cho Google và khi chia sẻ link (meta description, og:description).
+ *  Câu mô tả trong dữ liệu thường rất ngắn (~40 ký tự), nên ghép thêm thông tin có thật của trang:
+ *  số mốc chương, số nguồn tham khảo, có tư liệu không. Không viết thêm nội dung mới. */
+function metaDescription(base, nChap, nRef, nFoot) {
+  let d = String(base || '').trim().replace(/\s+/g, ' ').replace(/[.。]+$/, '');
+  if (d.length >= 110) return d.length > 160 ? d.slice(0, 157).replace(/\s+\S*$/, '') + '…' : d + '.';
+  const parts = [nChap && `${nChap} mốc chương`, nRef && `${nRef} nguồn tham khảo`, nFoot && 'tư liệu hình ảnh'].filter(Boolean);
+  return parts.length ? `${d}. Video Bienac kèm ${parts.join(', ')}.` : `${d}. Video trên kênh Bienac.`;
+}
+
 async function readJsonVideos() {
   let files = [];
   try { files = (await readdir(VIDEO_SRC)).filter((f) => f.endsWith('.json') && !f.startsWith('_')); } catch { return []; }
@@ -390,7 +400,7 @@ async function main() {
       alias: [],
       lienQuan: list(d.related).concat(md ? md.lienQuan : []),
       title: d.title,
-      description: d.description || (md && md.description) || summary.split(/\n\s*\n/)[0].slice(0, 200),
+      description: metaDescription(d.description || (md && md.description) || summary.split(/\n\s*\n/)[0], chapters.length || (md ? md.chapters.length : 0), refs.length, foot.length),
       hook: (md && md.hook) || d.description || '',
       date: String(d.date || (md && md.date) || '').slice(0, 10),
       video: d.youtube_id,

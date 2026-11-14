@@ -32,3 +32,10 @@
   Cache-Control: public, max-age=300
 /*/du-lieu.json
   Cache-Control: public, max-age=3600
+
+# Trang Hành trình nhân loại: thư viện three.js (1,2 MB) và ảnh bề mặt Trái Đất gần như không bao giờ đổi.
+# Đổi nội dung thì đổi tên file.
+/thegioi/libs/*
+  Cache-Control: public, max-age=604800
+/thegioi/assets/*
+  Cache-Control: public, max-age=604800

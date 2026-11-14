@@ -1,0 +1,44 @@
+# Kiểm link tài liệu tham khảo/tư liệu của mọi trang video, ngày 1 hằng tháng (8:17 giờ VN).
+# Có link chết thì mở/cập nhật issue "Link tài liệu chết" (nhãn link); hết thì tự đóng.
+name: Reference link check
+
+on:
+  schedule:
+    - cron: '17 1 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Kiểm link
+        id: run
+        run: node scripts/link-check.mjs
+        continue-on-error: true
+      - name: Mở hoặc cập nhật issue
+        if: steps.run.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create link --color c9a650 --description "Link tài liệu chết" 2>/dev/null || true
+          n=$(gh issue list --label link --state open --json number --jq '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file link-check.md
+          else gh issue create --title "Link tài liệu chết" --label link --body-file link-check.md; fi
+          exit 1
+      - name: Tự đóng issue khi đã ổn
+        if: steps.run.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --label link --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "Hết link chết lúc $(TZ=Asia/Ho_Chi_Minh date '+%H:%M %d/%m/%Y')."
+          done

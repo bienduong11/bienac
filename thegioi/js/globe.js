@@ -108,9 +108,9 @@ export async function createGlobe(container, events) {
 
   const loader = new THREE.TextureLoader();
   const [dayMap, nightMap, bumpMap] = await Promise.all([
-    loader.loadAsync('assets/earth-day.jpg'),
-    loader.loadAsync('assets/earth-night.jpg'),
-    loader.loadAsync('assets/earth-topology.png')
+    loader.loadAsync('assets/earth-day.webp'),
+    loader.loadAsync('assets/earth-night.webp'),
+    loader.loadAsync('assets/earth-topology.webp')
   ]);
   dayMap.colorSpace = THREE.SRGBColorSpace;
   nightMap.colorSpace = THREE.SRGBColorSpace;

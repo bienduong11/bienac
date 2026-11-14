@@ -69,6 +69,8 @@
     .sp-fav .btn { flex: 1; justify-content: center; text-align: center; font: 700 1rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 15px 18px; }
     .sp-link { background: none; border: 0; color: var(--cyan); font-size: .85rem; cursor: pointer; padding: 10px 0 0; text-decoration: underline; }
     .sp-acc { display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: center; }
+    .sp-qr-note { display: block; margin-top: 8px; font-size: .78rem; line-height: 1.4; color: var(--cyan); text-align: center; max-width: 200px; }
+    .sp-acc > a { text-decoration: none; }
     .sp-acc > a img { width: 200px; height: 200px; object-fit: contain; background: #fff; border-radius: 16px; padding: 8px; display: block; }
     @media (max-width: 560px) { .sp-acc { grid-template-columns: 1fr; justify-items: center; text-align: center; } .sp-acc > a img { width: 220px; height: 220px; } }
     .sp-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
@@ -133,7 +135,7 @@
 
       <section class="ud-panel sp-card" id="acc">
         <div class="sp-acc">
-          <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" loading="lazy" /></a>
+          <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" loading="lazy" /><span class="sp-qr-note" id="qr-note"></span></a>
           <div>
             <h2 data-t="accTitle">Quét mã hoặc chép số tài khoản</h2>
             <p data-t="accHint">Trên máy tính: mở app ngân hàng trên điện thoại và quét mã. Trên điện thoại: lưu ảnh mã về máy rồi chọn “Quét ảnh” trong app.</p>
@@ -193,6 +195,7 @@
   <div class="sp-toast" id="toast" role="status" aria-live="polite"></div>
   <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
 
+<script src="/js/vendor/qrcode-generator.min.js"></script>
 <script>
 (() => {
   /* ---- Thông tin tài khoản: sửa ở đây ---- */
@@ -221,7 +224,7 @@
       f2: 'Chia sẻ một video', f2p: 'Gửi video bạn thích nhất cho một người hay tò mò.', f2b: 'Chép link kênh',
       f3: 'Góp ý, báo lỗi sai', f3p: 'Muốn xem chủ đề gì, hay thấy chỗ nào chưa đúng? Mọi góp ý đều được đọc.', f3b: 'Gửi góp ý',
       cd: 'Cộng đồng Bienac', mail: 'Liên hệ', lang: 'English',
-      amt: 'Số tiền (không bắt buộc)', amtOther: 'Khác',
+      amt: 'Số tiền (không bắt buộc)', amtOther: 'Khác', qrAmt: 'Mã đã kèm {a}đ và nội dung, quét là app tự điền', qrMemo: 'Mã đã kèm nội dung chuyển khoản',
       toastFill: 'Đang mở {b}…', toastCopy: 'Đang mở {b}. Số tài khoản {n} cũng đã được chép sẵn, phòng khi app không tự điền.' },
     en: { here: 'Support', sub: 'Subscribe', kicker: 'Support', title: 'Help Bienac <span class="accent">go further</span>',
       lede: 'Each video takes weeks of reading, writing, recording and animation. Every contribution goes straight into making videos.',
@@ -240,7 +243,7 @@
       f2: 'Share a video', f2p: 'Send your favourite video to a curious friend.', f2b: 'Copy channel link',
       f3: 'Ideas and corrections', f3p: 'A topic you want to see, or a mistake you spotted? Every message gets read.', f3b: 'Send feedback',
       cd: 'Bienac community', mail: 'Contact', lang: 'Tiếng Việt',
-      amt: 'Amount in VND (optional)', amtOther: 'Other',
+      amt: 'Amount in VND (optional)', amtOther: 'Other', qrAmt: 'Code includes {a} VND and the note: your app fills them in', qrMemo: 'Code includes the transfer note',
       toastFill: 'Opening {b}…', toastCopy: 'Opening {b}. Account number {n} is copied too, in case the app does not pre-fill.' },
   };
 
@@ -281,6 +284,43 @@
   const IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
   const NO_IOS = ['nab'];
   const shown = (a) => !(IOS && NO_IOS.includes(a[0]));
+  /* Mã VietQR tạo ngay trên trang: kèm nội dung "Ung ho Bienac" và số tiền đã chọn, nên app ngân hàng nào quét
+     cũng tự điền đủ (kể cả app không có deeplink). Chuỗi kiểm 14/11/2026: trùng từng ký tự với chuỗi VietQR tạo cho MB.
+     Thư viện không tải được thì giữ ảnh tĩnh /assets/qr-bidv.svg (chỉ có số tài khoản). */
+  const tlv = (id, v) => id + String(v.length).padStart(2, '0') + v;
+  function crc16(str) { let c = 0xffff; for (const ch of new TextEncoder().encode(str)) { c ^= ch << 8; for (let i = 0; i < 8; i++) c = c & 0x8000 ? ((c << 1) ^ 0x1021) & 0xffff : (c << 1) & 0xffff; } return c.toString(16).toUpperCase().padStart(4, '0'); }
+  function vietqr(am) {
+    const acc = tlv('00', 'A000000727') + tlv('01', tlv('00', '970418') + tlv('01', ACC.number)) + tlv('02', 'QRIBFTTA');
+    const p = tlv('00', '01') + tlv('01', am ? '12' : '11') + tlv('38', acc) + tlv('53', '704') + (am ? tlv('54', String(am)) : '') + tlv('58', 'VN') + tlv('62', tlv('08', ACC.memo)) + '6304';
+    return p + crc16(p);
+  }
+  let qrSvg = '';
+  function renderQR() {
+    if (typeof window.qrcode !== 'function' || ACC.bank !== 'bidv') return;
+    try {
+      const q = window.qrcode(0, 'M'); q.addData(vietqr(amount)); q.make();
+      qrSvg = q.createSvgTag({ cellSize: 8, margin: 4, scalable: true });
+      $('qr').src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(qrSvg);
+      $('qr-note').textContent = amount ? t('qrAmt').replace('{a}', fmt(amount)) : t('qrMemo');
+    } catch {}
+  }
+  // Tải ảnh: xuất đúng mã đang hiện ra PNG (app ngân hàng quét từ thư viện ảnh không đọc SVG).
+  $('qr-link').addEventListener('click', (e) => {
+    if (!qrSvg) return;                       // chưa có mã động: để link tải PNG tĩnh như cũ
+    e.preventDefault();
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = c.height = 720;
+      const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, 720, 720); g.drawImage(img, 0, 0, 720, 720);
+      c.toBlob((b) => {
+        const a = document.createElement('a'); a.href = URL.createObjectURL(b);
+        a.download = `Bienac-QR-BIDV${amount ? '-' + amount : ''}.png`; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      }, 'image/png');
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(qrSvg);
+  });
+
   /* Hàng chọn số tiền: chạm lại để bỏ chọn. "Khác" cho tự gõ. */
   const AMOUNTS = [20000, 50000, 100000, 200000, 500000];
   const fmt = (n) => n.toLocaleString('vi-VN');
@@ -290,12 +330,13 @@
   }
   $('chips').addEventListener('click', (e) => {
     const c = e.target.closest('[data-am]'); if (!c) return;
-    const n = Number(c.dataset.am); amount = amount === n ? 0 : n; renderChips(); renderFav();
+    const n = Number(c.dataset.am); amount = amount === n ? 0 : n; renderChips(); renderFav(); renderQR();
   });
   $('chips').addEventListener('input', (e) => {
     if (e.target.id !== 'am-in') return;
     const n = Number(e.target.value.replace(/\D/g, '').slice(0, 10)) || 0;
     amount = n >= 1000 ? n : 0;
+    renderQR();
     document.querySelectorAll('#chips [data-am]').forEach((b) => b.classList.remove('on'));
     $('am-other').classList.toggle('on', !!amount);
     const go = $('fav-go'); if (go.dataset.app) go.href = deeplink(go.dataset.app);
@@ -391,6 +432,7 @@
     document.querySelectorAll('[data-t]').forEach((el) => { const v = t(el.dataset.t); if (v) el.innerHTML = v; });
     $('lang').textContent = t('lang');
     renderChips();
+    renderQR();
     // Tiếng Anh: quốc tế lên trước, chuyển khoản Việt Nam xuống dưới
     // Máy tính không mở được app ngân hàng: đưa mã QR lên trước lưới ngân hàng.
     const vnPart = mobile ? ['vn', 'acc'] : ['acc', 'vn'];
