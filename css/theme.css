@@ -631,3 +631,12 @@ body.home .hero-sub { color: #00ffff; }
 body.home .site-footer a { color: #00ffff; }
 .about-logo > a { display: block; width: clamp(180px, 22vw, 240px); }
 .about-logo .about-qr { width: 100% !important; height: auto !important; box-sizing: border-box; }
+
+/* Hàng lối vào dưới khẩu hiệu: Bắt đầu từ đây + video mới nhất */
+.hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
+.hero-links .hero-start { margin-top: 0; }
+.hero-new { color: var(--text); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hero-new b { color: #00ffff; font-weight: 700; }
+.hero-new .dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #e8452e; box-shadow: 0 0 8px #e8452e; vertical-align: 1px; animation: hero-dot 1.8s ease-in-out infinite; }
+@keyframes hero-dot { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .hero-new .dot { animation: none; } }
