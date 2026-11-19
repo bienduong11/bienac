@@ -75,6 +75,9 @@
     .sp-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
     .sp-story p + p { margin-top: 10px; }
     .sp-sign { margin-top: 12px !important; text-align: right; font-style: italic; color: var(--text) !important; }
+    .sp-toggle { width: 100%; justify-content: center; text-align: center; font: 700 .98rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 14px 16px; }
+    #fav + .sp-toggle, #fav:not([hidden]) ~ .sp-toggle { margin-top: 12px; }
+    #pick { margin-top: 4px; }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -118,12 +121,11 @@
 
       <!-- Chuyển khoản trong nước -->
       <section class="ud-panel sp-card" id="vn">
-        <h2 data-t="vnTitle">Chuyển khoản nhanh</h2>
         <div id="fav" hidden>
           <div class="sp-fav"><img id="fav-img" alt="" width="56" height="56" /><a class="btn btn-primary" id="fav-go" href="#"></a></div>
-          <p class="sp-note" data-t="favHint" style="margin-top:8px">Lần trước bạn dùng app này. Chọn ngân hàng khác ở dưới cũng được.</p>
         </div>
-        <div id="pick">
+        <button class="btn btn-ghost sp-toggle" id="pick-toggle" type="button" aria-expanded="false" aria-controls="pick" data-t="pickBtn">Mở app ngân hàng</button>
+        <div id="pick" hidden>
           <div class="sp-banks" id="banks"></div>
           <details class="sp-more"><summary data-t="more">Ngân hàng khác</summary><div class="sp-banks" id="banks-more"></div></details>
         </div>
@@ -178,6 +180,7 @@
       storyTitle: 'Đôi lời từ Bienac',
       story1: 'Bienac là kênh kể chuyện khoa học và lịch sử bằng tiếng Việt. Mỗi video dài là vài tuần đọc tài liệu, viết lời, thu âm rồi dựng từng hình, phần lớn do mình tự làm.',
       story2: 'Mọi khoản ủng hộ, dù nhỏ, đều dùng cho việc làm video: tài liệu, phần mềm, máy móc và thời gian để làm kỹ hơn. Cảm ơn bạn đã xem, đã ở lại và đi cùng Bienac.',
+      pickBtn: 'Mở app ngân hàng',
       vnTitle: 'Chuyển khoản nhanh', vnHint: 'Chạm vào app ngân hàng bạn dùng là app mở ra để chuyển khoản.',
       more: 'Ngân hàng khác', vnNote: 'Dấu ✓: app điền sẵn đầy đủ (BIDV, MB, VietinBank, ACB, OCB). App khác chỉ mở lên, số tài khoản đã được chép sẵn để bạn dán.',
       other: 'Chọn ngân hàng khác', open: 'Mở app {b}', favHint: 'Lần trước bạn dùng app này. Chọn ngân hàng khác ở dưới cũng được.',
@@ -200,6 +203,7 @@
       storyTitle: 'A note from Bienac',
       story1: 'Bienac tells stories of science and history in Vietnamese. Each long video takes weeks of reading, writing, recording and building every visual, mostly by one person.',
       story2: 'Every contribution, however small, goes into making videos: sources, software, equipment and the time to do them properly. Thank you for watching, for staying, and for coming along with Bienac.',
+      pickBtn: 'Open a Vietnamese banking app',
       vnTitle: 'Bank transfer from Vietnam', vnHint: 'Tap the banking app you use and it opens ready for the transfer.',
       more: 'Other banks', vnNote: '✓ = fully pre-filled (BIDV, MB, VietinBank, ACB, OCB). Other apps just open; the account number is copied for you to paste.',
       other: 'Choose another bank', open: 'Open {b}', favHint: 'You used this app last time. Any other bank below works too.',
@@ -395,6 +399,12 @@
   $('y').textContent = new Date().getFullYear();
   $('num').textContent = `${ACC.bankName} · ${ACC.number.replace(/(\d{4})(\d{3})(\d+)/, '$1 $2 $3')}`;
   renderBanks();
+  // Lưới ngân hàng chỉ có ích trên điện thoại (máy tính không mở được app): máy tính ẩn hẳn,
+  // điện thoại thu gọn sau một nút, chạm mới bung ra (19/11/2026, Bien muốn trang giản dị).
+  if (!mobile) $('vn').hidden = true;
+  const showPick = (open) => { $('pick').hidden = !open; $('pick-toggle').setAttribute('aria-expanded', String(open)); };
+  $('pick-toggle').onclick = () => { const open = $('pick').hidden; showPick(open); if (open) tap('pick-open'); };
+  if (/[?&](thanks|back)=1/.test(location.search)) showPick(true);
   applyLang();
 
   /* Mở trang lần sau trên điện thoại: thử mở luôn app đã chọn lần trước (một lần mỗi phiên, để quay lại trang không bị mở lặp).
