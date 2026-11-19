@@ -62,7 +62,6 @@
     .sp-fav .btn { flex: 1; justify-content: center; text-align: center; font: 700 1rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 15px 18px; }
     .sp-link { background: none; border: 0; color: var(--cyan); font-size: .85rem; cursor: pointer; padding: 10px 0 0; text-decoration: underline; }
     .sp-acc { display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: center; }
-    .sp-qr-note { display: block; margin-top: 8px; font-size: .78rem; line-height: 1.4; color: var(--cyan); text-align: center; max-width: 200px; }
     .sp-acc > a { text-decoration: none; }
     .sp-acc > a img { width: 200px; height: 200px; object-fit: contain; background: #fff; border-radius: 16px; padding: 8px; display: block; }
     @media (max-width: 560px) { .sp-acc { grid-template-columns: 1fr; justify-items: center; text-align: center; } .sp-acc > a img { width: 220px; height: 220px; } }
@@ -74,6 +73,8 @@
     .sp-btns .btn { padding: 10px 18px; font-size: .84rem; }
     .sp-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0; background: #0f1a1a; border: 1px solid var(--cyan); color: var(--text); padding: 12px 18px; border-radius: 14px; font-size: .86rem; max-width: 92vw; transition: .25s; pointer-events: none; z-index: 50; text-align: center; }
     .sp-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .sp-story p + p { margin-top: 10px; }
+    .sp-sign { margin-top: 12px !important; text-align: right; font-style: italic; color: var(--text) !important; }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -105,10 +106,10 @@
     <div id="order">
       <section class="ud-panel sp-card" id="acc">
         <div class="sp-acc">
-          <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" fetchpriority="high" /><span class="sp-qr-note" id="qr-note"></span></a>
+          <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" fetchpriority="high" /></a>
           <div>
-            <h2 data-t="accTitle">Quét mã hoặc chép số tài khoản</h2>
-            <p data-t="accHint">Trên máy tính: mở app ngân hàng trên điện thoại và quét mã. Trên điện thoại: lưu ảnh mã về máy rồi chọn “Quét ảnh” trong app.</p>
+            <h2 id="desk-t" hidden></h2>
+            <p id="desk-p" hidden></p>
             <div class="sp-row"><span class="sp-num" id="num">BIDV · 4506 285 887</span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
             <div class="sp-row"><span id="holder" style="font:600 .9rem var(--mono)">DUONG VAN BIEN</span></div>
             <div class="sp-row"><span style="font-size:.85rem;color:var(--text-dim)"><span data-t="memo">Nội dung</span>: <b id="memo-text">Ung ho Bienac</b></span><button class="sp-copy" type="button" data-copy="memo" data-t="copy">Sao chép</button></div>
@@ -124,10 +125,8 @@
           <p class="sp-note" data-t="favHint" style="margin-top:8px">Lần trước bạn dùng app này. Chọn ngân hàng khác ở dưới cũng được.</p>
         </div>
         <div id="pick">
-          <p data-t="vnHint">Chạm vào app ngân hàng bạn dùng là app mở ra để chuyển khoản.</p>
           <div class="sp-banks" id="banks"></div>
           <details class="sp-more"><summary data-t="more">Ngân hàng khác</summary><div class="sp-banks" id="banks-more"></div></details>
-          <p class="sp-note" data-t="vnNote">Dấu ✓: app điền sẵn đầy đủ (BIDV, MB, VietinBank, ACB, OCB). App khác chỉ mở lên, số tài khoản đã được chép sẵn để bạn dán.</p>
         </div>
       </section>
 
@@ -135,11 +134,16 @@
       <!-- Quốc tế / hằng tháng -->
       <section class="ud-panel sp-card" id="intl">
         <h2 data-t="intlTitle">Từ nước ngoài, hoặc ủng hộ hằng tháng</h2>
-        <p data-t="intlHint">PayPal nhận thẻ quốc tế. Patreon và Hội viên YouTube là ủng hộ hằng tháng, có quyền lợi riêng.</p>
         <div class="sp-btns" id="intl-btns"></div>
       </section>
     </div>
 
+    <section class="ud-panel sp-card sp-story">
+      <h2 data-t="storyTitle">Đôi lời từ Bienac</h2>
+      <p data-t="story1">Bienac là kênh kể chuyện khoa học và lịch sử bằng tiếng Việt. Mỗi video dài là vài tuần đọc tài liệu, viết lời, thu âm rồi dựng từng hình, phần lớn do mình tự làm.</p>
+      <p data-t="story2">Mọi khoản ủng hộ, dù nhỏ, đều dùng cho việc làm video: tài liệu, phần mềm, máy móc và thời gian để làm kỹ hơn. Cảm ơn bạn đã xem, đã ở lại và đi cùng Bienac.</p>
+      <p class="sp-sign">Biên</p>
+    </section>
   </main>
 
   <div class="sp-sheet" id="sheet" hidden role="dialog" aria-modal="true">
@@ -173,6 +177,9 @@
   const T = {
     vi: { here: 'Ủng hộ', sub: 'Đăng ký kênh', kicker: 'Ủng hộ', title: 'Cùng Bienac <span class="accent">đi xa hơn</span>',
       lede: 'Mỗi video mất nhiều tuần đọc tài liệu, viết, thu âm và dựng hình. Mọi khoản ủng hộ đều dùng cho việc làm video.',
+      storyTitle: 'Đôi lời từ Bienac',
+      story1: 'Bienac là kênh kể chuyện khoa học và lịch sử bằng tiếng Việt. Mỗi video dài là vài tuần đọc tài liệu, viết lời, thu âm rồi dựng từng hình, phần lớn do mình tự làm.',
+      story2: 'Mọi khoản ủng hộ, dù nhỏ, đều dùng cho việc làm video: tài liệu, phần mềm, máy móc và thời gian để làm kỹ hơn. Cảm ơn bạn đã xem, đã ở lại và đi cùng Bienac.',
       vnTitle: 'Chuyển khoản nhanh', vnHint: 'Chạm vào app ngân hàng bạn dùng là app mở ra để chuyển khoản.',
       more: 'Ngân hàng khác', vnNote: 'Dấu ✓: app điền sẵn đầy đủ (BIDV, MB, VietinBank, ACB, OCB). App khác chỉ mở lên, số tài khoản đã được chép sẵn để bạn dán.',
       other: 'Chọn ngân hàng khác', open: 'Mở app {b}', favHint: 'Lần trước bạn dùng app này. Chọn ngân hàng khác ở dưới cũng được.',
@@ -192,6 +199,9 @@
       toastFill: 'Đang mở {b}…', toastCopy: 'Đang mở {b}. Số tài khoản {n} cũng đã được chép sẵn, phòng khi app không tự điền.' },
     en: { here: 'Support', sub: 'Subscribe', kicker: 'Support', title: 'Help Bienac <span class="accent">go further</span>',
       lede: 'Each video takes weeks of reading, writing, recording and animation. Every contribution goes straight into making videos.',
+      storyTitle: 'A note from Bienac',
+      story1: 'Bienac tells stories of science and history in Vietnamese. Each long video takes weeks of reading, writing, recording and building every visual, mostly by one person.',
+      story2: 'Every contribution, however small, goes into making videos: sources, software, equipment and the time to do them properly. Thank you for watching, for staying, and for coming along with Bienac.',
       vnTitle: 'Bank transfer from Vietnam', vnHint: 'Tap the banking app you use and it opens ready for the transfer.',
       more: 'Other banks', vnNote: '✓ = fully pre-filled (BIDV, MB, VietinBank, ACB, OCB). Other apps just open; the account number is copied for you to paste.',
       other: 'Choose another bank', open: 'Open {b}', favHint: 'You used this app last time. Any other bank below works too.',
@@ -265,7 +275,6 @@
       const q = window.qrcode(0, 'M'); q.addData(vietqr(amount)); q.make();
       qrSvg = q.createSvgTag({ cellSize: 8, margin: 4, scalable: true });
       $('qr').src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(qrSvg);
-      $('qr-note').textContent = amount ? t('qrAmt').replace('{a}', fmt(amount)) : t('qrMemo');
     } catch {}
   }
   // Tải ảnh: xuất đúng mã đang hiện ra PNG (app ngân hàng quét từ thư viện ảnh không đọc SVG).
@@ -339,8 +348,8 @@
     store.set('bienac-bank', id);
     if (!mobile) {
       $('acc').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      $('acc').querySelector('h2').textContent = t('deskTitle');
-      $('acc').querySelector('p').textContent = t('deskLede').replace('{b}', app[1]);
+      $('desk-t').textContent = t('deskTitle'); $('desk-t').hidden = false;
+      $('desk-p').textContent = t('deskLede').replace('{b}', app[1]); $('desk-p').hidden = false;
       $('acc').classList.add('sp-flash'); setTimeout(() => $('acc').classList.remove('sp-flash'), 1800);
       return;
     }
