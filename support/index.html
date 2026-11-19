@@ -26,7 +26,6 @@
     .sp { max-width: 820px; margin: 0 auto; padding: 100px clamp(14px, 4vw, 32px) 64px; }
     .sp-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
     .sp-lang { background: none; border: 1px solid rgba(236,230,214,.2); color: var(--text-dim); border-radius: 999px; padding: 6px 14px; font: 600 .78rem var(--mono); cursor: pointer; }
-    .sp-lede { margin-top: 10px; font-size: 1rem; line-height: 1.65; color: var(--text-dim); max-width: 620px; }
     .sp-card { padding: 20px; margin-top: 16px; }
     .sp-card h2 { font: 700 1.12rem/1.3 var(--display); margin-bottom: 6px; }
     .sp-card p { font-size: .9rem; line-height: 1.6; color: var(--text-dim); }
@@ -42,12 +41,6 @@
     .sp-more { margin-top: 10px; }
     .sp-more summary { cursor: pointer; font-size: .85rem; color: var(--cyan); padding: 6px 0; }
     .sp-note { margin-top: 12px; font-size: .78rem !important; }
-    .sp-amt { margin: 10px 0 4px; }
-    .sp-amt-k { font-size: .82rem; color: var(--text-dim); }
-    .sp-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    .sp-chip { border: 1px solid rgba(236,230,214,.18); background: rgba(255,255,255,.03); color: var(--text); border-radius: 999px; padding: 8px 14px; font: 600 .82rem/1 var(--mono); cursor: pointer; -webkit-tap-highlight-color: transparent; }
-    .sp-chip.on { border-color: var(--cyan); background: rgba(55,240,207,.14); color: var(--cyan); }
-    .sp-chip input { width: 92px; background: none; border: 0; color: inherit; font: inherit; outline: none; padding: 0; }
     .sp-thanks { margin-top: 16px; padding: 16px 20px; border-radius: 16px; border: 1px solid var(--cyan); background: rgba(55,240,207,.08); font-size: .95rem; line-height: 1.6; }
     .sp-thanks b { color: var(--cyan); }
     .sp-thanks p { margin: 6px 0 0; color: var(--text-dim); font-size: .9rem; }
@@ -79,9 +72,6 @@
     .sp-copy { border: 1px solid rgba(55,240,207,.4); background: rgba(55,240,207,.08); color: var(--cyan); border-radius: 999px; padding: 6px 14px; font: 600 .76rem var(--mono); cursor: pointer; }
     .sp-btns { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
     .sp-btns .btn { padding: 10px 18px; font-size: .84rem; }
-    .sp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
-    .sp-grid .sp-card { margin-top: 0; }
-    @media (max-width: 680px) { .sp-grid { grid-template-columns: 1fr; } }
     .sp-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0; background: #0f1a1a; border: 1px solid var(--cyan); color: var(--text); padding: 12px 18px; border-radius: 14px; font-size: .86rem; max-width: 92vw; transition: .25s; pointer-events: none; z-index: 50; text-align: center; }
     .sp-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
     [hidden] { display: none !important; }
@@ -106,7 +96,6 @@
       <button class="sp-lang" id="lang" type="button">English</button>
     </div>
     <h1 class="ud-title" data-t="title">Cùng Bienac <span class="accent">đi xa hơn</span></h1>
-    <p class="sp-lede" data-t="lede">Mỗi video mất nhiều tuần đọc tài liệu, viết, thu âm và dựng hình. Mọi khoản ủng hộ đều dùng cho việc làm video.</p>
 
     <div class="sp-thanks" id="thanks" hidden>
       <b data-t="backTitle">Bạn vừa quay lại từ app ngân hàng</b>
@@ -114,13 +103,22 @@
       <p data-t="backFail">Nếu app không mở được hoặc chưa chuyển được: bạn có thể chuyển tay bằng số tài khoản bên dưới, quét mã QR, hoặc chọn một ngân hàng khác.</p>
     </div>
     <div id="order">
+      <section class="ud-panel sp-card" id="acc">
+        <div class="sp-acc">
+          <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" fetchpriority="high" /><span class="sp-qr-note" id="qr-note"></span></a>
+          <div>
+            <h2 data-t="accTitle">Quét mã hoặc chép số tài khoản</h2>
+            <p data-t="accHint">Trên máy tính: mở app ngân hàng trên điện thoại và quét mã. Trên điện thoại: lưu ảnh mã về máy rồi chọn “Quét ảnh” trong app.</p>
+            <div class="sp-row"><span class="sp-num" id="num">BIDV · 4506 285 887</span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
+            <div class="sp-row"><span id="holder" style="font:600 .9rem var(--mono)">DUONG VAN BIEN</span></div>
+            <div class="sp-row"><span style="font-size:.85rem;color:var(--text-dim)"><span data-t="memo">Nội dung</span>: <b id="memo-text">Ung ho Bienac</b></span><button class="sp-copy" type="button" data-copy="memo" data-t="copy">Sao chép</button></div>
+          </div>
+        </div>
+      </section>
+
       <!-- Chuyển khoản trong nước -->
       <section class="ud-panel sp-card" id="vn">
         <h2 data-t="vnTitle">Chuyển khoản nhanh</h2>
-        <div class="sp-amt">
-          <span class="sp-amt-k" data-t="amt">Số tiền (không bắt buộc)</span>
-          <div class="sp-chips" id="chips"></div>
-        </div>
         <div id="fav" hidden>
           <div class="sp-fav"><img id="fav-img" alt="" width="56" height="56" /><a class="btn btn-primary" id="fav-go" href="#"></a></div>
           <p class="sp-note" data-t="favHint" style="margin-top:8px">Lần trước bạn dùng app này. Chọn ngân hàng khác ở dưới cũng được.</p>
@@ -133,18 +131,6 @@
         </div>
       </section>
 
-      <section class="ud-panel sp-card" id="acc">
-        <div class="sp-acc">
-          <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" loading="lazy" /><span class="sp-qr-note" id="qr-note"></span></a>
-          <div>
-            <h2 data-t="accTitle">Quét mã hoặc chép số tài khoản</h2>
-            <p data-t="accHint">Trên máy tính: mở app ngân hàng trên điện thoại và quét mã. Trên điện thoại: lưu ảnh mã về máy rồi chọn “Quét ảnh” trong app.</p>
-            <div class="sp-row"><span class="sp-num" id="num">BIDV · 4506 285 887</span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
-            <div class="sp-row"><span id="holder" style="font:600 .9rem var(--mono)">DUONG VAN BIEN</span></div>
-            <div class="sp-row"><span style="font-size:.85rem;color:var(--text-dim)"><span data-t="memo">Nội dung</span>: <b id="memo-text">Ung ho Bienac</b></span><button class="sp-copy" type="button" data-copy="memo" data-t="copy">Sao chép</button></div>
-          </div>
-        </div>
-      </section>
 
       <!-- Quốc tế / hằng tháng -->
       <section class="ud-panel sp-card" id="intl">
@@ -154,28 +140,6 @@
       </section>
     </div>
 
-    <div class="sp-grid">
-      <section class="ud-panel sp-card">
-        <h2 data-t="f1">Xem hết, bấm thích</h2>
-        <p data-t="f1p">Thời gian xem trọn video và bình luận thật lòng giúp YouTube giới thiệu kênh tới người mới. Hoàn toàn miễn phí.</p>
-      </section>
-      <section class="ud-panel sp-card">
-        <h2 data-t="f2">Chia sẻ một video</h2>
-        <p data-t="f2p">Gửi video bạn thích nhất cho một người hay tò mò.</p>
-        <div class="sp-btns"><button class="btn btn-ghost" id="share" type="button" data-t="f2b">Chép link kênh</button></div>
-      </section>
-      <section class="ud-panel sp-card">
-        <h2 data-t="f3">Góp ý, báo lỗi sai</h2>
-        <p data-t="f3p">Muốn xem chủ đề gì, hay thấy chỗ nào chưa đúng? Mọi góp ý đều được đọc.</p>
-        <div class="sp-btns"><a class="btn btn-ghost" href="/#request" data-t="f3b">Gửi góp ý</a></div>
-      </section>
-    </div>
-
-    <section class="ud-panel sp-card" id="cd-box" hidden>
-      <h2 data-t="cd">Cộng đồng Bienac</h2>
-      <div class="sp-btns" id="cd"></div>
-      <p id="mail" style="margin-top:12px"></p>
-    </section>
   </main>
 
   <div class="sp-sheet" id="sheet" hidden role="dialog" aria-modal="true">
@@ -260,7 +224,7 @@
   // url (trang quay về sau khi chuyển xong) là BẮT BUỘC để VietQR tự điền thông tin vào app (kiểm 02/11/2026).
   // am (số tiền) không bắt buộc với VietQR nhưng tài liệu khuyên có; người xem chọn ở hàng số tiền.
   const BACK = 'https://bienac.com/support/?back=1';
-  let amount = 0;
+  const amount = 0;   // bỏ chọn số tiền (19/11/2026): người xem tự nhập trong app
   const deeplink = (app) => `https://dl.vietqr.io/pay?app=${encodeURIComponent(app)}&ba=${ACC.number}@${ACC.bank}${amount ? '&am=' + amount : ''}&tn=${encodeURIComponent(ACC.memo)}&bn=${encodeURIComponent(ACC.holder)}&url=${encodeURIComponent(BACK)}`;
   const appById = (id) => APPS.find((a) => a[0] === id);
 
@@ -321,26 +285,7 @@
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(qrSvg);
   });
 
-  /* Hàng chọn số tiền: chạm lại để bỏ chọn. "Khác" cho tự gõ. */
-  const AMOUNTS = [20000, 50000, 100000, 200000, 500000];
   const fmt = (n) => n.toLocaleString('vi-VN');
-  function renderChips() {
-    $('chips').innerHTML = AMOUNTS.map((n) => `<button type="button" class="sp-chip${amount === n ? ' on' : ''}" data-am="${n}">${fmt(n)}</button>`).join('')
-      + `<label class="sp-chip${amount && !AMOUNTS.includes(amount) ? ' on' : ''}" id="am-other"><input id="am-in" inputmode="numeric" placeholder="${t('amtOther')}" value="${amount && !AMOUNTS.includes(amount) ? fmt(amount) : ''}" aria-label="${t('amtOther')}" /></label>`;
-  }
-  $('chips').addEventListener('click', (e) => {
-    const c = e.target.closest('[data-am]'); if (!c) return;
-    const n = Number(c.dataset.am); amount = amount === n ? 0 : n; renderChips(); renderFav(); renderQR();
-  });
-  $('chips').addEventListener('input', (e) => {
-    if (e.target.id !== 'am-in') return;
-    const n = Number(e.target.value.replace(/\D/g, '').slice(0, 10)) || 0;
-    amount = n >= 1000 ? n : 0;
-    renderQR();
-    document.querySelectorAll('#chips [data-am]').forEach((b) => b.classList.remove('on'));
-    $('am-other').classList.toggle('on', !!amount);
-    const go = $('fav-go'); if (go.dataset.app) go.href = deeplink(go.dataset.app);
-  });
 
   const bankBtn = ([id, name, full]) => `<a class="sp-bank" href="${esc(deeplink(id))}" data-app="${esc(id)}" rel="noopener"><img src="/assets/banks/${esc(id)}.webp" alt="" width="44" height="44" loading="lazy" />${esc(name)}${full ? '<i>✓</i>' : ''}</a>`;
 
@@ -431,23 +376,15 @@
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-t]').forEach((el) => { const v = t(el.dataset.t); if (v) el.innerHTML = v; });
     $('lang').textContent = t('lang');
-    renderChips();
     renderQR();
     // Tiếng Anh: quốc tế lên trước, chuyển khoản Việt Nam xuống dưới
     // Máy tính không mở được app ngân hàng: đưa mã QR lên trước lưới ngân hàng.
-    const vnPart = mobile ? ['vn', 'acc'] : ['acc', 'vn'];
-    (lang === 'en' ? ['intl', ...vnPart] : [...vnPart, 'intl']).forEach((id) => $('order').append($(id)));
+    // Mã QR và thông tin tài khoản luôn ở đầu (19/11/2026). Tiếng Anh: PayPal/Patreon lên trước lưới ngân hàng Việt Nam.
+    (lang === 'en' ? ['acc', 'intl', 'vn'] : ['acc', 'vn', 'intl']).forEach((id) => $('order').append($(id)));
     renderFav(); renderIntl();
-    if (mailAddr) $('mail').innerHTML = `${t('mail')}: <a href="mailto:${esc(mailAddr)}">${esc(mailAddr)}</a>`;
   }
   $('lang').onclick = () => { lang = lang === 'vi' ? 'en' : 'vi'; store.set('bienac-lang', lang); applyLang(); };
 
-  $('share').onclick = async (e) => {
-    const link = 'https://www.youtube.com/@bienac';
-    try { if (navigator.share) await navigator.share({ title: 'Bienac', url: link }); else if (await copy(link)) e.target.textContent = t('copied'); } catch {}
-  };
-
-  let mailAddr = '';
   $('y').textContent = new Date().getFullYear();
   $('num').textContent = `${ACC.bankName} · ${ACC.number.replace(/(\d{4})(\d{3})(\d+)/, '$1 $2 $3')}`;
   renderBanks();
@@ -460,11 +397,6 @@
   // nên chỉ hiện bảng trung tính cho cả hai trường hợp. KHÔNG tự mở lại app: từng làm người xem kẹt vòng lặp (04/11/2026).
   if (/[?&](thanks|back)=1/.test(location.search)) { $('thanks').hidden = false; tap('return'); }
 
-  fetch('/data/config.json').then((r) => r.json()).then((c) => {
-    const u = c.ungHo || {};
-    if (u.congDong && u.congDong.length) { $('cd').innerHTML = u.congDong.map(([n, h]) => `<a class="btn btn-ghost" href="${esc(h)}" target="_blank" rel="noopener">${esc(n)}</a>`).join(''); $('cd-box').hidden = false; }
-    if (u.lienHe) { mailAddr = u.lienHe; $('mail').innerHTML = `${t('mail')}: <a href="mailto:${esc(mailAddr)}">${esc(mailAddr)}</a>`; }
-  }).catch(() => {});
 })();
 </script>
 <script src="/js/dem.js"></script>
