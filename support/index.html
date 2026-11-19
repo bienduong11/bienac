@@ -112,7 +112,6 @@
             <p id="desk-p" hidden></p>
             <div class="sp-row"><span class="sp-num" id="num">BIDV · 4506 285 887</span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
             <div class="sp-row"><span id="holder" style="font:600 .9rem var(--mono)">DUONG VAN BIEN</span></div>
-            <div class="sp-row"><span style="font-size:.85rem;color:var(--text-dim)"><span data-t="memo">Nội dung</span>: <b id="memo-text">Ung ho Bienac</b></span><button class="sp-copy" type="button" data-copy="memo" data-t="copy">Sao chép</button></div>
           </div>
         </div>
       </section>
@@ -153,7 +152,6 @@
       <div class="sp-sheet-acc">
         <div class="sp-row"><span class="sp-num" id="sh-num"></span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
         <div class="sp-row"><span id="sh-holder" style="font:600 .9rem var(--mono)"></span></div>
-        <div class="sp-row"><span style="font-size:.85rem;color:var(--text-dim)"><span data-t="memo">Nội dung</span>: <b id="sh-memo"></b></span><button class="sp-copy" type="button" data-copy="memo" data-t="copy">Sao chép</button></div>
       </div>
       <ol id="sh-steps"></ol>
       <div class="sp-sheet-btns"><a class="btn btn-primary" id="sh-go" href="#" rel="noopener"></a></div>
@@ -186,7 +184,7 @@
       backTitle: 'Bạn vừa quay lại từ app ngân hàng', backOk: 'Nếu đã chuyển xong: cảm ơn bạn rất nhiều 💚',
       backFail: 'Nếu app không mở được hoặc chưa chuyển được: bạn có thể chuyển tay bằng số tài khoản bên dưới, quét mã QR, hoặc chọn một ngân hàng khác.',
       shTitle: 'Chuyển qua app {b}', shLede: 'App {b} chưa nhận thông tin điền sẵn, bạn chuyển tay theo 3 bước. Số tài khoản đã được chép sẵn.',
-      shSteps: ['Mở app {b}, chọn Chuyển tiền (tới ngân hàng khác)', 'Chọn ngân hàng nhận: BIDV, dán số tài khoản 4506285887', 'Nội dung: Ung ho Bienac, rồi xác nhận'],
+      shSteps: ['Mở app {b}, chọn Chuyển tiền (tới ngân hàng khác)', 'Chọn ngân hàng nhận: BIDV, dán số tài khoản 4506285887', 'Nhập số tiền, lời nhắn tùy bạn, rồi xác nhận'],
       deskTitle: 'Trên máy tính thì quét mã QR', deskLede: 'Mở app {b} trên điện thoại, chọn Quét QR và quét mã này. Số tài khoản ở bên cạnh để chuyển tay.', accTitle: 'Quét mã hoặc chép số tài khoản',
       accHint: 'Trên máy tính: mở app ngân hàng trên điện thoại và quét mã. Trên điện thoại: lưu ảnh mã về máy rồi chọn “Quét ảnh” trong app.',
       copy: 'Sao chép', copied: 'Đã chép ✓', memo: 'Nội dung', intlTitle: 'Từ nước ngoài, hoặc ủng hộ hằng tháng',
@@ -208,7 +206,7 @@
       backTitle: 'You are back from your banking app', backOk: 'If the transfer went through: thank you so much 💚',
       backFail: 'If the app did not open or the transfer did not go through: you can transfer manually with the account number below, scan the QR code, or pick another bank.',
       shTitle: 'Transfer with {b}', shLede: '{b} does not receive pre-filled details, so it takes 3 steps. The account number is already copied.',
-      shSteps: ['Open {b} and choose Transfer (to another bank)', 'Receiving bank: BIDV, paste account number 4506285887', 'Note: Ung ho Bienac, then confirm'],
+      shSteps: ['Open {b} and choose Transfer (to another bank)', 'Receiving bank: BIDV, paste account number 4506285887', 'Enter the amount and any message you like, then confirm'],
       deskTitle: 'On a computer, scan the QR code', deskLede: 'Open {b} on your phone, choose Scan QR and scan this code. The account number is next to it for a manual transfer.', accTitle: 'Scan the code or copy the account number',
       accHint: 'On a computer: scan with your phone’s banking app. On a phone: save the image, then use “Scan from photo” in your app.',
       copy: 'Copy', copied: 'Copied ✓', memo: 'Note', intlTitle: 'From anywhere in the world',
@@ -235,7 +233,7 @@
   // am (số tiền) không bắt buộc với VietQR nhưng tài liệu khuyên có; người xem chọn ở hàng số tiền.
   const BACK = 'https://bienac.com/support/?back=1';
   const amount = 0;   // bỏ chọn số tiền (19/11/2026): người xem tự nhập trong app
-  const deeplink = (app) => `https://dl.vietqr.io/pay?app=${encodeURIComponent(app)}&ba=${ACC.number}@${ACC.bank}${amount ? '&am=' + amount : ''}&tn=${encodeURIComponent(ACC.memo)}&bn=${encodeURIComponent(ACC.holder)}&url=${encodeURIComponent(BACK)}`;
+  const deeplink = (app) => `https://dl.vietqr.io/pay?app=${encodeURIComponent(app)}&ba=${ACC.number}@${ACC.bank}${amount ? '&am=' + amount : ''}&bn=${encodeURIComponent(ACC.holder)}&url=${encodeURIComponent(BACK)}`;
   const appById = (id) => APPS.find((a) => a[0] === id);
 
   let toastTimer;
@@ -258,14 +256,14 @@
   const IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
   const NO_IOS = ['nab'];
   const shown = (a) => !(IOS && NO_IOS.includes(a[0]));
-  /* Mã VietQR tạo ngay trên trang: kèm nội dung "Ung ho Bienac" và số tiền đã chọn, nên app ngân hàng nào quét
+  /* Mã VietQR tạo ngay trên trang, chỉ kèm số tài khoản (không kèm nội dung từ 19/11/2026: người xem tự viết lời nhắn), nên app ngân hàng nào quét
      cũng tự điền đủ (kể cả app không có deeplink). Chuỗi kiểm 14/11/2026: trùng từng ký tự với chuỗi VietQR tạo cho MB.
      Thư viện không tải được thì giữ ảnh tĩnh /assets/qr-bidv.svg (chỉ có số tài khoản). */
   const tlv = (id, v) => id + String(v.length).padStart(2, '0') + v;
   function crc16(str) { let c = 0xffff; for (const ch of new TextEncoder().encode(str)) { c ^= ch << 8; for (let i = 0; i < 8; i++) c = c & 0x8000 ? ((c << 1) ^ 0x1021) & 0xffff : (c << 1) & 0xffff; } return c.toString(16).toUpperCase().padStart(4, '0'); }
   function vietqr(am) {
     const acc = tlv('00', 'A000000727') + tlv('01', tlv('00', '970418') + tlv('01', ACC.number)) + tlv('02', 'QRIBFTTA');
-    const p = tlv('00', '01') + tlv('01', am ? '12' : '11') + tlv('38', acc) + tlv('53', '704') + (am ? tlv('54', String(am)) : '') + tlv('58', 'VN') + tlv('62', tlv('08', ACC.memo)) + '6304';
+    const p = tlv('00', '01') + tlv('01', am ? '12' : '11') + tlv('38', acc) + tlv('53', '704') + (am ? tlv('54', String(am)) : '') + tlv('58', 'VN') + '6304';
     return p + crc16(p);
   }
   let qrSvg = '';
@@ -323,7 +321,7 @@
     $('sh-title').textContent = t('shTitle').replace('{b}', app[1]);
     $('sh-lede').textContent = t('shLede').replace(/\{b\}/g, app[1]);
     $('sh-num').textContent = `${ACC.bankName} · ${ACC.number.replace(/(\d{4})(\d{3})(\d+)/, '$1 $2 $3')}`;
-    $('sh-holder').textContent = ACC.holder; $('sh-memo').textContent = ACC.memo;
+    $('sh-holder').textContent = ACC.holder;
     $('sh-steps').innerHTML = t('shSteps').map((x) => `<li>${esc(x.replace(/\{b\}/g, app[1]))}</li>`).join('');
     const go = $('sh-go'); go.href = deeplink(app[0]); go.dataset.app = app[0]; go.textContent = t('open').replace('{b}', app[1]);
     $('sheet').hidden = false; document.body.style.overflow = 'hidden';
@@ -372,7 +370,7 @@
   }
 
   document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
-    const ok = await copy(b.dataset.copy === 'num' ? ACC.number : ACC.memo);
+    const ok = await copy(ACC.number);
     if (ok) { b.textContent = t('copied'); setTimeout(() => (b.textContent = t('copy')), 1600); }
   }));
 

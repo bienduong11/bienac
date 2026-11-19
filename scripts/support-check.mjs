@@ -39,7 +39,7 @@ const NO_IOS = JSON.parse(html.match(/const NO_IOS = (\[.*?\]);/)[1].replace(/'/
 const ACC = Object.fromEntries([...html.match(/const ACC = \{([^}]+)\}/)[1].matchAll(/(\w+): '([^']*)'/g)].map((m) => [m[1], m[2]]));
 const BACK = (html.match(/const BACK = '([^']+)'/) || [])[1];
 if (!BACK) fails.push('- Trang mất tham số url (BACK) của deeplink: không app nào tự điền được nữa.');
-const q = `ba=${ACC.number}@${ACC.bank}&tn=${encodeURIComponent(ACC.memo)}&bn=${encodeURIComponent(ACC.holder)}&url=${encodeURIComponent(BACK || '')}`;
+const q = `ba=${ACC.number}@${ACC.bank}&bn=${encodeURIComponent(ACC.holder)}&url=${encodeURIComponent(BACK || '')}`;
 
 // 1. So với danh sách VietQR hôm nay
 const api = async (os) => (await (await get(`https://api.vietqr.io/v2/${os}-app-deeplinks`)).json()).apps;
