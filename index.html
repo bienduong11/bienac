@@ -189,6 +189,15 @@
   <script src="js/main.js"></script>
   <script src="js/bubble.js"></script>
   <script src="/js/nhac-nen.js"></script>
+  <script src="/js/dem.js"></script>
+  <script>
+  // Lượt chạm từng ô (kể cả ô cuộn trong trang như Video, Đề xuất): /home/tap/<ô>
+  document.querySelectorAll('#apps a.app').forEach((a) => a.addEventListener('click', () => {
+    const h = a.getAttribute('href') || '';
+    const id = (h.startsWith('#') ? h.slice(1) : h.replace(/\.html$/, '').split('/').filter(Boolean)[0] || 'home').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30);
+    try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/home/tap/' + id, r: document.referrer })); } catch (e) {}
+  }));
+  </script>
   <script>
   // Video mới nhất của kênh (data/videos.json do GitHub Actions cập nhật 6 tiếng/lần), trỏ vào trang tài liệu nếu đã có
   (async () => {
