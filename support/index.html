@@ -78,6 +78,9 @@
     .sp-toggle { width: 100%; justify-content: center; text-align: center; font: 700 .98rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 14px 16px; }
     #fav + .sp-toggle, #fav:not([hidden]) ~ .sp-toggle { margin-top: 12px; }
     #pick { margin-top: 4px; }
+    #pick-toggle { scroll-margin-top: 76px; }
+    #pick-toggle::after { content: ''; width: 8px; height: 8px; margin-left: 10px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s; display: inline-block; }
+    #pick-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -403,7 +406,12 @@
   // điện thoại thu gọn sau một nút, chạm mới bung ra (19/11/2026, Bien muốn trang giản dị).
   if (!mobile) $('vn').hidden = true;
   const showPick = (open) => { $('pick').hidden = !open; $('pick-toggle').setAttribute('aria-expanded', String(open)); };
-  $('pick-toggle').onclick = () => { const open = $('pick').hidden; showPick(open); if (open) tap('pick-open'); };
+  // Nút thường nằm sát mép dưới màn hình điện thoại: bung ra mà không cuộn thì lưới nằm khuất, người xem tưởng nút hỏng và bấm liên tục
+  // (20/11/2026: một người xem iPhone bấm 17 lần trong 30 giây). Nên bung xong thì cuộn nút lên đầu màn hình để thấy lưới ngân hàng.
+  $('pick-toggle').onclick = () => {
+    const open = $('pick').hidden; showPick(open);
+    if (open) { tap('pick-open'); requestAnimationFrame(() => $('pick-toggle').scrollIntoView({ behavior: 'smooth', block: 'start' })); }
+  };
   if (/[?&](thanks|back)=1/.test(location.search)) showPick(true);
   applyLang();
 
