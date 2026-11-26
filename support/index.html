@@ -42,10 +42,9 @@
     .sp-btns .btn { padding: 10px 18px; font-size: .84rem; }
     .sp-story p + p { margin-top: 10px; }
     .sp-sign { margin-top: 12px !important; text-align: right; font-style: italic; color: var(--text) !important; }
-    .sp-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .sp-item h2 { margin: 0; }
-    .sp-item > .btn, .sp-item .sp-btns .btn { padding: 10px 18px; font-size: .84rem; }
-    .sp-item .sp-btns { margin: 0; }
+    .sp-list { margin-top: 16px; display: grid; gap: 10px; }
+    .sp-pay { display: block; padding: 16px 20px; border-radius: 16px; text-align: center; text-decoration: none; font: 600 1rem 'Be Vietnam Pro', sans-serif; color: var(--text); background: var(--glass); box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .sp-pay:hover, .sp-pay:focus-visible { color: var(--cyan); box-shadow: inset 0 0 0 1px var(--cyan); }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -79,23 +78,12 @@
       </div>
     </section>
 
-    <section class="ud-panel sp-card sp-item" id="momo">
-      <h2>MoMo</h2>
-      <a class="btn btn-primary" id="momo-go" href="https://me.momo.vn/bienac" target="_blank" rel="noopener" data-tap="momo" data-t="momoBtn">Mở MoMo</a>
-    </section>
-
-    <section class="ud-panel sp-card sp-item" id="paypal">
-      <h2>PayPal</h2>
-      <a class="btn btn-primary" id="paypal-go" href="https://paypal.me/bienac" target="_blank" rel="noopener" data-tap="paypal" data-t="paypalBtn">Mở PayPal</a>
-    </section>
-
-    <section class="ud-panel sp-card sp-item" id="member">
-      <h2 data-t="member">Hội viên YouTube</h2>
-      <div class="sp-btns">
-        <a class="btn btn-primary" id="member-go" href="https://youtube.com/@Bienac/join" target="_blank" rel="noopener" data-tap="member" data-t="memberBtn">Tham gia</a>
-        <a class="btn btn-ghost" id="patreon-go" href="https://patreon.com/bienac/join" target="_blank" rel="noopener" data-tap="patreon">Patreon</a>
-      </div>
-    </section>
+    <nav class="sp-list" aria-label="Cách ủng hộ khác">
+      <a class="sp-pay" href="https://me.momo.vn/bienac" target="_blank" rel="noopener" data-tap="momo">MoMo</a>
+      <a class="sp-pay" href="https://paypal.me/bienac" target="_blank" rel="noopener" data-tap="paypal">PayPal</a>
+      <a class="sp-pay" href="https://youtube.com/@Bienac/join" target="_blank" rel="noopener" data-tap="member" data-t="member">Hội viên YouTube</a>
+      <a class="sp-pay" href="https://patreon.com/bienac/join" target="_blank" rel="noopener" data-tap="patreon">Patreon</a>
+    </nav>
 
     <section class="ud-panel sp-card sp-story">
       <h2 data-t="storyTitle">Đôi lời từ Bienac</h2>
@@ -118,12 +106,12 @@
       storyTitle: 'Đôi lời từ Bienac',
       story1: 'Bienac là kênh kể chuyện khoa học và lịch sử bằng tiếng Việt. Mỗi video dài là vài tuần đọc tài liệu, viết lời, thu âm rồi dựng từng hình, phần lớn do mình tự làm.',
       story2: 'Mọi khoản ủng hộ, dù nhỏ, đều dùng cho việc làm video: tài liệu, phần mềm, máy móc và thời gian để làm kỹ hơn. Cảm ơn bạn đã xem, đã ở lại và đi cùng Bienac.',
-      copy: 'Sao chép', copied: 'Đã chép ✓', momoBtn: 'Mở MoMo', paypalBtn: 'Mở PayPal', member: 'Hội viên YouTube', memberBtn: 'Tham gia', lang: 'English' },
+      copy: 'Sao chép', copied: 'Đã chép ✓', member: 'Hội viên YouTube', lang: 'English' },
     en: { here: 'Support', sub: 'Subscribe', kicker: 'Support', title: 'Help Bienac <span class="accent">go further</span>',
       storyTitle: 'A note from Bienac',
       story1: 'Bienac tells stories of science and history in Vietnamese. Each long video takes weeks of reading, writing, recording and building every visual, mostly by one person.',
       story2: 'Every contribution, however small, goes into making videos: sources, software, equipment and the time to do them properly. Thank you for watching, for staying, and for coming along with Bienac.',
-      copy: 'Copy', copied: 'Copied ✓', momoBtn: 'Open MoMo', paypalBtn: 'Open PayPal', member: 'YouTube Membership', memberBtn: 'Join', lang: 'Tiếng Việt' },
+      copy: 'Copy', copied: 'Copied ✓', member: 'YouTube Membership', lang: 'Tiếng Việt' },
   };
   const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
   const $ = (id) => document.getElementById(id);
