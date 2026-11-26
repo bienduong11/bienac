@@ -111,10 +111,15 @@
     timers.push(setTimeout(() => playing && bell(), 2500 + Math.random() * 7000));
   }
 
+  // iOS: Web Audio mặc định đi theo nút gạt im lặng; đổi sang kiểu "playback"
+  // để nhạc vẫn phát khi máy đang gạt im lặng (Safari 16.4 trở lên).
+  function session() { try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {} }
+
   function start() {
-    if (playing) return;
+    session();
     if (!ctx) build();
-    ctx.resume();
+    if (playing) { ctx.resume().catch(() => {}); return; }
+    ctx.resume().catch(() => {});
     playing = true;
     const t = ctx.currentTime;
     master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value, t);
@@ -135,17 +140,23 @@
     if (remember) set('0');
   }
 
-  btn.addEventListener('click', (e) => { e.stopPropagation(); playing ? stop() : start(); });
+  // Bấm nút: đang phát thật thì tắt; còn lại (tắt, hoặc bị trình duyệt giữ im) thì bật.
+  btn.addEventListener('click', (e) => { e.stopPropagation(); (playing && ctx.state === 'running') ? stop() : start(); });
 
   // Mặc định phát. Chỉ không phát khi người xem đã tự tắt (lưu '0').
   // Trình duyệt thường chặn âm thanh trước khi người xem tương tác, nên:
   // thử phát ngay; nếu bị chặn thì phát ở cú chạm, cú bấm hoặc phím đầu tiên.
   if (get() !== '0') {
     const EV = ['pointerdown', 'keydown', 'touchend', 'click'];
+    // Trên điện thoại, cú chạm đầu (pointerdown) chưa được phép mở âm thanh,
+    // phải tới touchend/click. Vì vậy chỉ gỡ các lắng nghe khi nhạc đã chạy thật.
+    const done = () => EV.forEach((ev) => removeEventListener(ev, go, true));
     const go = (e) => {
       if (e && btn.contains(e.target)) return;      // bấm thẳng vào nút: để nút tự xử lý
-      EV.forEach((ev) => removeEventListener(ev, go, true));
-      if (!playing) start();
+      if (get() === '0') return done();
+      start();
+      if (ctx.state === 'running') return done();
+      ctx.resume().then(() => { if (ctx.state === 'running') done(); }).catch(() => {});
     };
     EV.forEach((ev) => addEventListener(ev, go, true));
     try {
@@ -159,6 +170,6 @@
   // Ẩn tab thì tạm dừng cho đỡ tốn pin
   document.addEventListener('visibilitychange', () => {
     if (!ctx || !playing) return;
-    document.hidden ? ctx.suspend() : ctx.resume();
+    document.hidden ? ctx.suspend() : ctx.resume().catch(() => {});
   });
 })();

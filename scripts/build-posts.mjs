@@ -115,6 +115,7 @@ const page = ({ title, description, url, image, body, type = 'website', noindex 
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" /></noscript>
   <link rel="stylesheet" href="/css/blog.css" />
   <link rel="stylesheet" href="/css/theme.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&text=Bienac&display=swap" media="print" onload="this.media='all'" />
 </head>
 <body class="no-webgl blog">
   <div class="vignette" aria-hidden="true"></div>

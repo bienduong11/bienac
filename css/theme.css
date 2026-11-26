@@ -640,3 +640,28 @@ body.home .site-footer a { color: #00ffff; }
 .hero-new .dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #e8452e; box-shadow: 0 0 8px #e8452e; vertical-align: 1px; animation: hero-dot 1.8s ease-in-out infinite; }
 @keyframes hero-dot { 50% { opacity: .35; } }
 @media (prefers-reduced-motion: reduce) { .hero-new .dot { animation: none; } }
+
+/* ---- Trang chủ 26/11: tên kênh, nút Ủng hộ, màu theo chủ đề ---- */
+/* Tên kênh viết như trên YouTube: chỉ hoa chữ đầu, chữ đậm kiểu YouTube Sans (Roboto 700 là bản gần nhất được dùng tự do) */
+.brand-name { text-transform: none; letter-spacing: 0; font-family: 'Roboto', 'YouTube Sans', 'Be Vietnam Pro', sans-serif; font-weight: 700; }
+/* Bỏ viền bo quanh logo */
+.home-brand { padding: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; border-radius: 0; }
+/* Nút Ủng hộ góc trên bên phải, ngang hàng logo */
+.home-support { position: absolute; top: 18px; right: clamp(14px, 3vw, 28px); z-index: 30; height: 38px; display: inline-flex; align-items: center; gap: 7px; padding: 0 16px; border-radius: 999px;
+  font: 600 .86rem 'Be Vietnam Pro', sans-serif; color: var(--text); text-decoration: none; background: rgba(6,8,12,.45); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.home-support svg { color: #ff6b81; }
+.home-support:hover, .home-support:focus-visible { color: #fff; box-shadow: inset 0 0 0 1px #ff6b81; background: rgba(255,107,129,.14); }
+@media (max-width: 560px) { .home-support { top: 12px; height: 34px; padding: 0 13px; font-size: .8rem; } }
+
+/* Mỗi chủ đề một màu: ô ứng dụng (biểu tượng, viền khi rê) và nút lọc */
+.app[data-cat^="kenh"], .app-filter [data-f="kenh"] { --c: 55, 240, 207; }        /* Kênh: ngọc */
+.app[data-cat^="vu-tru"], .app-filter [data-f="vu-tru"] { --c: 139, 156, 255; }   /* Vũ trụ: tím xanh */
+.app[data-cat^="vat-ly"], .app-filter [data-f="vat-ly"] { --c: 255, 181, 71; }    /* Vật lý & Hóa: hổ phách */
+.app[data-cat^="hon-loan"], .app-filter [data-f="hon-loan"] { --c: 111, 224, 122; } /* Hỗn loạn & Sự sống: lá */
+.app[data-cat^="dong-tay"], .app-filter [data-f="dong-tay"] { --c: 255, 122, 107; } /* Đông Tây & Lịch sử: son */
+body.home .app .app-ico { color: rgb(var(--c)); background: rgba(var(--c), .13); }
+body.home .app:hover, body.home .app:focus-visible { border-color: rgba(var(--c), .6); background: linear-gradient(160deg, rgba(var(--c), .2), rgba(8,10,14,.6)) !important; }
+body.home .app:hover .app-ico, body.home .app:focus-visible .app-ico { background: rgba(var(--c), .24); }
+.app-filter button[data-f]:not([data-f=""])::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: rgb(var(--c)); vertical-align: 1px; }
+body.home .app-filter button[data-f]:not([data-f=""])[aria-pressed="true"] { color: var(--ink); background: rgb(var(--c)); border-color: rgb(var(--c)); }
+body.home .app-filter button[data-f]:not([data-f=""])[aria-pressed="true"]::before { background: var(--ink); }

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bienac — Chuyện trên Trái Đất 🌏</title>
+  <title>Bienac</title>
   <link rel="canonical" href="https://bienac.com/" />
   <meta name="description" content="Bienac: kênh YouTube khoa học và lịch sử bằng tiếng Việt. Hồ sơ từng video kèm nguồn tham khảo, và 30 ứng dụng tương tác về vũ trụ, hóa học, sự sống." />
-  <meta property="og:title" content="Bienac — Chuyện trên Trái Đất 🌏" />
-  <meta property="og:description" content="Kênh YouTube khoa học Bienac — Chuyện trên Trái Đất 🌏." />
+  <meta property="og:title" content="Bienac" />
+  <meta property="og:description" content="Kênh YouTube khoa học và lịch sử bằng tiếng Việt: hồ sơ từng video kèm nguồn, và 30 ứng dụng tương tác." />
   <meta property="og:image" content="https://bienac.com/assets/og/trang-chu.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:type" content="website" />
@@ -23,12 +23,14 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" /></noscript>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&text=Bienac&display=swap" media="print" onload="this.media='all'" />
 </head>
 <body class="home">
   <a class="brand home-brand" href="/" aria-label="Bienac, trang chủ">
     <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" width="34" height="34" /></span>
     <span class="brand-name">Bienac</span>
   </a>
+  <a class="home-support" href="/support/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Ủng hộ</span></a>
 
   <!-- Nền hiệu ứng WebGL (cực quang, sóng biển…) -->
   <canvas id="fx-canvas" aria-hidden="true"></canvas>
@@ -41,10 +43,8 @@
     <section class="hero">
       <h1 class="sr-only">Bienac</h1>
       <div class="hero-head">
-        <p class="hero-tagline">Chuyện trên Trái Đất 🌏</p>
-        <p class="hero-sub">Đạo khả đạo &middot; Phi thường đạo</p>
         <div class="hero-links">
-          <a class="hero-start" href="/bat-dau/">Mới biết Bienac? Bắt đầu từ đây →</a>
+          <a class="hero-start" href="/bat-dau/">Bắt đầu</a>
           <a class="hero-start hero-new" id="hero-new" href="https://www.youtube.com/@bienac/videos" hidden><span class="dot" aria-hidden="true"></span>Mới ra: <b id="hero-new-t"></b></a>
         </div>
       </div>
@@ -158,8 +158,7 @@
           <div class="about-pay">
             <a class="btn btn-ghost" href="https://me.momo.vn/bienac" target="_blank" rel="noopener">MoMo</a>
             <a class="btn btn-ghost" href="https://paypal.me/bienac" target="_blank" rel="noopener">PayPal</a>
-            <a class="btn btn-ghost" href="https://patreon.com/bienac/join" target="_blank" rel="noopener">Patreon</a>
-            <a class="btn btn-ghost" href="https://www.youtube.com/@Bienac/join" target="_blank" rel="noopener">Hội viên kênh</a>
+            <a class="btn btn-ghost" href="https://www.youtube.com/@Bienac/join" target="_blank" rel="noopener">Hội viên</a>
           </div>
           <p>Sự ủng hộ của bạn giúp đỡ mình rất nhiều. Cảm ơn bạn!</p>
           <a class="btn btn-primary" href="/support/">Các cách ủng hộ khác</a>
@@ -197,6 +196,10 @@
     const id = (h.startsWith('#') ? h.slice(1) : h.replace(/\.html$/, '').split('/').filter(Boolean)[0] || 'home').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30);
     try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/home/tap/' + id, r: document.referrer })); } catch (e) {}
   }));
+  // Nút Ủng hộ góc trên bên phải: /home/tap/support-top
+  document.querySelector('.home-support').addEventListener('click', () => {
+    try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/home/tap/support-top', r: document.referrer })); } catch (e) {}
+  });
   </script>
   <script>
   // Video mới nhất của kênh (data/videos.json do GitHub Actions cập nhật 6 tiếng/lần), trỏ vào trang tài liệu nếu đã có
