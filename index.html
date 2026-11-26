@@ -146,22 +146,24 @@
       </script>
     </section>
 
-    <!-- ỦNG HỘ -->
+    <!-- ỦNG HỘ (cùng cấu trúc và lời với trang /support) -->
     <section class="section" id="ung-ho">
-      <div class="about-card">
-        <div class="about-logo"><a href="https://img.vietqr.io/image/BIDV-4506285887-print.png" target="_blank" rel="noopener" title="Mở mã QR bản gốc nền trắng"><img src="/assets/qr-ung-ho.svg" alt="Mã QR chuyển khoản BIDV ủng hộ Bienac" loading="lazy" class="about-qr" width="240" height="240" /></a></div>
+      <div class="about-card hs-card">
+        <div class="about-logo"><a href="/assets/qr-bidv.png" target="_blank" rel="noopener" title="Mở mã QR nền trắng"><img src="/assets/qr-ung-ho.svg" alt="Mã QR chuyển khoản BIDV ủng hộ Bienac" loading="lazy" class="about-qr" width="240" height="240" /></a></div>
         <div class="about-text">
           <p class="sec-label">Ủng hộ</p>
           <h2 class="section-title">Cùng Bienac <span class="accent">đi xa hơn</span></h2>
-          <p>Mỗi video mất nhiều tuần đọc tài liệu, viết, thu âm và dựng hình. Nếu bạn thấy những câu chuyện ở đây đáng giá, bạn có thể ủng hộ kênh qua:</p>
-          <p class="about-bank">BIDV • 4506 285 887 • Duong Van Bien</p>
-          <div class="about-pay">
-            <a class="btn btn-ghost" href="https://me.momo.vn/bienac" target="_blank" rel="noopener">MoMo</a>
-            <a class="btn btn-ghost" href="https://paypal.me/bienac" target="_blank" rel="noopener">PayPal</a>
-            <a class="btn btn-ghost" href="https://www.youtube.com/@Bienac/join" target="_blank" rel="noopener">Hội viên</a>
+          <div class="hs-acc">
+            <p class="about-bank"><span id="hs-num">BIDV · 4506 285 887</span><button class="hs-copy" type="button" id="hs-copy">Sao chép</button></p>
+            <p class="hs-holder">DUONG VAN BIEN</p>
           </div>
-          <p>Sự ủng hộ của bạn giúp đỡ mình rất nhiều. Cảm ơn bạn!</p>
-          <a class="btn btn-primary" href="/support/">Các cách ủng hộ khác</a>
+          <nav class="hs-pay" aria-label="Cách ủng hộ khác">
+            <a href="https://me.momo.vn/bienac" target="_blank" rel="noopener" data-pay="momo">MoMo</a>
+            <a href="https://paypal.me/bienac" target="_blank" rel="noopener" data-pay="paypal">PayPal</a>
+            <a href="https://youtube.com/@Bienac/join" target="_blank" rel="noopener" data-pay="member">Hội viên</a>
+          </nav>
+          <p class="hs-story">Nếu câu chuyện mình kể mang lại giá trị cho bạn, bạn có thể ủng hộ để giúp kênh duy trì. Cảm ơn bạn đã xem, đã ở lại, và đi cùng Bienac.</p>
+          <p class="hs-sign">Biên</p>
         </div>
       </div>
     </section>
@@ -196,6 +198,18 @@
     const id = (h.startsWith('#') ? h.slice(1) : h.replace(/\.html$/, '').split('/').filter(Boolean)[0] || 'home').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30);
     try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/home/tap/' + id, r: document.referrer })); } catch (e) {}
   }));
+  // Khối ủng hộ cuối trang: sao chép số tài khoản, đếm lượt chạm /home/tap/pay-<cách>
+  (() => {
+    const hit = (id) => { try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/home/tap/' + id, r: document.referrer })); } catch (e) {} };
+    document.querySelectorAll('.hs-pay a').forEach((a) => a.addEventListener('click', () => hit('pay-' + a.dataset.pay)));
+    const b = document.getElementById('hs-copy');
+    b.addEventListener('click', async () => {
+      const ok = () => { b.textContent = 'Đã chép'; setTimeout(() => { b.textContent = 'Sao chép'; }, 1600); };
+      try { await navigator.clipboard.writeText('4506285887'); ok(); }
+      catch (e) { const t = document.createElement('textarea'); t.value = '4506285887'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch (_) {} t.remove(); }
+      hit('copy-num');
+    });
+  })();
   // Nút Ủng hộ góc trên bên phải: /home/tap/support-top
   document.querySelector('.home-support').addEventListener('click', () => {
     try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/home/tap/support-top', r: document.referrer })); } catch (e) {}

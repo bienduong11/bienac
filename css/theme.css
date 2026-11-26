@@ -665,3 +665,19 @@ body.home .app:hover .app-ico, body.home .app:focus-visible .app-ico { backgroun
 .app-filter button[data-f]:not([data-f=""])::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: rgb(var(--c)); vertical-align: 1px; }
 body.home .app-filter button[data-f]:not([data-f=""])[aria-pressed="true"] { color: var(--ink); background: rgb(var(--c)); border-color: rgb(var(--c)); }
 body.home .app-filter button[data-f]:not([data-f=""])[aria-pressed="true"]::before { background: var(--ink); }
+
+/* Khối ủng hộ cuối trang chủ (26/11): giống trang /support */
+.hs-card .about-text { max-width: 460px; }
+.hs-card .section-title { margin-bottom: 18px; }
+.hs-acc .about-bank { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0; font: 600 1.05rem var(--mono); }
+.hs-copy { padding: 5px 12px; border-radius: 999px; border: 0; cursor: pointer; font: 600 .74rem 'Be Vietnam Pro', sans-serif; color: var(--text); background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+.hs-copy:hover { color: var(--cyan); box-shadow: inset 0 0 0 1px var(--cyan); }
+.hs-holder { margin: 6px 0 0 !important; font: 600 .9rem var(--mono) !important; color: var(--text-dim) !important; }
+.hs-pay { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.hs-pay a { display: block; padding: 12px 8px; border-radius: 14px; text-align: center; text-decoration: none; font: 600 .92rem 'Be Vietnam Pro', sans-serif; color: var(--text); background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+.hs-pay a:hover, .hs-pay a:focus-visible { color: var(--cyan); box-shadow: inset 0 0 0 1px var(--cyan); }
+.hs-story { margin-top: 20px !important; line-height: 1.7; color: var(--text) !important; font-size: 1rem !important; }
+.hs-sign { margin-top: 6px !important; text-align: right; font-style: italic; color: var(--text-dim) !important; }
+@media (max-width: 720px) { .hs-card .about-text { max-width: none; } .hs-acc .about-bank { justify-content: center; } .hs-sign { text-align: center; } }
+.hs-acc .about-bank { border: 0 !important; padding: 0 !important; }
+.hs-card .about-text { max-width: 540px; }
