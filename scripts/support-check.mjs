@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* =====================================================================
  * Kiểm tra sâu trang ủng hộ bienac.com/support (GitHub Actions, mỗi ngày và sau mỗi lần sửa support/).
- * Từ 26/11/2026 trang chỉ còn: mã QR + số tài khoản BIDV, MoMo, PayPal, Hội viên YouTube, Patreon
+ * Từ 26/11/2026 trang chỉ còn: mã QR + số tài khoản BIDV, MoMo, PayPal, Hội viên YouTube
  * (bỏ lưới ngân hàng và deeplink VietQR theo quyết định của Bien).
- *  1. Trang có đủ số tài khoản, tên, mã QR (SVG + PNG), các link MoMo / PayPal / Hội viên / Patreon.
- *  2. MoMo mở ra đúng tên "Dương Văn Biên", PayPal sống, trang Hội viên và Patreon không lỗi.
+ *  1. Trang có đủ số tài khoản, tên, mã QR (SVG + PNG), các link MoMo / PayPal / Hội viên.
+ *  2. MoMo mở ra đúng tên "Dương Văn Biên", PayPal sống, trang Hội viên không lỗi.
  *  3. Chuỗi VietQR mà trang tự tạo đúng định dạng (BIDV 970418, số tài khoản, CRC).
  * Lỗi thì ghi support-check.md và thoát mã 1 để workflow mở issue.
  * Chạy tay: node scripts/support-check.mjs [https://bienac.com]
@@ -28,7 +28,7 @@ const get = async (url, ua = 'Mozilla/5.0 (compatible; bienac-theo-doi/1.0)') =>
 const html = await (await get(SITE + '/support/')).text();
 const ACC = Object.fromEntries([...(html.match(/const ACC = \{([^}]+)\}/) || ['', ''])[1].matchAll(/(\w+): '([^']*)'/g)].map((m) => [m[1], m[2]]));
 if (ACC.number !== '4506285887' || ACC.holder !== 'DUONG VAN BIEN' || ACC.bank !== 'bidv') fails.push(`- Khối ACC trên trang sai hoặc mất: ${JSON.stringify(ACC)}`);
-const LINKS = { momo: 'https://me.momo.vn/bienac', paypal: 'https://paypal.me/bienac', member: 'https://youtube.com/@Bienac/join', patreon: 'https://patreon.com/bienac/join' };
+const LINKS = { momo: 'https://me.momo.vn/bienac', paypal: 'https://paypal.me/bienac', member: 'https://youtube.com/@Bienac/join' };
 for (const [k, u] of Object.entries(LINKS)) if (!html.includes(`href="${u}"`)) fails.push(`- Trang không còn nút ${k} (${u}).`);
 for (const f of ['/assets/qr-bidv.svg', '/assets/qr-bidv.png', '/js/vendor/qrcode-generator.min.js']) {
   const r = await get(SITE + f).catch(() => null);
@@ -38,9 +38,9 @@ for (const f of ['/assets/qr-bidv.svg', '/assets/qr-bidv.png', '/js/vendor/qrcod
 // 2. Đích các nút
 const momo = await (await get(LINKS.momo, IOS)).text().catch(() => '');
 if (!/Dương Văn Biên/.test(momo)) fails.push(`- MoMo ${LINKS.momo}: không thấy tên "Dương Văn Biên".`);
-for (const k of ['paypal', 'member', 'patreon']) {
+for (const k of ['paypal', 'member']) {
   const r = await get(LINKS[k], IOS).catch(() => null);
-  // 401/403/429 là tường chống bot (Patreon chặn máy), không phải link hỏng.
+  // 401/403/429 là tường chống bot , không phải link hỏng.
   if (!r || r.status === 404 || r.status === 410 || r.status >= 500) fails.push(`- ${k} ${LINKS[k]}: mã ${r ? r.status : 'lỗi'}.`);
 }
 
