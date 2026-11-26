@@ -29,37 +29,6 @@
     .sp-card { padding: 20px; margin-top: 16px; }
     .sp-card h2 { font: 700 1.12rem/1.3 var(--display); margin-bottom: 6px; }
     .sp-card p { font-size: .9rem; line-height: 1.6; color: var(--text-dim); }
-    .sp-banks { margin-top: 14px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-    @media (max-width: 640px) { .sp-banks { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    .sp-bank { position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 2px 8px; border-radius: 16px; border: 1px solid rgba(236,230,214,.12); background: rgba(255,255,255,.03); color: var(--text); text-decoration: none; font: 600 .66rem/1.15 var(--body, sans-serif); word-break: break-word; text-align: center; cursor: pointer; transition: border-color .15s, transform .15s; -webkit-tap-highlight-color: transparent; }
-    .sp-bank:hover, .sp-bank:focus-visible { border-color: var(--cyan); }
-    .sp-bank:active { transform: scale(.96); }
-    .sp-bank img { width: 40px; height: 40px; border-radius: 12px; background: #fff; object-fit: contain; }
-    .sp-bank .ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 1.3rem; background: rgba(55,240,207,.12); color: var(--cyan); }
-    .sp-bank.momo .ic { background: #a50064; color: #fff; font: 800 .8rem var(--display); }
-    .sp-bank i { position: absolute; top: 4px; right: 4px; width: 15px; height: 15px; border-radius: 50%; background: var(--cyan); color: #06070b; font: 800 .55rem/15px sans-serif; font-style: normal; }
-    .sp-more { margin-top: 10px; }
-    .sp-more summary { cursor: pointer; font-size: .85rem; color: var(--cyan); padding: 6px 0; }
-    .sp-note { margin-top: 12px; font-size: .78rem !important; }
-    .sp-thanks { margin-top: 16px; padding: 16px 20px; border-radius: 16px; border: 1px solid var(--cyan); background: rgba(55,240,207,.08); font-size: .95rem; line-height: 1.6; }
-    .sp-thanks b { color: var(--cyan); }
-    .sp-thanks p { margin: 6px 0 0; color: var(--text-dim); font-size: .9rem; }
-    .sp-flash { box-shadow: 0 0 0 2px var(--cyan); transition: box-shadow .3s; }
-    .sp-sheet { position: fixed; inset: 0; z-index: 70; background: rgba(3,5,8,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: flex-end; justify-content: center; }
-    .sp-sheet-in { width: 100%; max-width: 560px; background: #0b1014; border: 1px solid rgba(236,230,214,.14); border-bottom: 0; border-radius: 22px 22px 0 0; padding: 20px 20px calc(20px + env(safe-area-inset-bottom)); }
-    @media (min-width: 600px) { .sp-sheet { align-items: center; } .sp-sheet-in { border-radius: 22px; border-bottom: 1px solid rgba(236,230,214,.14); } }
-    .sp-sheet-h { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-    .sp-sheet-h img { width: 44px; height: 44px; border-radius: 12px; background: #fff; }
-    .sp-sheet-h b { font: 700 1.05rem/1.3 var(--display); }
-    .sp-sheet ol { margin: 8px 0 0; padding-left: 1.3em; color: var(--text-dim); font-size: .92rem; line-height: 1.7; }
-    .sp-sheet .sp-num { font-size: 1.3rem; }
-    .sp-sheet-acc { margin: 12px 0; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(236,230,214,.1); }
-    .sp-sheet-btns { display: flex; gap: 10px; margin-top: 14px; }
-    .sp-sheet-btns .btn { flex: 1; justify-content: center; text-align: center; font: 700 .98rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 14px 16px; }
-    .sp-sheet-close { background: none; border: 0; color: var(--text-dim); font-size: .85rem; cursor: pointer; padding: 10px 0 0; width: 100%; text-align: center; text-decoration: underline; }
-    .sp-fav { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
-    .sp-fav img { width: 56px; height: 56px; border-radius: 14px; background: #fff; }
-    .sp-fav .btn { flex: 1; justify-content: center; text-align: center; font: 700 1rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 15px 18px; }
     .sp-link { background: none; border: 0; color: var(--cyan); font-size: .85rem; cursor: pointer; padding: 10px 0 0; text-decoration: underline; }
     .sp-acc { display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: center; }
     .sp-acc > a { text-decoration: none; }
@@ -71,16 +40,12 @@
     .sp-copy { border: 1px solid rgba(55,240,207,.4); background: rgba(55,240,207,.08); color: var(--cyan); border-radius: 999px; padding: 6px 14px; font: 600 .76rem var(--mono); cursor: pointer; }
     .sp-btns { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
     .sp-btns .btn { padding: 10px 18px; font-size: .84rem; }
-    .sp-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0; background: #0f1a1a; border: 1px solid var(--cyan); color: var(--text); padding: 12px 18px; border-radius: 14px; font-size: .86rem; max-width: 92vw; transition: .25s; pointer-events: none; z-index: 50; text-align: center; }
-    .sp-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
     .sp-story p + p { margin-top: 10px; }
     .sp-sign { margin-top: 12px !important; text-align: right; font-style: italic; color: var(--text) !important; }
-    .sp-toggle { width: 100%; justify-content: center; text-align: center; font: 700 .98rem/1.2 'Be Vietnam Pro', sans-serif; text-transform: none; letter-spacing: 0; padding: 14px 16px; }
-    #fav + .sp-toggle, #fav:not([hidden]) ~ .sp-toggle { margin-top: 12px; }
-    #pick { margin-top: 4px; }
-    #pick-toggle { scroll-margin-top: 76px; }
-    #pick-toggle::after { content: ''; width: 8px; height: 8px; margin-left: 10px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s; display: inline-block; }
-    #pick-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
+    .sp-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .sp-item h2 { margin: 0; }
+    .sp-item > .btn, .sp-item .sp-btns .btn { padding: 10px 18px; font-size: .84rem; }
+    .sp-item .sp-btns { margin: 0; }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -104,43 +69,33 @@
     </div>
     <h1 class="ud-title" data-t="title">Cùng Bienac <span class="accent">đi xa hơn</span></h1>
 
-    <div class="sp-thanks" id="thanks" hidden>
-      <b data-t="backTitle">Bạn vừa quay lại từ app ngân hàng</b>
-      <p data-t="backOk">Nếu đã chuyển xong: cảm ơn bạn rất nhiều 💚</p>
-      <p data-t="backFail">Nếu app không mở được hoặc chưa chuyển được: bạn có thể chuyển tay bằng số tài khoản bên dưới, quét mã QR, hoặc chọn một ngân hàng khác.</p>
-    </div>
-    <div id="order">
-      <section class="ud-panel sp-card" id="acc">
-        <div class="sp-acc">
-          <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" fetchpriority="high" /></a>
-          <div>
-            <h2 id="desk-t" hidden></h2>
-            <p id="desk-p" hidden></p>
-            <div class="sp-row"><span class="sp-num" id="num">BIDV · 4506 285 887</span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
-            <div class="sp-row"><span id="holder" style="font:600 .9rem var(--mono)">DUONG VAN BIEN</span></div>
-          </div>
+    <section class="ud-panel sp-card" id="acc">
+      <div class="sp-acc">
+        <a href="/assets/qr-bidv.png" target="_blank" rel="noopener" id="qr-link" download="Bienac-QR-BIDV.png"><img id="qr" src="/assets/qr-bidv.svg" alt="Mã QR chuyển khoản BIDV" width="200" height="200" fetchpriority="high" /></a>
+        <div>
+          <div class="sp-row"><span class="sp-num" id="num">BIDV · 4506 285 887</span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
+          <div class="sp-row"><span id="holder" style="font:600 .9rem var(--mono)">DUONG VAN BIEN</span></div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Chuyển khoản trong nước -->
-      <section class="ud-panel sp-card" id="vn">
-        <div id="fav" hidden>
-          <div class="sp-fav"><img id="fav-img" alt="" width="56" height="56" /><a class="btn btn-primary" id="fav-go" href="#"></a></div>
-        </div>
-        <button class="btn btn-ghost sp-toggle" id="pick-toggle" type="button" aria-expanded="false" aria-controls="pick" data-t="pickBtn">Mở app ngân hàng</button>
-        <div id="pick" hidden>
-          <div class="sp-banks" id="banks"></div>
-          <details class="sp-more"><summary data-t="more">Ngân hàng khác</summary><div class="sp-banks" id="banks-more"></div></details>
-        </div>
-      </section>
+    <section class="ud-panel sp-card sp-item" id="momo">
+      <h2>MoMo</h2>
+      <a class="btn btn-primary" id="momo-go" href="https://me.momo.vn/bienac" target="_blank" rel="noopener" data-tap="momo" data-t="momoBtn">Mở MoMo</a>
+    </section>
 
+    <section class="ud-panel sp-card sp-item" id="paypal">
+      <h2>PayPal</h2>
+      <a class="btn btn-primary" id="paypal-go" href="https://paypal.me/bienac" target="_blank" rel="noopener" data-tap="paypal" data-t="paypalBtn">Mở PayPal</a>
+    </section>
 
-      <!-- Quốc tế / hằng tháng -->
-      <section class="ud-panel sp-card" id="intl">
-        <h2 data-t="intlTitle">Từ nước ngoài, hoặc ủng hộ hằng tháng</h2>
-        <div class="sp-btns" id="intl-btns"></div>
-      </section>
-    </div>
+    <section class="ud-panel sp-card sp-item" id="member">
+      <h2 data-t="member">Hội viên YouTube</h2>
+      <div class="sp-btns">
+        <a class="btn btn-primary" id="member-go" href="https://youtube.com/@Bienac/join" target="_blank" rel="noopener" data-tap="member" data-t="memberBtn">Tham gia</a>
+        <a class="btn btn-ghost" id="patreon-go" href="https://patreon.com/bienac/join" target="_blank" rel="noopener" data-tap="patreon">Patreon</a>
+      </div>
+    </section>
 
     <section class="ud-panel sp-card sp-story">
       <h2 data-t="storyTitle">Đôi lời từ Bienac</h2>
@@ -150,101 +105,34 @@
     </section>
   </main>
 
-  <div class="sp-sheet" id="sheet" hidden role="dialog" aria-modal="true">
-    <div class="sp-sheet-in">
-      <div class="sp-sheet-h"><img id="sh-img" alt="" width="44" height="44" /><b id="sh-title"></b></div>
-      <p id="sh-lede" style="font-size:.9rem;color:var(--text-dim)"></p>
-      <div class="sp-sheet-acc">
-        <div class="sp-row"><span class="sp-num" id="sh-num"></span><button class="sp-copy" type="button" data-copy="num" data-t="copy">Sao chép</button></div>
-        <div class="sp-row"><span id="sh-holder" style="font:600 .9rem var(--mono)"></span></div>
-      </div>
-      <ol id="sh-steps"></ol>
-      <div class="sp-sheet-btns"><a class="btn btn-primary" id="sh-go" href="#" rel="noopener"></a></div>
-      <button class="sp-sheet-close" id="sh-close" type="button" data-t="other">Chọn ngân hàng khác</button>
-    </div>
-  </div>
-  <div class="sp-toast" id="toast" role="status" aria-live="polite"></div>
   <footer class="site-footer"><p>© <span id="y"></span> Bienac.</p></footer>
 
 <script src="/js/vendor/qrcode-generator.min.js"></script>
 <script>
 (() => {
-  /* ---- Thông tin tài khoản: sửa ở đây ---- */
-  const ACC = { bank: 'bidv', bankName: 'BIDV', number: '4506285887', holder: 'DUONG VAN BIEN', memo: 'Ung ho Bienac',
-    momo: 'https://me.momo.vn/bienac', paypal: 'https://paypal.me/bienac', patreon: 'https://patreon.com/bienac/join', member: 'https://youtube.com/@Bienac/join' };
-
-  /* App ngân hàng hỗ trợ deeplink VietQR (api.vietqr.io, lấy ngày 02/11/2026; 14/11: OceanBank đổi thành MBV Bank). [mã app, tên, tự điền đủ] */
-  const APPS = [["icb","VietinBank",1],["bidv","BIDV",1],["ocb","OCB",1],["acb","ACB",1],["mb","MB",1],["vcb","Vietcombank",0],["tcb","Techcom",0],["vpb","VPBank",0],["vib-2","VIB",0],["shb","SHB",0],["lpb","LPBank",0],["seab","SeABank",0],["scb","SCB",0],["cake","Cake",0],["hdb","HDBank",0],["vba","Agribank",0],["tpb","TPBank",0],["timo","Timo",0],["shbvn","Shinhan",0],["nab","Nam A Bank",0],["abb","ABBank",0],["eib","Eximbank",0],["coopbank","Co-opBank",0],["pvcb","PVcomBank",0],["wvn","Woori",0],["klb","KienlongBank",0],["bvb","BaoViet Bank",0],["vab","Vietbank",0],["ncb","NCB",0],["mbv","MBV Bank",0],["pbvn","Public Bank",0],["sgicb","Saigonbank",0],["cimb","CIMB",0]];
-  const TOP = ['vcb', 'mb', 'tcb', 'bidv', 'tpb', 'acb', 'icb', 'vba', 'vpb', 'ocb', 'hdb'];
-
+  /* ---- Thông tin tài khoản: sửa ở đây (link MoMo/PayPal/Hội viên/Patreon sửa thẳng trong HTML ở trên) ---- */
+  const ACC = { bank: 'bidv', bankName: 'BIDV', number: '4506285887', holder: 'DUONG VAN BIEN' };
+  // 26/11/2026 (Bien quyết): bỏ lưới ngân hàng và deeplink VietQR. Trang chỉ còn: mã QR + số tài khoản, MoMo, PayPal, Hội viên (+ Patreon).
   const T = {
     vi: { here: 'Ủng hộ', sub: 'Đăng ký kênh', kicker: 'Ủng hộ', title: 'Cùng Bienac <span class="accent">đi xa hơn</span>',
-      lede: 'Mỗi video mất nhiều tuần đọc tài liệu, viết, thu âm và dựng hình. Mọi khoản ủng hộ đều dùng cho việc làm video.',
       storyTitle: 'Đôi lời từ Bienac',
       story1: 'Bienac là kênh kể chuyện khoa học và lịch sử bằng tiếng Việt. Mỗi video dài là vài tuần đọc tài liệu, viết lời, thu âm rồi dựng từng hình, phần lớn do mình tự làm.',
       story2: 'Mọi khoản ủng hộ, dù nhỏ, đều dùng cho việc làm video: tài liệu, phần mềm, máy móc và thời gian để làm kỹ hơn. Cảm ơn bạn đã xem, đã ở lại và đi cùng Bienac.',
-      pickBtn: 'Mở app ngân hàng',
-      vnTitle: 'Chuyển khoản nhanh', vnHint: 'Chạm vào app ngân hàng bạn dùng là app mở ra để chuyển khoản.',
-      more: 'Ngân hàng khác', vnNote: 'Dấu ✓: app điền sẵn đầy đủ (BIDV, MB, VietinBank, ACB, OCB). App khác chỉ mở lên, số tài khoản đã được chép sẵn để bạn dán.',
-      other: 'Chọn ngân hàng khác', open: 'Mở app {b}', favHint: 'Lần trước bạn dùng app này. Chọn ngân hàng khác ở dưới cũng được.',
-      backTitle: 'Bạn vừa quay lại từ app ngân hàng', backOk: 'Nếu đã chuyển xong: cảm ơn bạn rất nhiều 💚',
-      backFail: 'Nếu app không mở được hoặc chưa chuyển được: bạn có thể chuyển tay bằng số tài khoản bên dưới, quét mã QR, hoặc chọn một ngân hàng khác.',
-      shTitle: 'Chuyển qua app {b}', shLede: 'App {b} chưa nhận thông tin điền sẵn, bạn chuyển tay theo 3 bước. Số tài khoản đã được chép sẵn.',
-      shSteps: ['Mở app {b}, chọn Chuyển tiền (tới ngân hàng khác)', 'Chọn ngân hàng nhận: BIDV, dán số tài khoản 4506285887', 'Nhập số tiền, lời nhắn tùy bạn, rồi xác nhận'],
-      deskTitle: 'Trên máy tính thì quét mã QR', deskLede: 'Mở app {b} trên điện thoại, chọn Quét QR và quét mã này. Số tài khoản ở bên cạnh để chuyển tay.', accTitle: 'Quét mã hoặc chép số tài khoản',
-      accHint: 'Trên máy tính: mở app ngân hàng trên điện thoại và quét mã. Trên điện thoại: lưu ảnh mã về máy rồi chọn “Quét ảnh” trong app.',
-      copy: 'Sao chép', copied: 'Đã chép ✓', memo: 'Nội dung', intlTitle: 'Từ nước ngoài, hoặc ủng hộ hằng tháng',
-      intlHint: 'PayPal nhận thẻ quốc tế. Patreon và Hội viên YouTube là ủng hộ hằng tháng, có quyền lợi riêng.',
-      member: 'Hội viên YouTube', f1: 'Xem hết, bấm thích', f1p: 'Thời gian xem trọn video và bình luận thật lòng giúp YouTube giới thiệu kênh tới người mới. Hoàn toàn miễn phí.',
-      f2: 'Chia sẻ một video', f2p: 'Gửi video bạn thích nhất cho một người hay tò mò.', f2b: 'Chép link kênh',
-      f3: 'Góp ý, báo lỗi sai', f3p: 'Muốn xem chủ đề gì, hay thấy chỗ nào chưa đúng? Mọi góp ý đều được đọc.', f3b: 'Gửi góp ý',
-      cd: 'Cộng đồng Bienac', mail: 'Liên hệ', lang: 'English',
-      amt: 'Số tiền (không bắt buộc)', amtOther: 'Khác', qrAmt: 'Mã đã kèm {a}đ và nội dung, quét là app tự điền', qrMemo: 'Mã đã kèm nội dung chuyển khoản',
-      toastFill: 'Đang mở {b}…', toastCopy: 'Đang mở {b}. Số tài khoản {n} cũng đã được chép sẵn, phòng khi app không tự điền.' },
+      copy: 'Sao chép', copied: 'Đã chép ✓', momoBtn: 'Mở MoMo', paypalBtn: 'Mở PayPal', member: 'Hội viên YouTube', memberBtn: 'Tham gia', lang: 'English' },
     en: { here: 'Support', sub: 'Subscribe', kicker: 'Support', title: 'Help Bienac <span class="accent">go further</span>',
-      lede: 'Each video takes weeks of reading, writing, recording and animation. Every contribution goes straight into making videos.',
       storyTitle: 'A note from Bienac',
       story1: 'Bienac tells stories of science and history in Vietnamese. Each long video takes weeks of reading, writing, recording and building every visual, mostly by one person.',
       story2: 'Every contribution, however small, goes into making videos: sources, software, equipment and the time to do them properly. Thank you for watching, for staying, and for coming along with Bienac.',
-      pickBtn: 'Open a Vietnamese banking app',
-      vnTitle: 'Bank transfer from Vietnam', vnHint: 'Tap the banking app you use and it opens ready for the transfer.',
-      more: 'Other banks', vnNote: '✓ = fully pre-filled (BIDV, MB, VietinBank, ACB, OCB). Other apps just open; the account number is copied for you to paste.',
-      other: 'Choose another bank', open: 'Open {b}', favHint: 'You used this app last time. Any other bank below works too.',
-      backTitle: 'You are back from your banking app', backOk: 'If the transfer went through: thank you so much 💚',
-      backFail: 'If the app did not open or the transfer did not go through: you can transfer manually with the account number below, scan the QR code, or pick another bank.',
-      shTitle: 'Transfer with {b}', shLede: '{b} does not receive pre-filled details, so it takes 3 steps. The account number is already copied.',
-      shSteps: ['Open {b} and choose Transfer (to another bank)', 'Receiving bank: BIDV, paste account number 4506285887', 'Enter the amount and any message you like, then confirm'],
-      deskTitle: 'On a computer, scan the QR code', deskLede: 'Open {b} on your phone, choose Scan QR and scan this code. The account number is next to it for a manual transfer.', accTitle: 'Scan the code or copy the account number',
-      accHint: 'On a computer: scan with your phone’s banking app. On a phone: save the image, then use “Scan from photo” in your app.',
-      copy: 'Copy', copied: 'Copied ✓', memo: 'Note', intlTitle: 'From anywhere in the world',
-      intlHint: 'PayPal accepts international cards. Patreon and YouTube Membership are monthly, with member perks.',
-      member: 'YouTube Membership', f1: 'Watch, like, comment', f1p: 'Full watch time and real comments help YouTube recommend the channel to new viewers. Totally free.',
-      f2: 'Share a video', f2p: 'Send your favourite video to a curious friend.', f2b: 'Copy channel link',
-      f3: 'Ideas and corrections', f3p: 'A topic you want to see, or a mistake you spotted? Every message gets read.', f3b: 'Send feedback',
-      cd: 'Bienac community', mail: 'Contact', lang: 'Tiếng Việt',
-      amt: 'Amount in VND (optional)', amtOther: 'Other', qrAmt: 'Code includes {a} VND and the note: your app fills them in', qrMemo: 'Code includes the transfer note',
-      toastFill: 'Opening {b}…', toastCopy: 'Opening {b}. Account number {n} is copied too, in case the app does not pre-fill.' },
+      copy: 'Copy', copied: 'Copied ✓', momoBtn: 'Open MoMo', paypalBtn: 'Open PayPal', member: 'YouTube Membership', memberBtn: 'Join', lang: 'Tiếng Việt' },
   };
-
-  const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} } };
+  const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
   const $ = (id) => document.getElementById(id);
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
 
   /* ---- Ngôn ngữ: ?lang= > lựa chọn đã lưu > ngôn ngữ trình duyệt ---- */
   const qs = new URLSearchParams(location.search).get('lang');
   let lang = qs === 'en' || qs === 'vi' ? qs : store.get('bienac-lang') || ((navigator.language || 'vi').toLowerCase().startsWith('vi') ? 'vi' : 'en');
   const t = (k) => T[lang][k] || T.vi[k] || '';
 
-  // url (trang quay về sau khi chuyển xong) là BẮT BUỘC để VietQR tự điền thông tin vào app (kiểm 02/11/2026).
-  // am (số tiền) không bắt buộc với VietQR nhưng tài liệu khuyên có; người xem chọn ở hàng số tiền.
-  const BACK = 'https://bienac.com/support/?back=1';
-  const amount = 0;   // bỏ chọn số tiền (19/11/2026): người xem tự nhập trong app
-  const deeplink = (app) => `https://dl.vietqr.io/pay?app=${encodeURIComponent(app)}&ba=${ACC.number}@${ACC.bank}${amount ? '&am=' + amount : ''}&bn=${encodeURIComponent(ACC.holder)}&url=${encodeURIComponent(BACK)}`;
-  const appById = (id) => APPS.find((a) => a[0] === id);
-
-  let toastTimer;
-  function toast(msg) { const el = $('toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('on'), 5000); }
   /* Chép đồng bộ trước (giữ được "lần chạm" của người dùng, iPhone cần điều này), rồi chép thêm bằng API mới. */
   function copySync(text) {
     try {
@@ -259,32 +147,27 @@
     try { await navigator.clipboard.writeText(text); return true; } catch { return ok; }
   }
 
-  // App VietQR không có deeplink trên iPhone (kiểm 02/11/2026).
-  const IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
-  const NO_IOS = ['nab'];
-  const shown = (a) => !(IOS && NO_IOS.includes(a[0]));
-  /* Mã VietQR tạo ngay trên trang, chỉ kèm số tài khoản (không kèm nội dung từ 19/11/2026: người xem tự viết lời nhắn), nên app ngân hàng nào quét
-     cũng tự điền đủ (kể cả app không có deeplink). Chuỗi kiểm 14/11/2026: trùng từng ký tự với chuỗi VietQR tạo cho MB.
-     Thư viện không tải được thì giữ ảnh tĩnh /assets/qr-bidv.svg (chỉ có số tài khoản). */
+  /* Mã VietQR tạo ngay trên trang, chỉ kèm số tài khoản: app ngân hàng nào quét cũng tự điền ngân hàng, số tài khoản, tên;
+     người xem tự nhập số tiền và lời nhắn. Thư viện không tải được thì giữ ảnh tĩnh /assets/qr-bidv.svg. */
   const tlv = (id, v) => id + String(v.length).padStart(2, '0') + v;
   function crc16(str) { let c = 0xffff; for (const ch of new TextEncoder().encode(str)) { c ^= ch << 8; for (let i = 0; i < 8; i++) c = c & 0x8000 ? ((c << 1) ^ 0x1021) & 0xffff : (c << 1) & 0xffff; } return c.toString(16).toUpperCase().padStart(4, '0'); }
-  function vietqr(am) {
+  function vietqr() {
     const acc = tlv('00', 'A000000727') + tlv('01', tlv('00', '970418') + tlv('01', ACC.number)) + tlv('02', 'QRIBFTTA');
-    const p = tlv('00', '01') + tlv('01', am ? '12' : '11') + tlv('38', acc) + tlv('53', '704') + (am ? tlv('54', String(am)) : '') + tlv('58', 'VN') + '6304';
+    const p = tlv('00', '01') + tlv('01', '11') + tlv('38', acc) + tlv('53', '704') + tlv('58', 'VN') + '6304';
     return p + crc16(p);
   }
   let qrSvg = '';
   function renderQR() {
-    if (typeof window.qrcode !== 'function' || ACC.bank !== 'bidv') return;
+    if (qrSvg || typeof window.qrcode !== 'function' || ACC.bank !== 'bidv') return;
     try {
-      const q = window.qrcode(0, 'M'); q.addData(vietqr(amount)); q.make();
+      const q = window.qrcode(0, 'M'); q.addData(vietqr()); q.make();
       qrSvg = q.createSvgTag({ cellSize: 8, margin: 4, scalable: true });
       $('qr').src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(qrSvg);
     } catch {}
   }
   // Tải ảnh: xuất đúng mã đang hiện ra PNG (app ngân hàng quét từ thư viện ảnh không đọc SVG).
   $('qr-link').addEventListener('click', (e) => {
-    if (!qrSvg) return;                       // chưa có mã động: để link tải PNG tĩnh như cũ
+    if (!qrSvg) return;
     e.preventDefault();
     const img = new Image();
     img.onload = () => {
@@ -292,136 +175,35 @@
       const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, 720, 720); g.drawImage(img, 0, 0, 720, 720);
       c.toBlob((b) => {
         const a = document.createElement('a'); a.href = URL.createObjectURL(b);
-        a.download = `Bienac-QR-BIDV${amount ? '-' + amount : ''}.png`; document.body.appendChild(a); a.click(); a.remove();
+        a.download = 'Bienac-QR-BIDV.png'; document.body.appendChild(a); a.click(); a.remove();
         setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       }, 'image/png');
     };
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(qrSvg);
   });
 
-  const fmt = (n) => n.toLocaleString('vi-VN');
-
-  const bankBtn = ([id, name, full]) => `<a class="sp-bank" href="${esc(deeplink(id))}" data-app="${esc(id)}" rel="noopener"><img src="/assets/banks/${esc(id)}.webp" alt="" width="44" height="44" loading="lazy" />${esc(name)}${full ? '<i>✓</i>' : ''}</a>`;
-
-  function renderBanks() {
-    const top = TOP.map(appById).filter(Boolean).filter(shown);
-    $('banks').innerHTML = top.map(bankBtn).join('') + `<a class="sp-bank momo" href="${esc(ACC.momo)}" data-momo="1" target="_blank" rel="noopener"><span class="ic">MoMo</span>MoMo</a>`;
-    $('banks-more').innerHTML = APPS.filter((a) => !TOP.includes(a[0]) && shown(a)).map(bankBtn).join('');
-  }
-
-  /* Chạm vào một ngân hàng: chép sẵn số tài khoản (cho app không tự điền), nhớ lựa chọn, rồi để link mở app. */
-  /* Đếm lượt chạm từng lựa chọn (ngân hàng, MoMo, PayPal…) để biết người xem dùng gì nhiều, sắp xếp lại cho đúng. */
+  /* Đếm lượt chạm (MoMo, PayPal, Hội viên, Patreon, sao chép, tải QR): /support/tap/<tên> */
   const tap = (what) => { try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: '/support/tap/' + what, r: document.referrer })); } catch {} };
   document.addEventListener('click', (e) => {
-    const el = e.target.closest('[data-momo], #intl-btns a, [data-copy], #qr-link, #fav-change');
+    const el = e.target.closest('[data-tap], [data-copy], #qr-link');
     if (!el) return;
-    if (el.dataset.momo) tap('momo');
-    else if (el.id === 'qr-link') tap('qr');
-    else if (el.id === 'fav-change') tap('change-bank');
-    else if (el.dataset.copy) tap('copy-' + el.dataset.copy);
-    else tap(/paypal/.test(el.href) ? 'paypal' : /patreon/.test(el.href) ? 'patreon' : 'member');
+    tap(el.dataset.tap || (el.id === 'qr-link' ? 'qr' : 'copy-' + el.dataset.copy));
   }, true);
-  let shApp = null;
-  function openSheet(app) {
-    shApp = app;
-    $('sh-img').src = `/assets/banks/${app[0]}.webp`;
-    $('sh-title').textContent = t('shTitle').replace('{b}', app[1]);
-    $('sh-lede').textContent = t('shLede').replace(/\{b\}/g, app[1]);
-    $('sh-num').textContent = `${ACC.bankName} · ${ACC.number.replace(/(\d{4})(\d{3})(\d+)/, '$1 $2 $3')}`;
-    $('sh-holder').textContent = ACC.holder;
-    $('sh-steps').innerHTML = t('shSteps').map((x) => `<li>${esc(x.replace(/\{b\}/g, app[1]))}</li>`).join('');
-    const go = $('sh-go'); go.href = deeplink(app[0]); go.dataset.app = app[0]; go.textContent = t('open').replace('{b}', app[1]);
-    $('sheet').hidden = false; document.body.style.overflow = 'hidden';
-  }
-  function closeSheet() { $('sheet').hidden = true; document.body.style.overflow = ''; shApp = null; }
-  $('sh-close').onclick = () => { tap('sheet-close'); closeSheet(); };
-  $('sheet').addEventListener('click', (e) => { if (e.target === $('sheet')) closeSheet(); });
-  $('sh-go').addEventListener('click', () => { tap('sheet-open-' + (shApp ? shApp[0] : '?')); copy(ACC.number); setTimeout(closeSheet, 600); });
-
-  /* Chạm vào một ngân hàng:
-     - máy tính: không mở được app, cuộn tới mã QR và hướng dẫn quét bằng điện thoại;
-     - app không tự điền: chép số tài khoản, hiện bảng 3 bước với nút "Mở app" (một chạm thật để mở app);
-     - app tự điền (✓): chép số tài khoản phòng hờ rồi mở app ngay. */
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('.sp-bank[data-app], #fav-go');
-    if (!a) return;
-    const id = a.dataset.app;
-    const app = appById(id);
-    if (!app) return;
-    e.preventDefault();
-    tap((a.id === 'fav-go' ? 'fav-' : '') + id + (amount ? '-' + Math.round(amount / 1000) + 'k' : ''));
-    store.set('bienac-bank', id);
-    if (!mobile) {
-      $('acc').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      $('desk-t').textContent = t('deskTitle'); $('desk-t').hidden = false;
-      $('desk-p').textContent = t('deskLede').replace('{b}', app[1]); $('desk-p').hidden = false;
-      $('acc').classList.add('sp-flash'); setTimeout(() => $('acc').classList.remove('sp-flash'), 1800);
-      return;
-    }
-    if (!app[2]) { copy(ACC.number); openSheet(app); renderFav(); return; }
-    toast(t('toastCopy').replace('{b}', app[1]).replace('{n}', ACC.number));
-    const done = copy(ACC.number);
-    Promise.race([done, new Promise((r) => setTimeout(r, 400))]).then(() => setTimeout(() => { location.href = deeplink(id); setTimeout(renderFav, 300); }, 120));
-  });
-
-  function renderFav() {
-    const id = store.get('bienac-bank');
-    const app = id && appById(id);
-    $('fav').hidden = !app;
-    if (!app) return;
-    $('fav-img').src = `/assets/banks/${app[0]}.webp`;
-    const go = $('fav-go');
-    go.href = deeplink(app[0]);
-    go.dataset.app = app[0];
-    go.textContent = t('open').replace('{b}', app[1]);
-  }
-
   document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
     const ok = await copy(ACC.number);
     if (ok) { b.textContent = t('copied'); setTimeout(() => (b.textContent = t('copy')), 1600); }
   }));
-
-  function renderIntl() {
-    const btn = (label, href, cls) => href ? `<a class="btn ${cls}" href="${esc(href)}" target="_blank" rel="noopener">${esc(label)}</a>` : '';
-    $('intl-btns').innerHTML = [btn('PayPal', ACC.paypal, 'btn-primary'), btn('Patreon', ACC.patreon, 'btn-ghost'), btn(t('member'), ACC.member, 'btn-ghost')].join('');
-  }
 
   function applyLang() {
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-t]').forEach((el) => { const v = t(el.dataset.t); if (v) el.innerHTML = v; });
     $('lang').textContent = t('lang');
     renderQR();
-    // Tiếng Anh: quốc tế lên trước, chuyển khoản Việt Nam xuống dưới
-    // Máy tính không mở được app ngân hàng: đưa mã QR lên trước lưới ngân hàng.
-    // Mã QR và thông tin tài khoản luôn ở đầu (19/11/2026). Tiếng Anh: PayPal/Patreon lên trước lưới ngân hàng Việt Nam.
-    (lang === 'en' ? ['acc', 'intl', 'vn'] : ['acc', 'vn', 'intl']).forEach((id) => $('order').append($(id)));
-    renderFav(); renderIntl();
   }
   $('lang').onclick = () => { lang = lang === 'vi' ? 'en' : 'vi'; store.set('bienac-lang', lang); applyLang(); };
-
   $('y').textContent = new Date().getFullYear();
   $('num').textContent = `${ACC.bankName} · ${ACC.number.replace(/(\d{4})(\d{3})(\d+)/, '$1 $2 $3')}`;
-  renderBanks();
-  // Lưới ngân hàng chỉ có ích trên điện thoại (máy tính không mở được app): máy tính ẩn hẳn,
-  // điện thoại thu gọn sau một nút, chạm mới bung ra (19/11/2026, Bien muốn trang giản dị).
-  if (!mobile) $('vn').hidden = true;
-  const showPick = (open) => { $('pick').hidden = !open; $('pick-toggle').setAttribute('aria-expanded', String(open)); };
-  // Nút thường nằm sát mép dưới màn hình điện thoại: bung ra mà không cuộn thì lưới nằm khuất, người xem tưởng nút hỏng và bấm liên tục
-  // (20/11/2026: một người xem iPhone bấm 17 lần trong 30 giây). Nên bung xong thì cuộn nút lên đầu màn hình để thấy lưới ngân hàng.
-  $('pick-toggle').onclick = () => {
-    const open = $('pick').hidden; showPick(open);
-    if (open) { tap('pick-open'); requestAnimationFrame(() => $('pick-toggle').scrollIntoView({ behavior: 'smooth', block: 'start' })); }
-  };
-  if (/[?&](thanks|back)=1/.test(location.search)) showPick(true);
   applyLang();
-
-  /* Mở trang lần sau trên điện thoại: thử mở luôn app đã chọn lần trước (một lần mỗi phiên, để quay lại trang không bị mở lặp).
-     Trình duyệt có thể chặn việc tự mở app khi chưa chạm; khi đó nút "Mở app …" vẫn nằm sẵn ở đầu trang. */
-  // Quay về từ app ngân hàng sau khi chuyển xong (?thanks=1): cảm ơn, không tự mở app nữa.
-  // Quay về từ app ngân hàng (VietQR đưa về cùng một địa chỉ dù chuyển xong hay app không mở được),
-  // nên chỉ hiện bảng trung tính cho cả hai trường hợp. KHÔNG tự mở lại app: từng làm người xem kẹt vòng lặp (04/11/2026).
-  if (/[?&](thanks|back)=1/.test(location.search)) { $('thanks').hidden = false; tap('return'); }
-
 })();
 </script>
 <script src="/js/dem.js"></script>
