@@ -1,0 +1,442 @@
+{
+  "slug": "silk",
+  "youtube_id": "bsun2NjJTDM",
+  "title": "Bí Mật Của Tơ Lụa",
+  "description": "Thứ vải đắt hơn vàng và vụ trộm thế kỷ",
+  "date": "2026-11-26",
+  "chapters": [
+    {
+      "time": "0:00",
+      "title": "Mở đầu"
+    },
+    {
+      "time": "1:37",
+      "title": "Thứ vải lạ"
+    },
+    {
+      "time": "6:14",
+      "title": "Con sâu"
+    },
+    {
+      "time": "18:42",
+      "title": "Bí mật"
+    },
+    {
+      "time": "20:29",
+      "title": "Con đường"
+    },
+    {
+      "time": "24:29",
+      "title": "Vụ trộm"
+    },
+    {
+      "time": "28:56",
+      "title": "Châu Âu"
+    },
+    {
+      "time": "34:25",
+      "title": "Ngày nay"
+    },
+    {
+      "time": "37:28",
+      "title": "Lụa giả"
+    },
+    {
+      "time": "42:03",
+      "title": "Kết"
+    }
+  ],
+  "notes": "Procopius chỉ kể các tu sĩ mang trứng tằm về Constantinople. Chi tiết giấu trứng trong gậy tre rỗng là của Theophanes, và người đó là một người Ba Tư.\n\nCờ lụa ở Carrhae do Florus viết sau trận đánh hơn một trăm năm. Chuyện đổ vàng vào miệng Crassus, áo lụa của Cleopatra, khăn choàng lọt qua nhẫn, thợ La Mã gỡ lụa dệt lại, áo lụa cản tên của kỵ binh Mông Cổ, Jacquard suýt bị ném xuống sông, Ỷ Lan hái dâu và 2 000 thợ dệt chạy sang Ý cũng là chuyện kể lại.\n\n\"Lụa vớt từ đáy biển\" là do người La Mã lẫn lụa với tơ trai biển (byssus). Mảnh lụa trong tóc xác ướp Ai Cập được giám định lại và cho là có thể là tàn dư hiện đại.\n\nTên \"Con đường Tơ lụa\" gắn với Ferdinand von Richthofen (1877), nhưng Carl Ritter đã dùng chữ này từ năm 1838.\n\n\"Ba Tư\" trong video là đế quốc Parthia thời Carrhae và Cam Anh, đế quốc Sasan thời Justinian.",
+  "references": [
+    {
+      "group": "Thứ vải lạ",
+      "text": "Pliny the Elder, *Naturalis Historia* (77), quyển 12 (vàng chảy sang phương Đông)",
+      "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/12*.html"
+    },
+    {
+      "group": "Thứ vải lạ",
+      "text": "Pliny the Elder, *Naturalis Historia* (77), quyển 6 (người Seres và sợi trên lá cây)",
+      "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/6*.html"
+    },
+    {
+      "group": "Thứ vải lạ",
+      "text": "Florus, *Epitome* 1.46 (cờ vàng và lụa ở Carrhae)",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Florus/Epitome/1M*.html"
+    },
+    {
+      "group": "Thứ vải lạ",
+      "text": "Plutarch, *Crassus* 23–31",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Crassus*.html"
+    },
+    {
+      "group": "Thứ vải lạ",
+      "text": "Tacitus, *Annals* 2.33 (lệnh cấm đàn ông mặc lụa, năm 16)",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Annals/2B*.html"
+    },
+    {
+      "group": "Thứ vải lạ",
+      "text": "*Historia Augusta*, Aurelian 45 (một cân lụa bằng một cân vàng)",
+      "url": "https://penelope.uchicago.edu/Thayer/e/roman/texts/historia_augusta/aurelian/3*.html"
+    },
+    {
+      "group": "Thứ vải lạ",
+      "text": "Wikipedia, Edict on Maximum Prices (bảng giá Diocletian, 301)",
+      "url": "https://en.wikipedia.org/wiki/Edict_on_Maximum_Prices"
+    },
+    {
+      "group": "Thứ vải lạ",
+      "text": "G. Lubec et al., Use of silk in ancient Egypt, *Nature* (1993)",
+      "url": "https://www.nature.com/articles/362025b0"
+    },
+    {
+      "group": "Con sâu",
+      "text": "Can Bảo, Sưu Thần Ký 搜神記, quyển 14 (Mã Đầu Nương)",
+      "url": "https://zh.wikisource.org/wiki/搜神記/第14卷"
+    },
+    {
+      "group": "Con sâu",
+      "text": "Tuân Tử 荀子, thiên Phú 賦篇 (bài đố về con tằm)",
+      "url": "https://zh.wikisource.org/wiki/荀子/賦篇"
+    },
+    {
+      "group": "Con sâu",
+      "text": "Lý Thời Trân, Bản Thảo Cương Mục 本草綱目, Trùng bộ, mục Tàm",
+      "url": "https://zh.wikisource.org/wiki/本草綱目/蟲之一"
+    },
+    {
+      "group": "Con sâu",
+      "text": "Y. Gong et al., Biomolecular Evidence of Silk from 8,500 Years Ago, *PLOS ONE* (2016)",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0168042"
+    },
+    {
+      "group": "Con sâu",
+      "text": "Z.-J. Zhang et al., A determining factor for insect feeding preference in the silkworm, Bombyx mori, *PLOS Biology* (2019)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6411195/"
+    },
+    {
+      "group": "Con sâu",
+      "text": "F. G. Omenetto, D. L. Kaplan, New Opportunities for an Ancient Material, *Science* (2010)",
+      "url": "https://www.science.org/doi/10.1126/science.1188936"
+    },
+    {
+      "group": "Con sâu",
+      "text": "Wikipedia, Mawangdui Silk Texts (sách lụa Mã Vương Đôi)",
+      "url": "https://en.wikipedia.org/wiki/Mawangdui_Silk_Texts"
+    },
+    {
+      "group": "Con sâu",
+      "text": "Wikipedia, Silk",
+      "url": "https://en.wikipedia.org/wiki/Silk"
+    },
+    {
+      "group": "Bí mật",
+      "text": "Tư Mã Thiên, Sử Ký 史記, quyển 110, Hung Nô liệt truyện (Trung Hàng Duyệt)",
+      "url": "https://zh.wikisource.org/wiki/史記/卷110"
+    },
+    {
+      "group": "Bí mật",
+      "text": "Ban Cố, Hán Thư 漢書, quyển 94 hạ (30.000 tấm lụa năm 1 TCN)",
+      "url": "https://zh.wikisource.org/wiki/漢書/卷094下"
+    },
+    {
+      "group": "Bí mật",
+      "text": "Trương Du 張俞, Tàm phụ 蠶婦",
+      "url": "https://zh.wikisource.org/wiki/蠶婦"
+    },
+    {
+      "group": "Con đường",
+      "text": "Tư Mã Thiên, Sử Ký 史記, quyển 123, Đại Uyển liệt truyện",
+      "url": "https://zh.wikisource.org/wiki/史記/卷123"
+    },
+    {
+      "group": "Con đường",
+      "text": "Phạm Diệp, Hậu Hán Thư 後漢書, quyển 88, Tây Vực truyện (Đại Tần, Cam Anh)",
+      "url": "https://zh.wikisource.org/wiki/後漢書/卷88"
+    },
+    {
+      "group": "Con đường",
+      "text": "Đỗ Hựu, Thông Điển 通典, quyển 6 (thuế lụa đời Đường)",
+      "url": "https://zh.wikisource.org/wiki/通典/卷006"
+    },
+    {
+      "group": "Con đường",
+      "text": "Tân Đường Thư 新唐書, quyển 217 thượng, Hồi Cốt truyện (40 tấm lụa một con ngựa)",
+      "url": "https://zh.wikisource.org/wiki/新唐書/卷217上"
+    },
+    {
+      "group": "Con đường",
+      "text": "Pháp Hiển 法顯, Phật Quốc Ký 佛國記",
+      "url": "https://zh.wikisource.org/wiki/佛國記"
+    },
+    {
+      "group": "Con đường",
+      "text": "Valerie Hansen, *The Silk Road: A New History*, Oxford University Press (2012)",
+      "url": "https://search.worldcat.org/title/The-Silk-Road-:-a-new-history/oclc/808366374"
+    },
+    {
+      "group": "Con đường",
+      "text": "M. A. Spyrou et al., The source of the Black Death in fourteenth-century central Eurasia, *Nature* (2022)",
+      "url": "https://www.nature.com/articles/s41586-022-04800-3"
+    },
+    {
+      "group": "Vụ trộm",
+      "text": "Procopius, *History of the Wars* 8.17 (các tu sĩ mang trứng tằm về)",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/8C*.html"
+    },
+    {
+      "group": "Vụ trộm",
+      "text": "Internet History Sourcebooks, Procopius và Theophanes về việc đưa tằm vào Byzantium",
+      "url": "https://sourcebooks.fordham.edu/source/550byzsilk.asp"
+    },
+    {
+      "group": "Vụ trộm",
+      "text": "Wikipedia, Smuggling of silkworm eggs into the Byzantine Empire",
+      "url": "https://en.wikipedia.org/wiki/Smuggling_of_silkworm_eggs_into_the_Roman_Empire"
+    },
+    {
+      "group": "Châu Âu",
+      "text": "Wikipedia, Silk industry in Lyon",
+      "url": "https://en.wikipedia.org/wiki/Silk_industry_in_Lyon"
+    },
+    {
+      "group": "Châu Âu",
+      "text": "Wikipedia, Canut revolts (khởi nghĩa thợ dệt Lyon)",
+      "url": "https://en.wikipedia.org/wiki/Canut_revolts"
+    },
+    {
+      "group": "Châu Âu",
+      "text": "The earliest evidence of pattern looms: Han Dynasty tomb models from Chengdu, China, *Antiquity* (2017)",
+      "url": "https://www.cambridge.org/core/product/50DDD53B5889E6FF4C88FD75F0271C33"
+    },
+    {
+      "group": "Châu Âu",
+      "text": "Wikipedia, Jacquard machine",
+      "url": "https://en.wikipedia.org/wiki/Jacquard_machine"
+    },
+    {
+      "group": "Châu Âu",
+      "text": "Wikipedia, Analytical engine",
+      "url": "https://en.wikipedia.org/wiki/Analytical_engine"
+    },
+    {
+      "group": "Châu Âu",
+      "text": "Louis Pasteur, *Études sur la maladie des vers à soie*, Gauthier-Villars (1870)",
+      "url": "https://archive.org/details/b28124583_0001"
+    },
+    {
+      "group": "Châu Âu",
+      "text": "Wikipedia, Pébrine",
+      "url": "https://en.wikipedia.org/wiki/P%C3%A9brine"
+    },
+    {
+      "group": "Ngày nay",
+      "text": "Lưu Hân Kỳ, Giao Châu Ký 交州記, dẫn trong lời chú Văn Tuyển 文選, quyển 5",
+      "url": "https://zh.wikisource.org/wiki/昭明文選/卷5"
+    },
+    {
+      "group": "Ngày nay",
+      "text": "Wikipedia, History of silk",
+      "url": "https://en.wikipedia.org/wiki/History_of_silk"
+    },
+    {
+      "group": "Ngày nay",
+      "text": "Wikipedia, Vạn Phúc silk village",
+      "url": "https://en.wikipedia.org/wiki/V%E1%BA%A1n_Ph%C3%BAc_silk_village"
+    },
+    {
+      "group": "Ngày nay",
+      "text": "International Sericultural Commission, Statistics",
+      "url": "https://www.inserco.org/en/statistics"
+    },
+    {
+      "group": "Ngày nay",
+      "text": "Báo Lâm Đồng, Nâng cao sức cạnh tranh quốc tế của ngành dâu tằm tơ",
+      "url": "https://baolamdong.vn/nang-cao-suc-canh-tranh-quoc-te-cua-nganh-dau-tam-to-425811.html"
+    },
+    {
+      "group": "Ngày nay",
+      "text": "VnBusiness, Phụ thuộc 90% giống nhập từ Trung Quốc, sản xuất tơ tằm kêu cứu",
+      "url": "https://vnbusiness.vn/phu-thuoc-90-giong-nhap-tu-trung-quoc-san-xuat-to-tam-keu-cuu.html"
+    },
+    {
+      "group": "Ngày nay",
+      "text": "Imperial College London, Imperial-led team fuse natural silk into ultra-strong, sustainable materials (2026)",
+      "url": "https://www.imperial.ac.uk/news/articles/engineering/aeronautics/2026/imperial-led-team-fuse-natural-silk/"
+    },
+    {
+      "group": "Lụa giả",
+      "text": "Tianjin University, Scientists Develop Artificial Superstrong Silk (2022)",
+      "url": "https://en.tju.edu.cn/info/1010/6498.htm"
+    },
+    {
+      "group": "Lụa giả",
+      "text": "Wikipedia, Nexia Biotechnologies (dê tơ nhện BioSteel)",
+      "url": "https://en.wikipedia.org/wiki/Nexia_Biotechnologies"
+    },
+    {
+      "group": "Lụa giả",
+      "text": "Wikipedia, Ahimsa silk",
+      "url": "https://en.wikipedia.org/wiki/Ahimsa_silk"
+    },
+    {
+      "group": "Lụa giả",
+      "text": "Huyền Trang, Đại Đường Tây Vực Ký 大唐西域記, quyển 12 (nước Khotan)",
+      "url": "https://zh.wikisource.org/wiki/大唐西域記/12"
+    },
+    {
+      "group": "Lụa giả",
+      "text": "British Museum, tấm ván vẽ nàng công chúa tơ lụa, Dandan Oilik (1907,1111.73)",
+      "url": "https://www.britishmuseum.org/collection/object/A_1907-1111-73"
+    },
+    {
+      "group": "Kết",
+      "text": "Lý Thương Ẩn 李商隱, Vô đề 無題 (Tương kiến thời nan biệt diệc nan)",
+      "url": "https://zh.wikisource.org/wiki/無題_(相見時難別亦難)"
+    }
+  ],
+  "footage": [
+    {
+      "group": "Phim tư liệu",
+      "text": "Sericulture (1937) · US National Archives / FedFlix · Public domain",
+      "url": "https://archive.org/details/h-hf-208"
+    },
+    {
+      "group": "Phim tư liệu",
+      "text": "A Strand of Silk · Prelinger Archives",
+      "url": "https://archive.org/details/0396_Strand_of_Silk_A_10_10_25_10"
+    },
+    {
+      "group": "Phim tư liệu",
+      "text": "Silk Makers of Japan (Bailey Film, 1961)",
+      "url": "https://archive.org/details/silkmakersofjapan"
+    },
+    {
+      "group": "Phim tư liệu",
+      "text": "People of Western China (1940) · Prelinger Archives",
+      "url": "https://archive.org/details/Peopleof1940"
+    },
+    {
+      "group": "Phim tư liệu",
+      "text": "Kimono (1950s) · Prelinger Archives",
+      "url": "https://archive.org/details/201464_Kimono"
+    },
+    {
+      "group": "Phim tư liệu",
+      "text": "Silk weaving in Thailand · Wikimedia Commons · CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Silk_weaving_in_Thailand.webm"
+    },
+    {
+      "group": "Phim tư liệu",
+      "text": "Métier à tisser Jacquard · Wikimedia Commons · CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Métier_à_tisser_Jacquard_01.webm"
+    },
+    {
+      "group": "Phim tư liệu",
+      "text": "Video Mixkit (giấy phép Mixkit)",
+      "url": "https://mixkit.co/free-stock-video/"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Lương Khải 梁楷, Tằm chức đồ 蠶織圖 (thế kỷ 13) · Cleveland Museum of Art · CC0",
+      "url": "https://www.clevelandart.org/art/1977.5"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Canh chức đồ 耕織圖 · The Metropolitan Museum of Art · CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:MET_CIB19_MM66714.jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Tống Ứng Tinh 宋應星, Thiên Công Khai Vật 天工開物 (1637), chương Nãi phục · Internet Archive",
+      "url": "https://archive.org/details/02095376.cn"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Trương Huyên 張萱 (bản Tống), Đảo luyện đồ · Wikimedia Commons",
+      "url": "https://commons.wikimedia.org/wiki/File:Court_Ladies_Preparing_Newly_Woven_Silk_(cropped).jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Kitagawa Utamaro, loạt tranh nuôi tằm dệt lụa (khoảng 1800) · The Metropolitan Museum of Art · CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:女織蚕手業草_十二終-Women_Weaving_Silk_Cloth_MET_DP143113.jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Stradanus, The Introduction of the Silkworm (Vermis Sericus) · The Metropolitan Museum of Art",
+      "url": "https://commons.wikimedia.org/wiki/File:Emperor_Justinian_Receiving_the_First_Imported_Silkworm_Eggs_from_Nestorian_Monks,_Plate_2_from_%22The_Introduction_of_the_Silkworm%22_-Vermis_Sericus-_MET_DP841101.jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Lancelot Blondeel, Cái chết của Crassus (1558) · Groeningemuseum",
+      "url": "https://commons.wikimedia.org/wiki/File:Groeningemuseum-Blondeel-Der_Tod_des_Marcus_Licinius_Crassus_DSC9460.jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Andrea Mantegna, The Triumphs of Caesar · Royal Collection",
+      "url": "https://en.wikipedia.org/wiki/Triumphs_of_Caesar"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Tranh đoàn lạc đà và Con đường Tơ lụa: Vereshchagin, Gérôme, Pasini, Cassas, Catalan Atlas (1375) · Wikimedia Commons",
+      "url": "https://commons.wikimedia.org/wiki/File:1375_Atlas_Catalan_Abraham_Cresques_(cropped).jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Tranh mộc bản nàng công chúa tơ lụa, Dandan Oilik · Aurel Stein, Ancient Khotan (1907)",
+      "url": "https://commons.wikimedia.org/wiki/File:Ancient_Khotan_BLER2_AKV1_FP246_FIG28.jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "P. Lackerbauer, minh hoạ công trình của Pasteur về bệnh tằm · BnF",
+      "url": "https://commons.wikimedia.org/wiki/File:Illustrations_des_travaux_de_Louis_Pasteur_sur_les_maladies_des_vers_à_soie_-_P._Lackerbauer,_dess._-_btv1b32000135_(09_of_16).jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Chân dung Jacquard dệt bằng lụa · Library of Congress",
+      "url": "https://commons.wikimedia.org/wiki/File:À_la_mémoire_de_J.M._Jacquard_LCCN2002737214.jpg"
+    },
+    {
+      "group": "Tranh cổ",
+      "text": "Khởi nghĩa thợ dệt lụa Lyon (1831) · BnF",
+      "url": "https://commons.wikimedia.org/wiki/File:Événements_de_Lyon._Barrière_de_la_Croix-Rousse_-_estampe_-_btv1b8414759m.jpg"
+    },
+    {
+      "group": "Hiện vật",
+      "text": "Mô hình máy dệt mộ Lão Quan Sơn, Thành Đô (Tây Hán) · Wikimedia Commons",
+      "url": "https://commons.wikimedia.org/wiki/File:成都老官山墓地出土-织机-西汉-成都考古中心_2024-10-17.jpg"
+    },
+    {
+      "group": "Hiện vật",
+      "text": "Vải lụa Byzantine · Cleveland Museum of Art, The Metropolitan Museum of Art · CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Aachen_Cathedral_Treasury,_cloth_with_quadriga_from_Karlsschrein.jpg"
+    },
+    {
+      "group": "Hiện vật",
+      "text": "Hiện vật Hán, Hung Nô, Đường, Byzantine, nhà Lý: Cleveland Museum of Art, Walters, V&A, Östasiatiska museet, Tokyo National Museum, Bảo tàng Lịch sử Quốc gia · Wikimedia Commons",
+      "url": ""
+    },
+    {
+      "group": "Hiện vật",
+      "text": "Ảnh khoa học: Wellcome Collection (CC BY 4.0), Biodiversity Data Journal",
+      "url": ""
+    },
+    {
+      "group": "Âm nhạc",
+      "text": "Johan Halvorsen, Passacaglia on a theme by Handel (1894) · Roxana Pavel Goldstein, Elias Goldstein · CC BY-SA 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Johan_Halvorsen_-_Passacaglia_on_a_theme_by_Handel.ogg"
+    },
+    {
+      "group": "Âm nhạc",
+      "text": "Epidemic Sound (giấy phép kênh)",
+      "url": "https://www.epidemicsound.com/"
+    }
+  ],
+  "related": [
+    "asbestos",
+    "horse-strike"
+  ],
+  "tags": [
+    "Lịch sử",
+    "Sinh học"
+  ]
+}

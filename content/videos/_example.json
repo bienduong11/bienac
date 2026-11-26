@@ -5,6 +5,7 @@
   "description": "Một câu dưới 160 ký tự, hiện ở kết quả Google và khi chia sẻ lên Facebook, Zalo. Không có thì lấy đoạn đầu của summary.",
   "date": "2025-07-04",
   "summary": "Đoạn tóm tắt thứ nhất.\n\nĐoạn thứ hai (các đoạn cách nhau bằng một dòng trống).",
+  "notes": "Tùy chọn: mục Lưu ý (đính chính, chuyện kể lại), Markdown, giống khối Lưu ý trong mô tả YouTube.",
   "chapters": [
     { "time": "0:00", "title": "Mở đầu" },
     { "time": "1:50", "title": "Vải lông kỳ nhông" }

@@ -387,6 +387,7 @@ async function main() {
     const chapters = jsonChapters(d.chapters);
     const refs = d.references || [], foot = d.footage || [];
     const summary = String(d.summary || '').trim();
+    const notes = String(d.notes || '').trim();
     posts.push({
       ...(md || { alias: [], lienQuan: [], hashtags: [], tags: [], luuYHtml: '', fix: '', html: '', minutes: 0, bodyText: '', nguonChinh: '' }),
       kind: 'video',
@@ -407,6 +408,8 @@ async function main() {
       tags: list(d.tags).length ? list(d.tags) : md ? md.tags : [],
       chapters: chapters.length ? chapters : md ? md.chapters : [],
       tomTatHtml: summary ? marked.parse(summary) : md ? md.tomTatHtml : '',
+      luuY: notes || (md ? md.luuY : ''),
+      luuYHtml: notes ? marked.parse(notes) : md ? md.luuYHtml : '',
       nguon: refs.length ? '' : md ? md.nguon : '',
       nguonHtml: refs.length ? groupedHtml(refs, 'ol') : md ? md.nguonHtml : '',
       hinhAnh: foot.length ? '' : md ? md.hinhAnh : '',
