@@ -23,7 +23,7 @@ chạy trên **Cloudflare Pages** kèm vài Pages Functions và một cơ sở d
 |---|---|
 | `index.html` | Trang chủ: 30 ô ứng dụng, tìm kiếm, nền mưa nhị phân + WebGL, Đề xuất (giscus), Ủng hộ |
 | `v/<slug>/` (sinh ra) | Trang tài liệu cho từng video: tóm tắt, chương, nguồn, đính chính. Dữ liệu ở `content/videos/` |
-| `support/` | Trang ủng hộ chuyển khoản một chạm (VietQR, nhiều ngân hàng). Trang quan trọng nhất |
+| `support/` | Trang ủng hộ: mã QR + số tài khoản BIDV, MoMo, PayPal, Hội viên YouTube. Trang quan trọng nhất |
 | `email/` | Gửi thư cho Bienac |
 | `stats/` | Thống kê lượt (nội bộ, không lên Google) |
 | `functions/` | Link ngắn mạng xã hội có đếm lượt; `api/hit`, `api/message`, `api/stats` |
@@ -39,11 +39,13 @@ chạy trên **Cloudflare Pages** kèm vài Pages Functions và một cơ sở d
 |---|---|
 | `cap-nhat-video.yml` | 6 tiếng một lần cập nhật danh sách video |
 | `kiem-tra.yml` | Mỗi lần đẩy code: dựng nghiêm ngặt, kiểm cú pháp Functions; lỗi thì mở issue |
-| `theo-doi.yml` | 30 phút một lần kiểm mọi link trong mô tả YouTube, trang ủng hộ, tên miền; lỗi thì mở issue |
+| `theo-doi.yml` | Ngay sau mỗi lần Cloudflare Pages dựng xong và theo lịch 30 phút (GitHub thực tế chỉ chạy 3–4 lần/ngày): kiểm mọi link trong mô tả YouTube, trang ủng hộ, tên miền; lỗi thì mở issue |
 | `support-check.yml` | Kiểm sâu trang `/support` mỗi ngày và sau mỗi lần sửa |
 
 ## Hiệu năng
 
 - Máy yếu / điện thoại / tiết kiệm dữ liệu: WebGL và mưa nhị phân tự giảm khung hình, độ phân giải.
 - Máy không có tăng tốc đồ họa: nền WebGL chỉ vẽ một khung tĩnh. Máy không theo kịp thì tự hạ độ phân giải, cuối cùng đứng hình.
-- Shader biên dịch sau khi trang hiện xong; font Google nạp không chặn hiển thị.
+- Shader biên dịch sau khi trang hiện xong.
+- Font tự lưu trong `fonts/` (`css/fonts.css`): Be Vietnam Pro cho chữ, JetBrains Mono cho số; không gọi Google Fonts (trừ Noto Serif TC ở vài trang chữ Hán).
+- Trên Cloudflare Pages, `scripts/dong-dau.mjs` thu gọn CSS/JS, gắn `?v=<mã băm nội dung>`, chèn speculation rules tải trước trang.
