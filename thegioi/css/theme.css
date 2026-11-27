@@ -29,3 +29,6 @@ html, body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; }
 @media (max-width: 720px) {
   .home-apps { left: auto; right: 12px; top: 106px; transform: none; width: 36px; height: 36px; }
 }
+
+/* Nút, ô chọn, ô nhập dùng cùng họ chữ với trang (trình duyệt mặc định dùng Arial) */
+button, input, select, textarea { font-family: inherit; }

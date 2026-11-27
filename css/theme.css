@@ -688,3 +688,6 @@ body.home .app-filter button[data-f]:not([data-f=""])[aria-pressed="true"]::befo
 /* 27/11: tiêu đề Be Vietnam Pro nét đậm, khít chữ nhẹ khi to */
 .hero-title, .section-title, .post-title, .ud-title, .post-body h2, .post-item h2 { letter-spacing: -0.01em; }
 .app-name { letter-spacing: 0; }
+
+/* Nút, ô chọn, ô nhập dùng cùng họ chữ với trang (trình duyệt mặc định dùng Arial) */
+button, input, select, textarea { font-family: inherit; }
