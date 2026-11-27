@@ -1,11 +1,16 @@
-# Theo dõi bienac.com 30 phút một lần. Lỗi thì mở issue "Sự cố bienac.com"
+# Theo dõi bienac.com. Lỗi thì mở issue "Sự cố bienac.com"
 # (GitHub gửi thư báo cho chủ repo); hết lỗi thì tự đóng issue.
+# Lịch đặt 30 phút một lần nhưng GitHub bóp lịch: thực tế chỉ 3–4 lần/ngày (16–27/11/2026).
+# Nên kiểm thêm ngay sau MỖI lần Cloudflare Pages dựng xong (check run "Cloudflare Pages"),
+# vì phần lớn sự cố đến từ chính các lần đẩy mã.
 name: Theo doi bienac.com
 
 on:
   schedule:
     - cron: '7,37 * * * *'
   workflow_dispatch:
+  check_run:
+    types: [completed]
 
 permissions:
   contents: read
@@ -15,10 +20,15 @@ concurrency: theo-doi
 
 jobs:
   check:
+    # check_run: chỉ chạy cho lần dựng của Cloudflare Pages (bỏ qua các check khác).
+    if: github.event_name != 'check_run' || github.event.check_run.name == 'Cloudflare Pages'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Chờ Cloudflare phát bản mới tới mọi nơi
+        if: github.event_name == 'check_run'
+        run: sleep 60
       - uses: actions/setup-node@v4
         with:
           node-version: 20
