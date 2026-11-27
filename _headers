@@ -18,7 +18,7 @@
 /cong-cu/*
   X-Robots-Tag: noindex, nofollow
 
-# Ảnh, logo, biểu tượng: gần như không đổi. Đổi nội dung thì đổi tên file (riêng ảnh QR: sửa cả mã băm trong scripts/theo-doi.mjs).
+# Ảnh, logo, biểu tượng: gần như không đổi. Đổi nội dung thì đổi tên file hoặc thêm ?v=<ngày> ở chỗ gọi (ảnh chia sẻ assets/og: ?v=20261127) (riêng ảnh QR: sửa cả mã băm trong scripts/theo-doi.mjs).
 /assets/*
   Cache-Control: public, max-age=604800
 

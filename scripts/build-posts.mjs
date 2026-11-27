@@ -504,7 +504,7 @@ async function main() {
     : `<div class="post-empty"><h2>Đang biên soạn</h2><p>Trong lúc chờ, bạn xem video trên kênh nhé.</p><a class="btn btn-ghost" href="/#videos">Xem video</a></div>`;
   await writeFile(path.join(OUT, 'index.html'), page({
     title: 'Bài viết · Bienac',
-    image: `${SITE}/assets/og/bai-viet.jpg`,
+    image: `${SITE}/assets/og/bai-viet.jpg?v=20261127`,
     description: 'Hồ sơ từng video của Bienac: tóm tắt, chương, tài liệu tham khảo và tư liệu.',
     url: `${SITE}/bai-viet/`,
     body: `
