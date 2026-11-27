@@ -26,7 +26,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 const b = await chromium.launch();
 
 // 1. Chụp trang thật (khung máy tính), đợi hiệu ứng chạy một chút.
-const shotCtx = await b.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1, userAgent: 'Mozilla/5.0 (Macintosh) Chrome/120 bienac-theo-doi' });
+const shotCtx = await b.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1, locale: 'vi-VN', userAgent: 'Mozilla/5.0 (Macintosh) Chrome/120 bienac-theo-doi' });
 const sp = await shotCtx.newPage();
 await sp.goto(site + page, { waitUntil: 'load', timeout: 45000 });
 await sp.waitForTimeout(3500);
