@@ -9,7 +9,7 @@
  * 2. Đóng dấu phiên bản cho file CSS/JS nội bộ trong mọi trang HTML:
  *      href="/css/theme.css"  →  href="/css/theme.css?v=ab12cd34"
  *    Dấu là mã băm NỘI DUNG file. File không đổi thì dấu không đổi, nên
- *    trình duyệt giữ bản đã tải (xem _headers: /css, /js lưu 1 năm).
+ *    trình duyệt giữ bản đã tải (xem _headers: /css, /js lưu 1 ngày).
  *    File đổi thì dấu đổi, trình duyệt tải bản mới ngay.
  *
  * 3. Chèn "speculation rules": khi người xem rê chuột hoặc chạm vào một link
@@ -57,11 +57,13 @@ if (ON_CF) {
 }
 
 /* ---- 2 + 3. Đóng dấu và chèn tải trước ---- */
+// Đổi SALT khi cần ép mọi trình duyệt và máy chủ Cloudflare lấy bản mới (ví dụ máy chủ giữ nhầm bản cũ).
+const SALT = 'r2';
 const hashes = new Map();
 async function stamp(file) {
   if (!hashes.has(file)) {
     let h = '';
-    try { h = createHash('sha1').update(await readFile(file)).digest('hex').slice(0, 8); } catch (e) { h = ''; }
+    try { h = createHash('sha1').update(SALT).update(await readFile(file)).digest('hex').slice(0, 8); } catch (e) { h = ''; }
     hashes.set(file, h);
   }
   return hashes.get(file);

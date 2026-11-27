@@ -26,13 +26,16 @@
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-# CSS/JS dùng chung: mọi trang gọi kèm dấu ?v= là mã băm nội dung file (scripts/dong-dau.mjs),
-# nên lưu được 1 năm: file đổi thì dấu đổi, trình duyệt tải bản mới ngay.
-# LƯU Ý: không gọi file trong /css, /js mà thiếu dấu ?v= (ví dụ nạp bằng JavaScript), kẻo trình duyệt giữ bản cũ.
+# CSS/JS dùng chung: mọi trang gọi kèm dấu ?v= là mã băm nội dung file (scripts/dong-dau.mjs).
+# Trình duyệt giữ 1 ngày (hết hạn thì hỏi lại, file không đổi chỉ tốn vài trăm byte).
+# Máy chủ Cloudflare chỉ giữ 5 phút: lúc web vừa cập nhật, máy chủ có thể lấy nhầm bản cũ
+# trước khi bản mới lan tới (đã gặp 27/11), giữ ngắn để tự hết sai.
 /css/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400
+  Cloudflare-CDN-Cache-Control: max-age=300
 /js/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400
+  Cloudflare-CDN-Cache-Control: max-age=300
 /data/*
   Cache-Control: public, max-age=300
 /*/du-lieu.json
