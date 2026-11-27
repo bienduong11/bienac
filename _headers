@@ -18,16 +18,21 @@
 /cong-cu/*
   X-Robots-Tag: noindex, nofollow
 
-# Logo ngân hàng, ảnh: đổi tên file khi đổi nội dung nên lưu lâu được.
-/assets/banks/*
-  Cache-Control: public, max-age=2592000
+# Ảnh, logo, biểu tượng: gần như không đổi. Đổi nội dung thì đổi tên file (riêng ảnh QR: sửa cả mã băm trong scripts/theo-doi.mjs).
+/assets/*
+  Cache-Control: public, max-age=604800
 
-# Cloudflare Pages: thời gian lưu đệm. CSS/JS đã có dấu ?v= theo từng lần dựng,
-# nên chỉ cần lưu ngắn để các file nạp gián tiếp cũng sớm được làm mới.
+# Font tự lưu: tên file cố định theo font, nội dung không bao giờ đổi.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS/JS dùng chung: mọi trang gọi kèm dấu ?v= là mã băm nội dung file (scripts/dong-dau.mjs),
+# nên lưu được 1 năm: file đổi thì dấu đổi, trình duyệt tải bản mới ngay.
+# LƯU Ý: không gọi file trong /css, /js mà thiếu dấu ?v= (ví dụ nạp bằng JavaScript), kẻo trình duyệt giữ bản cũ.
 /css/*
-  Cache-Control: public, max-age=300
+  Cache-Control: public, max-age=31536000, immutable
 /js/*
-  Cache-Control: public, max-age=300
+  Cache-Control: public, max-age=31536000, immutable
 /data/*
   Cache-Control: public, max-age=300
 /*/du-lieu.json

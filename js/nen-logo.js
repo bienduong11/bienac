@@ -20,7 +20,7 @@
   const sprites = {};
 
   const logo = new Image();
-  logo.src = '/assets/logo.svg';
+  logo.src = '/assets/logo-512.webp';   // bản ảnh 512px: nhẹ hơn nhiều so với logo.svg (200 KB, hàng nghìn hình tròn)
 
   function sprite(ch, color) {
     const c = document.createElement('canvas');

@@ -36,7 +36,7 @@ await shotCtx.close();
 // 2. Ghép khuôn.
 const logo = (await readFile(path.join(ROOT, 'assets', 'logo-192.webp'))).toString('base64');
 const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;700&family=Chakra+Petch:wght@600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="/css/fonts.css" />
 <style>
   html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:radial-gradient(120% 140% at 0% 0%,#0d1a1a 0%,#06070b 55%);font-family:'Be Vietnam Pro',sans-serif;color:#ece6d6}
   .l{position:absolute;left:64px;top:0;bottom:0;width:470px;display:flex;flex-direction:column;justify-content:center}
