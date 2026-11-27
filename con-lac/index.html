@@ -25,7 +25,7 @@
     .cl-stage { position: relative; border-radius: 18px; overflow: hidden; background: rgba(5, 7, 10, .82); box-shadow: inset 0 0 0 1px var(--glass-border); aspect-ratio: 1 / 1; max-height: 78vh; touch-action: none; cursor: grab; }
     .cl-stage.drag { cursor: grabbing; }
     .cl-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    .cl-hint { position: absolute; left: 14px; bottom: 12px; font: 500 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
+    .cl-hint { position: absolute; left: 14px; bottom: 12px; font: 500 .66rem var(--label); letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
     .cl-side { display: flex; flex-direction: column; gap: 14px; }
     .cl-box { padding: 16px 18px; border-radius: 18px; }
     .cl-row { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -36,13 +36,13 @@
     .cl-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .cl-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
     .cl-stat b { display: block; font: 600 1.1rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
-    .cl-stat span { font: 500 .62rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .cl-stat span { font: 500 .62rem var(--label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); }
     .cl-stat.wide { grid-column: 1 / -1; }
     .cl-range { display: grid; gap: 6px; margin-top: 12px; }
     .cl-range label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text); }
     .cl-range output { font: 600 .8rem var(--mono); color: var(--brass); }
     .cl-range input { width: 100%; accent-color: #37f0cf; }
-    .cl-k { font: 600 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .cl-k { font: 600 .66rem var(--label); letter-spacing: 0.07em; text-transform: uppercase; color: var(--brass); }
     .cl-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; font-size: .8rem; color: var(--text-dim); }
     .cl-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
     .cl-text h2 { font: 700 1.05rem var(--display); margin-bottom: 6px; }
@@ -52,7 +52,7 @@
     .cl-text a { color: var(--cyan); }
     .cl-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: var(--text); }
     .cl-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
-    .cl-video small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .cl-video small { display: block; font: 500 .62rem var(--label); letter-spacing: 0.07em; text-transform: uppercase; color: var(--brass); }
     .cl-video b { font: 600 .95rem var(--display); }
     .cl-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
     @media (max-width: 900px) {

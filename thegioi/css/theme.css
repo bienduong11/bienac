@@ -10,7 +10,7 @@
 }
 html, body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; }
 .panel { border-radius: 2px; }
-#header h1 { font-family: 'Chakra Petch', sans-serif; letter-spacing: .02em; }
+#header h1 { font-family: 'Be Vietnam Pro', sans-serif; letter-spacing: .02em; }
 #header .subtitle, #header .hint, #counter, #era-buttons button { font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; }
 #era-buttons button, #country-select, .country-ev, #tooltip, #modal-close { border-radius: 2px; }
 #play-btn:hover { background: rgba(201, 166, 80, 0.18); }

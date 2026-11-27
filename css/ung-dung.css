@@ -12,8 +12,8 @@ body.ud .site-header { background: rgba(6, 7, 11, 0.72); backdrop-filter: blur(1
   -webkit-backdrop-filter: blur(10px);
 }
 .ud-kicker {
-  font: 500 .68rem/1.4 var(--mono);
-  letter-spacing: .18em;
+  font: 500 .68rem/1.4 var(--label);
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--brass);
 }
@@ -22,8 +22,8 @@ body.ud .site-header { background: rgba(6, 7, 11, 0.72); backdrop-filter: blur(1
 .ud-title .accent { color: var(--cyan); }
 .ud-dim { color: var(--text-dim); }
 .ud-btn {
-  font: 600 .74rem/1 var(--mono);
-  letter-spacing: .12em;
+  font: 600 .74rem/1 var(--label);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text);
   background: rgba(8, 10, 14, .7);

@@ -42,7 +42,7 @@ const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
   .l{position:absolute;left:64px;top:0;bottom:0;width:470px;display:flex;flex-direction:column;justify-content:center}
   .brand{display:flex;align-items:center;gap:16px;margin-bottom:36px}
   .brand img{width:56px;height:56px;filter:drop-shadow(0 0 14px rgba(55,240,207,.55))}
-  .brand span{font:600 26px 'Chakra Petch',monospace;letter-spacing:.18em;color:#37f0cf}
+  .brand span{font:700 26px 'Be Vietnam Pro',sans-serif;letter-spacing:.06em;color:#37f0cf}
   h1{font-weight:700;font-size:${title.length > 18 ? 50 : 60}px;line-height:1.12;margin:0 0 22px}
   p{font-weight:500;font-size:25px;line-height:1.5;margin:0;color:rgba(236,230,214,.72)}
   .r{position:absolute;left:580px;top:70px;width:700px;height:466px;border-radius:26px;overflow:hidden;border:1px solid rgba(236,230,214,.14);box-shadow:0 30px 80px rgba(0,0,0,.6)}

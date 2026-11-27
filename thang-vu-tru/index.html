@@ -52,7 +52,7 @@
     .tvt-rail .knob { position: absolute; left: 50%; width: 26px; height: 10px; transform: translate(-50%, -50%); background: var(--cyan); box-shadow: 0 0 14px rgba(55, 240, 207, .7); clip-path: polygon(0 50%, 25% 0, 100% 0, 100% 100%, 25% 100%); }
 
     .tvt-ctrl { position: fixed; right: clamp(64px, 8vw, 96px); bottom: clamp(16px, 4vh, 40px); z-index: 6; display: flex; gap: 8px; }
-    .tvt-hint { position: fixed; left: 50%; top: 84px; transform: translateX(-50%); z-index: 4; font: 500 .66rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; transition: opacity .6s; white-space: nowrap; }
+    .tvt-hint { position: fixed; left: 50%; top: 84px; transform: translateX(-50%); z-index: 4; font: 500 .66rem var(--label); letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; transition: opacity .6s; white-space: nowrap; }
 
     @media (max-width: 720px) {
       .tvt-read { top: 76px; right: 64px; }
@@ -262,7 +262,7 @@
         const lx = px - 18, ly = py - 14;
         g.beginPath(); g.moveTo(px, py); g.lineTo(lx, ly); g.lineTo(lx - 10, ly); g.stroke();
         g.beginPath(); g.arc(px, py, 2.2, 0, Math.PI * 2); g.fillStyle = col; g.fill();
-        g.font = '600 12px "Chakra Petch", sans-serif'; g.textAlign = 'right'; g.textBaseline = 'middle';
+        g.font = '600 12px "Be Vietnam Pro", sans-serif'; g.textAlign = 'right'; g.textBaseline = 'middle';
         g.fillStyle = '#ece6d6'; g.fillText(o.n, lx - 14, ly);
       }
       g.globalAlpha = 1;

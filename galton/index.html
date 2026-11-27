@@ -31,7 +31,7 @@
     .sim-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .sim-stat { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--glass-border); }
     .sim-stat b { display: block; font: 600 1.15rem var(--mono); color: var(--cyan); font-variant-numeric: tabular-nums; }
-    .sim-stat span { font: 500 .66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+    .sim-stat span { font: 500 .66rem var(--label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); }
     .sim-range { display: grid; gap: 6px; margin-top: 10px; }
     .sim-range label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--text); }
     .sim-range label output { font: 600 .8rem var(--mono); color: var(--brass); }
@@ -43,10 +43,10 @@
     .sim-chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .sim-chip { padding: 6px 12px; border-radius: 999px; border: 0; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--glass-border); color: var(--text); font: 600 .78rem 'Be Vietnam Pro', sans-serif; cursor: pointer; }
     .sim-chip:hover, .sim-chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--cyan); color: var(--cyan); }
-    .sim-hint { position: absolute; left: 12px; bottom: 10px; font: 500 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
+    .sim-hint { position: absolute; left: 12px; bottom: 10px; font: 500 .66rem var(--label); letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); pointer-events: none; }
     .sim-video { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: var(--text); }
     .sim-video img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
-    .sim-video small { display: block; font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+    .sim-video small { display: block; font: 500 .62rem var(--label); letter-spacing: 0.07em; text-transform: uppercase; color: var(--brass); }
     .sim-video b { font: 600 .95rem var(--display); }
     .sim-video:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
     @media (max-width: 900px) {

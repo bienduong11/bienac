@@ -231,7 +231,7 @@
         const p = proj(c.c[0], c.c[1]); if (!inView(p)) continue;
         const col = c.tu ? c.tu.t.col : '#e8452e';
         const han = c.tu ? c.tu.u[1] : c.x[0], hv = c.tu ? c.tu.u[2] : c.x[1];
-        g.font = '600 13px "Chakra Petch", sans-serif';
+        g.font = '600 13px "Be Vietnam Pro", sans-serif';
         const tw = g.measureText(hv).width + 14;
         g.fillStyle = 'rgba(6,7,11,.78)'; g.beginPath(); g.roundRect(p[0] - tw / 2, p[1] - 10, tw, 20, 10); g.fill();
         g.strokeStyle = col; g.lineWidth = 1; g.stroke();
