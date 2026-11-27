@@ -594,7 +594,7 @@ export const ANIMATIONS = {
         'rgba(232,238,247,.6)', i % 8 === 0 ? 2.5 : 1.2);
     }
     ctx.fillStyle = '#e8eef7';
-    ctx.font = 'bold 17px sans-serif';
+    ctx.font = 'bold 17px "Be Vietnam Pro", sans-serif';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText('B', cx, cy - R + 30);
     ctx.fillText('N', cx, cy + R - 30);
@@ -831,7 +831,7 @@ export const ANIMATIONS = {
     circle(ctx, mmx, mmy, 7, '#c9cdd4');
     ctx.restore();
     // công thức
-    ctx.font = 'italic 17px Georgia, serif';
+    ctx.font = 'italic 17px "Be Vietnam Pro", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillStyle = `rgba(255,200,87,${0.55 + 0.25 * Math.sin(t * 2)})`;
     ctx.fillText('F = G·m₁·m₂ / r²', w / 2, h * 0.94);
@@ -1290,7 +1290,7 @@ export const ANIMATIONS = {
     grad.addColorStop(1, 'rgba(110,231,255,0)');
     ctx.fillStyle = grad;
     ctx.fillRect(scanX - 50, 16, 100, h - 32);
-    ctx.font = '11px monospace';
+    ctx.font = '11px "JetBrains Mono", monospace';
     ctx.fillStyle = 'rgba(110,231,255,.5)';
     ctx.textAlign = 'left';
     ctx.fillText('RÖNTGEN · 1895', 30, h - 26);
@@ -1419,7 +1419,7 @@ export const ANIMATIONS = {
     }
     ctx.globalAlpha = 1;
     // E = mc²
-    ctx.font = 'italic bold 22px Georgia, serif';
+    ctx.font = 'italic bold 22px "Be Vietnam Pro", sans-serif';
     ctx.textAlign = 'right';
     ctx.fillStyle = `rgba(255,200,87,${0.6 + 0.3 * Math.sin(t * 2.2)})`;
     ctx.fillText('E = mc²', w - 28, h - 24);
@@ -1471,7 +1471,7 @@ export const ANIMATIONS = {
     const noteA = clamp01((t - 4.2) / 1.2);
     if (noteA > 0) {
       ctx.globalAlpha = noteA;
-      ctx.font = 'italic 13px sans-serif';
+      ctx.font = 'italic 13px "Be Vietnam Pro", sans-serif';
       ctx.textAlign = 'left';
       ctx.fillStyle = '#9fb0c8';
       const lx2 = mgx + CR * 0.72, ly2 = mgy + CR * 0.72;
@@ -1621,7 +1621,7 @@ export const ANIMATIONS = {
     ctx.rotate(-rot);
     ctx.restore();
     // tín hiệu chữ
-    ctx.font = '13px monospace';
+    ctx.font = '13px "JetBrains Mono", monospace';
     ctx.textAlign = 'right';
     ctx.fillStyle = `rgba(110,231,255,${0.4 + 0.35 * Math.sin(t * 6)})`;
     ctx.fillText('bíp… bíp… bíp…', w - 26, h * 0.14);
@@ -1818,7 +1818,7 @@ export const ANIMATIONS = {
     circle(ctx, bx + 38, by + 18, 5, '#ffd166');
     circle(ctx, bx + 56, by + 18, 5, '#06d6a0');
     rrect(ctx, bx + 76, by + 9, bw - 100, 18, 9, '#0b1322', '#2c3e57', 1.4);
-    ctx.font = '11px monospace';
+    ctx.font = '11px "JetBrains Mono", monospace';
     ctx.textAlign = 'left';
     ctx.fillStyle = '#9fb0c8';
     ctx.fillText('http://info.cern.ch', bx + 88, by + 22);
@@ -1889,7 +1889,7 @@ export const ANIMATIONS = {
     ctx.beginPath(); ctx.roundRect(px, py, pw, ph2, 20); ctx.clip();
     ctx.fillStyle = sg; ctx.fillRect(px, py, pw, ph2);
     // thanh trạng thái
-    ctx.font = 'bold 10px sans-serif';
+    ctx.font = 'bold 10px "Be Vietnam Pro", sans-serif';
     ctx.fillStyle = '#e8eef7';
     ctx.textAlign = 'left';
     ctx.fillText('9:41', px + 12, py + 16);
@@ -2000,7 +2000,7 @@ export const ANIMATIONS = {
       }
     }
     // các "tia sáng ý tưởng" trôi nổi
-    ctx.font = '13px sans-serif';
+    ctx.font = '13px "Be Vietnam Pro", sans-serif';
     ctx.textAlign = 'center';
     for (let i = 0; i < 5; i++) {
       const sx = rnd(i + 70) * w;
@@ -2308,7 +2308,7 @@ export const ANIMATIONS = {
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     // ký hiệu toán học trôi mờ ở nền
     const syms = ['+', '×', '√', 'π', '−', '='];
-    ctx.font = 'bold 26px Georgia, serif';
+    ctx.font = 'bold 26px "Be Vietnam Pro", sans-serif';
     ctx.fillStyle = '#8fb7d8';
     for (let i = 0; i < 10; i++) {
       const x = rnd(i + 31) * w;
@@ -2327,7 +2327,7 @@ export const ANIMATIONS = {
     ctx.stroke();
     ctx.lineCap = 'butt';
     // các chữ số 1–9 quay quanh quỹ đạo
-    ctx.font = 'bold 22px Georgia, serif';
+    ctx.font = 'bold 22px "Be Vietnam Pro", sans-serif';
     ctx.fillStyle = '#6ee7ff';
     for (let d = 1; d <= 9; d++) {
       const a = -Math.PI / 2 + TAU * d / 9 + t * 0.35;
@@ -2340,7 +2340,7 @@ export const ANIMATIONS = {
     const slide = easeOut(clamp01(p / 0.22));
     const fill = easeOut(clamp01((p - 0.3) / 0.2));
     const fade = p > 0.9 ? 1 - (p - 0.9) / 0.1 : 1;
-    ctx.font = 'bold 36px Georgia, serif';
+    ctx.font = 'bold 36px "Be Vietnam Pro", sans-serif';
     ctx.globalAlpha = fade;
     ctx.fillStyle = '#e8ecf4';
     ctx.fillText('1', lerp(-30, cx - dx, slide), by);
@@ -2732,7 +2732,7 @@ export const ANIMATIONS = {
     // thanh nam châm: nửa xanh S - nửa đỏ N
     rrect(ctx, mx - 130, coilY - 16, 65, 32, 4, '#3567c9', '#22437f', 2);
     rrect(ctx, mx - 65, coilY - 16, 65, 32, 4, '#d44a4a', '#8f2f2f', 2);
-    ctx.fillStyle = '#fff'; ctx.font = 'bold 15px system-ui'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 15px "Be Vietnam Pro", sans-serif'; ctx.textAlign = 'center';
     ctx.fillText('S', mx - 97, coilY + 5);
     ctx.fillText('N', mx - 33, coilY + 5);
     // cuộn dây lớn: nhiều vòng elip cạnh nhau, vẽ sau để che nam châm
@@ -2759,7 +2759,7 @@ export const ANIMATIONS = {
     glow(ctx, gx, pivotY, 36, 'rgba(255,200,87,.8)', 0.5 * clamp01(Math.abs(v)));
     line(ctx, gx, pivotY, gx + Math.cos(na) * 34, pivotY + Math.sin(na) * 34, '#ffc857', 2.5);
     circle(ctx, gx, pivotY, 4, '#ffd166');
-    ctx.fillStyle = '#9fb2cc'; ctx.font = '12px system-ui';
+    ctx.fillStyle = '#9fb2cc'; ctx.font = '12px "Be Vietnam Pro", sans-serif';
     ctx.fillText('G', gx, gy + 40);
   },
 
@@ -3079,7 +3079,7 @@ export const ANIMATIONS = {
       ctx.fill();
     }
     ctx.globalAlpha = 1;
-    ctx.fillStyle = '#e9f0e6'; ctx.font = 'italic 12px Georgia'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#e9f0e6'; ctx.font = 'italic 12px "Be Vietnam Pro", sans-serif'; ctx.textAlign = 'center';
     ctx.fillText('Mendeleev — 1869', w / 2, h * 0.115);
     const rows = [
       ['H', '', '', '', '', '', '', 'He'],
@@ -3120,15 +3120,15 @@ export const ANIMATIONS = {
           glow(ctx, x + cw / 2, y + ch / 2, cw, 'rgba(255,209,102,.9)', fl);
         }
         ctx.fillStyle = mi >= 0 ? '#ffd166' : '#e9f0e6';
-        ctx.font = 'bold 16px Georgia';
+        ctx.font = 'bold 16px "Be Vietnam Pro", sans-serif';
         ctx.fillText(sym, x + cw / 2, y + ch * 0.74);
-        ctx.font = '9px Georgia';
+        ctx.font = '9px "Be Vietnam Pro", sans-serif';
         ctx.fillText(nums[r][c], x + cw * 0.24, y + ch * 0.34);
       } else {
         // ô để trống: dấu "?" phấn vàng nhấp nháy
         ctx.globalAlpha = appear * (0.35 + 0.6 * Math.abs(Math.sin(t * 2.6 + mi * 2)));
         ctx.fillStyle = '#ffd166';
-        ctx.font = 'bold 18px Georgia';
+        ctx.font = 'bold 18px "Be Vietnam Pro", sans-serif';
         ctx.fillText('?', x + cw / 2, y + ch * 0.72);
       }
       ctx.globalAlpha = 1;
@@ -3238,7 +3238,7 @@ export const ANIMATIONS = {
     ctx.moveTo(7, 0); ctx.lineTo(-4, -4.5); ctx.lineTo(-4, 4.5);
     ctx.closePath(); ctx.fill();
     ctx.restore();
-    ctx.fillStyle = '#9fb4d8'; ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#9fb4d8'; ctx.font = '12px "Be Vietnam Pro", sans-serif'; ctx.textAlign = 'center';
     ctx.fillText('B', cx - R - 14, cy - 8);
     ctx.fillText('C', cx + 28, cy - R - 8);
     ctx.fillText('E', cx + 28, cy + R + 20);
@@ -3417,9 +3417,9 @@ export const ANIMATIONS = {
     ctx.strokeStyle = '#6ee7ff'; ctx.lineWidth = 2; ctx.stroke();
     ctx.restore();
     // chỉ số nhịp góc màn hình
-    ctx.fillStyle = '#ffc857'; ctx.font = 'bold 26px monospace';
+    ctx.fillStyle = '#ffc857'; ctx.font = 'bold 26px "JetBrains Mono", monospace';
     ctx.fillText('72', mx + mw - 56, my + 32);
-    ctx.fillStyle = 'rgba(255,200,87,.7)'; ctx.font = '11px monospace';
+    ctx.fillStyle = 'rgba(255,200,87,.7)'; ctx.font = '11px "JetBrains Mono", monospace';
     ctx.fillText('BPM', mx + mw - 56, my + 46);
   },
 
@@ -4057,7 +4057,7 @@ export const ANIMATIONS = {
   quantum(ctx, t, w, h) {
     bgGrad(ctx, w, h, '#0b1026', '#05070f');
     // ký hiệu ψ, ħ trôi mờ trong nền
-    ctx.font = 'italic 30px Georgia';
+    ctx.font = 'italic 30px "Be Vietnam Pro", sans-serif';
     ctx.fillStyle = '#6ee7ff';
     for (let i = 0; i < 5; i++) {
       const x = rnd(i + 60) * w * 0.9, y = h * (0.15 + rnd(i + 90) * 0.7);
@@ -4182,7 +4182,7 @@ export const ANIMATIONS = {
       ctx.globalAlpha = 1; ctx.lineCap = 'butt';
     }
     // số liệu giả nhấp nháy
-    ctx.font = '10px monospace';
+    ctx.font = '10px "JetBrains Mono", monospace';
     const stats = ['√s = 13 TeV', 'L = 2.4e34', 'm(H) ≈ 125 GeV', 'evt 40 MHz'];
     for (let i = 0; i < stats.length; i++) {
       ctx.globalAlpha = 0.25 + 0.3 * Math.abs(Math.sin(t * 2.1 + i * 1.9));
@@ -4243,7 +4243,7 @@ export const ANIMATIONS = {
       const cyc = (t * 0.30 + i * 0.34) % 1;
       const zx = hx + 16 + Math.sin(cyc * 5 + i * 1.7) * 10;
       const zy = hy - 22 - cyc * 70;
-      ctx.font = `bold ${11 + i * 4}px Georgia, serif`;
+      ctx.font = `bold ${11 + i * 4}px "Be Vietnam Pro", sans-serif`;
       ctx.fillStyle = '#ffd166';
       ctx.globalAlpha = asleep * (1 - cyc) * 0.8;
       ctx.fillText('z', zx, zy);
@@ -4314,7 +4314,7 @@ export const ANIMATIONS = {
       const show = clamp01((fx - (ccx - 34)) / 44) * endFade;
       if (show > 0.01) {
         ctx.globalAlpha = show;
-        ctx.font = 'bold 26px Georgia, serif';
+        ctx.font = 'bold 26px "Be Vietnam Pro", sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillStyle = '#ffd166';
         ctx.fillText(cell.ch, ccx, cy - 74 - show * 6);
@@ -4626,7 +4626,7 @@ export const ANIMATIONS = {
     // dấu mốc phục hồi
     ctx.globalAlpha = 0.4;
     ctx.fillStyle = '#a9bcdc';
-    ctx.font = '600 15px system-ui, sans-serif';
+    ctx.font = '600 15px "Be Vietnam Pro", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('1987 → 2066', w / 2, h - 10);
     ctx.textAlign = 'left';

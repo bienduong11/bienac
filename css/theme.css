@@ -645,8 +645,8 @@ body.home .site-footer a { color: #00ffff; }
 @media (prefers-reduced-motion: reduce) { .hero-new .dot { animation: none; } }
 
 /* ---- Trang chủ 26/11: tên kênh, nút Ủng hộ, màu theo chủ đề ---- */
-/* Tên kênh viết như trên YouTube: chỉ hoa chữ đầu, chữ đậm kiểu YouTube Sans (Roboto 700 là bản gần nhất được dùng tự do) */
-.brand-name { text-transform: none; letter-spacing: 0; font-family: 'Roboto', 'YouTube Sans', 'Be Vietnam Pro', sans-serif; font-weight: 700; }
+/* Tên kênh: chỉ hoa chữ đầu, cùng họ chữ với cả trang (27/11: Bien chốt đồng bộ, bỏ Roboto) */
+.brand-name { text-transform: none; letter-spacing: -0.01em; font-family: var(--display); font-weight: 700; }
 /* Bỏ viền bo quanh logo */
 .home-brand { padding: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; border-radius: 0; }
 /* Nút Ủng hộ góc trên bên phải, ngang hàng logo */
