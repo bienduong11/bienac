@@ -1,4 +1,5 @@
-/* Font tự lưu trên bienac.com (trước đây tải từ Google Fonts): không còn kết nối ra ngoài, mỗi độ đậm một file
+/* Font tự lưu trên bienac.com: mỗi độ đậm một file gồm đủ chữ Latin + tiếng Việt. Giấy phép OFL.
+   Be Vietnam Pro cho mọi chữ; JetBrains Mono chỉ cho số. */
 @font-face{font-family:'Be Vietnam Pro';font-style:normal;font-weight:300;font-display:swap;src:url(/fonts/be-vietnam-pro-300.woff2) format('woff2')}
 @font-face{font-family:'Be Vietnam Pro';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/be-vietnam-pro-400.woff2) format('woff2')}
 @font-face{font-family:'Be Vietnam Pro';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/be-vietnam-pro-500.woff2) format('woff2')}
