@@ -1,0 +1,20 @@
+[
+  {
+    "id": "poster-periodic-a2",
+    "name": "Poster Bảng tuần hoàn A2",
+    "price": 150000,
+    "kind": "print",
+    "desc": "In trên giấy couche 200 gsm, khổ 42 × 59,4 cm.",
+    "image": "/assets/shop/poster-periodic-a2.webp",
+    "active": true
+  },
+  {
+    "id": "wallpaper-cosmic",
+    "name": "Bộ hình nền Thang vũ trụ",
+    "price": 30000,
+    "kind": "file",
+    "desc": "5 hình nền cho điện thoại và máy tính, gửi qua email.",
+    "image": "/assets/shop/wallpaper-cosmic.webp",
+    "active": true
+  }
+]

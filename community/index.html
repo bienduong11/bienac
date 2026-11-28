@@ -77,16 +77,16 @@
     paint();
     el.onclick = async (e) => { const b = e.target.closest('[data-id]'); if (!b || b.disabled) return; b.disabled = true; const j = await post('/api/vote', { id: +b.dataset.id }).catch(() => ({})); if (j.ok) { const it = items.find((x) => x.id === j.id); it.n = j.n; it.mine = j.mine; items.sort((a, c) => c.n - a.n || a.id - c.id); tap('vote-' + g); } paint(); };
   }
-  function form(f, msg, send, okText) { f.onsubmit = async (e) => { e.preventDefault(); const btn = f.querySelector('button'); btn.disabled = true; msg.className = 'hub-msg'; msg.textContent = 'Đang gửi…'; let j = {}; try { j = await send(new FormData(f)); } catch (err) {} if (j.ok) { msg.className = 'hub-msg ok'; msg.textContent = okText; f.reset(); } else { msg.className = 'hub-msg err'; msg.textContent = j.error === 'rate' ? 'Bạn gửi hơi nhiều rồi, lát nữa thử lại nhé.' : j.error === 'email' ? 'Địa chỉ email chưa đúng.' : 'Chưa gửi được. Bạn thử lại sau nhé.'; } btn.disabled = false; }; }
+  function form(f, msg, send, okText) { f.onsubmit = async (e) => { e.preventDefault(); const btn = f.querySelector('button'); btn.disabled = true; msg.className = 'hub-msg'; msg.textContent = 'Đang gửi…'; let j = {}; try { j = await send(new FormData(f)); } catch (err) {} if (j.ok) { msg.className = 'hub-msg ok'; msg.textContent = okText; f.reset(); if (j.payload && !send.own) fetch('https://formsubmit.co/ajax/bienacvn@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(j.payload) }).catch(() => {}); } else { msg.className = 'hub-msg err'; msg.textContent = j.error === 'rate' ? 'Bạn gửi hơi nhiều rồi, lát nữa thử lại nhé.' : j.error === 'email' ? 'Địa chỉ email chưa đúng.' : 'Chưa gửi được. Bạn thử lại sau nhé.'; } btn.disabled = false; }; }
 
   board($('board'), 'video');
   form($('propose'), $('proposeMsg'), (fd) => post('/api/vote', { g: 'video', title: fd.get('title'), website: fd.get('website') }), 'Đã nhận đề xuất. Nó sẽ hiện lên bảng sau khi Bienac duyệt.');
   form($('sub'), $('subMsg'), (fd) => post('/api/subscribe', { email: fd.get('email'), src: 'community', website: fd.get('website') }), 'Đã ghi lại. Cảm ơn bạn!');
-  form($('askForm'), $('askMsg'), async (fd) => {
+  const ask = async (fd) => {
     const j = await post('/api/message', { name: (fd.get('name') || '') + ' [Hỏi Bienac]', contact: fd.get('contact'), body: fd.get('body'), website: fd.get('website') });
     if (j.ok && j.payload) { const f2 = await fetch('https://formsubmit.co/ajax/bienacvn@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(j.payload) }).then((x) => x.json()).catch(() => ({})); if (String(f2.success) === 'true') fetch('/api/message', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: j.id }) }).catch(() => {}); }
     return j;
-  }, 'Đã gửi. Cảm ơn bạn đã hỏi!');
+  }; ask.own = true; form($('askForm'), $('askMsg'), ask, 'Đã gửi. Cảm ơn bạn đã hỏi!');
   document.querySelectorAll('[data-tap]').forEach((a) => a.addEventListener('click', () => tap(a.dataset.tap)));
 })();
 </script>

@@ -19,6 +19,30 @@
   <link rel="stylesheet" href="/css/theme.css" />
   <link rel="stylesheet" href="/css/ung-dung.css" />
   <link rel="stylesheet" href="/css/sim.css" />
+  <style>
+    .sh-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin-top: 16px; }
+    .sh-item { display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; }
+    .sh-item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: rgba(255,255,255,.04); }
+    .sh-item .sh-b { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; flex: 1; }
+    .sh-item h3 { font: 700 1rem var(--display); }
+    .sh-item p { font-size: .86rem; line-height: 1.55; color: var(--text-dim); flex: 1; }
+    .sh-kind { font: 600 .62rem var(--label); letter-spacing: .07em; text-transform: uppercase; color: var(--brass); }
+    .sh-price { font: 600 1.05rem var(--mono); color: var(--cyan); }
+    .sh-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 6px; }
+    .sh-add { padding: 9px 16px; border: 0; border-radius: 10px; cursor: pointer; font: 700 .82rem var(--label); color: var(--ink); background: var(--cyan); }
+    .sh-cart-line { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.07); font-size: .92rem; }
+    .sh-qty { display: inline-flex; align-items: center; gap: 8px; font: 600 .9rem var(--mono); }
+    .sh-qty button { width: 28px; height: 28px; border: 0; border-radius: 8px; cursor: pointer; color: var(--text); background: rgba(255,255,255,.08); font: 600 1rem var(--mono); }
+    .sh-total { display: flex; justify-content: space-between; margin-top: 14px; font: 700 1.1rem var(--display); }
+    .sh-total b { font-family: var(--mono); color: var(--cyan); }
+    .sh-pay { display: grid; grid-template-columns: 240px 1fr; gap: 22px; align-items: center; }
+    .sh-pay img { width: 240px; height: 240px; border-radius: 14px; background: #fff; display: block; }
+    .sh-pay dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: .92rem; }
+    .sh-pay dt { color: var(--text-dim); } .sh-pay dd { font: 600 .98rem var(--mono); color: var(--text); }
+    .sh-pay dd.big { color: var(--cyan); font-size: 1.15rem; }
+    .sh-copy { margin-left: 8px; padding: 3px 10px; border: 0; border-radius: 999px; cursor: pointer; font: 600 .7rem var(--label); color: var(--text); background: rgba(255,255,255,.1); }
+    @media (max-width: 640px) { .sh-pay { grid-template-columns: 1fr; justify-items: center; } .sh-pay dl { width: 100%; } }
+  </style>
 </head>
 <body class="ud" data-nen="hao">
   <header class="site-header scrolled">
@@ -36,11 +60,12 @@
   <main class="hub">
     <p class="ud-kicker">Cửa hàng</p>
     <h1 class="ud-title">Cửa hàng Bienac <span class="accent">đang được chuẩn bị</span></h1>
-    <p class="sim-lede">Chưa có món nào lên kệ. Trước khi làm, Bienac muốn biết bạn thích thứ gì. Bỏ phiếu bên dưới và để lại email, khi cửa hàng mở bạn sẽ là người biết đầu tiên.</p>
+    <p class="sim-lede">Trước khi làm, Bienac muốn biết bạn thích thứ gì. Bỏ phiếu bên dưới và để lại email, khi cửa hàng mở bạn sẽ là người biết đầu tiên.</p>
+    <div id="soon" hidden>
     <span class="hub-badge">Sắp ra mắt</span>
     <section class="hub-sec" id="want">
       <h2>Bạn muốn Bienac làm món gì?</h2>
-      <p>Bấm để bỏ phiếu. Món nào nhiều phiếu nhất sẽ được làm trước.</p>
+      <p>Chưa có món nào lên kệ. Bấm để bỏ phiếu, món nào nhiều phiếu nhất sẽ được làm trước.</p>
       <div class="ud-panel hub-card"><div class="vote-list" id="board"></div>
         <form class="hub-form" id="propose"><input type="text" name="title" maxlength="80" required placeholder="Món khác bạn muốn có…" aria-label="Món đề xuất" /><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" /><button class="hub-btn" type="submit">Đề xuất</button></form>
         <p class="hub-msg" id="proposeMsg">Đề xuất mới sẽ hiện lên bảng sau khi Bienac duyệt.</p></div>
@@ -50,23 +75,53 @@
       <p>Chỉ một thư khi cửa hàng mở và khi có món mới. Không quảng cáo, không chia sẻ địa chỉ của bạn cho ai.</p>
       <div class="ud-panel hub-card"><form class="hub-form" id="sub" style="margin-top:0"><input type="email" name="email" required maxlength="160" placeholder="email@cuaban.com" aria-label="Email" autocomplete="email" /><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" /><button class="hub-btn" type="submit">Đăng ký</button></form><p class="hub-msg" id="subMsg"></p></div>
     </section>
+    </div>
+    <div id="store" hidden>
+      <section class="hub-sec" style="margin-top:22px"><h2>Trên kệ</h2><div class="sh-grid" id="items"></div></section>
+      <section class="hub-sec" id="cartSec" hidden>
+        <h2>Giỏ hàng</h2>
+        <div class="ud-panel hub-card"><div id="cart"></div><div class="sh-total"><span>Tổng cộng</span><b id="total"></b></div>
+          <form class="hub-form" id="checkout">
+            <input type="text" name="name" required minlength="2" maxlength="80" placeholder="Họ tên" aria-label="Họ tên" autocomplete="name" />
+            <input type="email" name="email" required maxlength="160" placeholder="Email nhận hàng và xác nhận" aria-label="Email" autocomplete="email" />
+            <input type="text" name="phone" maxlength="20" placeholder="Số điện thoại" aria-label="Số điện thoại" autocomplete="tel" data-ship />
+            <input type="text" name="address" maxlength="240" placeholder="Địa chỉ nhận hàng" aria-label="Địa chỉ" autocomplete="street-address" data-ship style="flex-basis:100%" />
+            <input type="text" name="note" maxlength="500" placeholder="Ghi chú (không bắt buộc)" aria-label="Ghi chú" style="flex-basis:100%" />
+            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button class="hub-btn" type="submit">Đặt hàng</button>
+          </form><p class="hub-msg" id="orderMsg">Sau khi đặt, bạn sẽ thấy mã QR để chuyển khoản.</p></div>
+      </section>
+      <section class="hub-sec" id="paySec" hidden>
+        <h2>Chuyển khoản để hoàn tất</h2>
+        <p>Quét mã bằng app ngân hàng. Số tiền và nội dung đã điền sẵn. Nếu chuyển tay, nhớ ghi đúng nội dung để Bienac nhận ra đơn của bạn.</p>
+        <div class="ud-panel hub-card"><div class="sh-pay"><img id="qr" alt="Mã QR chuyển khoản cho đơn hàng" width="240" height="240" />
+          <dl><dt>Ngân hàng</dt><dd>BIDV</dd><dt>Số tài khoản</dt><dd>4506 285 887<button class="sh-copy" data-copy="4506285887">Chép</button></dd><dt>Chủ tài khoản</dt><dd>DUONG VAN BIEN</dd><dt>Số tiền</dt><dd class="big" id="payAmt"></dd><dt>Nội dung</dt><dd class="big"><span id="payCode"></span><button class="sh-copy" id="copyCode">Chép</button></dd></dl></div>
+          <p class="hub-msg ok" style="margin-top:16px">Đơn đã được ghi lại. Bienac kiểm tra chuyển khoản bằng tay, thường trong vòng một ngày, rồi gửi hàng và thư xác nhận. Hãy lưu lại mã đơn.</p></div>
+      </section>
+    </div>
+    <section class="hub-sec" id="track">
+      <h2>Xem đơn của bạn</h2>
+      <p>Nhập mã đơn (bắt đầu bằng BN) để biết đơn đang ở bước nào.</p>
+      <div class="ud-panel hub-card"><form class="hub-form" id="look" style="margin-top:0"><input type="text" name="code" required maxlength="8" placeholder="BN……" aria-label="Mã đơn" autocomplete="off" style="text-transform:uppercase" /><button class="hub-btn" type="submit">Xem</button></form><p class="hub-msg" id="lookMsg"></p></div>
+    </section>
     <section class="hub-sec" id="how">
-      <h2>Mua hàng sẽ như thế nào</h2>
+      <h2>Mua hàng như thế nào</h2>
       <p>Không cần tạo tài khoản, không cần thẻ.</p>
       <div class="hub-steps">
-        <div class="hub-step"><b>Chọn món</b><p>Xem ảnh, mô tả và giá ngay trên trang này.</p></div>
-        <div class="hub-step"><b>Quét mã QR</b><p>Chuyển khoản bằng app ngân hàng, kèm mã đơn hiện trên màn hình.</p></div>
+        <div class="hub-step"><b>Chọn món</b><p>Xem ảnh, mô tả và giá ngay trên trang này, rồi bỏ vào giỏ.</p></div>
+        <div class="hub-step"><b>Quét mã QR</b><p>Chuyển khoản bằng app ngân hàng. Số tiền và mã đơn được điền sẵn.</p></div>
         <div class="hub-step"><b>Nhận hàng</b><p>File gửi qua email. Hàng in gửi về địa chỉ bạn để lại.</p></div>
       </div>
     </section>
     <section class="hub-sec">
-      <h2>Trong lúc chờ</h2>
-      <p>Nếu bạn muốn giúp kênh ngay bây giờ, trang ủng hộ luôn mở.</p>
+      <h2>Ủng hộ không cần mua gì</h2>
+      <p>Nếu bạn chỉ muốn giúp kênh, trang ủng hộ luôn mở.</p>
       <div class="hub-links"><a class="hub-link" href="/support/" data-tap="support"><b>Ủng hộ Bienac</b><span>QR, MoMo, PayPal, Hội viên</span></a><a class="hub-link" href="/community/" data-tap="community"><b>Cộng đồng</b><span>Bình chọn video tiếp theo</span></a></div>
     </section>
   </main>
+<script src="/js/vendor/qrcode-generator.min.js"></script>
 <script>
-(() => {
+(async () => {
   const $ = (id) => document.getElementById(id), esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const post = (url, data) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then((r) => r.json().catch(() => ({ ok: false })));
   const tap = (id) => { try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: location.pathname.replace(/\/$/, '') + '/tap/' + id, r: document.referrer })); } catch (e) {} };
@@ -77,12 +132,53 @@
     paint();
     el.onclick = async (e) => { const b = e.target.closest('[data-id]'); if (!b || b.disabled) return; b.disabled = true; const j = await post('/api/vote', { id: +b.dataset.id }).catch(() => ({})); if (j.ok) { const it = items.find((x) => x.id === j.id); it.n = j.n; it.mine = j.mine; items.sort((a, c) => c.n - a.n || a.id - c.id); tap('vote-' + g); } paint(); };
   }
-  function form(f, msg, send, okText) { f.onsubmit = async (e) => { e.preventDefault(); const btn = f.querySelector('button'); btn.disabled = true; msg.className = 'hub-msg'; msg.textContent = 'Đang gửi…'; let j = {}; try { j = await send(new FormData(f)); } catch (err) {} if (j.ok) { msg.className = 'hub-msg ok'; msg.textContent = okText; f.reset(); } else { msg.className = 'hub-msg err'; msg.textContent = j.error === 'rate' ? 'Bạn gửi hơi nhiều rồi, lát nữa thử lại nhé.' : j.error === 'email' ? 'Địa chỉ email chưa đúng.' : 'Chưa gửi được. Bạn thử lại sau nhé.'; } btn.disabled = false; }; }
+  function form(f, msg, send, okText) { f.onsubmit = async (e) => { e.preventDefault(); const btn = f.querySelector('button'); btn.disabled = true; msg.className = 'hub-msg'; msg.textContent = 'Đang gửi…'; let j = {}; try { j = await send(new FormData(f)); } catch (err) {} if (j.ok) { msg.className = 'hub-msg ok'; msg.textContent = okText; f.reset(); if (j.payload && !send.own) fetch('https://formsubmit.co/ajax/bienacvn@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(j.payload) }).catch(() => {}); } else { msg.className = 'hub-msg err'; msg.textContent = j.error === 'rate' ? 'Bạn gửi hơi nhiều rồi, lát nữa thử lại nhé.' : j.error === 'email' ? 'Địa chỉ email chưa đúng.' : 'Chưa gửi được. Bạn thử lại sau nhé.'; } btn.disabled = false; }; }
 
-  board($('board'), 'shop');
-  form($('propose'), $('proposeMsg'), (fd) => post('/api/vote', { g: 'shop', title: fd.get('title'), website: fd.get('website') }), 'Đã nhận đề xuất. Cảm ơn bạn!');
-  form($('sub'), $('subMsg'), (fd) => post('/api/subscribe', { email: fd.get('email'), src: 'shop', website: fd.get('website') }), 'Đã ghi lại. Khi cửa hàng mở, bạn sẽ nhận được thư.');
+  const vnd = (n) => Number(n).toLocaleString('vi-VN') + ' đ';
   document.querySelectorAll('[data-tap]').forEach((a) => a.addEventListener('click', () => tap(a.dataset.tap)));
+  // Tra đơn
+  $('look').onsubmit = async (e) => { e.preventDefault(); const code = new FormData(e.target).get('code').trim().toUpperCase(), m = $('lookMsg'); m.className = 'hub-msg'; m.textContent = 'Đang tìm…';
+    const ST = { pending: 'Đang chờ Bienac xác nhận chuyển khoản.', paid: 'Đã nhận tiền, đang chuẩn bị gửi hàng.', sent: 'Đã gửi hàng. Bạn kiểm tra email (hoặc chờ bưu tá) nhé.', cancelled: 'Đơn đã hủy.' };
+    let j = {}; try { j = await (await fetch('/api/order?code=' + encodeURIComponent(code))).json(); } catch (err) {}
+    if (j.ok) { m.className = 'hub-msg ok'; m.textContent = `Đơn ${j.code} · ${vnd(j.total)}: ${ST[j.status] || j.status}`; } else { m.className = 'hub-msg err'; m.textContent = 'Không tìm thấy đơn này. Bạn xem lại mã nhé.'; } };
+  let P = []; try { const a = await (await fetch('/data/products.json')).json(); if (Array.isArray(a)) P = a.filter((p) => p && p.active !== false && p.price > 0); } catch (e) {}
+  if (!P.length) {
+    $('soon').hidden = false; board($('board'), 'shop');
+    form($('propose'), $('proposeMsg'), (fd) => post('/api/vote', { g: 'shop', title: fd.get('title'), website: fd.get('website') }), 'Đã nhận đề xuất. Cảm ơn bạn!');
+    form($('sub'), $('subMsg'), (fd) => post('/api/subscribe', { email: fd.get('email'), src: 'shop', website: fd.get('website') }), 'Đã ghi lại. Khi cửa hàng mở, bạn sẽ nhận được thư.');
+    return;
+  }
+  // ---- Cửa hàng có hàng ----
+  document.querySelector('.ud-title').innerHTML = 'Cửa hàng <span class="accent">Bienac</span>'; document.querySelector('.sim-lede').textContent = 'Mỗi món bạn mua giúp kênh tiếp tục ra video. Thanh toán bằng chuyển khoản, không cần tài khoản hay thẻ.';
+  $('store').hidden = false; const cart = new Map();
+  try { for (const [id, q] of JSON.parse(localStorage.getItem('bienac-cart') || '[]')) if (P.find((p) => p.id === id)) cart.set(id, q); } catch (e) {}
+  const save = () => { try { localStorage.setItem('bienac-cart', JSON.stringify([...cart])); } catch (e) {} };
+  $('items').innerHTML = P.map((p) => `<article class="ud-panel sh-item">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" />` : ''}<div class="sh-b"><span class="sh-kind">${p.kind === 'print' ? 'Hàng gửi bưu điện' : 'File gửi qua email'}</span><h3>${esc(p.name)}</h3><p>${esc(p.desc || '')}</p><div class="sh-row"><span class="sh-price">${vnd(p.price)}</span><button class="sh-add" data-id="${esc(p.id)}">Thêm vào giỏ</button></div></div></article>`).join('');
+  function paint() {
+    const lines = [...cart].map(([id, q]) => [P.find((p) => p.id === id), q]).filter((x) => x[0]); $('cartSec').hidden = !lines.length; let total = 0, ship = false;
+    $('cart').innerHTML = lines.map(([p, q]) => { total += p.price * q; if (p.kind === 'print') ship = true; return `<div class="sh-cart-line"><span>${esc(p.name)}</span><span class="sh-qty"><button data-d="-1" data-id="${esc(p.id)}" aria-label="Bớt">−</button>${q}<button data-d="1" data-id="${esc(p.id)}" aria-label="Thêm">+</button></span><b style="font-family:var(--mono)">${vnd(p.price * q)}</b></div>`; }).join('');
+    $('total').textContent = vnd(total); document.querySelectorAll('#checkout [data-ship]').forEach((i) => { i.hidden = !ship; i.required = ship; }); save();
+  }
+  $('items').onclick = (e) => { const b = e.target.closest('[data-id]'); if (!b) return; cart.set(b.dataset.id, Math.min(20, (cart.get(b.dataset.id) || 0) + 1)); paint(); tap('add'); $('cartSec').scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
+  $('cart').onclick = (e) => { const b = e.target.closest('[data-d]'); if (!b) return; const q = (cart.get(b.dataset.id) || 0) + +b.dataset.d; q <= 0 ? cart.delete(b.dataset.id) : cart.set(b.dataset.id, Math.min(20, q)); paint(); };
+  paint();
+  // Mã VietQR có số tiền và nội dung (EMVCo): quét là app điền sẵn.
+  const tlv = (id, v) => id + String(v.length).padStart(2, '0') + v;
+  function crc16(str) { let c = 0xffff; for (const ch of new TextEncoder().encode(str)) { c ^= ch << 8; for (let i = 0; i < 8; i++) c = c & 0x8000 ? ((c << 1) ^ 0x1021) & 0xffff : (c << 1) & 0xffff; } return c.toString(16).toUpperCase().padStart(4, '0'); }
+  function vietqr(amount, memo) { const acc = tlv('00', 'A000000727') + tlv('01', tlv('00', '970418') + tlv('01', '4506285887')) + tlv('02', 'QRIBFTTA'); const p = tlv('00', '01') + tlv('01', '12') + tlv('38', acc) + tlv('53', '704') + tlv('54', String(amount)) + tlv('58', 'VN') + tlv('62', tlv('08', memo)) + '6304'; return p + crc16(p); }
+  $('checkout').onsubmit = async (e) => {
+    e.preventDefault(); const fd = new FormData(e.target), btn = e.target.querySelector('button'), m = $('orderMsg'); btn.disabled = true; m.className = 'hub-msg'; m.textContent = 'Đang tạo đơn…';
+    const j = await post('/api/order', { items: [...cart].map(([id, qty]) => ({ id, qty })), name: fd.get('name'), email: fd.get('email'), phone: fd.get('phone'), address: fd.get('address'), note: fd.get('note'), website: fd.get('website') }).catch(() => ({}));
+    btn.disabled = false;
+    if (!j.ok) { m.className = 'hub-msg err'; m.textContent = { email: 'Địa chỉ email chưa đúng.', name: 'Bạn điền họ tên nhé.', ship: 'Món này gửi bưu điện, bạn điền đủ số điện thoại và địa chỉ nhé.', rate: 'Bạn đặt hơi nhiều đơn rồi, lát nữa thử lại nhé.', empty: 'Giỏ hàng đang trống.' }[j.error] || 'Chưa tạo được đơn. Bạn thử lại sau nhé.'; return; }
+    $('payAmt').textContent = vnd(j.total); $('payCode').textContent = j.code;
+    try { const q = window.qrcode(0, 'M'); q.addData(vietqr(j.total, j.code)); q.make(); $('qr').src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(q.createSvgTag({ cellSize: 8, margin: 4, scalable: true })); } catch (err) { $('qr').src = '/assets/qr-bidv.png'; }
+    $('cartSec').hidden = true; $('paySec').hidden = false; $('paySec').scrollIntoView({ behavior: 'smooth' }); cart.clear(); save(); tap('order');
+    if (j.payload) fetch('https://formsubmit.co/ajax/bienacvn@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(j.payload) }).catch(() => {});
+  };
+  const copy = async (b, text) => { try { await navigator.clipboard.writeText(text); const o = b.textContent; b.textContent = 'Đã chép'; setTimeout(() => { b.textContent = o; }, 1500); } catch (e) {} };
+  $('copyCode').onclick = (e) => copy(e.target, $('payCode').textContent);
+  document.querySelectorAll('[data-copy]').forEach((b) => { b.onclick = () => copy(b, b.dataset.copy); });
 })();
 </script>
 <script src="/js/nen-ung-dung.js"></script>

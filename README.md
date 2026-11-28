@@ -55,7 +55,10 @@ chạy trên **Cloudflare Pages** kèm vài Pages Functions và một cơ sở d
 - **Ứng dụng mới (slug tiếng Anh):** `pendulum-wave`, `orbits`, `fourier`, `mandelbrot`, `ripple`, `turing`, `gas`, `pi`, `light-speed`, `cipher`. Dùng khuôn chung `css/sim.css` + `js/sim.js` (hàm `Sim.stage`, `Sim.loop`, `Sim.pos`, `Sim.vi`).
 - **Thư viện:** `/glossary/` (dữ liệu `data/glossary.json`), `/today/` (dữ liệu `data/today.json`, mỗi dòng `[tháng, ngày, năm, nội dung]`).
 - **Cộng đồng `/community/`:** bình chọn chủ đề video, đề xuất chủ đề (chờ duyệt), hỏi Bienac (dùng `/api/message`), đăng ký nhận tin.
-- **Cửa hàng `/shop/`:** đang ở trạng thái "sắp ra mắt": bình chọn món muốn có + đăng ký nhận tin.
+- **Cửa hàng `/shop/`:** đọc `data/products.json`. File rỗng (`[]`) thì trang ở trạng thái "sắp ra mắt" (bình chọn món + đăng ký nhận tin). Có món thì tự thành cửa hàng: giỏ hàng, đặt đơn, mã QR chuyển khoản điền sẵn số tiền và mã đơn.
+  - Thêm món: chép mẫu từ `data/products.example.json` (id, name, price đồng, kind `file` | `print`, desc, image, active). Ảnh đặt ở `assets/shop/`.
+  - `/api/order`: bảng D1 `orders`. Giá tính ở máy chủ theo products.json. Đơn mới báo về hộp thư qua FormSubmit.
+    Xem đơn chờ: `SELECT code, total, name, email, items FROM orders WHERE status = 'pending'`. Đã nhận tiền: `UPDATE orders SET status = 'paid' WHERE code = 'BN…'`; đã gửi: `'sent'`; hủy: `'cancelled'`.
 - **API mới** (Pages Functions, D1 `bienac-stats`, mã dùng chung `lib/guard.js`):
   - `/api/vote`: bảng `topics` (grp `video` | `shop`, status 1 = hiện, 0 = chờ duyệt) và `votes`.
     Duyệt đề xuất: `UPDATE topics SET status = 1 WHERE id = …`. Xem đề xuất chờ: `SELECT * FROM topics WHERE status = 0`.

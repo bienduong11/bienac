@@ -37,5 +37,6 @@ export async function onRequestPost({ request, env }) {
   const lim = await env.DB.prepare('SELECT SUM(who = ?1) AS mine, COUNT(*) AS allday FROM topics WHERE status = 0 AND ts > ?2').bind(me, now - 86400000).first().catch(() => null);
   if (lim && (lim.mine >= 3 || lim.allday >= 60)) return json({ ok: false, error: 'rate' }, 429);
   await env.DB.prepare('INSERT INTO topics (grp, title, note, status, ts, who) VALUES (?, ?, ?, 0, ?, ?)').bind(g, title, clean(f.note, 160), now, me).run();
-  return json({ ok: true, pending: true });
+  // Trình duyệt người gửi chuyển thông báo tới hộp thư Bienac (FormSubmit), để Bien biết có đề xuất chờ duyệt.
+  return json({ ok: true, pending: true, payload: { _subject: `Đề xuất mới (${g === 'shop' ? 'cửa hàng' : 'video'}): ${title}`, _template: 'box', _captcha: 'false', 'Đề xuất': title, 'Nhóm': g } });
 }
