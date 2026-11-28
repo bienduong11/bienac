@@ -59,6 +59,19 @@ await hit('/support/', { expect: ok200, contains: [PAY.number, PAY.holder, PAY.b
 await hit('/assets/qr-bidv.png', { expect: ok200, sha: QR_SHA256 });
 await hit('/assets/qr-bidv.svg', { expect: ok200 });
 await hit('/email/', { expect: ok200, contains: ['bienacvn@gmail.com'] });
+// Trang thêm từ 28/11/2026: ứng dụng mới, thư viện, cộng đồng, cửa hàng, và các API đi kèm.
+for (const s of ['pendulum-wave', 'orbits', 'fourier', 'mandelbrot', 'ripple', 'turing', 'gas', 'pi', 'light-speed']) await hit(`/${s}/`, { expect: ok200, contains: ['id="cv"', '/js/sim.js'] });
+await hit('/cipher/', { expect: ok200, contains: ['id="brute"'] });
+await hit('/glossary/', { expect: ok200, contains: ['/data/glossary.json'] });
+await hit('/today/', { expect: ok200, contains: ['/data/today.json'] });
+await hit('/community/', { expect: ok200, contains: ['id="board"', '/api/vote'] });
+await hit('/shop/', { expect: ok200, contains: ['/data/products.json', '4506285887', 'DUONG VAN BIEN'] });
+await hit('/data/glossary.json', { expect: ok200, contains: ['Entropy'] });
+await hit('/data/today.json', { expect: ok200, contains: ['Sputnik'] });
+await hit('/data/products.json', { expect: ok200, contains: ['['] });
+await hit('/api/vote?g=video', { expect: ok200, contains: ['"ok":true'] });
+await hit('/api/vote?g=shop', { expect: ok200, contains: ['"ok":true'] });
+await hit('/api/score?game=do-vui', { expect: ok200, contains: ['"dist"'] });
 await hit('/support', { expect: redir });
 await hit('/email', { expect: redir });
 await hit('/api/stats', { expect: ok200 });

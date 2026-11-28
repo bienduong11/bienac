@@ -1,5 +1,5 @@
 /* =====================================================================
- * Ô tìm kiếm trang chủ: video, bài viết, ứng dụng, và chữ Hán (mở Chiết tự).
+ * Ô tìm kiếm trang chủ: video, bài viết, ứng dụng, thuật ngữ từ điển, và chữ Hán (mở Chiết tự).
  * Dữ liệu nạp lúc người dùng bấm vào ô lần đầu.
  * ===================================================================== */
 (function () {
@@ -57,11 +57,12 @@
   async function load() {
     if (data) return;
     const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    const [videos, posts, hoSo] = await Promise.all([get('/data/tat-ca-video.json'), get('/bai-viet/muc-luc.json'), get('/bai-viet/ho-so.json')]);
+    const [videos, posts, hoSo, terms] = await Promise.all([get('/data/tat-ca-video.json'), get('/bai-viet/muc-luc.json'), get('/bai-viet/ho-so.json'), get('/data/glossary.json')]);
     data = [];
     (posts || []).forEach((p) => data.push({ k: 'Bài viết', t: p.title, u: p.url || `/bai-viet/${p.slug}/`, img: p.video ? `https://i.ytimg.com/vi/${p.video}/mqdefault.jpg` : '', f: fold(p.title + ' ' + (p.description || '')) }));
     (videos || []).forEach((v) => data.push({ k: 'Video', t: v.title, u: (hoSo && hoSo[v.id]) || `https://www.youtube.com/watch?v=${v.id}`, img: `https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`, f: fold(v.title) }));
     APPS.forEach(([t, u, kw]) => data.push({ k: 'Ứng dụng', t, u, ic: '◈', f: fold(t) + ' ' + kw }));
+    (terms || []).forEach((x) => data.push({ k: 'Từ điển', t: x.t, u: '/glossary/#' + fold(x.t).replace(/[^a-z0-9]+/g, '-'), ic: 'A', f: fold(x.t + ' ' + (x.en || '')) }));
   }
 
   function render() {

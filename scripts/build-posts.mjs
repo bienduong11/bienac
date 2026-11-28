@@ -120,7 +120,7 @@ ${header()}
 ${body}
   </main>
   <footer class="site-footer"><p>© ${new Date().getFullYear()} Bienac.</p></footer>
-${url.includes('/v/') ? '  <script src="/js/dem.js"></script>' : ''}
+${url.includes('/v/') || url.endsWith('/bai-viet/') ? '  <script src="/js/dem.js"></script>' : ''}
 </body>
 </html>
 `;
