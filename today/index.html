@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Ngày này năm xưa · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/today/" />
+  <meta name="description" content="Ngày này trong lịch sử khoa học: mỗi ngày một phát hiện, một chuyến bay, một ngày sinh. Xem hôm nay và cả năm." />
+  <meta property="og:title" content="Ngày này năm xưa · Bienac" />
+  <meta property="og:description" content="Ngày này trong lịch sử khoa học: mỗi ngày một phát hiện, một chuyến bay, một ngày sinh. Xem hôm nay và cả năm." />
+  <meta property="og:image" content="https://bienac.com/assets/og/today.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="trang">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Ngày này năm xưa</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="lib">
+    <p class="ud-kicker">Thư viện</p>
+    <h1 class="ud-title">Ngày này <span class="accent">trong lịch sử khoa học</span></h1>
+    <p class="sim-lede">Mỗi ngày một mốc: một phát hiện, một chuyến bay, một ngày sinh. Hôm nay có gì, và những ngày sắp tới có gì.</p>
+    <section class="ud-panel hub-card" id="hero" style="margin-top:22px"><p class="ud-kicker" id="heroK"></p><div id="heroB"></div></section>
+    <div class="hub-sec"><h2>Sắp tới</h2><div class="lib-list" id="next"></div></div>
+    <div class="hub-sec"><h2>Cả năm</h2><div class="sim-chips" id="months"></div><div class="lib-list" id="list"></div></div>
+  </main>
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id), esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let D = []; try { D = await (await fetch('/data/today.json')).json(); } catch (e) {}
+  const now = new Date(), m = now.getMonth() + 1, d = now.getDate(), yr = now.getFullYear();
+  const key = (x) => x[0] * 100 + x[1], today = m * 100 + d;
+  const ago = (y) => y < 0 ? '' : `${(yr - y).toLocaleString('vi-VN')} năm trước`;
+  const card = (x) => `<article class="ud-panel lib-card"><span class="lib-tag">${x[1]} tháng ${x[0]} · ${x[2]}</span><p style="color:var(--text);margin-top:0">${esc(x[3])}</p></article>`;
+  const hit = D.filter((x) => key(x) === today);
+  const after = D.filter((x) => key(x) > today).concat(D.filter((x) => key(x) < today));
+  if (hit.length) { $('heroK').textContent = `Hôm nay, ${d} tháng ${m}`; $('heroB').innerHTML = hit.map((x) => `<p style="margin-top:10px;font:700 1.25rem/1.45 var(--display)">${esc(x[3])}</p><p class="ud-dim" style="margin-top:6px;font:500 .85rem var(--mono)">${x[2]} · ${ago(x[2])}</p>`).join(''); }
+  else { const x = after[0]; $('heroK').textContent = `Hôm nay, ${d} tháng ${m}, chưa có mốc nào trong sổ. Mốc gần nhất sắp tới: ${x[1]} tháng ${x[0]}`; $('heroB').innerHTML = `<p style="margin-top:10px;font:700 1.25rem/1.45 var(--display)">${esc(x[3])}</p><p class="ud-dim" style="margin-top:6px;font:500 .85rem var(--mono)">${x[2]} · ${ago(x[2])}</p>`; }
+  $('next').innerHTML = after.slice(hit.length ? 0 : 1, hit.length ? 6 : 7).map(card).join('');
+  let mon = m;
+  $('months').innerHTML = Array.from({ length: 12 }, (_, i) => `<button class="sim-chip" data-m="${i + 1}" aria-pressed="${i + 1 === mon}">Tháng ${i + 1}</button>`).join('');
+  const show = () => { $('list').innerHTML = D.filter((x) => x[0] === mon).map(card).join(''); };
+  $('months').onclick = (e) => { const b = e.target.closest('[data-m]'); if (!b) return; mon = +b.dataset.m; document.querySelectorAll('#months [data-m]').forEach((x) => x.setAttribute('aria-pressed', x === b)); show(); };
+  show();
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

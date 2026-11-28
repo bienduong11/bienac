@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Ném ra số π · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/pi/" />
+  <meta name="description" content="Ném chấm ngẫu nhiên vào hình vuông, đếm số chấm rơi trong hình tròn, và số π dần hiện ra. Kèm bài toán thả kim của Buffon." />
+  <meta property="og:title" content="Ném ra số π · Bienac" />
+  <meta property="og:description" content="Ném chấm ngẫu nhiên vào hình vuông, đếm số chấm rơi trong hình tròn, và số π dần hiện ra. Kèm bài toán thả kim của Buffon." />
+  <meta property="og:image" content="https://bienac.com/assets/og/pi.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="so">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Ném ra số π</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Ném ra số π</p>
+    <h1 class="ud-title">Tìm số π <span class="accent">bằng cách ném bừa</span></h1>
+    <p class="sim-lede">Ném thật nhiều chấm ngẫu nhiên vào một hình vuông. Đếm xem bao nhiêu chấm rơi trong hình tròn. Chỉ từ tỉ lệ ấy, số π dần hiện ra. Hoặc thử cách của thế kỷ 18: thả kim xuống sàn gỗ.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Các chấm ngẫu nhiên rơi vào hình vuông có hình tròn bên trong"></canvas></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-chips" id="mode"><button class="sim-chip" data-m="dart" aria-pressed="true">Ném chấm</button><button class="sim-chip" data-m="needle" aria-pressed="false">Thả kim Buffon</button></div>
+          <div class="sim-row" style="margin-top:10px"><button class="ud-btn" id="play" aria-pressed="true">❚❚ Dừng</button><button class="ud-btn" id="more">Ném 10.000</button><button class="ud-btn" id="reset">Xóa</button></div>
+          <div class="sim-stats"><div class="sim-stat"><b id="n">0</b><span>Số lần ném</span></div><div class="sim-stat"><b id="hit">0</b><span id="hitL">Rơi trong hình tròn</span></div><div class="sim-stat"><b id="est">–</b><span>π ước lượng</span></div><div class="sim-stat"><b id="err">–</b><span>Sai lệch</span></div></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Vì sao ra được π?</h2>
+          <p>Hình tròn nội tiếp chiếm đúng <b>π/4</b> diện tích hình vuông. Ném thật bừa thì tỉ lệ chấm rơi trong hình tròn cũng tiến về π/4. Nhân 4 lên là ra π.</p>
+          <p>Cách này chậm: muốn thêm một chữ số đúng phải ném nhiều gấp khoảng trăm lần. Nhưng nó làm được những bài không có công thức. Trong dự án bom nguyên tử ở Los Alamos, Stanisław Ulam và John von Neumann dùng đúng ý tưởng này để tính đường đi của neutron, và đặt tên nó theo sòng bạc <b>Monte Carlo</b>.</p>
+          <p>Còn bài thả kim do Buffon nêu ra năm 1777: thả cây kim dài bằng khoảng cách giữa hai khe ván sàn, xác suất kim nằm đè lên khe là <b>2/π</b>.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, vi, still } = Sim;
+  let mode = 'dart', n = 0, hit = 0, on = !still; const lay = document.createElement('canvas'), lg = lay.getContext('2d');
+  const S = stage($('cv'), (s) => { lay.width = s.cv.width; lay.height = s.cv.height; lg.setTransform(s.dpr, 0, 0, s.dpr, 0, 0); n = 0; hit = 0; });
+  const box = () => { const m = Math.min(S.W, S.H) * 0.9; return [(S.W - m) / 2, (S.H - m) / 2, m]; };
+  function throwN(k, show) {
+    const [x0, y0, m] = box();
+    for (let i = 0; i < k; i++) { n++;
+      if (mode === 'dart') { const x = Math.random(), y = Math.random(), inn = (x - .5) ** 2 + (y - .5) ** 2 <= .25; if (inn) hit++; if (show || i % 8 === 0) { lg.fillStyle = inn ? 'rgba(55,240,207,.8)' : 'rgba(232,69,46,.75)'; lg.fillRect(x0 + x * m - 1, y0 + y * m - 1, 2, 2); } }
+      else { const gap = m / 8, x = Math.random() * m, y = Math.random() * m, a = Math.random() * Math.PI, dx = Math.cos(a) * gap / 2, dy = Math.sin(a) * gap / 2, cross = Math.floor((y - dy) / gap) !== Math.floor((y + dy) / gap); if (cross) hit++; if (show || i % 8 === 0) { lg.strokeStyle = cross ? 'rgba(55,240,207,.75)' : 'rgba(236,230,214,.28)'; lg.lineWidth = 1; lg.beginPath(); lg.moveTo(x0 + x - dx, y0 + y - dy); lg.lineTo(x0 + x + dx, y0 + y + dy); lg.stroke(); } }
+    }
+  }
+  function draw() {
+    const g = S.g, [x0, y0, m] = box(); g.clearRect(0, 0, S.W, S.H); g.drawImage(lay, 0, 0, S.W, S.H);
+    g.strokeStyle = 'rgba(201,166,80,.8)'; g.lineWidth = 1.5; g.strokeRect(x0, y0, m, m);
+    if (mode === 'dart') { g.beginPath(); g.arc(x0 + m / 2, y0 + m / 2, m / 2, 0, 7); g.stroke(); }
+    else { g.strokeStyle = 'rgba(201,166,80,.45)'; g.lineWidth = 1; g.beginPath(); for (let i = 1; i < 8; i++) { g.moveTo(x0, y0 + i * m / 8); g.lineTo(x0 + m, y0 + i * m / 8); } g.stroke(); }
+    const est = mode === 'dart' ? 4 * hit / n : 2 * n / hit;
+    $('n').textContent = vi(n); $('hit').textContent = vi(hit); $('est').textContent = n && hit ? vi(est, 5) : '–'; $('err').textContent = n && hit ? vi(Math.abs(est - Math.PI) / Math.PI * 100, 3) + '%' : '–';
+  }
+  loop(() => { if (on) throwN(mode === 'dart' ? 40 : 12, true); draw(); });
+  const clear = () => { n = 0; hit = 0; lg.clearRect(0, 0, S.W, S.H); };
+  $('play').onclick = () => { on = !on; $('play').setAttribute('aria-pressed', on); $('play').textContent = on ? '❚❚ Dừng' : '▶ Ném tiếp'; };
+  if (still) { $('play').setAttribute('aria-pressed', false); $('play').textContent = '▶ Ném tiếp'; }
+  $('more').onclick = () => throwN(10000, false); $('reset').onclick = clear;
+  $('mode').onclick = (e) => { const b = e.target.closest('[data-m]'); if (!b) return; mode = b.dataset.m; document.querySelectorAll('#mode [data-m]').forEach((x) => x.setAttribute('aria-pressed', x === b)); $('hitL').textContent = mode === 'dart' ? 'Rơi trong hình tròn' : 'Kim đè lên khe'; clear(); };
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

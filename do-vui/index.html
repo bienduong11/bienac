@@ -37,6 +37,7 @@
     .dv-exp a { color: var(--cyan); }
     .dv-next { margin-top: 16px; display: flex; justify-content: flex-end; }
     .dv-end { text-align: center; }
+    .dv-rank { margin-top: 10px; font-size: .9rem; color: var(--brass); }
     .dv-end .score { font: 700 clamp(3rem, 12vw, 5rem)/1 var(--mono); color: var(--cyan); margin-top: 10px; }
     .dv-end p { color: var(--text-dim); margin-top: 10px; line-height: 1.6; }
     .dv-end .row { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
@@ -127,7 +128,16 @@
     $('prog').style.width = '100%';
     const msg = score >= 9 ? 'Xuất sắc! Bạn đúng là khán giả ruột của Bienac.' : score >= 7 ? 'Rất tốt! Chỉ thiếu chút nữa là tuyệt đối.' : score >= 4 ? 'Không tệ chút nào. Xem lại vài video là lần sau điểm cao ngay.' : 'Mỗi câu sai là một chuyện mới để khám phá. Thử lại nhé!';
     card.innerHTML = `<div class="dv-end"><p class="cat">Kết quả</p><p class="score">${score}/10</p><p>${msg}</p>
+      <p class="dv-rank" id="rank" hidden></p>
       <div class="row"><button class="ud-btn" id="again">Chơi lượt mới</button><button class="ud-btn" id="share">Khoe điểm</button></div></div>`;
+    // So với những người đã chơi (chỉ lưu điểm, không lưu tên).
+    fetch('/api/score', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ game: 'do-vui', score }) })
+      .then((r) => r.json()).then((j) => {
+        if (!j.ok) return; const total = j.dist.reduce((a, b) => a + b, 0); if (total < 20 || !$('rank')) return;
+        const below = j.dist.slice(0, score).reduce((a, b) => a + b, 0), pct = Math.round(below / total * 100);
+        $('rank').textContent = pct > 0 ? `Bạn cao điểm hơn ${pct}% trong ${total.toLocaleString('vi-VN')} lượt chơi.` : `Đã có ${total.toLocaleString('vi-VN')} lượt chơi. Thử lại để vượt lên nhé.`;
+        $('rank').hidden = false;
+      }).catch(() => {});
     $('again').onclick = start;
     $('share').onclick = async (e) => {
       const text = `Mình được ${score}/10 điểm ở Đố vui Bienac. Bạn thử xem: https://bienac.com/do-vui/`;

@@ -580,7 +580,7 @@ async function main() {
   await writeFile(path.join(OUT, 'ho-so.json'), JSON.stringify(Object.fromEntries(posts.filter((p) => p.video).map((p) => [p.video, p.url]))));
 
   // 8. Sitemap
-  const urls = ['/', '/elements', '/phenomena', '/thegioi/', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', '/email/', ...posts.map((p) => p.url)];
+  const urls = ['/', '/pendulum-wave/', '/orbits/', '/fourier/', '/mandelbrot/', '/ripple/', '/turing/', '/gas/', '/pi/', '/light-speed/', '/cipher/', '/glossary/', '/today/', '/community/', '/shop/', '/elements', '/phenomena', '/thegioi/', '/thang-vu-tru/', '/dong-thoi-gian/', '/mang-tri-thuc/', '/chiet-tu/', '/bau-troi/', '/support/', '/moi-giay/', '/do-vui/', '/lich-vu-tru/', '/he-mat-troi/', '/hanh-tinh/', '/pho-anh-sang/', '/hai-khe/', '/phong-xa/', '/su-song/', '/dan-chim/', '/canh-buom/', '/galton/', '/am-lich/', '/kinh-dich/', '/he-dem/', '/ngon-lua/', '/tron-mau/', '/con-lac/', '/bat-dau/', '/bai-viet/', '/email/', ...posts.map((p) => p.url)];
   await writeFile(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 
   if (PROBLEMS.length) console.warn(`⚠ ${PROBLEMS.length} file dữ liệu bị bỏ qua (chạy với --strict để xem lỗi).`);

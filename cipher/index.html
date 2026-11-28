@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mật mã · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/cipher/" />
+  <meta name="description" content="Mã hóa thư theo cách của Julius Caesar, Vigenère và Atbash, rồi tự tay phá mật mã bằng phép đếm tần suất của Al-Kindi." />
+  <meta property="og:title" content="Mật mã · Bienac" />
+  <meta property="og:description" content="Mã hóa thư theo cách của Julius Caesar, Vigenère và Atbash, rồi tự tay phá mật mã bằng phép đếm tần suất của Al-Kindi." />
+  <meta property="og:image" content="https://bienac.com/assets/og/cipher.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+  <style>
+    .cp-io { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+    .cp-io label { display: block; margin-bottom: 6px; font: 600 .68rem var(--label); letter-spacing: .07em; text-transform: uppercase; color: var(--brass); }
+    .cp-io textarea, .cp-out { width: 100%; min-height: 150px; padding: 14px 16px; border-radius: 16px; border: 0; color: var(--text); background: var(--glass); box-shadow: inset 0 0 0 1px var(--glass-border); font: 500 1rem/1.6 var(--mono); letter-spacing: .04em; resize: vertical; outline: none; white-space: pre-wrap; word-break: break-word; }
+    .cp-io textarea:focus { box-shadow: inset 0 0 0 1px var(--cyan); }
+    .cp-out { color: var(--cyan); }
+    .cp-ctl { margin-top: 14px; padding: 16px 18px; border-radius: 18px; }
+    .cp-wheel { display: grid; grid-template-columns: repeat(26, 1fr); gap: 2px; margin-top: 12px; font: 600 .78rem var(--mono); text-align: center; }
+    .cp-wheel span { padding: 5px 0; border-radius: 4px; background: rgba(255,255,255,.04); }
+    .cp-wheel .to { color: var(--cyan); background: rgba(55,240,207,.08); }
+    .cp-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; align-items: start; }
+    .cp-bars { display: grid; grid-template-columns: repeat(26, 1fr); gap: 2px; align-items: end; height: 120px; margin-top: 12px; }
+    .cp-bars i { display: block; background: var(--cyan); border-radius: 2px 2px 0 0; min-height: 1px; opacity: .85; }
+    .cp-axis { display: grid; grid-template-columns: repeat(26, 1fr); gap: 2px; font: 500 .62rem var(--mono); text-align: center; color: var(--text-dim); margin-top: 4px; }
+    .cp-brute { margin-top: 10px; max-height: 260px; overflow: auto; font: 500 .82rem/1.5 var(--mono); }
+    .cp-brute button { display: grid; grid-template-columns: 34px 1fr; gap: 8px; width: 100%; padding: 6px 8px; border: 0; border-radius: 8px; background: none; color: var(--text-dim); text-align: left; cursor: pointer; font: inherit; }
+    .cp-brute button:hover { background: rgba(255,255,255,.05); color: var(--text); }
+    .cp-brute button b { color: var(--brass); }
+    @media (max-width: 760px) { .cp-io, .cp-two { grid-template-columns: 1fr; } .cp-wheel { font-size: .58rem; } }
+  </style>
+</head>
+<body class="ud" data-nen="muc">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Mật mã</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Mật mã cổ</p>
+    <h1 class="ud-title">Viết thư mà <span class="accent">chỉ một người đọc được</span></h1>
+    <p class="sim-lede">Gõ một câu và xem nó biến thành dãy chữ vô nghĩa theo cách Julius Caesar từng dùng. Rồi đổi vai: thử làm kẻ nghe trộm và phá mật mã ấy trong vài giây.</p>
+    <div class="cp-io">
+      <div><label for="in">Thư gốc</label><textarea id="in" spellcheck="false">Gap nhau o cong thanh luc nua dem</textarea></div>
+      <div><label>Thư đã mã hóa</label><div class="cp-out" id="out" aria-live="polite"></div></div>
+    </div>
+    <section class="ud-panel cp-ctl">
+      <div class="sim-chips" id="mode" style="margin-top:0"><button class="sim-chip" data-m="caesar" aria-pressed="true">Caesar</button><button class="sim-chip" data-m="vig" aria-pressed="false">Vigenère</button><button class="sim-chip" data-m="atbash" aria-pressed="false">Atbash</button></div>
+      <div id="c-caesar"><div class="sim-range"><label for="sh">Dịch đi <output id="shO"></output></label><input type="range" id="sh" min="0" max="25" step="1" value="3" /></div></div>
+      <div id="c-vig" hidden><div class="hub-form" style="margin-top:12px"><input type="text" id="key" value="BIENAC" maxlength="24" aria-label="Từ khóa" spellcheck="false" /></div></div>
+      <div class="cp-wheel" id="wheel" aria-hidden="true"></div>
+      <div class="sim-row" style="margin-top:12px"><button class="ud-btn" id="swap">Giải mã ngược lại</button><button class="ud-btn" id="copy">Chép thư mã hóa</button></div>
+    </section>
+    <div class="cp-two">
+      <section class="ud-panel sim-box"><div class="sim-text"><h2>Chữ nào xuất hiện nhiều nhất?</h2><p>Đếm từng chữ cái trong thư đã mã hóa. Với mật mã Caesar, cột cao nhất gần như tố cáo ngay chữ nào đã bị thay.</p></div><div class="cp-bars" id="bars"></div><div class="cp-axis" id="axis"></div></section>
+      <section class="ud-panel sim-box"><div class="sim-text"><h2>Thử hết 25 chìa khóa</h2><p>Mật mã Caesar chỉ có 25 cách dịch. Kẻ nghe trộm chỉ việc thử từng cách và đọc xem dòng nào có nghĩa. Bấm vào một dòng để lấy chìa đó.</p></div><div class="cp-brute" id="brute"></div></section>
+    </div>
+    <section class="ud-panel sim-box sim-text" style="margin-top:14px">
+      <h2>Hai nghìn năm giấu thư</h2>
+      <p>Theo sử gia Suetonius, <b>Julius Caesar</b> viết thư riêng bằng cách thay mỗi chữ cái bằng chữ đứng sau nó ba vị trí. Đơn giản, nhưng thời đó rất ít người biết chữ, nên vẫn đủ dùng.</p>
+      <p>Thế kỷ 9 ở Baghdad, học giả <b>Al-Kindi</b> viết ra cách phá mọi mật mã kiểu thay chữ: trong ngôn ngữ nào cũng có vài chữ cái xuất hiện nhiều hơn hẳn, chỉ cần đếm là lần ra. Đó là phép phân tích tần suất, biểu đồ cột bên trên.</p>
+      <p>Mật mã <b>Vigenère</b> ở thế kỷ 16 chống lại cách đếm ấy bằng một từ khóa: mỗi chữ trong thư được dịch đi một khoảng khác nhau, nên cùng một chữ có thể biến thành nhiều chữ khác nhau. Nó được gọi là “mật mã không thể phá” suốt ba trăm năm, cho tới khi Charles Babbage và Friedrich Kasiski tìm ra cách vào giữa thế kỷ 19. <b>Atbash</b> thì cổ hơn cả: đảo ngược bảng chữ cái, A thành Z, B thành Y, từng được dùng trong Kinh Thánh Do Thái.</p>
+      <p>Trang này bỏ dấu tiếng Việt trước khi mã hóa, vì các mật mã cổ chỉ làm việc với 26 chữ cái Latin.</p>
+    </section>
+  </main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id), A = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let mode = 'caesar', dec = false;
+  const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+  const shiftCh = (c, k) => { const u = c.toUpperCase(), i = A.indexOf(u); if (i < 0) return c; const o = A[(i + k + 260) % 26]; return c === u ? o : o.toLowerCase(); };
+  function enc(text, sign) {
+    if (mode === 'atbash') return [...text].map((c) => { const u = c.toUpperCase(), i = A.indexOf(u); if (i < 0) return c; const o = A[25 - i]; return c === u ? o : o.toLowerCase(); }).join('');
+    if (mode === 'caesar') return [...text].map((c) => shiftCh(c, sign * +$('sh').value)).join('');
+    const key = fold($('key').value).toUpperCase().replace(/[^A-Z]/g, '') || 'A'; let j = 0;
+    return [...text].map((c) => { if (A.indexOf(c.toUpperCase()) < 0) return c; return shiftCh(c, sign * A.indexOf(key[j++ % key.length])); }).join('');
+  }
+  function run() {
+    const text = fold($('in').value), out = enc(text, dec ? -1 : 1); $('out').textContent = out;
+    $('shO').textContent = $('sh').value + ' chữ';
+    // bảng thay chữ
+    const k = mode === 'caesar' ? +$('sh').value : 0;
+    $('wheel').innerHTML = mode === 'vig' ? '' : [...A].map((c) => `<span>${c}</span>`).join('') + [...A].map((c, i) => `<span class="to">${mode === 'atbash' ? A[25 - i] : A[(i + k) % 26]}</span>`).join('');
+    // tần suất
+    const cnt = new Array(26).fill(0); for (const c of out.toUpperCase()) { const i = A.indexOf(c); if (i >= 0) cnt[i]++; } const mx = Math.max(1, ...cnt);
+    $('bars').innerHTML = cnt.map((n) => `<i style="height:${n / mx * 100}%" title="${n}"></i>`).join(''); $('axis').innerHTML = [...A].map((c) => `<span>${c}</span>`).join('');
+    // thử hết
+    const sample = out.slice(0, 60);
+    $('brute').innerHTML = Array.from({ length: 25 }, (_, i) => i + 1).map((s) => `<button data-s="${s}"><b>−${s}</b><span>${[...sample].map((c) => shiftCh(c, -s)).join('').replace(/[<&]/g, '')}</span></button>`).join('');
+  }
+  $('in').oninput = run; $('sh').oninput = run; $('key').oninput = run;
+  $('mode').onclick = (e) => { const b = e.target.closest('[data-m]'); if (!b) return; mode = b.dataset.m; document.querySelectorAll('#mode [data-m]').forEach((x) => x.setAttribute('aria-pressed', x === b)); $('c-caesar').hidden = mode !== 'caesar'; $('c-vig').hidden = mode !== 'vig'; run(); };
+  $('swap').onclick = () => { $('in').value = $('out').textContent; dec = !dec; $('swap').textContent = dec ? 'Mã hóa trở lại' : 'Giải mã ngược lại'; run(); };
+  $('copy').onclick = async () => { try { await navigator.clipboard.writeText($('out').textContent); $('copy').textContent = 'Đã chép'; setTimeout(() => { $('copy').textContent = 'Chép thư mã hóa'; }, 1500); } catch (e) {} };
+  $('brute').onclick = (e) => { const b = e.target.closest('[data-s]'); if (!b) return; $('in').value = $('out').textContent; mode = 'caesar'; document.querySelectorAll('#mode [data-m]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.m === 'caesar')); $('c-caesar').hidden = false; $('c-vig').hidden = true; dec = true; $('sh').value = b.dataset.s; $('swap').textContent = 'Mã hóa trở lại'; run(); };
+  run();
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sóng con lắc · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/pendulum-wave/" />
+  <meta name="description" content="Một hàng con lắc dài ngắn khác nhau lệch nhịp thành sóng, rối tung, rồi đúng 60 giây sau xếp thẳng hàng trở lại." />
+  <meta property="og:title" content="Sóng con lắc · Bienac" />
+  <meta property="og:description" content="Một hàng con lắc dài ngắn khác nhau lệch nhịp thành sóng, rối tung, rồi đúng 60 giây sau xếp thẳng hàng trở lại." />
+  <meta property="og:image" content="https://bienac.com/assets/og/pendulum-wave.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="luoi">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Sóng con lắc</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Sóng con lắc</p>
+    <h1 class="ud-title">Mười lăm con lắc, <span class="accent">một điệu múa</span></h1>
+    <p class="sim-lede">Một hàng con lắc dài ngắn khác nhau được thả cùng lúc. Chúng lệch nhịp dần, uốn thành sóng, rối tung lên, rồi đúng 60 giây sau lại xếp thẳng hàng như chưa có gì xảy ra.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Hàng con lắc dao động lệch nhịp"></canvas></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row"><button class="ud-btn" id="play" aria-pressed="true">❚❚ Dừng</button><button class="ud-btn" id="reset">Thả lại</button></div>
+          <div class="sim-range"><label for="n">Số con lắc <output id="nO"></output></label><input type="range" id="n" min="8" max="24" step="1" value="15" /></div>
+          <div class="sim-range"><label for="sp">Tốc độ <output id="spO"></output></label><input type="range" id="sp" min="0.25" max="4" step="0.25" value="1" /></div>
+          <div class="sim-stats"><div class="sim-stat"><b id="t">0,0 s</b><span>Thời gian</span></div><div class="sim-stat"><b id="left">60 s</b><span>Tới lúc thẳng hàng</span></div></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Vì sao chúng gặp lại nhau?</h2>
+          <p>Con lắc càng ngắn thì đung đưa càng nhanh. Ở đây chiều dài được chọn sao cho trong 60 giây, con lắc dài nhất đung đưa đúng <b>51 lần</b>, con kế tiếp 52 lần, rồi 53, 54… Mỗi con hơn con trước đúng một nhịp.</p>
+          <p>Vì thế chúng lệch nhau từng chút một, tạo thành sóng chạy dọc hàng. Giữa chừng có lúc chúng tách thành hai hàng, ba hàng đung đưa ngược nhau. Hết 60 giây, con nào cũng vừa xong một số nguyên lần đung đưa, nên cả hàng thẳng trở lại.</p>
+          <p>Không có con lắc nào “biết” đến con bên cạnh. Hình sóng bạn thấy chỉ là mắt người nối các điểm lại với nhau.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, vi, still } = Sim;
+  let N = 15, t = 0, speed = 1, on = !still;
+  const T = 60, K = 51, A = 0.42;
+  const S = stage($('cv'));
+  function draw() {
+    const g = S.g, W = S.W, H = S.H; g.clearRect(0, 0, W, H);
+    const topY = H * 0.1, maxL = H * 0.56, cx = W / 2;
+    // Thanh treo
+    g.strokeStyle = 'rgba(201,166,80,.7)'; g.lineWidth = 3; g.beginPath(); g.moveTo(W * 0.12, topY); g.lineTo(W * 0.88, topY); g.stroke();
+    const pts = [];
+    for (let i = N - 1; i >= 0; i--) {
+      const f = (K + i) / T, th = A * Math.cos(2 * Math.PI * f * t);
+      const L = maxL * Math.pow(K / (K + i), 2);              // chu kỳ tỉ lệ căn chiều dài
+      const depth = i / (N - 1), sc = 1 - depth * 0.35;
+      const ax = cx + (depth - 0.5) * W * 0.1, ay = topY;
+      const x = ax + Math.sin(th) * L * sc * 1.25, y = ay + Math.cos(th) * L * sc * 1.25;
+      const hue = 165 + depth * 120;
+      g.strokeStyle = `hsla(${hue},70%,70%,.35)`; g.lineWidth = 1; g.beginPath(); g.moveTo(ax, ay); g.lineTo(x, y); g.stroke();
+      g.fillStyle = `hsl(${hue},80%,62%)`; g.beginPath(); g.arc(x, y, 7 * sc + 2, 0, 7); g.fill();
+      pts[i] = th / A;
+    }
+    // Nhìn từ trên xuống: độ lệch của từng con lắc
+    const y0 = H * 0.86, hh = H * 0.08, x0 = W * 0.1, x1 = W * 0.9;
+    g.strokeStyle = 'rgba(236,230,214,.12)'; g.lineWidth = 1; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y0); g.stroke();
+    g.strokeStyle = 'rgba(55,240,207,.5)'; g.beginPath();
+    for (let i = 0; i < N; i++) { const x = x0 + (x1 - x0) * i / (N - 1), y = y0 - pts[i] * hh; i ? g.lineTo(x, y) : g.moveTo(x, y); }
+    g.stroke();
+    for (let i = 0; i < N; i++) { const x = x0 + (x1 - x0) * i / (N - 1), y = y0 - pts[i] * hh; g.fillStyle = `hsl(${165 + i / (N - 1) * 120},80%,62%)`; g.beginPath(); g.arc(x, y, 3.5, 0, 7); g.fill(); }
+    g.fillStyle = 'rgba(157,151,134,.9)'; g.font = '500 10px "Be Vietnam Pro", sans-serif'; g.textAlign = 'left'; g.fillText('NHÌN TỪ TRÊN XUỐNG', x0, y0 + hh + 14);
+    $('t').textContent = vi(t, 1) + ' s';
+    $('left').textContent = vi(T - (t % T), 1) + ' s';
+  }
+  loop((dt) => { if (on) t += dt * speed; draw(); });
+  $('play').onclick = () => { on = !on; $('play').setAttribute('aria-pressed', on); $('play').textContent = on ? '❚❚ Dừng' : '▶ Chạy'; };
+  $('reset').onclick = () => { t = 0; };
+  $('n').oninput = () => { N = +$('n').value; $('nO').textContent = N + ' con'; }; $('n').oninput();
+  $('sp').oninput = () => { speed = +$('sp').value; $('spO').textContent = '×' + vi(speed, 2).replace(/,?0+$/, ''); }; $('sp').oninput();
+  if (still) { $('play').textContent = '▶ Chạy'; $('play').setAttribute('aria-pressed', false); }
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

@@ -662,6 +662,7 @@ body.home .site-footer a { color: #00ffff; }
 .app[data-cat^="vat-ly"], .app-filter [data-f="vat-ly"] { --c: 255, 181, 71; }    /* Vật lý & Hóa: hổ phách */
 .app[data-cat^="hon-loan"], .app-filter [data-f="hon-loan"] { --c: 111, 224, 122; } /* Hỗn loạn & Sự sống: lá */
 .app[data-cat^="dong-tay"], .app-filter [data-f="dong-tay"] { --c: 255, 122, 107; } /* Đông Tây & Lịch sử: son */
+.app[data-cat^="thu-vien"], .app-filter [data-f="thu-vien"] { --c: 232, 205, 130; }              /* Thư viện: vàng giấy */
 body.home .app .app-ico { color: rgb(var(--c)); background: rgba(var(--c), .13); }
 body.home .app:hover, body.home .app:focus-visible { border-color: rgba(var(--c), .6); background: linear-gradient(160deg, rgba(var(--c), .2), rgba(8,10,14,.6)) !important; }
 body.home .app:hover .app-ico, body.home .app:focus-visible .app-ico { background: rgba(var(--c), .24); }

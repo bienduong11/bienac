@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Chờ ánh sáng · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/light-speed/" />
+  <meta name="description" content="Theo một tia sáng rời Mặt Trời với tốc độ thật: hơn 8 phút mới tới Trái Đất, hơn 4 tiếng mới tới Sao Hải Vương." />
+  <meta property="og:title" content="Chờ ánh sáng · Bienac" />
+  <meta property="og:description" content="Theo một tia sáng rời Mặt Trời với tốc độ thật: hơn 8 phút mới tới Trái Đất, hơn 4 tiếng mới tới Sao Hải Vương." />
+  <meta property="og:image" content="https://bienac.com/assets/og/light-speed.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="sao">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Chờ ánh sáng</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Tốc độ ánh sáng</p>
+    <h1 class="ud-title">Nhanh nhất vũ trụ, <span class="accent">mà vẫn chậm</span></h1>
+    <p class="sim-lede">Một tia sáng vừa rời Mặt Trời. Nó đang bay với tốc độ thật, gần 300.000 km mỗi giây. Bạn sẽ phải chờ hơn 8 phút để nó tới Trái Đất, và hơn 4 tiếng để tới Sao Hải Vương.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Tia sáng đi từ Mặt Trời qua các hành tinh"></canvas></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-chips" id="sp"><button class="sim-chip" data-s="1" aria-pressed="true">Tốc độ thật</button><button class="sim-chip" data-s="10">×10</button><button class="sim-chip" data-s="100">×100</button><button class="sim-chip" data-s="1000">×1000</button></div>
+          <div class="sim-row" style="margin-top:10px"><button class="ud-btn" id="again">Phát tia mới</button><button class="ud-btn" id="view" aria-pressed="false">Xem cả hệ</button></div>
+          <div class="sim-stats"><div class="sim-stat"><b id="el">0 s</b><span>Đã bay được</span></div><div class="sim-stat"><b id="km">0 km</b><span>Quãng đường</span></div><div class="sim-stat"><b id="next">–</b><span>Điểm đến kế tiếp</span></div><div class="sim-stat"><b id="eta">–</b><span>Còn phải chờ</span></div></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Nhìn xa là nhìn về quá khứ</h2>
+          <p>Ánh sáng đi được 299.792 km mỗi giây, đủ vòng quanh Trái Đất bảy vòng rưỡi. Vậy mà Mặt Trời bạn thấy lúc này là Mặt Trời của hơn 8 phút trước. Nếu nó tắt ngay bây giờ, suốt 8 phút nữa trời vẫn sáng.</p>
+          <p>Năm 1676, Ole Rømer nhận thấy các lần mặt trăng Io khuất sau Sao Mộc đến sớm hay muộn hơn dự tính tùy theo Trái Đất đang ở gần hay xa Sao Mộc. Ông kết luận ánh sáng cần thời gian để đi. Đó là lần đầu tiên tốc độ ánh sáng được ước lượng.</p>
+          <p>Vì thế điều khiển xe tự hành trên Sao Hỏa không thể làm trực tiếp: lệnh gửi đi mất từ 3 đến 22 phút mới tới nơi, tùy vị trí hai hành tinh.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, vi } = Sim;
+  const AU = 149597870.7, C = 299792.458, P = [['Sao Thủy', .387, '#b9b2a6'], ['Sao Kim', .723, '#e8c98a'], ['Trái Đất', 1, '#6fb6ff'], ['Sao Hỏa', 1.524, '#e2704e'], ['Sao Mộc', 5.203, '#d9b38c'], ['Sao Thổ', 9.537, '#e6d39a'], ['Sao Thiên Vương', 19.19, '#9fe3e6'], ['Sao Hải Vương', 30.07, '#6f8cff']];
+  let t = 0, speed = 1, whole = false; const S = stage($('cv'));
+  const dur = (s) => s >= 3600 ? Math.floor(s / 3600) + ' giờ ' + Math.floor(s % 3600 / 60) + ' phút' : s >= 60 ? Math.floor(s / 60) + ' phút ' + Math.floor(s % 60) + ' s' : vi(s, 1) + ' s';
+  function draw() {
+    const g = S.g, W = S.W, H = S.H, d = t * C / AU, y = H * 0.5; g.clearRect(0, 0, W, H);
+    const span = whole ? 31 : Math.max(0.5, Math.min(31, d * 1.6 + 0.25)), x0 = W * 0.08, sx = (W * 0.86) / span, X = (au) => x0 + au * sx;
+    g.strokeStyle = 'rgba(236,230,214,.14)'; g.lineWidth = 1; g.beginPath(); g.moveTo(x0, y); g.lineTo(W, y); g.stroke();
+    const sun = g.createRadialGradient(x0, y, 0, x0, y, 30); sun.addColorStop(0, '#fff6d8'); sun.addColorStop(.35, '#ffc65a'); sun.addColorStop(1, 'rgba(255,160,60,0)'); g.fillStyle = sun; g.beginPath(); g.arc(x0, y, 30, 0, 7); g.fill();
+    g.font = '500 11px "Be Vietnam Pro", sans-serif'; g.textAlign = 'center'; let lastX = -99, up = false;
+    for (const [name, au, col] of P) { const x = X(au); if (x > W + 20) break; const reached = d >= au; g.fillStyle = col; g.globalAlpha = reached ? 1 : .55; g.beginPath(); g.arc(x, y, au > 4 ? 6 : 4, 0, 7); g.fill();
+      if (x - lastX < 62) up = !up; else up = false; lastX = x; const ly = up ? y - 34 : y + 26; g.fillStyle = reached ? '#ece6d6' : '#9d9786'; g.fillText(name, x, ly); g.font = '500 10px "JetBrains Mono", monospace'; g.fillText(dur(au * AU / C), x, ly + 14); g.font = '500 11px "Be Vietnam Pro", sans-serif'; g.globalAlpha = 1; }
+    const px = X(d); if (px < W + 10) { const gr = g.createLinearGradient(Math.max(x0, px - 120), 0, px, 0); gr.addColorStop(0, 'rgba(55,240,207,0)'); gr.addColorStop(1, 'rgba(55,240,207,.9)'); g.strokeStyle = gr; g.lineWidth = 3; g.beginPath(); g.moveTo(Math.max(x0, px - 120), y); g.lineTo(px, y); g.stroke(); g.fillStyle = '#fff'; g.beginPath(); g.arc(px, y, 4, 0, 7); g.fill(); }
+    const nx = P.find((p) => p[1] > d);
+    $('el').textContent = dur(t); $('km').textContent = vi(t * C / 1e6, 1) + ' triệu km'; $('next').textContent = nx ? nx[0] : 'Ra khỏi vùng hành tinh'; $('eta').textContent = nx ? dur((nx[1] - d) * AU / C / speed) : '–';
+  }
+  loop((dt) => { t += dt * speed; draw(); });
+  $('sp').onclick = (e) => { const b = e.target.closest('[data-s]'); if (!b) return; speed = +b.dataset.s; document.querySelectorAll('#sp [data-s]').forEach((x) => x.setAttribute('aria-pressed', x === b)); };
+  $('again').onclick = () => { t = 0; }; $('view').onclick = () => { whole = !whole; $('view').setAttribute('aria-pressed', whole); };
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

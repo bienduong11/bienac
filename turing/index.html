@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Vân Turing · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/turing/" />
+  <meta name="description" content="Hai chất lan với tốc độ khác nhau, một nuôi một kìm, tự sinh ra đốm, sọc và mê cung như trên da báo, ngựa vằn. Chạm để gieo thêm." />
+  <meta property="og:title" content="Vân Turing · Bienac" />
+  <meta property="og:description" content="Hai chất lan với tốc độ khác nhau, một nuôi một kìm, tự sinh ra đốm, sọc và mê cung như trên da báo, ngựa vằn. Chạm để gieo thêm." />
+  <meta property="og:image" content="https://bienac.com/assets/og/turing.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="hat">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Vân Turing</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Vân Turing</p>
+    <h1 class="ud-title">Hai chất, hai luật, <span class="accent">ra vằn báo đốm</span></h1>
+    <p class="sim-lede">Hai chất hóa học lan trên một bề mặt với tốc độ khác nhau, một chất nuôi, một chất kìm. Không ai vẽ gì cả, vậy mà đốm, sọc, mê cung tự hiện ra. Chạm vào để gieo thêm.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Hoa văn tự hình thành từ phản ứng khuếch tán"></canvas><span class="sim-hint">Chạm để gieo</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-chips" id="pre"><button class="sim-chip" data-p="0.0367,0.0649" aria-pressed="true">Phân bào</button><button class="sim-chip" data-p="0.029,0.057">Mê cung</button><button class="sim-chip" data-p="0.0545,0.062">San hô</button><button class="sim-chip" data-p="0.025,0.06">Đốm</button><button class="sim-chip" data-p="0.078,0.061">Giun</button></div>
+          <div class="sim-row" style="margin-top:10px"><button class="ud-btn" id="play" aria-pressed="true">❚❚ Dừng</button><button class="ud-btn" id="seed">Gieo lại</button><button class="ud-btn" id="wipe">Xóa trắng</button></div>
+          <div class="sim-range"><label for="f">Tốc độ nuôi <output id="fO"></output></label><input type="range" id="f" min="0.01" max="0.09" step="0.0005" value="0.0367" /></div>
+          <div class="sim-range"><label for="kk">Tốc độ đào thải <output id="kO"></output></label><input type="range" id="kk" min="0.045" max="0.07" step="0.0005" value="0.0649" /></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Bài toán của Turing</h2>
+          <p>Năm 1952, hai năm trước khi mất, Alan Turing viết một bài báo về sinh học. Ông hỏi: phôi thai ban đầu là một khối tế bào giống hệt nhau, vậy hoa văn trên da từ đâu ra?</p>
+          <p>Câu trả lời của ông: chỉ cần hai chất. Một chất tự kích thích chính nó và lan chậm. Chất kia kìm chất thứ nhất và lan nhanh hơn. Sự chênh lệch đó đủ để một bề mặt đồng đều tự vỡ thành hoa văn đều đặn.</p>
+          <p>Mô phỏng ở đây dùng mô hình Gray-Scott, cùng họ với ý tưởng của Turing. Đổi hai thanh trượt một chút là hoa văn đổi hẳn kiểu. Về sau người ta tìm thấy cơ chế này ở vằn cá ngựa vằn, nếp vòm miệng chuột, khoảng cách giữa các nang lông.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, pos, still } = Sim;
+  const cv = $('cv'), W = 150; let H = 112, U, V, U2, V2, F = 0.0367, Kk = 0.0649, on = true, img, buf, down = false;
+  const off = document.createElement('canvas'), og = off.getContext('2d');
+  const S = stage(cv, (s) => { const h = Math.round(W * s.H / s.W); if (h !== H || !U) { H = h; init(); } });
+  function init() { const n = W * H; U = new Float32Array(n).fill(1); V = new Float32Array(n); U2 = new Float32Array(n); V2 = new Float32Array(n); off.width = W; off.height = H; img = og.createImageData(W, H); buf = new Uint32Array(img.data.buffer); seed(); }
+  function blob(cx, cy, r) { for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) if (x * x + y * y <= r * r) { const i = ((cy + y + H) % H) * W + ((cx + x + W) % W); V[i] = 1; U[i] = 0.5; } }
+  function seed() { for (let i = 0; i < 14; i++) blob(Math.floor(Math.random() * W), Math.floor(Math.random() * H), 3); }
+  function step() {
+    for (let y = 0; y < H; y++) { const yu = ((y - 1 + H) % H) * W, yd = ((y + 1) % H) * W, y0 = y * W;
+      for (let x = 0; x < W; x++) { const xl = (x - 1 + W) % W, xr = (x + 1) % W, i = y0 + x, u = U[i], v = V[i];
+        const lu = (U[y0 + xl] + U[y0 + xr] + U[yu + x] + U[yd + x]) * .2 + (U[yu + xl] + U[yu + xr] + U[yd + xl] + U[yd + xr]) * .05 - u;
+        const lv = (V[y0 + xl] + V[y0 + xr] + V[yu + x] + V[yd + x]) * .2 + (V[yu + xl] + V[yu + xr] + V[yd + xl] + V[yd + xr]) * .05 - v;
+        const r = u * v * v; U2[i] = u + lu - r + F * (1 - u); V2[i] = v + .5 * lv + r - (F + Kk) * v; } }
+    let a = U; U = U2; U2 = a; a = V; V = V2; V2 = a;
+  }
+  function draw() { for (let i = 0; i < W * H; i++) { const t = Math.max(0, Math.min(1, (U[i] - V[i]) )), s = 1 - t; const r = 6 + s * 49 + s * s * 180, g = 9 + s * 231, b = 14 + s * 193 - s * s * 60; buf[i] = (255 << 24) | (b << 16) | (g << 8) | r; } og.putImageData(img, 0, 0); S.g.imageSmoothingEnabled = true; S.g.drawImage(off, 0, 0, S.W, S.H); }
+  loop(() => { if (on) for (let i = 0; i < 10; i++) step(); draw(); });
+  const paint = (e) => { const [x, y] = pos(cv, e); blob(Math.floor(x / S.W * W), Math.floor(y / S.H * H), 3); const h = document.querySelector('.sim-hint'); if (h) h.style.display = 'none'; };
+  cv.addEventListener('pointerdown', (e) => { down = true; paint(e); cv.setPointerCapture(e.pointerId); }); cv.addEventListener('pointermove', (e) => { if (down) paint(e); }); cv.addEventListener('pointerup', () => { down = false; }); cv.addEventListener('pointercancel', () => { down = false; });
+  const sync = () => { $('fO').textContent = F.toFixed(4).replace('.', ','); $('kO').textContent = Kk.toFixed(4).replace('.', ','); };
+  $('f').oninput = () => { F = +$('f').value; sync(); unpress(); }; $('kk').oninput = () => { Kk = +$('kk').value; sync(); unpress(); };
+  const unpress = () => document.querySelectorAll('#pre [data-p]').forEach((b) => b.setAttribute('aria-pressed', false));
+  $('pre').onclick = (e) => { const b = e.target.closest('[data-p]'); if (!b) return; [F, Kk] = b.dataset.p.split(',').map(Number); $('f').value = F; $('kk').value = Kk; sync(); unpress(); b.setAttribute('aria-pressed', true); U.fill(1); V.fill(0); seed(); };
+  $('play').onclick = () => { on = !on; $('play').setAttribute('aria-pressed', on); $('play').textContent = on ? '❚❚ Dừng' : '▶ Chạy'; };
+  $('seed').onclick = () => { U.fill(1); V.fill(0); seed(); }; $('wipe').onclick = () => { U.fill(1); V.fill(0); };
+  sync(); if (still) { for (let i = 0; i < 2500; i++) step(); $('play').onclick(); }
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

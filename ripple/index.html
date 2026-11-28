@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bể sóng · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/ripple/" />
+  <meta name="description" content="Hai nguồn sóng trên mặt nước: chỗ đỉnh gặp đỉnh thì dâng gấp đôi, chỗ đỉnh gặp đáy thì đứng yên. Kéo để đổi hình giao thoa." />
+  <meta property="og:title" content="Bể sóng · Bienac" />
+  <meta property="og:description" content="Hai nguồn sóng trên mặt nước: chỗ đỉnh gặp đỉnh thì dâng gấp đôi, chỗ đỉnh gặp đáy thì đứng yên. Kéo để đổi hình giao thoa." />
+  <meta property="og:image" content="https://bienac.com/assets/og/ripple.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="song">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Bể sóng</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Giao thoa sóng</p>
+    <h1 class="ud-title">Hai nguồn sóng, <span class="accent">những vệt lặng</span></h1>
+    <p class="sim-lede">Hai điểm cùng gõ nhịp xuống mặt nước. Chỗ hai đỉnh sóng gặp nhau, nước dâng gấp đôi. Chỗ đỉnh gặp đáy, mặt nước đứng yên. Kéo hai nguồn để đổi hình giao thoa.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Mặt nước với hai nguồn sóng giao thoa"></canvas><span class="sim-hint">Kéo nguồn sóng</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row"><button class="ud-btn" id="two" aria-pressed="true">Hai nguồn</button><button class="ud-btn" id="wall" aria-pressed="false">Chắn bằng hai khe</button></div>
+          <div class="sim-range"><label for="lam">Bước sóng <output id="lamO"></output></label><input type="range" id="lam" min="14" max="60" step="1" value="30" /></div>
+          <div class="sim-range"><label for="ph">Lệch nhịp giữa hai nguồn <output id="phO"></output></label><input type="range" id="ph" min="0" max="180" step="10" value="0" /></div>
+          <label class="sim-check"><input type="checkbox" id="avg" /> Chỉ hiện độ mạnh trung bình</label>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Cộng sóng lại</h2>
+          <p>Sóng không va vào nhau như hai viên bi. Chúng đi xuyên qua nhau, và tại mỗi điểm, độ cao mặt nước bằng tổng độ cao của từng sóng. Hai đỉnh cộng thành đỉnh cao hơn. Một đỉnh và một đáy triệt tiêu nhau.</p>
+          <p>Điểm nào mà quãng đường tới hai nguồn lệch nhau nửa bước sóng (hay một bước rưỡi, hai bước rưỡi…) thì luôn lặng. Các điểm ấy nối thành những vệt tối tỏa ra như nan quạt. Bật “Chỉ hiện độ mạnh trung bình” để thấy rõ.</p>
+          <p>Năm 1801, Thomas Young cho ánh sáng đi qua hai khe hẹp và thấy đúng những vệt sáng tối xen kẽ như vậy. Đó là bằng chứng ánh sáng có tính sóng. Xem tiếp ở <a href="/hai-khe/" style="color:var(--cyan)">Thí nghiệm hai khe</a>.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, pos } = Sim;
+  const cv = $('cv'), GW = 200; let GH = 150, lam = 30, ph = 0, two = true, wall = false, t = 0, src = [[.35, .5], [.65, .5]], grab = -1, img, buf;
+  const off = document.createElement('canvas'), og = off.getContext('2d');
+  const S = stage(cv, (s) => { GH = Math.round(GW * s.H / s.W); off.width = GW; off.height = GH; img = og.createImageData(GW, GH); buf = new Uint32Array(img.data.buffer); });
+  function sources() { if (wall) return [[.5, .43], [.5, .57]].map((p) => [GW * 0.3, p[1] * GH]); return (two ? src : [src[0]]).map((p) => [p[0] * GW, p[1] * GH]); }
+  function draw() {
+    const ss = sources(), k = 2 * Math.PI / (lam * GW / 400), w = t * 6, avg = $('avg').checked, p2 = ph * Math.PI / 180;
+    for (let y = 0; y < GH; y++) for (let x = 0; x < GW; x++) {
+      let re = 0, im = 0;
+      if (wall && x < GW * 0.3) { re = Math.cos(k * x - w); im = Math.sin(k * x - w); }
+      else for (let i = 0; i < ss.length; i++) { const r = Math.hypot(x - ss[i][0], y - ss[i][1]) + 2, a = k * r - w + (i ? p2 : 0), m = 1 / Math.sqrt(r * .25 + 1); re += Math.cos(a) * m; im += Math.sin(a) * m; }
+      let v, r, g, b;
+      if (avg) { v = Math.min(1, Math.hypot(re, im) * (wall ? .9 : .8)); r = 10 + v * 45; g = 20 + v * 220; b = 30 + v * 177; }
+      else { v = Math.max(-1, Math.min(1, re * .75)); if (v > 0) { r = 12 + v * 170; g = 40 + v * 215; b = 60 + v * 190; } else { r = 12 + v * 8; g = 40 + v * 30; b = 60 + v * 30; } }
+      buf[y * GW + x] = (255 << 24) | (b << 16) | (g << 8) | r;
+    }
+    og.putImageData(img, 0, 0); const c = S.g; c.imageSmoothingEnabled = true; c.drawImage(off, 0, 0, S.W, S.H);
+    if (wall) { c.fillStyle = '#c9a650'; const x = S.W * 0.3 - 3, g1 = .43 * S.H, g2 = .57 * S.H, gap = S.H * 0.025; c.fillRect(x, 0, 6, g1 - gap); c.fillRect(x, g1 + gap, 6, g2 - g1 - 2 * gap); c.fillRect(x, g2 + gap, 6, S.H); }
+    else for (const p of (two ? src : [src[0]])) { c.fillStyle = '#e8452e'; c.beginPath(); c.arc(p[0] * S.W, p[1] * S.H, 6, 0, 7); c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 1.5; c.stroke(); }
+  }
+  loop((dt) => { t += dt; draw(); });
+  cv.addEventListener('pointerdown', (e) => { if (wall) return; const [x, y] = pos(cv, e); let best = 1e9; src.forEach((p, i) => { if (i && !two) return; const d = Math.hypot(p[0] * S.W - x, p[1] * S.H - y); if (d < best) { best = d; grab = i; } }); cv.setPointerCapture(e.pointerId); const h = document.querySelector('.sim-hint'); if (h) h.style.display = 'none'; });
+  cv.addEventListener('pointermove', (e) => { if (grab < 0) return; const [x, y] = pos(cv, e); src[grab] = [Math.max(.03, Math.min(.97, x / S.W)), Math.max(.03, Math.min(.97, y / S.H))]; });
+  cv.addEventListener('pointerup', () => { grab = -1; }); cv.addEventListener('pointercancel', () => { grab = -1; });
+  $('two').onclick = () => { two = !two; wall = false; $('wall').setAttribute('aria-pressed', false); $('two').setAttribute('aria-pressed', two); $('two').textContent = two ? 'Hai nguồn' : 'Một nguồn'; };
+  $('wall').onclick = () => { wall = !wall; $('wall').setAttribute('aria-pressed', wall); };
+  $('lam').oninput = () => { lam = +$('lam').value; $('lamO').textContent = lam; }; $('lam').oninput();
+  $('ph').oninput = () => { ph = +$('ph').value; $('phO').textContent = ph + '°'; }; $('ph').oninput();
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

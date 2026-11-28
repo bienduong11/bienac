@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Vẽ bằng vòng tròn · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/fourier/" />
+  <meta name="description" content="Vẽ một nét bất kỳ, rồi xem một chuỗi vòng tròn quay chồng lên nhau vẽ lại đúng nét đó: chuỗi Fourier bằng hình." />
+  <meta property="og:title" content="Vẽ bằng vòng tròn · Bienac" />
+  <meta property="og:description" content="Vẽ một nét bất kỳ, rồi xem một chuỗi vòng tròn quay chồng lên nhau vẽ lại đúng nét đó: chuỗi Fourier bằng hình." />
+  <meta property="og:image" content="https://bienac.com/assets/og/fourier.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="song">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Vẽ bằng vòng tròn</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Chuỗi Fourier</p>
+    <h1 class="ud-title">Hình nào cũng vẽ được <span class="accent">bằng vòng tròn</span></h1>
+    <p class="sim-lede">Vẽ một nét bất kỳ vào khung. Trang sẽ tìm ra một chuỗi vòng tròn quay, cái nọ gắn trên vành cái kia, mà đầu mút của chúng đi lại đúng nét bạn vừa vẽ.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Các vòng tròn quay nối nhau vẽ lại nét của bạn"></canvas><span class="sim-hint">Vẽ một nét vào đây</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row"><button class="ud-btn" id="redraw">Vẽ nét mới</button></div>
+          <div class="sim-chips" id="pre"><button class="sim-chip" data-s="heart">Trái tim</button><button class="sim-chip" data-s="star">Ngôi sao</button><button class="sim-chip" data-s="square">Hình vuông</button><button class="sim-chip" data-s="inf">Số tám nằm</button></div>
+          <div class="sim-range"><label for="k">Số vòng tròn <output id="kO"></output></label><input type="range" id="k" min="1" max="120" step="1" value="40" /></div>
+          <div class="sim-range"><label for="sp">Tốc độ <output id="spO"></output></label><input type="range" id="sp" min="0.2" max="3" step="0.1" value="1" /></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Ý tưởng của Fourier</h2>
+          <p>Năm 1807, khi nghiên cứu cách nhiệt lan trong kim loại, Joseph Fourier cho rằng mọi đường cong lặp lại đều có thể tách thành tổng của các dao động hình sin đơn giản. Nhiều nhà toán học thời đó không tin.</p>
+          <p>Mỗi vòng tròn ở đây là một dao động như thế: vòng lớn quay chậm giữ dáng chung, các vòng nhỏ quay nhanh thêm chi tiết. Kéo thanh “Số vòng tròn” xuống còn vài cái: hình chỉ còn dáng tròn trịa. Tăng lên, các góc nhọn dần hiện ra.</p>
+          <p>Nén ảnh JPEG, nén nhạc MP3, máy chụp cộng hưởng từ đều dựa trên phép tách này: giữ các dao động quan trọng, bỏ bớt phần mắt và tai khó nhận ra.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, pos } = Sim;
+  const cv = $('cv'); let pts = [], coef = [], K = 40, t = 0, speed = 1, drawing = false, raw = [], path = [];
+  const S = stage(cv);
+  const shapes = {
+    heart: (a) => [16 * Math.sin(a) ** 3, -(13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a))].map((v) => v / 18),
+    star: (a) => { const k = 5, seg = a / (2 * Math.PI) * k * 2, i = Math.floor(seg), f = seg - i, r0 = i % 2 ? .45 : 1, r1 = i % 2 ? 1 : .45, a0 = i * Math.PI / k - Math.PI / 2, a1 = (i + 1) * Math.PI / k - Math.PI / 2; return [(Math.cos(a0) * r0) * (1 - f) + Math.cos(a1) * r1 * f, (Math.sin(a0) * r0) * (1 - f) + Math.sin(a1) * r1 * f]; },
+    square: (a) => { const s = a / (2 * Math.PI) * 4, i = Math.floor(s) % 4, f = s - Math.floor(s), c = [[-1, -1], [1, -1], [1, 1], [-1, 1], [-1, -1]]; return [(c[i][0] * (1 - f) + c[i + 1][0] * f) * .8, (c[i][1] * (1 - f) + c[i + 1][1] * f) * .8]; },
+    inf: (a) => [Math.sin(a), Math.sin(a) * Math.cos(a)],
+  };
+  function setShape(name) { pts = []; const M = 256; for (let i = 0; i < M; i++) pts.push(shapes[name](i / M * 2 * Math.PI)); compute(); }
+  function fromRaw() {
+    if (raw.length < 8) return; const m = Math.min(S.W, S.H) * 0.4, cx = S.W / 2, cy = S.H / 2;
+    // lấy mẫu lại đều theo độ dài nét, khép kín
+    const L = [0]; for (let i = 1; i < raw.length; i++) L.push(L[i - 1] + Math.hypot(raw[i][0] - raw[i - 1][0], raw[i][1] - raw[i - 1][1]));
+    const close = Math.hypot(raw[0][0] - raw[raw.length - 1][0], raw[0][1] - raw[raw.length - 1][1]), tot = L[L.length - 1] + close; const M = 256; pts = []; let j = 0;
+    for (let i = 0; i < M; i++) { const d = i / M * tot; if (d > L[L.length - 1]) { const f = (d - L[L.length - 1]) / (close || 1), a = raw[raw.length - 1], b = raw[0]; pts.push([(a[0] + (b[0] - a[0]) * f - cx) / m, (a[1] + (b[1] - a[1]) * f - cy) / m]); continue; } while (j < L.length - 2 && L[j + 1] < d) j++; const f = (d - L[j]) / ((L[j + 1] - L[j]) || 1); pts.push([(raw[j][0] + (raw[j + 1][0] - raw[j][0]) * f - cx) / m, (raw[j][1] + (raw[j + 1][1] - raw[j][1]) * f - cy) / m]); }
+    compute();
+  }
+  function compute() { const M = pts.length; coef = []; for (let k = -M / 2; k < M / 2; k++) { let re = 0, im = 0; for (let n = 0; n < M; n++) { const a = -2 * Math.PI * k * n / M; re += pts[n][0] * Math.cos(a) - pts[n][1] * Math.sin(a); im += pts[n][0] * Math.sin(a) + pts[n][1] * Math.cos(a); } coef.push({ k, re: re / M, im: im / M, r: Math.hypot(re, im) / M, ph: Math.atan2(im, re) }); } coef.sort((a, b) => (a.k === 0 ? -1 : b.k === 0 ? 1 : b.r - a.r)); path = []; t = 0; }
+  function draw() {
+    const g = S.g, m = Math.min(S.W, S.H) * 0.4; g.clearRect(0, 0, S.W, S.H);
+    if (drawing) { g.strokeStyle = '#37f0cf'; g.lineWidth = 2; g.beginPath(); raw.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke(); return; }
+    if (!coef.length) return;
+    // nét gốc mờ
+    g.strokeStyle = 'rgba(236,230,214,.14)'; g.lineWidth = 1; g.beginPath(); pts.forEach((p, i) => { const x = S.W / 2 + p[0] * m, y = S.H / 2 + p[1] * m; i ? g.lineTo(x, y) : g.moveTo(x, y); }); g.closePath(); g.stroke();
+    let x = S.W / 2, y = S.H / 2;
+    for (let i = 0; i <= Math.min(K, coef.length - 1); i++) { const c = coef[i], a = 2 * Math.PI * c.k * t + c.ph, nx = x + Math.cos(a) * c.r * m, ny = y + Math.sin(a) * c.r * m; if (i > 0) { g.strokeStyle = 'rgba(201,166,80,.28)'; g.lineWidth = 1; g.beginPath(); g.arc(x, y, c.r * m, 0, 7); g.stroke(); g.strokeStyle = 'rgba(236,230,214,.55)'; g.beginPath(); g.moveTo(x, y); g.lineTo(nx, ny); g.stroke(); } x = nx; y = ny; }
+    path.push([x, y]); if (path.length > 900) path.shift();
+    g.strokeStyle = '#37f0cf'; g.lineWidth = 2.2; g.lineJoin = 'round'; g.beginPath(); path.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke();
+    g.fillStyle = '#e8452e'; g.beginPath(); g.arc(x, y, 3.5, 0, 7); g.fill();
+  }
+  loop((dt) => { if (!drawing && coef.length) { t += dt * speed * 0.12; if (t >= 1) { t -= 1; } } draw(); });
+  cv.addEventListener('pointerdown', (e) => { drawing = true; raw = [pos(cv, e)]; cv.setPointerCapture(e.pointerId); document.querySelector('.sim-hint').style.display = 'none'; });
+  cv.addEventListener('pointermove', (e) => { if (drawing) { const p = pos(cv, e), q = raw[raw.length - 1]; if (Math.hypot(p[0] - q[0], p[1] - q[1]) > 2) raw.push(p); } });
+  const end = () => { if (!drawing) return; drawing = false; if (raw.length >= 8) fromRaw(); };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  $('redraw').onclick = () => { coef = []; path = []; document.querySelector('.sim-hint').style.display = ''; };
+  $('pre').onclick = (e) => { const b = e.target.closest('[data-s]'); if (b) { setShape(b.dataset.s); document.querySelector('.sim-hint').style.display = 'none'; } };
+  $('k').oninput = () => { K = +$('k').value; $('kO').textContent = K + ' vòng'; path = []; }; $('k').oninput();
+  $('sp').oninput = () => { speed = +$('sp').value; $('spO').textContent = '×' + String(speed).replace('.', ','); }; $('sp').oninput();
+  new ResizeObserver(() => { path = []; }).observe(cv);
+  setShape('heart');
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

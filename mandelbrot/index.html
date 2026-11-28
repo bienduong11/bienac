@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Tập Mandelbrot · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/mandelbrot/" />
+  <meta name="description" content="Chạm để phóng to mãi vào tập Mandelbrot: cả hình sinh ra từ một phép tính lặp, bình phương rồi cộng hằng số." />
+  <meta property="og:title" content="Tập Mandelbrot · Bienac" />
+  <meta property="og:description" content="Chạm để phóng to mãi vào tập Mandelbrot: cả hình sinh ra từ một phép tính lặp, bình phương rồi cộng hằng số." />
+  <meta property="og:image" content="https://bienac.com/assets/og/mandelbrot.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="pho">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Tập Mandelbrot</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Tập Mandelbrot</p>
+    <h1 class="ud-title">Một công thức ngắn, <span class="accent">phóng mãi không hết</span></h1>
+    <p class="sim-lede">Chạm vào bất cứ đâu để phóng to. Toàn bộ hình này sinh ra từ một phép tính lặp đi lặp lại: lấy một số, bình phương lên, cộng thêm một hằng số.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Tập Mandelbrot"></canvas><span class="sim-hint">Chạm để phóng to</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row"><button class="ud-btn" id="out">Lùi ra</button><button class="ud-btn" id="home">Về đầu</button></div>
+          <div class="sim-chips" id="pre"><button class="sim-chip" data-p="-0.7453,0.1127,180">Thung lũng cá ngựa</button><button class="sim-chip" data-p="-1.7497,0,60">Bản sao tí hon</button><button class="sim-chip" data-p="0.2759,0.0069,90">Thung lũng voi</button><button class="sim-chip" data-p="-0.1011,0.9563,30">Tia sét</button></div>
+          <div class="sim-range"><label for="it">Số lần lặp tối đa <output id="itO"></output></label><input type="range" id="it" min="60" max="900" step="20" value="220" /></div>
+          <div class="sim-stats"><div class="sim-stat"><b id="zoom">1×</b><span>Độ phóng đại</span></div><div class="sim-stat"><b id="ctr">–</b><span>Tâm khung hình</span></div></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Hình này từ đâu ra?</h2>
+          <p>Với mỗi điểm c trên mặt phẳng, bắt đầu từ z = 0 rồi lặp phép tính <b>z → z² + c</b>. Nếu z cứ quanh quẩn, điểm đó thuộc tập hợp và được tô đen. Nếu z phóng ra vô cực, điểm đó được tô màu theo việc nó thoát nhanh hay chậm.</p>
+          <p>Phần viền giữa hai vùng chi tiết vô tận: phóng to bao nhiêu cũng gặp xoáy ốc, tua, và cả những bản sao tí hon của chính hình ban đầu.</p>
+          <p>Benoit Mandelbrot đưa hình này ra công chúng năm 1980 khi làm ở IBM. Ông đặt ra chữ <b>fractal</b> cho những hình mà từng phần nhỏ lại giống cả tổng thể, như bờ biển, bông cải, mạch máu.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, pos, vi } = Sim;
+  const cv = $('cv'); let cx = -0.6, cy = 0, scale = 3.2, maxIt = 220, job = 0, img, buf, RW, RH;
+  const off = document.createElement('canvas'), og = off.getContext('2d');
+  let S = null; S = stage(cv, () => { if (S) render(); }, 1);
+  const pal = new Uint32Array(512); for (let i = 0; i < 512; i++) { const t = i / 512 * 2 * Math.PI, r = Math.round(120 + 120 * Math.cos(t + 1.9)), g = Math.round(128 + 112 * Math.cos(t + 2.6)), b = Math.round(130 + 100 * Math.cos(t + 3.3)); pal[i] = (255 << 24) | (b << 16) | (g << 8) | r; }
+  function render() {
+    if (!S || !S.W) return; const id = ++job; RW = Math.round(S.W * Math.min(1.5, window.devicePixelRatio || 1)); RH = Math.round(S.H * RW / S.W);
+    off.width = RW; off.height = RH; img = og.createImageData(RW, RH); buf = new Uint32Array(img.data.buffer);
+    const px = scale / RW, x0 = cx - scale / 2, y0 = cy - px * RH / 2; let row = 0;
+    const chunk = () => {
+      if (id !== job) return; const t0 = performance.now();
+      while (row < RH && performance.now() - t0 < 14) {
+        const ci = y0 + row * px;
+        for (let x = 0; x < RW; x++) { const cr = x0 + x * px; let zr = 0, zi = 0, n = 0, r2 = 0, i2 = 0; while (n < maxIt && r2 + i2 < 16) { zi = 2 * zr * zi + ci; zr = r2 - i2 + cr; r2 = zr * zr; i2 = zi * zi; n++; }
+          buf[row * RW + x] = n >= maxIt ? 0xff0a0705 : pal[Math.floor(Math.sqrt(n + 1 - Math.log2(Math.log(r2 + i2) / 2)) * 70) & 511]; }
+        row++;
+      }
+      og.putImageData(img, 0, 0); S.g.drawImage(off, 0, 0, S.W, S.H);
+      if (row < RH) requestAnimationFrame(chunk);
+    };
+    chunk();
+    $('zoom').textContent = vi(3.2 / scale, scale > 0.5 ? 1 : 0) + '×'; $('ctr').textContent = cx.toFixed(4).replace('.', ',') + ' ; ' + cy.toFixed(4).replace('.', ',');
+  }
+  cv.addEventListener('click', (e) => { const [x, y] = pos(cv, e); cx += (x / S.W - .5) * scale; cy += (y / S.H - .5) * scale * S.H / S.W; scale /= 2.5; if (scale < 1e-13) scale = 1e-13; render(); const h = document.querySelector('.sim-hint'); if (h) h.style.display = 'none'; });
+  $('out').onclick = () => { scale = Math.min(3.2, scale * 2.5); render(); };
+  $('home').onclick = () => { cx = -0.6; cy = 0; scale = 3.2; render(); };
+  $('pre').onclick = (e) => { const b = e.target.closest('[data-p]'); if (!b) return; const [a, c, z] = b.dataset.p.split(',').map(Number); cx = a; cy = c; scale = 3.2 / z; render(); };
+  $('it').oninput = () => { maxIt = +$('it').value; $('itO').textContent = maxIt; }; $('it').onchange = render; $('it').oninput();
+  render();
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

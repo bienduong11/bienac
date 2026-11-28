@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Quỹ đạo · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/orbits/" />
+  <meta name="description" content="Kéo rồi thả để ném một hành tinh quanh ngôi sao: rơi vào, bay mất, hay vào quỹ đạo elip như Kepler mô tả." />
+  <meta property="og:title" content="Quỹ đạo · Bienac" />
+  <meta property="og:description" content="Kéo rồi thả để ném một hành tinh quanh ngôi sao: rơi vào, bay mất, hay vào quỹ đạo elip như Kepler mô tả." />
+  <meta property="og:image" content="https://bienac.com/assets/og/orbits.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="sao">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Quỹ đạo</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Quỹ đạo</p>
+    <h1 class="ud-title">Ném một hành tinh <span class="accent">quanh ngôi sao</span></h1>
+    <p class="sim-lede">Kéo rồi thả để ném một hành tinh. Ném nhẹ quá nó rơi vào sao, mạnh quá nó bay mất. Ở giữa hai mức đó là hình elip mà Kepler tìm ra từ số đo của Tycho Brahe.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Ngôi sao ở giữa và các hành tinh bay quanh"></canvas><span class="sim-hint">Kéo và thả để ném</span></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row"><button class="ud-btn" id="circ">Thả quỹ đạo tròn</button><button class="ud-btn" id="star2" aria-pressed="false">Thêm sao thứ hai</button><button class="ud-btn" id="clear">Xóa</button></div>
+          <label class="sim-check"><input type="checkbox" id="trail" checked /> Để lại vệt đường đi</label>
+          <div class="sim-stats"><div class="sim-stat"><b id="cnt">0</b><span>Hành tinh</span></div><div class="sim-stat"><b id="kind">–</b><span>Cú ném đang kéo</span></div></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Ba kết cục của một cú ném</h2>
+          <p>Hành tinh lúc nào cũng đang rơi về phía ngôi sao. Nó không đâm vào sao vì đồng thời bay ngang đủ nhanh, nên cứ rơi trượt mãi. Đó là <b>quỹ đạo</b>.</p>
+          <p>Tốc độ vừa khít thì quỹ đạo tròn. Lệch đi một chút thì thành elip: hành tinh chạy nhanh khi gần sao, chậm khi ở xa. Vượt quá <b>tốc độ thoát</b>, bằng căn hai lần tốc độ tròn, thì nó đi luôn không quay lại.</p>
+          <p>Thử bật “Thêm sao thứ hai”. Với hai ngôi sao, phần lớn đường đi hết còn là elip gọn gàng, và rất khó đoán trước. Đó là bài toán ba vật thể.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, pos, vi } = Sim;
+  const GM = 60000, cv = $('cv'); let bodies = [], drag = null, two = false, tt = 0;
+  const trailCv = document.createElement('canvas'), tg = trailCv.getContext('2d');
+  const S = stage(cv, (s) => { trailCv.width = cv.width; trailCv.height = cv.height; tg.setTransform(s.dpr, 0, 0, s.dpr, 0, 0); });
+  const stars = () => { const c = [S.W / 2, S.H / 2]; if (!two) return [[c[0], c[1], 1]]; const d = Math.min(S.W, S.H) * 0.16, a = tt * 0.5; return [[c[0] + Math.cos(a) * d, c[1] + Math.sin(a) * d, .5], [c[0] - Math.cos(a) * d, c[1] - Math.sin(a) * d, .5]]; };
+  function acc(x, y) { let ax = 0, ay = 0; for (const s of stars()) { const dx = s[0] - x, dy = s[1] - y, r2 = dx * dx + dy * dy + 30, r = Math.sqrt(r2); ax += GM * s[2] * dx / (r2 * r); ay += GM * s[2] * dy / (r2 * r); } return [ax, ay]; }
+  function add(x, y, vx, vy) { if (bodies.length > 60) bodies.shift(); bodies.push({ x, y, vx, vy, hue: 150 + Math.random() * 160 }); }
+  function step(dt) {
+    for (const b of bodies) {
+      let [ax, ay] = acc(b.x, b.y); b.vx += ax * dt / 2; b.vy += ay * dt / 2; const ox = b.x, oy = b.y; b.x += b.vx * dt; b.y += b.vy * dt;
+      [ax, ay] = acc(b.x, b.y); b.vx += ax * dt / 2; b.vy += ay * dt / 2;
+      if ($('trail').checked) { tg.strokeStyle = `hsla(${b.hue},80%,65%,.5)`; tg.lineWidth = 1; tg.beginPath(); tg.moveTo(ox, oy); tg.lineTo(b.x, b.y); tg.stroke(); }
+    }
+    bodies = bodies.filter((b) => { for (const s of stars()) if (Math.hypot(b.x - s[0], b.y - s[1]) < 11) return false; return Math.abs(b.x - S.W / 2) < S.W * 3 && Math.abs(b.y - S.H / 2) < S.H * 3; });
+  }
+  function kind(x, y, vx, vy) { const r = Math.hypot(x - S.W / 2, y - S.H / 2), v = Math.hypot(vx, vy), vc = Math.sqrt(GM / r); if (v > vc * 1.414) return 'Bay mất'; if (v < vc * 0.45) return 'Rơi vào sao'; return Math.abs(v - vc) < vc * 0.08 ? 'Gần tròn' : 'Elip'; }
+  function draw() {
+    const g = S.g; g.clearRect(0, 0, S.W, S.H); g.drawImage(trailCv, 0, 0, S.W, S.H);
+    for (const s of stars()) { const gr = g.createRadialGradient(s[0], s[1], 0, s[0], s[1], 34); gr.addColorStop(0, '#fff6d8'); gr.addColorStop(.3, '#ffc65a'); gr.addColorStop(1, 'rgba(255,160,60,0)'); g.fillStyle = gr; g.beginPath(); g.arc(s[0], s[1], 34, 0, 7); g.fill(); }
+    for (const b of bodies) { g.fillStyle = `hsl(${b.hue},85%,68%)`; g.beginPath(); g.arc(b.x, b.y, 4, 0, 7); g.fill(); }
+    if (drag) { g.strokeStyle = '#37f0cf'; g.lineWidth = 1.5; g.setLineDash([5, 5]); g.beginPath(); g.moveTo(drag.x, drag.y); g.lineTo(drag.cx, drag.cy); g.stroke(); g.setLineDash([]); g.fillStyle = '#37f0cf'; g.beginPath(); g.arc(drag.x, drag.y, 5, 0, 7); g.fill(); }
+    $('cnt').textContent = bodies.length;
+  }
+  cv.addEventListener('pointerdown', (e) => { const [x, y] = pos(cv, e); drag = { x, y, cx: x, cy: y }; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', (e) => { if (!drag) return; [drag.cx, drag.cy] = pos(cv, e); $('kind').textContent = kind(drag.x, drag.y, (drag.x - drag.cx) * 1.6, (drag.y - drag.cy) * 1.6); });
+  cv.addEventListener('pointerup', () => { if (!drag) return; add(drag.x, drag.y, (drag.x - drag.cx) * 1.6, (drag.y - drag.cy) * 1.6); drag = null; $('kind').textContent = '–'; });
+  cv.addEventListener('pointercancel', () => { drag = null; });
+  function circle(r, a) { const x = S.W / 2 + Math.cos(a) * r, y = S.H / 2 + Math.sin(a) * r, v = Math.sqrt(GM / r); add(x, y, -Math.sin(a) * v, Math.cos(a) * v); }
+  $('circ').onclick = () => circle(Math.min(S.W, S.H) * (0.18 + Math.random() * 0.25), Math.random() * 7);
+  $('clear').onclick = () => { bodies = []; tg.clearRect(0, 0, S.W, S.H); };
+  $('star2').onclick = () => { two = !two; $('star2').setAttribute('aria-pressed', two); tg.clearRect(0, 0, S.W, S.H); };
+  const m = Math.min(S.W, S.H); circle(m * 0.2, 0); circle(m * 0.33, 2); add(S.W / 2 + m * 0.26, S.H / 2, 0, Math.sqrt(GM / (m * 0.26)) * 0.7);
+  loop((dt) => { tt += dt; for (let i = 0; i < 4; i++) step(dt / 4); draw(); });
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

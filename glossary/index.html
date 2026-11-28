@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Từ điển Bienac · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/glossary/" />
+  <meta name="description" content="Từ điển thuật ngữ khoa học và lịch sử của Bienac: mỗi khái niệm giải thích trong vài câu, kèm ứng dụng hoặc video liên quan." />
+  <meta property="og:title" content="Từ điển Bienac · Bienac" />
+  <meta property="og:description" content="Từ điển thuật ngữ khoa học và lịch sử của Bienac: mỗi khái niệm giải thích trong vài câu, kèm ứng dụng hoặc video liên quan." />
+  <meta property="og:image" content="https://bienac.com/assets/og/glossary.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="muc">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Từ điển Bienac</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="lib">
+    <p class="ud-kicker">Thư viện</p>
+    <h1 class="ud-title">Từ điển <span class="accent">thuật ngữ</span></h1>
+    <p class="sim-lede">Những khái niệm hay gặp trong các video, mỗi mục giải thích trong vài câu và dẫn tới chỗ để thử tận tay hoặc xem kỹ hơn.</p>
+    <div class="lib-tools"><input class="lib-search" id="q" type="search" placeholder="Tìm một thuật ngữ…" aria-label="Tìm thuật ngữ" autocomplete="off" /><span class="lib-count" id="count"></span></div>
+    <div class="sim-chips" id="cats"></div>
+    <div class="lib-list" id="list"></div>
+    <p class="lib-empty" id="empty" hidden>Chưa có mục nào khớp. Bạn có thể <a href="/community/#ask" style="color:var(--cyan)">gửi câu hỏi</a> để Bienac bổ sung.</p>
+  </main>
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id), fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase();
+  const COL = { 'Vật lý': '255,181,71', 'Hóa học': '255,181,71', 'Vũ trụ': '139,156,255', 'Sự sống': '111,224,122', 'Toán & Hỗn loạn': '111,224,122', 'Lịch sử & Chữ viết': '255,122,107' };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let all = []; try { all = await (await fetch('/data/glossary.json')).json(); } catch (e) {}
+  let cat = '';
+  const cats = [...new Set(all.map((x) => x.c))];
+  $('cats').innerHTML = `<button class="sim-chip" data-c="" aria-pressed="true">Tất cả</button>` + cats.map((c) => `<button class="sim-chip" data-c="${esc(c)}" aria-pressed="false">${esc(c)}</button>`).join('');
+  function show() {
+    const q = fold($('q').value.trim());
+    const rows = all.filter((x) => (!cat || x.c === cat) && (!q || fold(x.t + ' ' + x.en + ' ' + x.d).includes(q)));
+    $('list').innerHTML = rows.map((x) => `<article class="ud-panel lib-card" id="${esc(fold(x.t).replace(/[^a-z0-9]+/g, '-'))}" style="--c:${COL[x.c] || '55,240,207'}"><span class="lib-tag">${esc(x.c)}</span><h2>${esc(x.t)}${x.en ? `<small>${esc(x.en)}</small>` : ''}</h2><p>${esc(x.d)}</p>${x.u ? `<a class="lib-more" href="${esc(x.u)}">${x.u.startsWith('/v/') ? 'Xem video' : 'Thử tận tay'} →</a>` : ''}</article>`).join('');
+    $('count').textContent = rows.length + ' mục'; $('empty').hidden = rows.length > 0;
+  }
+  $('q').oninput = show;
+  $('cats').onclick = (e) => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; document.querySelectorAll('#cats [data-c]').forEach((x) => x.setAttribute('aria-pressed', x === b)); show(); };
+  const h = new URLSearchParams(location.search).get('q'); if (h) $('q').value = h;
+  show(); if (location.hash) { const el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView({ block: 'center' }); }
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

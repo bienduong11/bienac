@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Cộng đồng · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/community/" />
+  <meta name="description" content="Bình chọn chủ đề video tiếp theo của Bienac, đề xuất chủ đề mới, gửi câu hỏi, và tham gia các nhóm người xem." />
+  <meta property="og:title" content="Cộng đồng · Bienac" />
+  <meta property="og:description" content="Bình chọn chủ đề video tiếp theo của Bienac, đề xuất chủ đề mới, gửi câu hỏi, và tham gia các nhóm người xem." />
+  <meta property="og:image" content="https://bienac.com/assets/og/community.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="gio">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Cộng đồng</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="hub">
+    <p class="ud-kicker">Cộng đồng</p>
+    <h1 class="ud-title">Cùng quyết <span class="accent">video tiếp theo</span></h1>
+    <p class="sim-lede">Bỏ phiếu cho chủ đề bạn muốn xem, đề xuất chủ đề mới, gửi câu hỏi cho Bienac, hoặc vào các nhóm để trò chuyện với những người xem khác.</p>
+    <section class="hub-sec" id="vote" style="margin-top:22px">
+      <h2>Bạn muốn xem chủ đề nào?</h2>
+      <p>Bấm vào một chủ đề để bỏ phiếu, bấm lần nữa để rút lại. Mỗi người một phiếu cho mỗi chủ đề.</p>
+      <div class="ud-panel hub-card"><div class="vote-list" id="board"></div>
+        <form class="hub-form" id="propose"><input type="text" name="title" maxlength="80" required placeholder="Đề xuất một chủ đề khác…" aria-label="Chủ đề đề xuất" /><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" /><button class="hub-btn" type="submit">Đề xuất</button></form>
+        <p class="hub-msg" id="proposeMsg">Đề xuất mới sẽ hiện lên bảng sau khi Bienac duyệt.</p></div>
+    </section>
+    <section class="hub-sec" id="ask">
+      <h2>Hỏi Bienac</h2>
+      <p>Có điều gì trong video bạn chưa rõ, hoặc thấy chỗ nào sai? Viết vào đây. Bienac đọc hết.</p>
+      <div class="ud-panel hub-card"><form class="hub-form" id="askForm" style="margin-top:0"><textarea name="body" required minlength="5" maxlength="2000" placeholder="Câu hỏi của bạn…" aria-label="Câu hỏi"></textarea><input type="text" name="name" maxlength="80" placeholder="Tên bạn (không bắt buộc)" aria-label="Tên" /><input type="text" name="contact" maxlength="160" placeholder="Email để nhận trả lời (không bắt buộc)" aria-label="Email" /><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" /><button class="hub-btn" type="submit">Gửi câu hỏi</button></form><p class="hub-msg" id="askMsg"></p></div>
+    </section>
+    <section class="hub-sec" id="groups">
+      <h2>Nơi trò chuyện</h2>
+      <p>Các nhóm của người xem Bienac. Vào đâu tiện cho bạn nhất.</p>
+      <div class="hub-links">
+        <a class="hub-link" href="/messenger" data-tap="messenger"><b>Messenger</b><span>Nhóm chat cộng đồng</span></a>
+        <a class="hub-link" href="/group" data-tap="group"><b>Nhóm Facebook</b><span>Bài viết, thảo luận dài</span></a>
+        <a class="hub-link" href="/discord" data-tap="discord"><b>Discord</b><span>Phòng theo từng chủ đề</span></a>
+        <a class="hub-link" href="/do-vui/" data-tap="quiz"><b>Đố vui</b><span>Xem bạn hơn bao nhiêu người chơi</span></a>
+      </div>
+    </section>
+    <section class="hub-sec" id="news">
+      <h2>Nhận tin qua email</h2>
+      <p>Để lại email, Bienac sẽ báo khi có video mới hoặc khi cửa hàng mở. Không quảng cáo, không chia sẻ địa chỉ của bạn cho ai.</p>
+      <div class="ud-panel hub-card"><form class="hub-form" id="sub" style="margin-top:0"><input type="email" name="email" required maxlength="160" placeholder="email@cuaban.com" aria-label="Email" autocomplete="email" /><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" /><button class="hub-btn" type="submit">Đăng ký</button></form><p class="hub-msg" id="subMsg"></p></div>
+    </section>
+  </main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id), esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const post = (url, data) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then((r) => r.json().catch(() => ({ ok: false })));
+  const tap = (id) => { try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: location.pathname.replace(/\/$/, '') + '/tap/' + id, r: document.referrer })); } catch (e) {} };
+  async function board(el, g) {
+    let items = [];
+    const paint = () => { const mx = Math.max(1, ...items.map((x) => x.n)); el.innerHTML = items.length ? items.map((x) => `<button class="vote-item" data-id="${x.id}" aria-pressed="${x.mine}" style="--w:${x.n / mx * 100}%"><span><b>${esc(x.title)}</b>${x.note ? `<small>${esc(x.note)}</small>` : ''}</span><span class="vote-n">${x.n.toLocaleString('vi-VN')}</span></button>`).join('') : '<p class="ud-dim">Chưa tải được danh sách. Bạn thử tải lại trang nhé.</p>'; };
+    try { const j = await (await fetch('/api/vote?g=' + g)).json(); items = j.items || []; } catch (e) {}
+    paint();
+    el.onclick = async (e) => { const b = e.target.closest('[data-id]'); if (!b || b.disabled) return; b.disabled = true; const j = await post('/api/vote', { id: +b.dataset.id }).catch(() => ({})); if (j.ok) { const it = items.find((x) => x.id === j.id); it.n = j.n; it.mine = j.mine; items.sort((a, c) => c.n - a.n || a.id - c.id); tap('vote-' + g); } paint(); };
+  }
+  function form(f, msg, send, okText) { f.onsubmit = async (e) => { e.preventDefault(); const btn = f.querySelector('button'); btn.disabled = true; msg.className = 'hub-msg'; msg.textContent = 'Đang gửi…'; let j = {}; try { j = await send(new FormData(f)); } catch (err) {} if (j.ok) { msg.className = 'hub-msg ok'; msg.textContent = okText; f.reset(); } else { msg.className = 'hub-msg err'; msg.textContent = j.error === 'rate' ? 'Bạn gửi hơi nhiều rồi, lát nữa thử lại nhé.' : j.error === 'email' ? 'Địa chỉ email chưa đúng.' : 'Chưa gửi được. Bạn thử lại sau nhé.'; } btn.disabled = false; }; }
+
+  board($('board'), 'video');
+  form($('propose'), $('proposeMsg'), (fd) => post('/api/vote', { g: 'video', title: fd.get('title'), website: fd.get('website') }), 'Đã nhận đề xuất. Nó sẽ hiện lên bảng sau khi Bienac duyệt.');
+  form($('sub'), $('subMsg'), (fd) => post('/api/subscribe', { email: fd.get('email'), src: 'community', website: fd.get('website') }), 'Đã ghi lại. Cảm ơn bạn!');
+  form($('askForm'), $('askMsg'), async (fd) => {
+    const j = await post('/api/message', { name: (fd.get('name') || '') + ' [Hỏi Bienac]', contact: fd.get('contact'), body: fd.get('body'), website: fd.get('website') });
+    if (j.ok && j.payload) { const f2 = await fetch('https://formsubmit.co/ajax/bienacvn@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(j.payload) }).then((x) => x.json()).catch(() => ({})); if (String(f2.success) === 'true') fetch('/api/message', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: j.id }) }).catch(() => {}); }
+    return j;
+  }, 'Đã gửi. Cảm ơn bạn đã hỏi!');
+  document.querySelectorAll('[data-tap]').forEach((a) => a.addEventListener('click', () => tap(a.dataset.tap)));
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

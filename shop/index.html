@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Cửa hàng · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/shop/" />
+  <meta name="description" content="Cửa hàng Bienac đang được chuẩn bị. Bỏ phiếu cho món bạn muốn có và để lại email để được báo khi mở." />
+  <meta property="og:title" content="Cửa hàng · Bienac" />
+  <meta property="og:description" content="Cửa hàng Bienac đang được chuẩn bị. Bỏ phiếu cho món bạn muốn có và để lại email để được báo khi mở." />
+  <meta property="og:image" content="https://bienac.com/assets/og/shop.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="hao">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Cửa hàng</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="hub">
+    <p class="ud-kicker">Cửa hàng</p>
+    <h1 class="ud-title">Cửa hàng Bienac <span class="accent">đang được chuẩn bị</span></h1>
+    <p class="sim-lede">Chưa có món nào lên kệ. Trước khi làm, Bienac muốn biết bạn thích thứ gì. Bỏ phiếu bên dưới và để lại email, khi cửa hàng mở bạn sẽ là người biết đầu tiên.</p>
+    <span class="hub-badge">Sắp ra mắt</span>
+    <section class="hub-sec" id="want">
+      <h2>Bạn muốn Bienac làm món gì?</h2>
+      <p>Bấm để bỏ phiếu. Món nào nhiều phiếu nhất sẽ được làm trước.</p>
+      <div class="ud-panel hub-card"><div class="vote-list" id="board"></div>
+        <form class="hub-form" id="propose"><input type="text" name="title" maxlength="80" required placeholder="Món khác bạn muốn có…" aria-label="Món đề xuất" /><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" /><button class="hub-btn" type="submit">Đề xuất</button></form>
+        <p class="hub-msg" id="proposeMsg">Đề xuất mới sẽ hiện lên bảng sau khi Bienac duyệt.</p></div>
+    </section>
+    <section class="hub-sec" id="notify">
+      <h2>Báo cho mình khi mở</h2>
+      <p>Chỉ một thư khi cửa hàng mở và khi có món mới. Không quảng cáo, không chia sẻ địa chỉ của bạn cho ai.</p>
+      <div class="ud-panel hub-card"><form class="hub-form" id="sub" style="margin-top:0"><input type="email" name="email" required maxlength="160" placeholder="email@cuaban.com" aria-label="Email" autocomplete="email" /><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" /><button class="hub-btn" type="submit">Đăng ký</button></form><p class="hub-msg" id="subMsg"></p></div>
+    </section>
+    <section class="hub-sec" id="how">
+      <h2>Mua hàng sẽ như thế nào</h2>
+      <p>Không cần tạo tài khoản, không cần thẻ.</p>
+      <div class="hub-steps">
+        <div class="hub-step"><b>Chọn món</b><p>Xem ảnh, mô tả và giá ngay trên trang này.</p></div>
+        <div class="hub-step"><b>Quét mã QR</b><p>Chuyển khoản bằng app ngân hàng, kèm mã đơn hiện trên màn hình.</p></div>
+        <div class="hub-step"><b>Nhận hàng</b><p>File gửi qua email. Hàng in gửi về địa chỉ bạn để lại.</p></div>
+      </div>
+    </section>
+    <section class="hub-sec">
+      <h2>Trong lúc chờ</h2>
+      <p>Nếu bạn muốn giúp kênh ngay bây giờ, trang ủng hộ luôn mở.</p>
+      <div class="hub-links"><a class="hub-link" href="/support/" data-tap="support"><b>Ủng hộ Bienac</b><span>QR, MoMo, PayPal, Hội viên</span></a><a class="hub-link" href="/community/" data-tap="community"><b>Cộng đồng</b><span>Bình chọn video tiếp theo</span></a></div>
+    </section>
+  </main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id), esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const post = (url, data) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then((r) => r.json().catch(() => ({ ok: false })));
+  const tap = (id) => { try { navigator.sendBeacon('/api/hit', JSON.stringify({ p: location.pathname.replace(/\/$/, '') + '/tap/' + id, r: document.referrer })); } catch (e) {} };
+  async function board(el, g) {
+    let items = [];
+    const paint = () => { const mx = Math.max(1, ...items.map((x) => x.n)); el.innerHTML = items.length ? items.map((x) => `<button class="vote-item" data-id="${x.id}" aria-pressed="${x.mine}" style="--w:${x.n / mx * 100}%"><span><b>${esc(x.title)}</b>${x.note ? `<small>${esc(x.note)}</small>` : ''}</span><span class="vote-n">${x.n.toLocaleString('vi-VN')}</span></button>`).join('') : '<p class="ud-dim">Chưa tải được danh sách. Bạn thử tải lại trang nhé.</p>'; };
+    try { const j = await (await fetch('/api/vote?g=' + g)).json(); items = j.items || []; } catch (e) {}
+    paint();
+    el.onclick = async (e) => { const b = e.target.closest('[data-id]'); if (!b || b.disabled) return; b.disabled = true; const j = await post('/api/vote', { id: +b.dataset.id }).catch(() => ({})); if (j.ok) { const it = items.find((x) => x.id === j.id); it.n = j.n; it.mine = j.mine; items.sort((a, c) => c.n - a.n || a.id - c.id); tap('vote-' + g); } paint(); };
+  }
+  function form(f, msg, send, okText) { f.onsubmit = async (e) => { e.preventDefault(); const btn = f.querySelector('button'); btn.disabled = true; msg.className = 'hub-msg'; msg.textContent = 'Đang gửi…'; let j = {}; try { j = await send(new FormData(f)); } catch (err) {} if (j.ok) { msg.className = 'hub-msg ok'; msg.textContent = okText; f.reset(); } else { msg.className = 'hub-msg err'; msg.textContent = j.error === 'rate' ? 'Bạn gửi hơi nhiều rồi, lát nữa thử lại nhé.' : j.error === 'email' ? 'Địa chỉ email chưa đúng.' : 'Chưa gửi được. Bạn thử lại sau nhé.'; } btn.disabled = false; }; }
+
+  board($('board'), 'shop');
+  form($('propose'), $('proposeMsg'), (fd) => post('/api/vote', { g: 'shop', title: fd.get('title'), website: fd.get('website') }), 'Đã nhận đề xuất. Cảm ơn bạn!');
+  form($('sub'), $('subMsg'), (fd) => post('/api/subscribe', { email: fd.get('email'), src: 'shop', website: fd.get('website') }), 'Đã ghi lại. Khi cửa hàng mở, bạn sẽ nhận được thư.');
+  document.querySelectorAll('[data-tap]').forEach((a) => a.addEventListener('click', () => tap(a.dataset.tap)));
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

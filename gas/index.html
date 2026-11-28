@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Hộp khí · Bienac</title>
+  <link rel="canonical" href="https://bienac.com/gas/" />
+  <meta name="description" content="Một hộp khí nóng và một hộp khí lạnh, rút vách ngăn là tự trộn đều. Vì sao chúng không bao giờ tự tách lại? Entropy bằng hình." />
+  <meta property="og:title" content="Hộp khí · Bienac" />
+  <meta property="og:description" content="Một hộp khí nóng và một hộp khí lạnh, rút vách ngăn là tự trộn đều. Vì sao chúng không bao giờ tự tách lại? Entropy bằng hình." />
+  <meta property="og:image" content="https://bienac.com/assets/og/gas.jpg?v=20261128" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/ung-dung.css" />
+  <link rel="stylesheet" href="/css/sim.css" />
+</head>
+<body class="ud" data-nen="hat">
+  <header class="site-header scrolled">
+    <a class="brand" href="/">
+      <span class="brand-logo"><img src="/assets/logo-192.webp" alt="logo Bienac" /></span>
+      <span class="brand-name">Bienac</span>
+    </a>
+    <nav class="site-nav">
+      <span class="nav-here">Hộp khí</span>
+      <a class="nav-apps" href="/#apps" title="Tất cả mục" aria-label="Tất cả mục của Bienac">⊞</a>
+      <a class="nav-cta" href="https://www.youtube.com/@bienac?sub_confirmation=1" target="_blank" rel="noopener">Đăng ký kênh</a>
+    </nav>
+  </header>
+
+  <main class="sim">
+    <p class="ud-kicker">Hộp khí</p>
+    <h1 class="ud-title">Nóng và lạnh <span class="accent">tự trộn vào nhau</span></h1>
+    <p class="sim-lede">Bên trái là khí nóng, hạt chạy nhanh. Bên phải là khí lạnh, hạt chạy chậm. Rút vách ngăn ra và xem chuyện gì xảy ra. Rồi thử chờ xem chúng có tự tách lại không.</p>
+    <div class="sim-grid">
+      <div class="sim-stage" id="stage"><canvas id="cv" aria-label="Hộp chứa các hạt khí nóng và lạnh"></canvas></div>
+      <div class="sim-side">
+        <section class="ud-panel sim-box">
+          <div class="sim-row"><button class="ud-btn" id="open">Rút vách ngăn</button><button class="ud-btn" id="reset">Làm lại</button></div>
+          <div class="sim-range"><label for="n">Số hạt mỗi bên <output id="nO"></output></label><input type="range" id="n" min="20" max="200" step="10" value="120" /></div>
+          <div class="sim-stats"><div class="sim-stat"><b id="tl">–</b><span>Nhiệt độ bên trái</span></div><div class="sim-stat"><b id="tr">–</b><span>Nhiệt độ bên phải</span></div><div class="sim-stat"><b id="mix">0%</b><span>Mức trộn lẫn</span></div><div class="sim-stat"><b id="time">0 s</b><span>Từ lúc rút vách</span></div></div>
+        </section>
+        <section class="ud-panel sim-box sim-text">
+          <h2>Vì sao không tự tách lại?</h2>
+          <p>Không có luật nào cấm các hạt nhanh tự dồn hết về bên trái. Mỗi cú va chạm ở đây đều có thể chạy ngược lại mà vẫn đúng vật lý.</p>
+          <p>Nhưng số cách sắp xếp “trộn đều” nhiều hơn số cách sắp xếp “tách riêng” đến mức không tưởng tượng nổi. Các hạt chỉ va chạm lung tung, và gần như mọi kết quả của sự lung tung ấy đều là trộn đều. <b>Entropy</b> đo đúng điều đó: số cách sắp xếp ứng với một trạng thái.</p>
+          <p>Kéo số hạt xuống còn 20 mỗi bên rồi chờ: thỉnh thoảng bạn sẽ thấy hai bên lệch nhau rõ. Với số hạt trong một căn phòng thật, bạn có chờ lâu hơn tuổi vũ trụ cũng không thấy. Xem thêm ở video <a href="/v/entropy/" style="color:var(--cyan)">về entropy</a>.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+<script src="/js/sim.js"></script>
+<script>
+(() => {
+  const { $, stage, loop, vi } = Sim;
+  let P = [], N = 120, wall = true, since = 0; const R = 3.2;
+  const S = stage($('cv'), () => { if (P.length) reset(); });
+  function reset() { P = []; wall = true; since = 0; $('open').textContent = 'Rút vách ngăn'; $('open').disabled = false;
+    for (let s = 0; s < 2; s++) for (let i = 0; i < N; i++) { const sp = s ? 45 : 170, a = Math.random() * 7; P.push({ x: (s ? .5 : 0) * S.W + R + Math.random() * (S.W / 2 - 2 * R - 4) + (s ? 4 : 0), y: R + Math.random() * (S.H - 2 * R), vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, hot: !s }); } }
+  function step(dt) {
+    const mid = S.W / 2;
+    for (const p of P) { const ox = p.x; p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.x < R) { p.x = R; p.vx = Math.abs(p.vx); } if (p.x > S.W - R) { p.x = S.W - R; p.vx = -Math.abs(p.vx); }
+      if (p.y < R) { p.y = R; p.vy = Math.abs(p.vy); } if (p.y > S.H - R) { p.y = S.H - R; p.vy = -Math.abs(p.vy); }
+      if (wall) { if (ox < mid && p.x > mid - R - 2) { p.x = mid - R - 2; p.vx = -Math.abs(p.vx); } else if (ox > mid && p.x < mid + R + 2) { p.x = mid + R + 2; p.vx = Math.abs(p.vx); } } }
+    // va chạm đàn hồi giữa các hạt (chia ô để tính nhanh)
+    const cs = 12, cols = Math.ceil(S.W / cs) + 1, grid = new Map();
+    for (let i = 0; i < P.length; i++) { const k = Math.floor(P[i].x / cs) + Math.floor(P[i].y / cs) * cols; (grid.get(k) || grid.set(k, []).get(k)).push(i); }
+    for (const [k, arr] of grid) for (const nb of [0, 1, cols - 1, cols, cols + 1]) { const other = nb ? grid.get(k + nb) : arr; if (!other) continue;
+      for (let a = 0; a < arr.length; a++) for (let b = nb ? 0 : a + 1; b < other.length; b++) { const p = P[arr[a]], q = P[other[b]]; if (wall && (p.x < mid) !== (q.x < mid)) continue; const dx = q.x - p.x, dy = q.y - p.y, d2 = dx * dx + dy * dy; if (d2 > 4 * R * R || d2 === 0) continue; const d = Math.sqrt(d2), nx = dx / d, ny = dy / d, rel = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny; if (rel > 0) continue; p.vx += rel * nx; p.vy += rel * ny; q.vx -= rel * nx; q.vy -= rel * ny; const push = (2 * R - d) / 2; p.x -= nx * push; p.y -= ny * push; q.x += nx * push; q.y += ny * push; } }
+  }
+  function draw() {
+    const g = S.g; g.clearRect(0, 0, S.W, S.H); let eL = 0, nL = 0, eR = 0, nR = 0, hotL = 0, hotAll = 0;
+    for (const p of P) { const e = p.vx * p.vx + p.vy * p.vy, v = Math.min(1, Math.sqrt(e) / 200); if (p.x < S.W / 2) { eL += e; nL++; if (p.hot) hotL++; } else { eR += e; nR++; } if (p.hot) hotAll++;
+      g.fillStyle = `rgb(${Math.round(70 + v * 185)},${Math.round(150 - v * 60)},${Math.round(255 - v * 200)})`; g.beginPath(); g.arc(p.x, p.y, R, 0, 7); g.fill(); }
+    if (wall) { g.fillStyle = '#c9a650'; g.fillRect(S.W / 2 - 2, 0, 4, S.H); } else { g.strokeStyle = 'rgba(201,166,80,.25)'; g.setLineDash([4, 6]); g.beginPath(); g.moveTo(S.W / 2, 0); g.lineTo(S.W / 2, S.H); g.stroke(); g.setLineDash([]); }
+    const T = (e, n) => n ? vi(e / n / 100) + '°' : '–'; $('tl').textContent = T(eL, nL); $('tr').textContent = T(eR, nR);
+    $('mix').textContent = Math.round((1 - Math.abs(hotL / (hotAll || 1) - .5) * 2) * 100) + '%'; $('time').textContent = vi(since) + ' s';
+  }
+  loop((dt) => { for (let i = 0; i < 2; i++) step(dt / 2); if (!wall) since += dt; draw(); });
+  $('open').onclick = () => { wall = false; $('open').textContent = 'Đã rút vách'; $('open').disabled = true; };
+  $('reset').onclick = reset; $('n').oninput = () => { N = +$('n').value; $('nO').textContent = N + ' hạt'; reset(); }; $('n').oninput();
+})();
+</script>
+<script src="/js/nen-ung-dung.js"></script>
+<script src="/js/dem.js"></script>
+</body>
+</html>

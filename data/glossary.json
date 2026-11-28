@@ -1,0 +1,366 @@
+[
+ {
+  "t": "Amiăng",
+  "c": "Hóa học",
+  "d": "Nhóm khoáng chất dạng sợi, chịu nhiệt và cách điện tốt. Hít phải sợi amiăng gây bệnh phổi và ung thư.",
+  "u": "/v/asbestos/",
+  "en": "asbestos"
+ },
+ {
+  "t": "Automat tế bào",
+  "c": "Toán & Hỗn loạn",
+  "d": "Lưới các ô đổi trạng thái theo luật chỉ phụ thuộc các ô bên cạnh. Trò chơi sự sống của John Conway là ví dụ nổi tiếng nhất.",
+  "u": "/su-song/",
+  "en": "cellular automaton"
+ },
+ {
+  "t": "Bước sóng",
+  "c": "Vật lý",
+  "d": "Khoảng cách giữa hai đỉnh sóng liên tiếp. Với ánh sáng, bước sóng quyết định màu: đỏ khoảng 700 nanômét, tím khoảng 400 nanômét.",
+  "u": "/pho-anh-sang/",
+  "en": "wavelength"
+ },
+ {
+  "t": "Bảng tuần hoàn",
+  "c": "Hóa học",
+  "d": "Bảng xếp các nguyên tố theo số proton tăng dần, sao cho những nguyên tố tính chất giống nhau nằm cùng cột. Dmitri Mendeleev công bố bản đầu năm 1869.",
+  "u": "/elements",
+  "en": "periodic table"
+ },
+ {
+  "t": "Bốn lực cơ bản",
+  "c": "Vật lý",
+  "d": "Hấp dẫn, điện từ, lực hạt nhân mạnh và lực hạt nhân yếu. Mọi tương tác đã biết trong tự nhiên đều quy về bốn lực này.",
+  "u": "/v/forces/",
+  "en": "fundamental forces"
+ },
+ {
+  "t": "Can Chi",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Hệ đếm chu kỳ 60 ghép 10 Thiên Can với 12 Địa Chi, dùng để gọi tên năm, tháng, ngày, giờ trong lịch Đông Á.",
+  "u": "/am-lich/",
+  "en": "sexagenary cycle"
+ },
+ {
+  "t": "Chiết tự",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Cách tách một chữ Hán thành các bộ phận để hiểu nghĩa, nhớ chữ.",
+  "u": "/chiet-tu/",
+  "en": ""
+ },
+ {
+  "t": "Chu kỳ bán rã",
+  "c": "Vật lý",
+  "d": "Thời gian để một nửa số hạt nhân phóng xạ trong mẫu phân rã. Với cacbon-14 là khoảng 5.730 năm.",
+  "u": "/phong-xa/",
+  "en": "half-life"
+ },
+ {
+  "t": "Chuỗi Fourier",
+  "c": "Toán & Hỗn loạn",
+  "d": "Cách viết một dao động lặp lại bất kỳ thành tổng của các dao động hình sin đơn giản.",
+  "u": "/fourier/",
+  "en": "Fourier series"
+ },
+ {
+  "t": "Chòm sao",
+  "c": "Vũ trụ",
+  "d": "Một vùng trên bầu trời theo quy ước. Hiệp hội Thiên văn Quốc tế chia trời thành 88 chòm; thiên văn cổ Trung Hoa chia theo 28 tú.",
+  "u": "/bau-troi/",
+  "en": "constellation"
+ },
+ {
+  "t": "Con đường Tơ lụa",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Mạng lưới đường buôn bán nối Trung Hoa với Trung Á, Ấn Độ và Địa Trung Hải. Tên gọi này mới có từ thế kỷ 19.",
+  "u": "/v/silk/",
+  "en": "Silk Road"
+ },
+ {
+  "t": "Electron",
+  "c": "Vật lý",
+  "d": "Hạt mang điện âm, nhẹ hơn proton khoảng 1.836 lần. Cách electron sắp xếp quanh hạt nhân quyết định tính chất hóa học của nguyên tố.",
+  "u": "/v/particles/",
+  "en": "electron"
+ },
+ {
+  "t": "Entropy",
+  "c": "Vật lý",
+  "d": "Đại lượng đo số cách sắp xếp vi mô ứng với cùng một trạng thái nhìn thấy được. Trong một hệ kín, entropy không tự giảm.",
+  "u": "/gas/",
+  "en": "entropy"
+ },
+ {
+  "t": "Fractal",
+  "c": "Toán & Hỗn loạn",
+  "d": "Hình mà từng phần nhỏ lại giống cả tổng thể, phóng to bao nhiêu vẫn còn chi tiết. Bờ biển, bông cải và tập Mandelbrot là ví dụ.",
+  "u": "/mandelbrot/",
+  "en": "fractal"
+ },
+ {
+  "t": "Giao thoa",
+  "c": "Vật lý",
+  "d": "Hiện tượng hai sóng gặp nhau và cộng lại: chỗ tăng cường, chỗ triệt tiêu. Các vân sáng tối trong thí nghiệm hai khe là do giao thoa.",
+  "u": "/ripple/",
+  "en": "interference"
+ },
+ {
+  "t": "Hiệu ứng cánh bướm",
+  "c": "Toán & Hỗn loạn",
+  "d": "Cách gọi hình ảnh cho sự nhạy với điều kiện ban đầu, xuất phát từ công trình dự báo thời tiết của Edward Lorenz những năm 1960.",
+  "u": "/canh-buom/",
+  "en": "butterfly effect"
+ },
+ {
+  "t": "Hệ nhị phân",
+  "c": "Toán & Hỗn loạn",
+  "d": "Cách viết số chỉ dùng hai chữ số 0 và 1. Mọi máy tính hiện nay lưu trữ và tính toán bằng hệ này.",
+  "u": "/he-dem/",
+  "en": "binary"
+ },
+ {
+  "t": "Hỗn loạn",
+  "c": "Toán & Hỗn loạn",
+  "d": "Tính chất của những hệ tuân theo luật xác định nhưng cực kỳ nhạy với điều kiện ban đầu, nên không thể dự đoán xa.",
+  "u": "/canh-buom/",
+  "en": "chaos"
+ },
+ {
+  "t": "Kinh Dịch",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Sách cổ Trung Hoa gồm 64 quẻ, mỗi quẻ sáu hào liền hoặc đứt. Leibniz nhận ra cách xếp quẻ trùng với các số nhị phân.",
+  "u": "/kinh-dich/",
+  "en": "I Ching"
+ },
+ {
+  "t": "Kiềm",
+  "c": "Hóa học",
+  "d": "Bazơ tan trong nước, như xút (NaOH) hay bồ tạt (KOH). Dung dịch kiềm nhờn, ăn da và phản ứng với chất béo tạo thành xà phòng.",
+  "u": "/v/alkali/",
+  "en": "alkali"
+ },
+ {
+  "t": "Lưỡng tính sóng hạt",
+  "c": "Vật lý",
+  "d": "Ánh sáng và vật chất vừa có tính chất của sóng, vừa có tính chất của hạt, tùy theo cách ta đo.",
+  "u": "/hai-khe/",
+  "en": "wave-particle duality"
+ },
+ {
+  "t": "Lịch vũ trụ",
+  "c": "Vũ trụ",
+  "d": "Cách nén 13,8 tỷ năm lịch sử vũ trụ vào một năm lịch, do Carl Sagan phổ biến. Theo đó loài người xuất hiện vào những phút cuối ngày 31 tháng 12.",
+  "u": "/lich-vu-tru/",
+  "en": "Cosmic Calendar"
+ },
+ {
+  "t": "Mật mã Caesar",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Cách mã hóa thay mỗi chữ cái bằng chữ đứng sau nó một số vị trí cố định.",
+  "u": "/cipher/",
+  "en": "Caesar cipher"
+ },
+ {
+  "t": "Neutron",
+  "c": "Vật lý",
+  "d": "Hạt không mang điện trong hạt nhân, do James Chadwick tìm ra năm 1932. Cùng một nguyên tố có thể có số neutron khác nhau, gọi là các đồng vị.",
+  "u": "/phong-xa/",
+  "en": "neutron"
+ },
+ {
+  "t": "Nguyên tố",
+  "c": "Hóa học",
+  "d": "Chất chỉ gồm một loại nguyên tử, không thể tách thành chất đơn giản hơn bằng phản ứng hóa học. Hiện biết 118 nguyên tố.",
+  "u": "/elements",
+  "en": "chemical element"
+ },
+ {
+  "t": "Nguyên tử",
+  "c": "Vật lý",
+  "d": "Đơn vị nhỏ nhất của một nguyên tố hóa học, gồm hạt nhân mang điện dương và các electron bao quanh. Gần như toàn bộ khối lượng nằm ở hạt nhân.",
+  "u": "/elements",
+  "en": "atom"
+ },
+ {
+  "t": "Năm ánh sáng",
+  "c": "Vũ trụ",
+  "d": "Quãng đường ánh sáng đi được trong một năm, khoảng 9.461 tỷ kilômét. Đây là đơn vị đo khoảng cách, không phải thời gian.",
+  "u": "/light-speed/",
+  "en": "light-year"
+ },
+ {
+  "t": "Photon",
+  "c": "Vật lý",
+  "d": "Hạt của ánh sáng. Photon không có khối lượng nghỉ và luôn chuyển động với tốc độ ánh sáng trong chân không.",
+  "u": "/pho-anh-sang/",
+  "en": "photon"
+ },
+ {
+  "t": "Phân hạch",
+  "c": "Vật lý",
+  "d": "Hạt nhân nặng vỡ thành các hạt nhân nhẹ hơn và giải phóng năng lượng. Đây là nguyên lý của lò phản ứng và bom nguyên tử.",
+  "u": "/v/atomic-bomb/",
+  "en": "nuclear fission"
+ },
+ {
+  "t": "Phân phối chuẩn",
+  "c": "Toán & Hỗn loạn",
+  "d": "Dạng hình quả chuông xuất hiện khi cộng rất nhiều tác động nhỏ, độc lập với nhau.",
+  "u": "/galton/",
+  "en": "normal distribution"
+ },
+ {
+  "t": "Phân tích tần suất",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Phá mật mã bằng cách đếm xem chữ nào xuất hiện nhiều nhất, do Al-Kindi mô tả ở thế kỷ 9.",
+  "u": "/cipher/",
+  "en": "frequency analysis"
+ },
+ {
+  "t": "Phóng xạ",
+  "c": "Vật lý",
+  "d": "Hiện tượng hạt nhân không bền tự biến đổi và phát ra tia. Henri Becquerel phát hiện năm 1896 khi làm việc với muối urani.",
+  "u": "/phong-xa/",
+  "en": "radioactivity"
+ },
+ {
+  "t": "Phương pháp Monte Carlo",
+  "c": "Toán & Hỗn loạn",
+  "d": "Giải bài toán bằng cách thử ngẫu nhiên thật nhiều lần rồi lấy thống kê.",
+  "u": "/pi/",
+  "en": "Monte Carlo method"
+ },
+ {
+  "t": "Phản ứng xà phòng hóa",
+  "c": "Hóa học",
+  "d": "Phản ứng giữa chất béo và kiềm, tạo ra xà phòng và glixerol.",
+  "u": "/v/soap/",
+  "en": "saponification"
+ },
+ {
+  "t": "Phổ phát xạ",
+  "c": "Hóa học",
+  "d": "Tập hợp các màu ánh sáng mà một nguyên tố phát ra khi bị nung nóng. Mỗi nguyên tố có một bộ vạch riêng, như dấu vân tay.",
+  "u": "/ngon-lua/",
+  "en": "emission spectrum"
+ },
+ {
+  "t": "Phổ điện từ",
+  "c": "Vật lý",
+  "d": "Toàn bộ dải sóng điện từ, từ sóng radio dài hàng cây số tới tia gamma ngắn hơn hạt nhân nguyên tử. Ánh sáng nhìn thấy chỉ là một khe hẹp trong đó.",
+  "u": "/pho-anh-sang/",
+  "en": "electromagnetic spectrum"
+ },
+ {
+  "t": "Proton",
+  "c": "Vật lý",
+  "d": "Hạt mang điện dương trong hạt nhân. Số proton quyết định nguyên tử thuộc nguyên tố nào: 1 là hiđro, 6 là cacbon, 79 là vàng.",
+  "u": "/elements",
+  "en": "proton"
+ },
+ {
+  "t": "Quark",
+  "c": "Vật lý",
+  "d": "Hạt cơ bản tạo nên proton và neutron. Có sáu loại quark; proton gồm hai quark lên và một quark xuống.",
+  "u": "/v/particles/",
+  "en": "quark"
+ },
+ {
+  "t": "Quy trình Haber-Bosch",
+  "c": "Hóa học",
+  "d": "Cách tổng hợp amoniac từ nitơ trong không khí và hiđro ở áp suất, nhiệt độ cao. Phân đạm làm từ amoniac này nuôi sống hàng tỷ người.",
+  "u": "/v/haber/",
+  "en": "Haber-Bosch process"
+ },
+ {
+  "t": "Quỹ đạo",
+  "c": "Vũ trụ",
+  "d": "Đường đi của một vật quanh vật khác dưới tác dụng của lực hấp dẫn. Quỹ đạo của các hành tinh là hình elip.",
+  "u": "/orbits/",
+  "en": "orbit"
+ },
+ {
+  "t": "Số π",
+  "c": "Toán & Hỗn loạn",
+  "d": "Tỉ số giữa chu vi và đường kính của mọi hình tròn, xấp xỉ 3,14159. Phần thập phân của nó không bao giờ kết thúc và không lặp lại.",
+  "u": "/pi/",
+  "en": "pi"
+ },
+ {
+  "t": "Tiết khí",
+  "c": "Lịch sử & Chữ viết",
+  "d": "24 mốc chia đều đường đi của Mặt Trời trong một năm, như Lập xuân, Hạ chí, Đông chí. Nhà nông Đông Á dựa vào đó để tính thời vụ.",
+  "u": "/am-lich/",
+  "en": "solar term"
+ },
+ {
+  "t": "Trội lên",
+  "c": "Toán & Hỗn loạn",
+  "d": "Hiện tượng một tập thể có tính chất mà từng thành viên không có, sinh ra từ các tương tác đơn giản giữa chúng.",
+  "u": "/v/emergence/",
+  "en": "emergence"
+ },
+ {
+  "t": "Tốc độ thoát",
+  "c": "Vũ trụ",
+  "d": "Tốc độ tối thiểu để một vật rời hẳn khỏi sức hút của thiên thể mà không cần đẩy thêm. Ở mặt đất là khoảng 11,2 km/s.",
+  "u": "/orbits/",
+  "en": "escape velocity"
+ },
+ {
+  "t": "Tốc độ ánh sáng",
+  "c": "Vật lý",
+  "d": "299.792.458 mét mỗi giây trong chân không. Theo thuyết tương đối, không vật nào có khối lượng đạt được tốc độ này.",
+  "u": "/light-speed/",
+  "en": "speed of light"
+ },
+ {
+  "t": "Tự tổ chức",
+  "c": "Toán & Hỗn loạn",
+  "d": "Trật tự xuất hiện mà không có ai chỉ huy, như đàn chim lượn hay vân trên da động vật.",
+  "u": "/dan-chim/",
+  "en": "self-organization"
+ },
+ {
+  "t": "Vân Turing",
+  "c": "Sự sống",
+  "d": "Hoa văn đốm, sọc tự hình thành khi hai chất lan với tốc độ khác nhau và tác động lẫn nhau, theo mô hình Alan Turing nêu năm 1952.",
+  "u": "/turing/",
+  "en": "Turing pattern"
+ },
+ {
+  "t": "Vụ Nổ Lớn",
+  "c": "Vũ trụ",
+  "d": "Mô hình mô tả vũ trụ bắt đầu từ trạng thái cực nóng, cực đặc cách đây khoảng 13,8 tỷ năm và giãn nở từ đó tới nay.",
+  "u": "/lich-vu-tru/",
+  "en": "Big Bang"
+ },
+ {
+  "t": "Âm dương lịch",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Lịch tính tháng theo Mặt Trăng nhưng thêm tháng nhuận để năm vẫn khớp với mùa. Lịch âm của Việt Nam thuộc loại này.",
+  "u": "/am-lich/",
+  "en": "lunisolar calendar"
+ },
+ {
+  "t": "Âm Hán Việt",
+  "c": "Lịch sử & Chữ viết",
+  "d": "Cách người Việt đọc chữ Hán, định hình từ khoảng cuối đời Đường. Rất nhiều từ tiếng Việt ngày nay có gốc từ lớp âm này.",
+  "u": "/chiet-tu/",
+  "en": "Sino-Vietnamese"
+ },
+ {
+  "t": "Đơn vị thiên văn",
+  "c": "Vũ trụ",
+  "d": "Khoảng cách trung bình từ Trái Đất tới Mặt Trời, khoảng 149,6 triệu kilômét.",
+  "u": "/he-mat-troi/",
+  "en": "astronomical unit"
+ },
+ {
+  "t": "Đồng vị",
+  "c": "Hóa học",
+  "d": "Các dạng của cùng một nguyên tố, cùng số proton nhưng khác số neutron. Cacbon-12 bền, cacbon-14 phóng xạ.",
+  "u": "/phong-xa/",
+  "en": "isotope"
+ }
+]
