@@ -49,3 +49,16 @@ chạy trên **Cloudflare Pages** kèm vài Pages Functions và một cơ sở d
 - Shader biên dịch sau khi trang hiện xong.
 - Font tự lưu trong `fonts/` (`css/fonts.css`): Be Vietnam Pro cho chữ, JetBrains Mono cho số; không gọi Google Fonts (trừ Noto Serif TC ở vài trang chữ Hán).
 - Trên Cloudflare Pages, `scripts/dong-dau.mjs` thu gọn CSS/JS, gắn `?v=<mã băm nội dung>`, chèn speculation rules tải trước trang.
+
+## Thêm từ 28/11/2026
+
+- **Ứng dụng mới (slug tiếng Anh):** `pendulum-wave`, `orbits`, `fourier`, `mandelbrot`, `ripple`, `turing`, `gas`, `pi`, `light-speed`, `cipher`. Dùng khuôn chung `css/sim.css` + `js/sim.js` (hàm `Sim.stage`, `Sim.loop`, `Sim.pos`, `Sim.vi`).
+- **Thư viện:** `/glossary/` (dữ liệu `data/glossary.json`), `/today/` (dữ liệu `data/today.json`, mỗi dòng `[tháng, ngày, năm, nội dung]`).
+- **Cộng đồng `/community/`:** bình chọn chủ đề video, đề xuất chủ đề (chờ duyệt), hỏi Bienac (dùng `/api/message`), đăng ký nhận tin.
+- **Cửa hàng `/shop/`:** đang ở trạng thái "sắp ra mắt": bình chọn món muốn có + đăng ký nhận tin.
+- **API mới** (Pages Functions, D1 `bienac-stats`, mã dùng chung `lib/guard.js`):
+  - `/api/vote`: bảng `topics` (grp `video` | `shop`, status 1 = hiện, 0 = chờ duyệt) và `votes`.
+    Duyệt đề xuất: `UPDATE topics SET status = 1 WHERE id = …`. Xem đề xuất chờ: `SELECT * FROM topics WHERE status = 0`.
+  - `/api/subscribe`: bảng `subscribers` (email, ts, src). Chỉ lưu, chưa gửi thư tự động.
+  - `/api/score`: bảng `scores` (điểm đố vui, không tên) để báo "bạn hơn X% người chơi".
+- Thêm trang mới thì nhớ: ô trên `index.html`, danh sách `APPS` trong `functions/api/hit.js`, `js/tim-kiem.js`, sitemap trong `scripts/build-posts.mjs`, ảnh `assets/og/<slug>.jpg` (`node scripts/og-card.mjs`).
