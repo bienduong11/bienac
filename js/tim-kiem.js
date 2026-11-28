@@ -46,6 +46,7 @@
     ['Từ điển thuật ngữ', '/glossary/', 'tu dien thuat ngu khai niem dinh nghia la gi'],
     ['Ngày này năm xưa', '/today/', 'ngay nay nam xua hom nay lich su khoa hoc'],
     ['Cộng đồng', '/community/', 'cong dong binh chon de xuat hoi cau hoi nhom'],
+    ['Quyền riêng tư', '/privacy/', 'quyen rieng tu luu gi cookie ip du lieu ca nhan'],
     ['Cửa hàng', '/shop/', 'cua hang mua poster ao shop'],
     ['Bắt đầu từ đây', '/bat-dau/', 'bat dau moi xem gioi thieu lo trinh nen xem video nao'],
     ['Ủng hộ Bienac', '/support/', 'ung ho donate'],

@@ -66,6 +66,7 @@ await hit('/glossary/', { expect: ok200, contains: ['/data/glossary.json'] });
 await hit('/today/', { expect: ok200, contains: ['/data/today.json'] });
 await hit('/community/', { expect: ok200, contains: ['id="board"', '/api/vote'] });
 await hit('/shop/', { expect: ok200, contains: ['/data/products.json', '4506285887', 'DUONG VAN BIEN'] });
+await hit('/privacy/', { expect: ok200, contains: ['không lưu địa chỉ IP'] });
 await hit('/data/glossary.json', { expect: ok200, contains: ['Entropy'] });
 await hit('/data/today.json', { expect: ok200, contains: ['Sputnik'] });
 await hit('/data/products.json', { expect: ok200, contains: ['['] });
